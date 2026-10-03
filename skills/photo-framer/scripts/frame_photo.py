@@ -248,7 +248,8 @@ def main(argv=None):
             results.append({'input': str(path), 'status':'ok', 'outputs':list(map(str,outputs)), 'notes':notes})
         except Exception as error:
             results.append({'input':str(path),'status':'error','error':str(error)})
-    print(json.dumps({'results':results},ensure_ascii=False,indent=2))
+    # ASCII JSON escapes preserve Unicode paths even on legacy Windows stdout.
+    print(json.dumps({'results':results},ensure_ascii=True,indent=2))
     return int(any(r['status']=='error' for r in results))
 
 if __name__ == '__main__':

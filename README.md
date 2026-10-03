@@ -72,7 +72,7 @@ python skills/photo-framer/scripts/test_frame_photo.py
 
 The tests generate synthetic images and an original grayscale ICC profile. They require only Python and Pillow; no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed.
 
-The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with both styles, ordinary alpha modes, RGB/ICC preservation, EXIF orientation and no-overwrite behavior. It fails on the pre-fix renderer and passes on the fixed version.
+The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with both styles, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. JSON escapes preserve the exact Unicode paths when parsed. It fails on the pre-fix renderer and passes on the fixed version.
 
 Local validation used Linux, Python 3.12.14 and Pillow 12.3.0. The included GitHub Actions workflow is configured for additional operating systems and the minimum supported Pillow version; those jobs are not claimed to have passed until GitHub runs them.
 

@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import struct
 import subprocess
@@ -69,16 +70,27 @@ class FramerRegression(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
-    def cli(self, paths, *flags):
+    def cli(self, paths, *flags, env=None):
         before = {p: hashlib.sha256(p.read_bytes()).digest() for p in paths}
         output = self.root / 'output'
         process = subprocess.run(
             [sys.executable, str(RENDERER), *map(str, paths), '--out-dir', str(output), *flags],
-            capture_output=True, text=True, encoding='utf-8')
+            capture_output=True, text=True, encoding='utf-8', env=env)
+        self.assertTrue(process.stdout.strip(), process.stderr)
         data = json.loads(process.stdout)
         for p, digest in before.items():
             self.assertEqual(digest, hashlib.sha256(p.read_bytes()).digest())
         return process, data['results']
+
+    def test_unicode_paths_with_legacy_stdout_encoding(self):
+        path = self.root / 'Ảnh mùa thu.png'
+        Image.new('RGB', (32, 24), 'red').save(path)
+        env = dict(os.environ, PYTHONIOENCODING='cp1252')
+        process, rows = self.cli([path], '--style', 'A', env=env)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(rows[0]['input'], str(path))
+        self.assertTrue(Path(rows[0]['outputs'][0]).is_file())
+        self.region(rows[0], (32, 24))
 
     def region(self, row, size, style='A'):
         self.assertEqual(row['status'], 'ok', row)
