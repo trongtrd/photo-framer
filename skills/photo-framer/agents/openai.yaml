@@ -1,0 +1,14 @@
+interface:
+  display_name: Photo Framer
+  short_description: Frame photos with soft shadows or gallery mats
+  default_prompt: Use $photo-framer to preview floating and gallery frames for my
+    photos.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
