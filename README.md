@@ -4,6 +4,26 @@ Add floating-photo shadows or gallery frames without regenerating your photograp
 
 Photo Framer is a Python renderer and an English–Vietnamese agent skill. It runs locally with Python 3.10+ and Pillow 10.1–12.x. No API key, remote image service, or image-generation model is required.
 
+## Before & after / Trước & sau
+
+One image, two framing styles. Both AFTER images below were produced by the bundled renderer using its defaults.
+
+| BEFORE — Original / Ảnh nguồn | AFTER A — Floating / Ảnh nổi | AFTER B — Gallery |
+| :---: | :---: | :---: |
+| ![Before: unframed mountain lake](docs/images/demo-source.jpg) | ![After A: the same image with a white surround and soft shadow](docs/images/demo-after-a.jpg) | ![After B: the same image with a black frame, white mat and gray background](docs/images/demo-after-b.jpg) |
+| No frame / Chưa thêm khung | Default / Mặc định `2-2-1` | Default / Mặc định `1-2-1` |
+
+**Giữ nguyên nội dung ảnh, thêm khung bên ngoài.** Hai ảnh AFTER được tạo bằng Photo Framer; bấm vào ảnh để xem lớn hơn.
+
+The source is an AI-generated demo image prepared at 960 × 640 pixels, not a user photograph. Framing is deterministic Python processing, without AI regeneration or retouching. These embedded AFTER files are lightweight JPEG share copies; the full-resolution PNG outputs retain the source photo region's decoded RGB pixels. GitHub scales each image to fit its column, so the photo appears smaller inside the larger framed canvas.
+
+Reproduce both results from the repository root:
+
+```sh
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source.jpg --style A --choices 2-2-1 --share --out-dir output/demo
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source.jpg --style B --choices 1-2-1 --share --out-dir output/demo
+```
+
 ## Styles
 
 | Code | Style | Default choices |
