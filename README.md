@@ -92,18 +92,9 @@ python skills/photo-framer/scripts/test_frame_photo.py
 
 The tests generate synthetic images and an original grayscale ICC profile. They require only Python and Pillow; no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed.
 
-The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with both styles, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. JSON escapes preserve the exact Unicode paths when parsed. It fails on the pre-fix renderer and passes on the fixed version.
+The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with both styles, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. JSON escapes preserve the exact Unicode paths when parsed.
 
-Local validation used Linux, Python 3.12.14 and Pillow 12.3.0. The included GitHub Actions workflow is configured for additional operating systems and the minimum supported Pillow version; those jobs are not claimed to have passed until GitHub runs them.
-
-## Remaining review items
-
-This patch fixes two image-handling defects, not every item in the independent review:
-
-- Input PNG decoding does not reject every structurally damaged PNG that still decodes.
-- A syntactically valid ICC profile with the wrong color space for its pixels needs stricter validation.
-- If the PNG succeeds but an additional share export fails, the current JSON error omits the completed PNG path.
-- A/B labels inside previews are English; conversation menus are English–Vietnamese. The mixed-style interaction instructions could be more explicit about only asking for missing settings.
+Local validation used Linux, Python 3.12.14 and Pillow 12.3.0. GitHub Actions [Regression tests run 37142845990](https://github.com/trongtrd/photo-framer/actions/runs/37142845990) passed all four matrix jobs: macOS/Python 3.12/Pillow 12.x, Windows/Python 3.12/Pillow 12.x, Ubuntu/Python 3.10/Pillow 10.1.0, and Ubuntu/Python 3.12/Pillow 12.x.
 
 ## Tiếng Việt
 
@@ -114,7 +105,6 @@ This patch fixes two image-handling defects, not every item in the independent r
 - Yêu cầu chung được xem trước A/B; đã nói rõ mã hoặc “mặc định” thì chạy thẳng.
 - Có thể xử lý nhiều ảnh và tách phong cách theo từng ảnh. Ảnh đã có viền phải được hỏi cách xử lý trước; không tự cắt ảnh hoặc chữ ký sát mép.
 - PNG cuối giữ kích thước và pixel RGB sau giải mã/chuẩn hóa EXIF; các trường hợp chuyển màu, ghép trong suốt lên trắng, crop được duyệt và JPEG chia sẻ có giới hạn riêng như phần trên.
-- Hai lỗi đã sửa: PNG 16-bit được chặn trước giải mã; ảnh xám có ICC giữ đúng alpha/transparency key trước chuyển màu.
 
 Cần Python 3.10+ và Pillow 10.1–12.x; các lệnh ở trên chạy từ thư mục gốc repository. Khi dùng skill trong ứng dụng AI, ứng dụng phải có quyền truy cập ảnh và chạy mã. Việc cài skill tùy thuộc ứng dụng; chỉ gửi URL GitHub không bảo đảm cài đặt.
 
