@@ -129,12 +129,12 @@ class FramerRegression(unittest.TestCase):
             s = min(size)
             if style == 'A':
                 off = max(4, round(s * .165))
-            elif style == 'C':
+            elif style in ('C', 'D'):
                 off = max(6, round(s * .035))
             else:
                 off = (max(4, round(s * .16)) + max(2, round(s * .035))
                        + max(4, round(s * .18)))
-            if style == 'C':
+            if style in ('C', 'D'):
                 band = max(round(s * .12), round(max(9, round(s * .018)) * 3.6), 44)
                 self.assertEqual(saved.size,
                                  (size[0] + off * 2, size[1] + off + band))
@@ -249,6 +249,97 @@ class FramerRegression(unittest.TestCase):
             self.assertIs(face, emphasis)
             self.assertGreater(stroke, 0)
 
+    def test_style_d_custom_text_and_capture_details(self):
+        path = self.root / 'custom spec.png'
+        save_with_xmp(Image.new('RGB', (900, 600), 'red'), path, xmp_packet())
+        text = 'Berlin, Germany | October 2022'
+        process, rows = self.cli([path], '--style', 'D', '--right-text', text, '--share')
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(self.region(rows[0], (900, 600), 'D').tobytes(),
+                         Image.new('RGB', (900, 600), 'red').tobytes())
+        self.assertTrue(self.has_ink(self.band_crop(rows[0], 0, 400, (900, 600))))
+        self.assertTrue(self.has_ink(self.band_crop(rows[0], 500, 900, (900, 600))))
+        self.assertTrue(any('XMP' in note for note in rows[0]['notes']))
+        self.assertTrue(any('user text replaces' in note for note in rows[0]['notes']))
+        self.assertFalse(any('Brand mark:' in note for note in rows[0]['notes']))
+        with Image.open(rows[0]['outputs'][0]) as im:
+            self.assertFalse(im.getexif())
+            self.assertFalse(im.getxmp())
+        with Image.open(rows[0]['outputs'][1]) as im:
+            im.load()
+            self.assertLessEqual(max(im.size), 2048)
+
+    def test_style_d_uses_gear_font_and_never_loads_logo(self):
+        photo = Image.new('RGB', (1200, 800), 'red')
+        # Identical strings must produce identical glyphs on both sides.
+        for font_path in (None, frame_photo.FONTS_DIR / 'Inter-Regular.ttf'):
+            with self.subTest(font_path=font_path), unittest.mock.patch.object(
+                    frame_photo, 'load_logo', side_effect=AssertionError('D must not load logos')):
+                result, _ = frame_photo.render(
+                    photo, 'D', meta={'make': 'SONY', 'model': 'ILCE-7C'},
+                    right_text='ILCE-7C', font_path=font_path)
+            left = result.crop((0, 828, 600, result.height)).convert('L')
+            right = result.crop((600, 828, result.width, result.height)).convert('L')
+            # Extract ink independently, comparing shape, size, weight and color.
+            left_box = left.point(lambda value: 255 if value < 200 else 0).getbbox()
+            right_box = right.point(lambda value: 255 if value < 200 else 0).getbbox()
+            self.assertIsNotNone(left_box)
+            self.assertIsNotNone(right_box)
+            self.assertEqual(left.crop(left_box).size, right.crop(right_box).size)
+            self.assertEqual(left.crop(left_box).tobytes(), right.crop(right_box).tobytes())
+
+    def test_style_d_vietnamese_without_metadata_and_spec_modes(self):
+        path = self.root / 'custom vietnamese.png'
+        save_with_xmp(Image.new('RGB', (1200, 800), 'blue'), path, xmp_packet())
+        text = 'Hồ Hoàn Kiếm | Tháng 10, 2022'
+        for mode in ('2-1-1', '2-1-2', '2-1-3'):
+            with self.subTest(mode=mode):
+                process, rows = self.cli([path], '--style', 'D', '--right-text', text,
+                                         '--choices', mode)
+                self.assertEqual(process.returncode, 0, process.stderr)
+                self.assertTrue(self.has_ink(self.band_crop(rows[0], 600, 1200, (1200, 800))))
+                left = self.band_crop(rows[0], 0, 500, (1200, 800))
+                self.assertEqual(self.has_ink(left), mode != '2-1-3')
+        plain = self.root / 'no metadata.png'
+        Image.new('RGB', (1200, 800), 'blue').save(plain)
+        process, rows = self.cli([plain], '--style', 'D', '--right-text', text)
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertTrue(self.is_blank(self.band_crop(rows[0], 0, 500, (1200, 800))))
+        self.assertTrue(self.has_ink(self.band_crop(rows[0], 600, 1200, (1200, 800))))
+
+    def test_style_d_rejects_missing_invalid_and_overlapping_text(self):
+        path = self.root / 'text validation.png'
+        save_with_xmp(Image.new('RGB', (900, 600), 'green'), path, xmp_packet())
+        for text in (None, '', '   ', 'one\ntwo', 'one\rtwo', 'one\ttwo', 'x'*201, 'W'*200):
+            with self.subTest(text=text):
+                flags = ('--right-text', text) if text is not None else ()
+                process, rows = self.cli([path], '--style', 'D', *flags)
+                self.assertEqual(process.returncode, 1)
+                self.assertEqual(rows[0]['status'], 'error')
+                self.assertNotIn('outputs', rows[0])
+        self.assertFalse((self.root / 'output').exists())
+        for style in 'ABC':
+            process, rows = self.cli([path], '--style', style, '--right-text', 'Berlin')
+            self.assertEqual(process.returncode, 1)
+            self.assertIn('only with style D', rows[0]['error'])
+
+    def test_style_d_fit_errors_continue_batch_and_preview_needs_supplied_text(self):
+        small, large = self.root / 'small.png', self.root / 'large.png'
+        Image.new('RGB', (40, 32), 'red').save(small)
+        Image.new('RGB', (900, 600), 'red').save(large)
+        text = 'Berlin, Germany | October 2022'
+        process, rows = self.cli([small, large], '--style', 'D', '--right-text', text)
+        self.assertEqual(process.returncode, 1)
+        self.assertEqual([row['status'] for row in rows], ['error', 'ok'])
+        for right_text, expected in ((None, '_ABC_preview.jpg'), (text, '_ABCD_preview.jpg')):
+            flags = ('--right-text', right_text) if right_text is not None else ()
+            process, rows = self.cli([large], '--preview', *flags)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertTrue(rows[0]['outputs'][0].endswith(expected))
+            with Image.open(rows[0]['outputs'][0]) as im:
+                im.load()
+                self.assertEqual(im.width, 1600 if right_text is not None else 2400)
+
     def test_spec_formatting_and_brand_mapping(self):
         line1, line2 = frame_photo.format_specs(
             {'model': 'E-M10MarkIV', 'lens': 'OM 12-45mm F4.0',
@@ -313,7 +404,7 @@ class FramerRegression(unittest.TestCase):
     def test_profiled_grayscale_alpha_and_color_key(self):
         values = [0, 1, 64, 127, 128, 192, 254, 255]
         for mode in ('LA', 'L'):
-            for style in ('A', 'B', 'C'):
+            for style in ('A', 'B', 'C', 'D'):
                 with self.subTest(mode=mode, style=style):
                     photo = Image.new(mode, (40, 32))
                     if mode == 'LA':
@@ -330,7 +421,8 @@ class FramerRegression(unittest.TestCase):
                     # Independent integer composite, rather than calling renderer helpers.
                     expected = bytes((c * alpha[i // 3] + 255 * (255 - alpha[i // 3]) + 127) // 255
                                      for i, c in enumerate(colors.tobytes()))
-                    process, rows = self.cli([path], '--style', style, '--share')
+                    flags = ('--right-text', 'D') if style == 'D' else ()
+                    process, rows = self.cli([path], '--style', style, '--share', *flags)
                     self.assertEqual(process.returncode, 0, process.stderr)
                     self.assertEqual(self.region(rows[0], photo.size, style).tobytes(), expected)
                     self.assertTrue(any('Transparency flattened' in n for n in rows[0]['notes']))
@@ -369,9 +461,10 @@ class FramerRegression(unittest.TestCase):
         path = self.root / 'ảnh có dấu.png'
         photo.save(path, icc_profile=self.srgb, exif=exif)
         expected = photo.transpose(Image.Transpose.ROTATE_270)
-        for style in ('A', 'B', 'C'):
+        for style in ('A', 'B', 'C', 'D'):
             with self.subTest(style=style):
-                process, rows = self.cli([path], '--style', style)
+                flags = ('--right-text', 'D') if style == 'D' else ()
+                process, rows = self.cli([path], '--style', style, *flags)
                 self.assertEqual(process.returncode, 0)
                 self.assertEqual(self.region(rows[0], expected.size, style).tobytes(), expected.tobytes())
                 final = Path(rows[0]['outputs'][0])
@@ -379,7 +472,7 @@ class FramerRegression(unittest.TestCase):
                 with Image.open(final) as im:
                     self.assertEqual(im.info['icc_profile'], self.srgb)
                     self.assertFalse(im.getexif())
-                _, rerun = self.cli([path], '--style', style)
+                _, rerun = self.cli([path], '--style', style, *flags)
                 self.assertNotEqual(rerun[0]['outputs'][0], str(final))
                 self.assertEqual(hashlib.sha256(final.read_bytes()).digest(), first_hash)
 

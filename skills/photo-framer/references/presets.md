@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (styles A, B) / v0.2 (style C)
+# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -43,5 +43,22 @@ Flat presentation: no shadow, frame or keyline.
   text is disabled; the wordmark does not.
 - Background: white #ffffff, ivory #faf8f3, light gray #f2f2f2.
 - Choices order: margin–background–caption; default 2-1-1 (medium, white, full).
+
+## D: custom spec card (added in v0.3)
+- Same geometry, colors and EXIF/XMP handling as C; no logo or wordmark.
+- Required `--right-text`: verbatim user wording, one line, at most 200 characters.
+- Right-aligned within the photo's right edge, vertically centered in the band.
+- Exactly the gear line's font face, size, SemiBold weight, stroke and (30,30,30)
+  color. A supplied `--font` replaces both faces consistently; no larger wordmark face.
+- Reserve the custom text's measured width plus a gap of max(0.6 × side margin,
+  2 × font size) before the left details. Reject text that does not fit; do not
+  shrink, truncate, wrap or discard left-side details to make room.
+- Choices: margin–background–left-side details, default 2-1-1. Choice 3 hides
+  only the left details; the supplied right text remains visible.
+- Missing metadata leaves the left side blank; custom wording is never derived
+  from GPS, capture dates or other metadata.
+- Default comparison remains A/B/C until text is supplied. With
+  `--preview --right-text "..."`, render A/B/C/D in a two-by-two comparison,
+  using that text.
 
 Square corners. Shadows never cover photo pixels. RGB final files retain source ICC; decorative numeric colors are interpreted in that profile. Preview/share versions convert to sRGB. EXIF/GPS are excluded. Cropping/resizing requires explicit authorization; reduced previews are not final files.

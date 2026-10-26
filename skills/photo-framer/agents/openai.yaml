@@ -1,8 +1,8 @@
 interface:
   display_name: Photo Framer
-  short_description: Frame photos with soft shadows, gallery mats, or EXIF spec cards
-  default_prompt: Use $photo-framer to preview floating and gallery frames for my
-    photos.
+  short_description: Frame photos with shadows, mats, EXIF specs or custom text
+  default_prompt: Use $photo-framer to help me choose A, B, C or D for my photos.
+    Ask for my exact custom text if I choose D without supplying it.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

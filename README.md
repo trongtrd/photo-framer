@@ -6,9 +6,9 @@
 
 # Photo Framer
 
-Ask your AI assistant to frame your photos in one of three styles: **A — Floating**, **B — Gallery**, or **C — Spec card**. Frames are added outside the photo; the original file stays untouched.
+Ask your AI assistant to frame your photos in one of four styles: **A — Floating**, **B — Gallery**, **C — Spec card**, or **D — Custom spec card**. Frames are added outside the photo; the original file stays untouched.
 
-Yêu cầu trợ lý AI thêm khung theo ba phong cách: **A — Ảnh nổi**, **B — Gallery** hoặc **C — Thẻ thông số**. Khung nằm bên ngoài ảnh; file gốc được giữ nguyên.
+Yêu cầu trợ lý AI thêm khung theo bốn phong cách: **A — Ảnh nổi**, **B — Gallery**, **C — Thẻ thông số** hoặc **D — Thẻ thông số có chữ riêng**. Khung nằm bên ngoài ảnh; file gốc được giữ nguyên.
 
 [English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Before & after / Trước & sau](#examples) · [Python and maintenance](#python-and-maintenance)
 
@@ -20,9 +20,9 @@ Photo Framer is a skill for AI apps that support installed skills, access to ima
 
 1. Download this repository and install the complete [`skills/photo-framer/`](skills/photo-framer/) folder using your app's supported skill installation method. Keep all files in that folder together.
 2. Open a chat where Photo Framer is available and attach your JPEG or PNG photos.
-3. Ask: **“Use Photo Framer to frame these photos. Show me A, B and C first.”**
+3. Ask: **“Use Photo Framer to frame these photos. Help me choose A, B, C or D.”**
 
-For a general request, the assistant shows a comparison using the first photo, then asks you to choose a style and its settings. You can reply in words or use the numbered choices in the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
+For a general request, the assistant shows A/B/C using the first photo, then offers all four styles and their settings. D uses C's layout with your text instead of the logo; it joins the comparison after you supply that text. You can reply in words or use the numbered choices in the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
 
 Installation depends on the app. A GitHub link alone does not install the skill or enable Python in a chat. The [Python instructions](#python-and-maintenance) below are for running Photo Framer directly on your computer.
 
@@ -33,6 +33,7 @@ Installation depends on the app. A GitHub link alone does not install the skill 
 | **A — Floating photo** | Light background and a soft shadow | `2-2-1`: medium margin, medium shadow, white background |
 | **B — Gallery** | Rigid frame, white mat, inner and outer shadows | `1-2-1`: black frame, medium mat, gray background |
 | **C — Spec card** | Flat border with camera details and a brand mark | `2-1-1`: medium margin, white background, full caption |
+| **D — Custom spec card** | C's layout with your text at the bottom right, replacing the brand mark | `2-1-1`: medium margin, white background, full left-side details |
 
 If you know what you want, ask directly:
 
@@ -44,13 +45,15 @@ If you know what you want, ask directly:
 | Different styles in a batch | “Use Photo Framer, A for the first photo and B for the second.” |
 | A caption | “Use Photo Framer, B default, with the caption ‘Hà Nội — mùa thu.’” |
 
+For D, you can say: **“Use Photo Framer, D default, with ‘Berlin, Germany | October 2022’ at the bottom right.”** The assistant asks for your exact text if you have not supplied it. It uses the same font, size, weight and color as the camera/lens line on the left. Long text is flagged for shorter wording; it is not shrunk or truncated. Locations, names and dates are your wording, not inferred capture data.
+
 An explicit style and settings skip the comparison and menu. If you say only “use defaults,” the skill uses A unless you have already chosen another style.
 
 ### What you receive
 
 - A full-resolution PNG with the frame added outside the photo. The original file stays untouched.
 - An additional lightweight JPEG when you ask for a sharing copy. Comparisons are reduced previews; sharing copies use lossy compression and may be resized. See the [technical notes](#technical-notes) for size limits, color handling and transparency.
-- For C, camera and lens details are read from capture information stored in the image (EXIF/XMP). The exposure line appears only when ISO, aperture, shutter speed and focal length are all present. Missing information is never invented; if there is no capture metadata, the assistant offers your own caption or a band without text. The brand mark follows the camera body.
+- For C and D, camera and lens details are read from capture information stored in the image (EXIF/XMP). The exposure line appears only when ISO, aperture, shutter speed and focal length are all present. Missing information is never invented. Without capture metadata, C can use your own caption or a band without text; D keeps your text on the right with no capture details on the left. C's brand mark follows the camera body.
 
 If a photo already has a border, the assistant asks how to handle it before proceeding. Cropping requires your approval. For a custom caption, provide the exact wording; the assistant needs a font that supports its characters, including Vietnamese accents.
 
@@ -62,9 +65,9 @@ Photo Framer là skill dành cho ứng dụng AI có hỗ trợ cài skill, đ�
 
 1. Tải mã nguồn của dự án này và cài toàn bộ thư mục [`skills/photo-framer/`](skills/photo-framer/) theo cách cài skill mà ứng dụng hỗ trợ. Giữ đầy đủ các file đi kèm.
 2. Mở cuộc trò chuyện có thể dùng Photo Framer, rồi đính kèm ảnh JPEG hoặc PNG.
-3. Gửi yêu cầu: **“Dùng Photo Framer thêm khung cho các ảnh này. Cho tôi xem trước A, B và C.”**
+3. Gửi yêu cầu: **“Dùng Photo Framer thêm khung cho các ảnh này. Giúp tôi chọn A, B, C hoặc D.”**
 
-Với yêu cầu chung, trợ lý dùng ảnh đầu tiên để tạo bản so sánh, sau đó hỏi phong cách và các tùy chỉnh. Bạn có thể trả lời bằng lời hoặc mã số trong [menu tiếng Việt](skills/photo-framer/references/menus.md#tiếng-việt).
+Với yêu cầu chung, trợ lý dùng ảnh đầu tiên để so sánh A/B/C, rồi đề nghị bạn chọn trong bốn phong cách. D có bố cục như C, thay logo bằng chữ của bạn; D được thêm vào bản so sánh khi đã có nội dung chữ. Bạn có thể trả lời bằng lời hoặc mã số trong [menu tiếng Việt](skills/photo-framer/references/menus.md#tiếng-việt).
 
 Cách cài phụ thuộc vào ứng dụng. Chỉ gửi đường dẫn GitHub chưa đủ để cài skill hoặc cho phép cuộc trò chuyện chạy Python. Phần [Python and maintenance](#python-and-maintenance) bên dưới dành cho người muốn tự chạy Photo Framer trên máy tính.
 
@@ -75,6 +78,7 @@ Cách cài phụ thuộc vào ứng dụng. Chỉ gửi đường dẫn GitHub c
 | **A — Ảnh nổi** | Nền sáng và bóng đổ mềm | `2-2-1`: khoảng trắng vừa, bóng mềm vừa, nền trắng |
 | **B — Gallery** | Khung cứng, bo giấy trắng, bóng trong và ngoài | `1-2-1`: khung đen, bo giấy vừa, nền xám |
 | **C — Thẻ thông số** | Viền phẳng, thông số máy ảnh và logo hãng | `2-1-1`: viền vừa, nền trắng, chữ đầy đủ |
+| **D — Thẻ thông số có chữ riêng** | Như C, thay logo bằng chữ của bạn ở góc dưới bên phải | `2-1-1`: viền vừa, nền trắng, thông tin bên trái đầy đủ |
 
 Nếu đã biết mình muốn gì, bạn có thể yêu cầu thẳng:
 
@@ -86,13 +90,15 @@ Nếu đã biết mình muốn gì, bạn có thể yêu cầu thẳng:
 | Chọn riêng cho từng ảnh | “Dùng Photo Framer, A cho ảnh thứ nhất, B cho ảnh thứ hai.” |
 | Thêm chữ | “Dùng Photo Framer, B mặc định, thêm chữ ‘Hà Nội — mùa thu.’” |
 
+Với D, có thể yêu cầu: **“Dùng Photo Framer, D mặc định, điền ‘Berlin, Germany | October 2022’ vào góc dưới bên phải.”** Nếu chưa có nội dung, trợ lý sẽ hỏi bạn muốn điền gì. Chữ bên phải dùng cùng font, cỡ, độ đậm và màu với dòng máy/ống kính bên trái. Chữ quá dài sẽ được đề nghị rút gọn, không tự thu nhỏ hoặc cắt bớt. Địa điểm, tên người chụp và thời gian được giữ theo lời bạn cung cấp, không suy đoán từ ảnh.
+
 Khi đã nêu rõ phong cách và tùy chỉnh, trợ lý chạy thẳng. Nếu chỉ nói “dùng mặc định”, skill dùng A, trừ khi bạn đã chọn phong cách khác trước đó.
 
 ### Bạn sẽ nhận được gì?
 
 - File PNG đầy đủ độ phân giải, có khung nằm bên ngoài ảnh. File gốc được giữ nguyên.
 - Thêm bản JPEG nhẹ nếu bạn yêu cầu bản chia sẻ. Bản xem trước và JPEG chia sẻ có thể giảm kích thước. Xem [ghi chú kỹ thuật](#technical-notes) để biết giới hạn về kích thước, màu và ảnh trong suốt.
-- Với C, máy và ống kính được đọc từ thông tin chụp lưu trong ảnh (EXIF/XMP). Dòng thông số chỉ xuất hiện khi đủ ISO, khẩu độ, tốc độ và tiêu cự. Skill không tự bịa phần thiếu; nếu ảnh không còn metadata, trợ lý sẽ đề nghị bạn cung cấp chữ hoặc dùng dải không chữ. Logo theo thân máy.
+- Với C và D, máy và ống kính được đọc từ thông tin chụp lưu trong ảnh (EXIF/XMP). Dòng thông số chỉ xuất hiện khi đủ ISO, khẩu độ, tốc độ và tiêu cự. Skill không tự bịa phần thiếu. Khi mất metadata, C có thể dùng chữ bạn cung cấp hoặc dải không chữ; D vẫn hiện chữ của bạn bên phải, để trống thông tin chụp bên trái. Logo của C theo thân máy.
 
 Ảnh đã có viền sẽ được hỏi cách xử lý trước khi chạy. Chỉ cắt ảnh khi bạn đồng ý. Nếu muốn thêm chữ, hãy cung cấp nguyên văn; trợ lý cần font có đủ ký tự, gồm cả dấu tiếng Việt.
 
@@ -100,9 +106,9 @@ Khi đã nêu rõ phong cách và tùy chỉnh, trợ lý chạy thẳng. Nếu 
 
 ## Before & after / Trước & sau
 
-One real photograph, three styles at their default settings. Click an image to enlarge it.
+One real photograph, four styles at their default settings. D uses the exact text supplied for this example. Click an image to enlarge it.
 
-Cùng một ảnh thật, ba phong cách ở chế độ mặc định. Bấm vào ảnh để xem lớn hơn.
+Cùng một ảnh thật, bốn phong cách ở chế độ mặc định. D dùng nguyên văn nội dung được cung cấp cho ví dụ này. Bấm vào ảnh để xem lớn hơn.
 
 | Before & after / Trước & sau |
 | :---: |
@@ -110,10 +116,11 @@ Cùng một ảnh thật, ba phong cách ở chế độ mặc định. Bấm v�
 | **AFTER A — Floating / Ảnh nổi** · Default / Mặc định `2-2-1`<br>![After A: the same photograph with a white surround and soft shadow](docs/images/demo-after-a-final.jpg) |
 | **AFTER B — Gallery** · Default / Mặc định `1-2-1`<br>![After B: the same photograph with a black frame, white mat and gray background](docs/images/demo-after-b-final.jpg) |
 | **AFTER C — Spec card / Thẻ thông số** · Default / Mặc định `2-1-1`<br>![After C: the same photograph with a flat white border, camera and exposure information read from EXIF, and the SONY logo](docs/images/demo-after-c-final.jpg) |
+| **AFTER D — Custom spec card / Thẻ thông số có chữ riêng** · Default / Mặc định `2-1-1`<br>![After D: the same photograph with capture details on the left and the supplied Berlin, Germany and October 2022 text at the bottom right](docs/images/demo-after-d-final.jpg) |
 
-C reads the camera details from this photo and selects the SONY logo.
+C reads the camera details from this photo and selects the SONY logo. D keeps those details and replaces the logo with the supplied text: `Berlin, Germany | October 2022`.
 
-C tự đọc thông số từ ảnh và chọn logo SONY.
+C tự đọc thông số từ ảnh và chọn logo SONY. D giữ thông tin chụp, thay logo bằng chữ được cung cấp: `Berlin, Germany | October 2022`.
 
 ## Python and maintenance
 
@@ -143,7 +150,12 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --choice
 
 # Spec card with capture information and the camera brand mark
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style C --out-dir "output"
+
+# Custom spec card: same gear-line font, with your text replacing the brand mark
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style D --right-text "Berlin, Germany | October 2022" --out-dir "output"
 ```
+
+To include D in the comparison, add `--right-text "your exact text"` to `--preview`. Without supplied text, the preview stays A/B/C and no wording is invented.
 
 For custom text, supply the exact caption and a font file with the required characters:
 
@@ -151,7 +163,7 @@ For custom text, supply the exact caption and a font file with the required char
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --caption "Hà Nội — mùa thu." --font "/path/to/unicode-font.ttf" --out-dir "output"
 ```
 
-Text supplied with `--caption` must fit on one line, contain at most 200 characters, and stay outside the photo. It requires an explicit `--font` path; check Vietnamese glyphs when needed. C's automatic spec band can contain two lines and uses the bundled Inter Regular and SemiBold fonts.
+Text supplied with `--caption` must fit on one line, contain at most 200 characters, and stay outside the photo. It requires an explicit `--font` path; check Vietnamese glyphs when needed. C/D's automatic spec band can contain two lines and uses the bundled Inter Regular and SemiBold fonts. D requires `--right-text`, also one line of at most 200 characters, and uses the gear line's SemiBold face and size without requiring `--font`. A font override applies to both sides. If the text and capture details cannot fit together, the renderer reports an error.
 
 For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` và `--font` như ví dụ; thêm `--share` để xuất bản chia sẻ.
 
@@ -171,9 +183,9 @@ Filesystems must support hard links for the renderer's atomic, no-overwrite fina
 - **Transparency:** transparent content is composited onto white paper, so the output is opaque. Alpha and grayscale transparency keys are captured before ICC conversion. Original alpha is not retained.
 - **Cropping:** requires explicit user approval. The script never edits the input file, and the skill asks how to handle existing borders before proceeding.
 - **Previews and sharing:** JPEG previews and sharing copies are reduced/lossy, with sharing copies limited to a longest edge of 2048 pixels. They are not pixel-identical archival copies; preview/share versions convert to sRGB.
-- **Style C:** Make, Model, LensModel, ISO, aperture, shutter speed and focal length are read from EXIF first; embedded XMP, such as a Lightroom export's capture data, fills missing fields. The exposure line is omitted unless all four exposure values exist. No values are invented.
-- **Brand marks:** selected from the camera body and pasted without recoloring or distortion. Sources are documented in [`assets/logos/`](skills/photo-framer/assets/logos/). Brands without a bundled logo use a bold text wordmark.
-- **Output metadata:** presentation files omit EXIF/XMP/GPS. C displays selected capture details as visible text in the image.
+- **Styles C/D:** Make, Model, LensModel, ISO, aperture, shutter speed and focal length are read from EXIF first; embedded XMP, such as a Lightroom export's capture data, fills missing fields. The exposure line is omitted unless all four exposure values exist. No values are invented. D uses exact user text on the right with the same typography as the gear line; it rejects overflow instead of shrinking, truncating or hiding left-side details.
+- **Brand marks (C):** selected from the camera body and pasted without recoloring or distortion. Sources are documented in [`assets/logos/`](skills/photo-framer/assets/logos/). Brands without a bundled logo use a bold text wordmark. D draws no logo or wordmark.
+- **Output metadata:** presentation files omit EXIF/XMP/GPS. C/D display selected capture details as visible text in the image; D's custom wording is supplied by the user.
 
 Ở PNG cuối, vùng ảnh đã được chuẩn bị giữ nguyên kích thước và pixel RGB sau giải mã/chuẩn hóa hướng xoay EXIF. Khung được thêm bên ngoài nên kích thước toàn bộ ảnh đầu ra tăng lên. Các trường hợp chuyển màu, ghép nội dung trong suốt lên trắng, cắt ảnh đã được duyệt và JPEG chia sẻ có giới hạn riêng như mô tả trên.
 
@@ -194,6 +206,7 @@ Cài thư viện theo phần trên trước khi chạy. Dùng thư mục `output
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style A --choices 2-2-1 --share --out-dir output/demo
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style B --choices 1-2-1 --share --out-dir output/demo
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style C --choices 2-1-1 --share --out-dir output/demo
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style D --choices 2-1-1 --right-text "Berlin, Germany | October 2022" --share --out-dir output/demo
 ```
 
 Each command creates `demo-source-final_<STYLE>.png` and `demo-source-final_<STYLE>_share.jpg` in `output/demo`.
@@ -212,7 +225,7 @@ import shutil
 
 rendered = Path("output/demo")
 images = Path("docs/images")
-for style in "ABC":
+for style in "ABCD":
     shutil.copyfile(
         rendered / f"demo-source-final_{style}_share.jpg",
         images / f"demo-after-{style.lower()}-final.jpg",
@@ -234,7 +247,7 @@ python skills/photo-framer/scripts/test_frame_photo.py
 
 The tests generate synthetic images and an original grayscale ICC profile. They require only Python and Pillow; no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed.
 
-The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C adds coverage for spec captions read from EXIF and from XMP-only exports, blank bands for files without metadata, the three caption modes, logo pasting and the text-wordmark fallback. JSON escapes preserve the exact Unicode paths when parsed.
+The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C covers EXIF/XMP captions, blank bands, caption modes, logo pasting and wordmark fallback. D adds custom-text validation, matching gear-line typography, Vietnamese text, missing metadata, left-side modes, overflow errors, mixed batches and comparisons with supplied wording. JSON escapes preserve the exact Unicode paths when parsed.
 
 Recorded local validation used Linux, Python 3.12.14 and Pillow 12.3.0 for v0.1, and Windows, Python 3.12 and Pillow 12.3.0 for v0.2. The historical GitHub Actions [v0.1 regression run 37142845990](https://github.com/trongtrd/photo-framer/actions/runs/37142845990) passed four matrix jobs: macOS/Python 3.12/Pillow 12.x, Windows/Python 3.12/Pillow 12.x, Ubuntu/Python 3.10/Pillow 10.1.0, and Ubuntu/Python 3.12/Pillow 12.x.
 

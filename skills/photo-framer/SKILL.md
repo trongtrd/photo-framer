@@ -1,6 +1,6 @@
 ---
 name: photo-framer
-description: Add floating-photo shadows or gallery frames to uploaded JPEG/PNG photographs using deterministic Python processing. Use for photo borders, framing, matting, soft drop shadows, gallery presentation, khung ảnh, ảnh nổi, bóng đổ, or bo giấy. Offer an A/B visual preview and numbered choices with explicit defaults while preserving photo content.
+description: Add floating-photo shadows, gallery frames, EXIF spec cards, or spec cards with custom right-side text to JPEG/PNG photographs using deterministic Python processing. Use for photo borders, framing, matting, khung ảnh, ảnh nổi, bóng đổ, bo giấy, or camera details with a location, photographer name or date. Offer styles A/B/C/D with explicit defaults while preserving photo content.
 ---
 
 # Photo Framer
@@ -30,30 +30,50 @@ Use the user's language and [menus.md](references/menus.md). Preserve codes acro
 - A: floating photo, default **2-2-1**.
 - B: gallery frame, default **1-2-1**.
 - C: print/spec card, default **2-1-1** (medium margin, white, full caption).
+- D: custom spec card, default **2-1-1** (same as C, user text replaces the logo).
 - Default style: A. If the user says only "use defaults" / "dùng mặc định", use A unless another style is already specified.
 
-Honor supplied choices. For "A default", "B mặc định", or a full code such as "B, 1-3-1", skip questions and comparison.
+Honor supplied choices. For "A default", "B mặc định", or a full code such as "B, 1-3-1", skip style/settings questions and comparison. D still requires the user's exact right-side text if it has not been supplied.
 
 Otherwise:
-1. Generate an A/B/C comparison using `--preview` on the first uploaded photo; identify it as representative of the batch.
-2. Display the comparison and ask A, B or C. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
+1. Generate an A/B/C comparison using `--preview` on the first uploaded photo; identify it as representative of the batch. When the user has supplied D's custom text, add `--right-text` to include D in a two-by-two A/B/C/D comparison. Do not invent placeholder text.
+2. Display the comparison and offer A, B, C or D. Explain that D uses C's layout with user text instead of the logo. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
 3. Once style is chosen, show its three-row menu in one turn, marking defaults. Accept three-number answers, "default", or natural language mapped explicitly to presets.
 4. If the choice UI returns no answer, apply the stated defaults instead of repeating questions. If the user explicitly wants to approve an appearance change, wait.
 5. Apply choices across the batch, splitting runs for per-image exceptions.
 
-## Style C metadata and brand marks
+For D, ask for the exact right-side text if it has not already been supplied:
+"Bạn muốn điền chữ gì ở góc dưới bên phải?" / "What exact text would you like
+at the bottom right?" It may be a location, photographer name, date, or a
+combination. Preserve the user's wording, punctuation and Vietnamese accents.
+Do not infer it from GPS, capture dates, filenames or context. An empty answer
+does not authorize invented text; wait for the wording or a different style.
+If D, its defaults and text are already explicit, run directly without asking again.
 
-C builds its caption from the photo itself: EXIF first, then the XMP that
+## Styles C/D: capture details, brand marks and custom text
+
+C and D build the left-side details from the photo itself: EXIF first, then the XMP that
 Lightroom writes into exports. Line 1 is `Model | LensModel`; line 2
 (`ISO … f/… …s …mm`) appears only when every value exists. Never invent,
 retype or estimate values. When a file carries no metadata, say so and offer
 user-supplied `--caption` text or a text-free band (`C` with caption choice 3).
+For D without metadata, keep the supplied right-side text and explain that
+the left-side capture details are unavailable.
 
 The brand mark is matched from Make/Model against `assets/logos/` (sources and
 license terms in that folder's README) and pasted unmodified — no recoloring,
 no distortion. Brands without a bundled logo (e.g. SIGMA, DJI) get a bold text
 wordmark instead. The mark follows the camera body; a third-party lens does
 not change it. Marks are stored next to this skill and need no network.
+
+D never draws a brand mark or wordmark. Pass the exact wording with
+`--right-text`. It uses the same font face, size, weight and color as the
+camera/lens line on the left (bundled Inter SemiBold by default); a `--font`
+override applies to both. D's third choice controls only the left-side details;
+the right-side custom text remains visible in every mode. Keep it to one line,
+up to 200 characters. If the text cannot fit alongside the details, ask for
+shorter wording or fewer left-side details. Never shrink, truncate, rewrite
+or wrap the supplied text to make it fit.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
 
@@ -72,6 +92,9 @@ python3 "$SKILL_DIR/scripts/frame_photo.py" \
   --share --out-dir "/path/output"
 python3 "$SKILL_DIR/scripts/frame_photo.py" \
   "/path/photo.jpg" --style C --out-dir "/path/output"
+python3 "$SKILL_DIR/scripts/frame_photo.py" \
+  "/path/photo.jpg" --style D --right-text "Berlin, Germany | October 2022" \
+  --out-dir "/path/output"
 ```
 
 Final PNG adds the frame outside the full-resolution photo. `--share` additionally exports an sRGB JPEG with longest edge at most 2048 px. Label reduced JPEG comparisons as previews.
@@ -80,7 +103,7 @@ Keep RGB photo pixels and their ICC profile in final PNGs; normalize EXIF rotati
 
 The renderer checks PNG bit depth before decoding, including RGB and alpha PNGs. For grayscale images with an ICC profile, it preserves alpha/transparency-key information before converting color, then composites onto white paper.
 
-Add a caption/signature only when requested, using exact supplied wording. Pass `--caption` and `--font` with an available Unicode-capable font file; visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a wider border.
+Add a caption/signature only when requested, using exact supplied wording. For D's right-side text, pass `--right-text`; it uses the bundled fonts. For a separate caption, pass `--caption` and `--font` with an available Unicode-capable font file. Visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a suitable layout choice.
 
 ## Verification and delivery
 

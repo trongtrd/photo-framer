@@ -42,10 +42,10 @@ MARK_SPACING = re.compile(r' *Mark *(?=[IVX]+\d*$|\d+$)')
 SRGB = ImageCms.ImageCmsProfile(ImageCms.createProfile('sRGB')).tobytes()
 
 def choices(style, code=None):
-    """Style-specific three-number menu, default A=2-2-1, B=1-2-1, C=2-1-1."""
-    if style not in ('A', 'B', 'C'):
-        raise ValueError('Style must be A, B or C.')
-    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1'}[style]
+    """Style-specific menu; C and D share margin/background/spec choices."""
+    if style not in ('A', 'B', 'C', 'D'):
+        raise ValueError('Style must be A, B, C or D.')
+    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1', 'D': '2-1-1'}[style]
     parts = code.split('-')
     if len(parts) != 3 or any(x not in ('1', '2', '3') for x in parts):
         raise ValueError('Choices must be three numbers from 1 to 3, e.g. 2-2-1.')
@@ -279,18 +279,25 @@ def shadow(canvas, box, blur, offset, opacity):
     mask = mask.filter(ImageFilter.GaussianBlur(blur))
     canvas.paste((0, 0, 0), (0, 0), mask)
 
-def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta):
-    """Style C caption band: auto spec lines on the left, brand mark on the right."""
+def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta,
+                   right_text=None):
+    """Auto specs on the left; C has a brand mark, D has exact user text."""
     band_top = canvas.height - band
     photo_right = canvas.width - side
     regular_font, emphasis_font, stroke = specs_fonts(font_px, font_path)
     d = ImageDraw.Draw(canvas)
-    slug = brand_slug(meta)
+    slug = brand_slug(meta) if right_text is None else None
     logo = load_logo(slug) if slug else None
     mark_width = 0
     wordmark = None
     mark_font = None
-    if logo is not None:
+    if right_text is not None:
+        right_bounds = d.textbbox((0, 0), right_text, font=emphasis_font,
+                                  stroke_width=stroke)
+        mark_width = right_bounds[2] - right_bounds[0]
+        if mark_width > canvas.width - 2*side or right_bounds[3] - right_bounds[1] > band - 4:
+            raise ValueError('Custom text does not fit; shorten --right-text.')
+    elif logo is not None:
         logo_h = min(round(font_px*2.8), round(band*.66))
         scale = logo_h / logo.height
         logo_w = round(logo.width * scale)
@@ -314,10 +321,19 @@ def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta):
         lines = [(line, True) for line in ((line1,) if line1 else ())]
         if mode == 1 and line2:
             lines.append((line2, False))
-    limit = canvas.width - 2*side - (mark_width + round(side*.6) if mark_width else 0)
+    separation = max(round(side*.6), 2*font_px) if right_text is not None else round(side*.6)
+    limit = canvas.width - 2*side - (mark_width + separation if mark_width else 0)
     kept = []
     for line, emphasis in lines:
         font = emphasis_font if emphasis else regular_font
+        if right_text is not None:
+            bounds = d.textbbox((0, 0), line, font=font,
+                                stroke_width=stroke if emphasis else 0)
+            if bounds[2] - bounds[0] > limit:
+                raise ValueError('Custom text does not fit beside the capture details; '
+                                 'shorten --right-text or choose fewer left-side details.')
+            kept.append((line, emphasis))
+            continue
         while line and d.textlength(line, font=font) > limit and ' | ' in line:
             line = line.rsplit(' | ', 1)[0]
         if line and d.textlength(line, font=font) <= limit:
@@ -334,7 +350,13 @@ def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta):
                    fill=(30, 30, 30) if emphasis else (115, 115, 115),
                    stroke_width=stroke if emphasis else 0)
             y += font_px + gap
-    if logo is not None:
+    if right_text is not None:
+        right_height = right_bounds[3] - right_bounds[1]
+        d.text((photo_right - right_bounds[2],
+                band_top + (band - right_height)//2 - right_bounds[1]),
+               right_text, font=emphasis_font, fill=(30, 30, 30),
+               stroke_width=stroke)
+    elif logo is not None:
         canvas.paste(logo, (photo_right - logo_w, band_top + (band - logo_h)//2), logo)
     elif wordmark:
         d.text((photo_right - mark_width,
@@ -342,8 +364,16 @@ def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta):
                wordmark, font=mark_font, fill=(40, 40, 40),
                stroke_width=mark_stroke)
 
-def render(photo, style='A', code=None, caption=None, font_path=None, meta=None):
+def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
+           right_text=None):
     one, two, three = choices(style, code)
+    if style == 'D':
+        if right_text is None or not right_text.strip():
+            raise ValueError('Style D requires --right-text with your exact text.')
+        if len(right_text) > 200 or any(char in right_text for char in '\r\n\t'):
+            raise ValueError('Use a single-line --right-text up to 200 characters.')
+    elif right_text is not None:
+        raise ValueError('--right-text is supported only with style D (or --preview).')
     w, h = photo.size
     s = min(w, h)
     if s < 16:
@@ -400,7 +430,8 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None)
         canvas = Image.new('RGB', size, BACKGROUNDS_C[two])
         pos = (side, side)
         canvas.paste(photo, pos)
-        draw_spec_band(canvas, side, band, three, caption, font_path, font_px, meta)
+        draw_spec_band(canvas, side, band, three, caption, font_path, font_px,
+                       meta or {}, right_text)
         return canvas, pos
     canvas.paste(photo, pos)
     if caption:
@@ -449,7 +480,7 @@ def save_verified(image, destination, profile, original=None, photo_pos=None):
     finally:
         Path(temporary).unlink(missing_ok=True)
 
-def preview(photo, profile, meta=None):
+def preview(photo, profile, meta=None, right_text=None):
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
     photo = photo.copy()
     photo.thumbnail((1100,1100), Image.Resampling.LANCZOS)
@@ -457,28 +488,35 @@ def preview(photo, profile, meta=None):
                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)), outputMode='RGB')
     results = [render(photo, style, meta=meta)[0] for style in ('A','B','C')]
+    if right_text is not None:
+        results.append(render(photo, 'D', meta=meta, right_text=right_text)[0])
     for image in results:
         image.thumbnail((760,980), Image.Resampling.LANCZOS)
     height = max(i.height for i in results)+90
-    board = Image.new('RGB',(2400,height),(238,238,238))
+    columns = 2 if right_text is not None else 3
+    rows = 2 if right_text is not None else 1
+    board = Image.new('RGB',(columns*800,rows*height),(238,238,238))
     d = ImageDraw.Draw(board)
     font = ImageFont.load_default(size=24)
-    labels = ('A / Floating photo','B / Gallery frame','C / Print · spec card')
+    labels = ('A / Floating photo','B / Gallery frame','C / Print · spec card',
+              'D / Custom text')
     for i,(label,image) in enumerate(zip(labels,results)):
-        d.text((i*800+20,18),label,font=font,fill=(30,30,30))
-        board.paste(image,(i*800+(800-image.width)//2,65+(height-75-image.height)//2))
+        left, top = (i % columns)*800, (i // columns)*height
+        d.text((left+20,top+18),label,font=font,fill=(30,30,30))
+        board.paste(image,(left+(800-image.width)//2,top+65+(height-75-image.height)//2))
     return board
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('inputs', type=Path, nargs='+')
-    parser.add_argument('--style', choices=['A','B','C'], default='A')
-    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C: margin-background-caption')
-    parser.add_argument('--preview', action='store_true', help='Preview A/B/C on the first input only')
+    parser.add_argument('--style', choices=['A','B','C','D'], default='A')
+    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C/D: margin-background-left-specs')
+    parser.add_argument('--preview', action='store_true', help='Preview A/B/C; include D when --right-text is supplied, first input only')
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--share', action='store_true', help='Also export an sRGB JPEG, max 2048 px')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT','TOP','RIGHT','BOTTOM'))
     parser.add_argument('--caption')
+    parser.add_argument('--right-text', help='Style D: exact text instead of the brand mark, same font as the gear line')
     parser.add_argument('--font', type=Path)
     args = parser.parse_args(argv)
     choices(args.style, args.choices)
@@ -491,10 +529,12 @@ def main(argv=None):
             photo, profile, notes = load_photo(path, args.crop)
             stem = path.stem
             if args.preview:
-                image = preview(photo, profile, meta)
-                outputs = [save_verified(image,args.out_dir/f'{stem}_ABC_preview.jpg',SRGB)]
+                image = preview(photo, profile, meta, args.right_text)
+                styles = 'ABCD' if args.right_text is not None else 'ABC'
+                outputs = [save_verified(image,args.out_dir/f'{stem}_{styles}_preview.jpg',SRGB)]
             else:
-                image, pos = render(photo,args.style,args.choices,args.caption,args.font,meta)
+                image, pos = render(photo,args.style,args.choices,args.caption,args.font,
+                                    meta,args.right_text)
                 outputs = [save_verified(image,args.out_dir/f'{stem}_{args.style}.png',profile,photo,pos)]
                 if args.share:
                     image.thumbnail((2048,2048),Image.Resampling.LANCZOS)
@@ -502,20 +542,26 @@ def main(argv=None):
                                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)),outputMode='RGB')
                     outputs.append(save_verified(image,args.out_dir/f'{stem}_{args.style}_share.jpg',SRGB))
-                if args.style == 'C' and not args.caption:
+                if args.style in ('C', 'D') and not args.caption:
                     if sources:
                         notes.append('Spec caption from ' + ' and '.join(sorted(sources)) + ' metadata.')
                     else:
-                        notes.append('No capture metadata; spec band left without text.')
-            if args.preview or args.style == 'C':
+                        notes.append('No capture metadata; left spec area left without text.'
+                                     if args.style == 'D' else
+                                     'No capture metadata; spec band left without text.')
+            if args.preview or args.style in ('C', 'D'):
                 model = meta.get('model')
                 if model and display_model(model) != model:
                     notes.append(f"Model display formatted: '{model}' -> '{display_model(model)}'.")
-                slug = brand_slug(meta)
-                if slug and (LOGO_DIR / f'{slug}.png').is_file():
-                    notes.append(f'Brand mark: {slug}.')
-                elif brand_wordmark(meta):
-                    notes.append('Brand wordmark drawn; no logo file for this brand.')
+                if args.preview or args.style == 'C':
+                    slug = brand_slug(meta)
+                    if slug and (LOGO_DIR / f'{slug}.png').is_file():
+                        notes.append(f'Brand mark: {slug}.')
+                    elif brand_wordmark(meta):
+                        notes.append('Brand wordmark drawn; no logo file for this brand.')
+                if args.right_text is not None:
+                    notes.append('Style D: user text replaces the brand mark; '
+                                 'same font, size and weight as the gear line.')
             results.append({'input': str(path), 'status':'ok', 'outputs':list(map(str,outputs)), 'notes':notes})
         except Exception as error:
             results.append({'input':str(path),'status':'error','error':str(error)})
