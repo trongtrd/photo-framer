@@ -98,22 +98,16 @@ One real photograph, three styles at their default settings. Click an image to e
 
 Cùng một ảnh thật, ba phong cách ở chế độ mặc định. Bấm vào ảnh để xem lớn hơn.
 
-| BEFORE — Original / Ảnh nguồn | AFTER A — Floating / Ảnh nổi | AFTER B — Gallery |
-| :---: | :---: | :---: |
-| ![Before: a person walking through a sunlit colonnade, without a frame](docs/images/demo-source-final.jpg) | ![After A: the same photograph with a white surround and soft shadow](docs/images/demo-after-a.jpg) | ![After B: the same photograph with a black frame, white mat and gray background](docs/images/demo-after-b.jpg) |
-| No frame / Chưa thêm khung | Default / Mặc định `2-2-1` | Default / Mặc định `1-2-1` |
+| Before & after / Trước & sau |
+| :---: |
+| **BEFORE — Original / Ảnh nguồn** · No frame / Chưa thêm khung<br>![Before: a person walking through a sunlit colonnade, without a frame](docs/images/demo-source-final.jpg) |
+| **AFTER A — Floating / Ảnh nổi** · Default / Mặc định `2-2-1`<br>![After A: the same photograph with a white surround and soft shadow](docs/images/demo-after-a-final.jpg) |
+| **AFTER B — Gallery** · Default / Mặc định `1-2-1`<br>![After B: the same photograph with a black frame, white mat and gray background](docs/images/demo-after-b-final.jpg) |
+| **AFTER C — Spec card / Thẻ thông số** · Default / Mặc định `2-1-1`<br>![After C: the same photograph with a flat white border, camera and exposure information read from EXIF, and the SONY logo](docs/images/demo-after-c-final.jpg) |
 
-**AFTER C — Spec card / Thẻ thông số** · Default / Mặc định `2-1-1`
+C reads the camera details from this photo and selects the SONY logo.
 
-![After C: the same photograph with a flat white border, camera and exposure information read from EXIF, and the SONY logo](docs/images/demo-after-c.jpg)
-
-**Caption detail / Cận cảnh thông số**
-
-![Style C caption detail: ILCE-7C, FE 85mm F1.8; ISO 100, f/8, 1/200s, 85mm](docs/images/demo-after-c-caption.png)
-
-C reads the camera details from this photo and selects the SONY logo. The close-up shows the rendered caption band.
-
-C tự đọc thông số từ ảnh và chọn logo SONY. Ảnh cận cảnh trích riêng dải chữ trong ảnh kết quả.
+C tự đọc thông số từ ảnh và chọn logo SONY.
 
 ## Python and maintenance
 
@@ -200,34 +194,22 @@ Each command creates `demo-source-final_<STYLE>.png` and `demo-source-final_<STY
 
 The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP for reproduction. EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
 
-The embedded AFTER files are lightweight sRGB JPEG share copies; the full-resolution PNG outputs retain the source photo region's decoded RGB pixels and ICC profile. GitHub scales images to the available width, so the photo appears smaller inside a larger framed canvas. The caption detail is an 800 × 164 pixel crop of C's rendered band at its original pixel size; the photograph is not cropped.
+The embedded AFTER files are lightweight sRGB JPEG share copies; the full-resolution PNG outputs retain the source photo region's decoded RGB pixels and ICC profile. GitHub scales images to the available width, so the photo appears smaller inside a larger framed canvas.
 
-After rendering, run this Python snippet from the repository root to update the documentation copies and extract the caption detail. It leaves the source photograph untouched.
+After rendering, run this Python snippet from the repository root to update the documentation copies. It leaves the source photograph untouched.
 
-Sau khi render, chạy đoạn Python này từ thư mục gốc để cập nhật ảnh minh họa và trích dải chữ. Ảnh nguồn được giữ nguyên.
+Sau khi render, chạy đoạn Python này từ thư mục gốc để cập nhật ảnh minh họa. Ảnh nguồn được giữ nguyên.
 
 ```python
 from pathlib import Path
 import shutil
-from PIL import Image
 
 rendered = Path("output/demo")
 images = Path("docs/images")
 for style in "ABC":
     shutil.copyfile(
         rendered / f"demo-source-final_{style}_share.jpg",
-        images / f"demo-after-{style.lower()}.jpg",
-    )
-
-# Default C geometry for the supplied 2048 x 1365 photograph.
-with Image.open(images / "demo-source-final.jpg") as source:
-    side = max(6, round(min(source.size) * 0.035))
-    band_top = source.height + side
-with Image.open(rendered / "demo-source-final_C.png") as image:
-    image.load()
-    image.crop((0, band_top, 800, image.height)).save(
-        images / "demo-after-c-caption.png",
-        icc_profile=image.info["icc_profile"],
+        images / f"demo-after-{style.lower()}-final.jpg",
     )
 ```
 
