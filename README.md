@@ -1,8 +1,14 @@
+<p align="center">
+  <a href="#examples">
+    <img src="docs/images/photo-framer-header.png" alt="Photo Framer: frame your photos and keep the original. A — Floating, B — Gallery, C — Spec card. Thêm khung ảnh, giữ nguyên file gốc." width="100%">
+  </a>
+</p>
+
 # Photo Framer
 
-Frame your photos by asking your AI assistant. Choose a floating photo, a gallery frame, or a card with camera details. Photo Framer adds the frame outside your photograph and leaves the original file untouched.
+Ask your AI assistant to frame your photos in one of three styles: **A — Floating**, **B — Gallery**, or **C — Spec card**. Frames are added outside the photo; the original file stays untouched.
 
-Thêm khung ảnh bằng cách yêu cầu trợ lý AI. Chọn ảnh nổi, khung gallery hoặc thẻ thông số máy ảnh. Photo Framer thêm khung bên ngoài ảnh và giữ nguyên file gốc.
+Yêu cầu trợ lý AI thêm khung theo ba phong cách: **A — Ảnh nổi**, **B — Gallery** hoặc **C — Thẻ thông số**. Khung nằm bên ngoài ảnh; file gốc được giữ nguyên.
 
 [English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Before & after / Trước & sau](#examples) · [Python and maintenance](#python-and-maintenance)
 
