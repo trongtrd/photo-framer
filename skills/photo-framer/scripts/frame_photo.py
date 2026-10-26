@@ -5,6 +5,8 @@ import argparse
 import io
 import json
 import os
+import re
+from fractions import Fraction
 from pathlib import Path
 import tempfile
 import warnings
@@ -16,18 +18,196 @@ MAX_OUTPUT_PIXELS = 60_000_000
 Image.MAX_IMAGE_PIXELS = MAX_INPUT_PIXELS
 BACKGROUNDS_A = {1: '#ffffff', 2: '#faf8f3', 3: '#f2f2f2'}
 BACKGROUNDS_B = {1: '#5a5a5a', 2: '#ffffff', 3: '#faf8f3'}
+BACKGROUNDS_C = {1: '#ffffff', 2: '#faf8f3', 3: '#f2f2f2'}
+C_MARGINS = {1: .022, 2: .035, 3: .055}
 FRAMES = {1: (32, 32, 31), 2: (242, 242, 240), 3: (66, 66, 65)}
+# Uppercase substring of Make/Model -> logo slug in assets/logos/.
+BRAND_LOGOS = (
+    ('OLYMPUS', 'om-system'), ('OM DIGITAL', 'om-system'), ('OM SYSTEM', 'om-system'),
+    ('PANASONIC', 'lumix'), ('LUMIX', 'lumix'),
+    ('SONY', 'sony'), ('CANON', 'canon'), ('NIKON', 'nikon'),
+    ('FUJIFILM', 'fujifilm'), ('FUJI', 'fujifilm'),
+    ('LEICA', 'leica'), ('RICOH', 'ricoh'), ('PENTAX', 'ricoh'),
+    ('APPLE', 'apple'), ('IPHONE', 'apple'), ('IPAD', 'apple'),
+    ('HASSELBLAD', 'hasselblad'), ('SAMSUNG', 'samsung'),
+    ('XIAOMI', 'xiaomi'), ('REDMI', 'xiaomi'), ('POCO', 'xiaomi'),
+    ('HUAWEI', 'huawei'), ('HONOR', 'huawei'),
+    ('KODAK', 'kodak'), ('EASTMAN KODAK', 'kodak'), ('GOPRO', 'gopro'),
+)
+LOGO_DIR = Path(__file__).resolve().parent.parent / 'assets' / 'logos'
+FONTS_DIR = Path(__file__).resolve().parent.parent / 'assets' / 'fonts'
+SPECS_FONT_FILES = ('Inter-Regular.ttf', 'Inter-SemiBold.ttf')
+# 'E-M10MarkIV' -> 'E-M10 Mark IV'; already-spaced names pass through.
+MARK_SPACING = re.compile(r' *Mark *(?=[IVX]+\d*$|\d+$)')
 SRGB = ImageCms.ImageCmsProfile(ImageCms.createProfile('sRGB')).tobytes()
 
 def choices(style, code=None):
-    """Style-specific three-number menu, default A=2-2-1, B=1-2-1."""
-    if style not in ('A', 'B'):
-        raise ValueError('Style must be A or B.')
-    code = code or ('2-2-1' if style == 'A' else '1-2-1')
+    """Style-specific three-number menu, default A=2-2-1, B=1-2-1, C=2-1-1."""
+    if style not in ('A', 'B', 'C'):
+        raise ValueError('Style must be A, B or C.')
+    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1'}[style]
     parts = code.split('-')
     if len(parts) != 3 or any(x not in ('1', '2', '3') for x in parts):
         raise ValueError('Choices must be three numbers from 1 to 3, e.g. 2-2-1.')
     return tuple(map(int, parts))
+
+def _xmp_description(xmp):
+    try:
+        return ((xmp.get('xmpmeta') or {}).get('RDF') or {}).get('Description') or {}
+    except AttributeError:
+        return {}
+
+def _xmp_value(description, *keys):
+    """First scalar value for the given XMP attribute names, unwrapping Seq/Bag lists."""
+    for key in keys:
+        value = description.get(key)
+        if isinstance(value, dict):
+            for container in ('Seq', 'Bag', 'Alt'):
+                items = value.get(container)
+                if isinstance(items, dict):
+                    value = items.get('li')
+                    break
+        if isinstance(value, list):
+            value = value[0] if value else None
+        if value not in (None, ''):
+            return str(value)
+    return None
+
+def _fraction(value):
+    """Parse EXIF/XMP rationals such as '1/200', IFDRational or plain numbers."""
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        try:
+            return float(Fraction(str(value).strip()))
+        except (ValueError, ZeroDivisionError):
+            return None
+
+def _scalar(value):
+    if isinstance(value, (list, tuple)):
+        return value[0] if value else None
+    return value
+
+def _text(value):
+    if value is None:
+        return None
+    text = str(value).strip()
+    return None if not text or text.lower() == 'unknown' else text
+
+def read_capture_metadata(path):
+    """Merge capture metadata; EXIF wins, XMP (Lightroom exports) fills the gaps.
+
+    Returns (metadata dict, set of source names). Never raises: a file the
+    renderer would reject is reported by load_photo instead.
+    """
+    meta, sources = {}, set()
+    try:
+        with Image.open(path) as source:
+            exif = source.getexif()
+            sub = exif.get_ifd(0x8769)
+            description = _xmp_description(source.getxmp() or {})
+        def resolve(exif_value, *xmp_keys):
+            value, origin = exif_value, 'EXIF'
+            if value in (None, ''):
+                value, origin = _xmp_value(description, *xmp_keys), 'XMP'
+            return value, origin
+        for key, exif_value, xmp_keys in (
+                ('make', exif.get(271), ('Make',)),
+                ('model', exif.get(272), ('Model',)),
+                ('lens', sub.get(42036), ('LensModel', 'Lens'))):
+            value, origin = resolve(exif_value, *xmp_keys)
+            value = _text(value)
+            if value:
+                meta[key] = value
+                sources.add(origin)
+        for key, exif_value, xmp_keys in (
+                ('iso', _scalar(sub.get(34855)), ('ISOSpeedRatings',)),
+                ('fnumber', sub.get(33437), ('FNumber',)),
+                ('exposure', sub.get(33434), ('ExposureTime',)),
+                ('focal', sub.get(37386), ('FocalLength',))):
+            value, origin = resolve(exif_value, *xmp_keys)
+            number = _fraction(_scalar(value)) if value is not None else None
+            if number:
+                meta[key] = number
+                sources.add(origin)
+    except Exception:
+        return {}, set()
+    return meta, sources
+
+def display_model(name):
+    """Space glued 'Mark' generations in EXIF model names; display-only.
+
+    Cameras write compact names like 'E-M10MarkIV'; the English word 'Mark'
+    is unambiguous, so only it gets spacing. Compact names without it
+    ('DC-S1RM2', 'E-M1X') stay verbatim, matching reference spec cards.
+    """
+    if not name:
+        return name
+    return MARK_SPACING.sub(' Mark ', name)
+
+def format_specs(meta):
+    """Two style-C caption lines: gear line and exposure line."""
+    gear = display_model(meta.get('model') or meta.get('make'))
+    line1 = ' | '.join(part for part in (gear, meta.get('lens')) if part) or None
+    iso, fnumber, exposure, focal = (meta.get(key)
+                                     for key in ('iso', 'fnumber', 'exposure', 'focal'))
+    if None not in (iso, fnumber, exposure, focal) and exposure > 0:
+        shutter = f'{exposure:g}s' if exposure >= 1 else f'1/{round(1 / exposure)}s'
+        line2 = f'ISO {round(iso)}  f/{fnumber:g}  {shutter}  {focal:g}mm'
+    else:
+        line2 = None
+    return line1, line2
+
+def brand_slug(meta):
+    haystack = ' '.join(filter(None, (meta.get('make'), meta.get('model')))).upper()
+    for needle, slug in BRAND_LOGOS:
+        if needle in haystack:
+            return slug
+    return None
+
+def brand_wordmark(meta):
+    make = meta.get('make')
+    if not make:
+        return None
+    words = [word for word in str(make).replace(',', ' ').split()
+             if word.upper() not in ('CORPORATION', 'CORP.', 'CORP', 'INC.', 'INC',
+                                     'LTD.', 'LTD', 'LIMITED', 'CO.', 'CO', '&')]
+    return ' '.join(words).upper() or None
+
+def load_logo(slug):
+    path = LOGO_DIR / f'{slug}.png'
+    if not path.is_file():
+        return None
+    with Image.open(path) as logo:
+        return logo.convert('RGBA')
+
+def specs_fonts(font_px, font_path=None):
+    """Caption-band pair: (regular, emphasis, stroke).
+
+    Bundled Inter gives true Regular + SemiBold faces. A user-supplied --font
+    replaces both faces and loses the weight step. Without either, Pillow's
+    default face is used and a thin stroke imitates the heavier weight.
+    """
+    if font_path:
+        face = ImageFont.truetype(str(font_path), font_px)
+        return face, face, 0
+    try:
+        regular = ImageFont.truetype(str(FONTS_DIR / SPECS_FONT_FILES[0]), font_px)
+        emphasis = ImageFont.truetype(str(FONTS_DIR / SPECS_FONT_FILES[1]), font_px)
+        return regular, emphasis, 0
+    except OSError:
+        face = ImageFont.load_default(size=font_px)
+        return face, face, max(1, round(font_px * .028))
+
+def wordmark_font(font_px, font_path=None):
+    """Face for the text wordmark fallback, mirroring the emphasis weight."""
+    size = round(font_px * 1.6)
+    if font_path:
+        return ImageFont.truetype(str(font_path), size), 0
+    try:
+        return ImageFont.truetype(str(FONTS_DIR / SPECS_FONT_FILES[1]), size), 0
+    except OSError:
+        return ImageFont.load_default(size=size), max(1, round(font_px * .028))
 
 def load_photo(path, crop=None):
     notes = []
@@ -42,7 +222,7 @@ def load_photo(path, crop=None):
         warnings.simplefilter('error', Image.DecompressionBombWarning)
         with Image.open(path) as source:
             if source.format not in ('JPEG', 'PNG'):
-                raise ValueError('Version 0.1 supports JPEG and PNG only.')
+                raise ValueError('Version 0.2 supports JPEG and PNG only.')
             if getattr(source, 'n_frames', 1) != 1:
                 raise ValueError('Animated images are not supported.')
             if source.width * source.height > MAX_INPUT_PIXELS:
@@ -99,21 +279,94 @@ def shadow(canvas, box, blur, offset, opacity):
     mask = mask.filter(ImageFilter.GaussianBlur(blur))
     canvas.paste((0, 0, 0), (0, 0), mask)
 
-def render(photo, style='A', code=None, caption=None, font_path=None):
+def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta):
+    """Style C caption band: auto spec lines on the left, brand mark on the right."""
+    band_top = canvas.height - band
+    photo_right = canvas.width - side
+    regular_font, emphasis_font, stroke = specs_fonts(font_px, font_path)
+    d = ImageDraw.Draw(canvas)
+    slug = brand_slug(meta)
+    logo = load_logo(slug) if slug else None
+    mark_width = 0
+    wordmark = None
+    mark_font = None
+    if logo is not None:
+        logo_h = min(round(font_px*2.8), round(band*.66))
+        scale = logo_h / logo.height
+        logo_w = round(logo.width * scale)
+        max_w = max(24, round((canvas.width - 2*side) * .34))
+        if logo_w > max_w:
+            logo_w = max_w
+            logo_h = max(1, round(logo.height * (max_w / logo.width)))
+        logo = logo.resize((logo_w, logo_h), Image.Resampling.LANCZOS)
+        mark_width = logo_w
+    elif mode != 3 or caption:
+        wordmark = brand_wordmark(meta)
+        if wordmark:
+            mark_font, mark_stroke = wordmark_font(font_px, font_path)
+            mark_width = round(d.textlength(wordmark, font=mark_font))
+    if caption:
+        lines = [(caption, True)]
+    elif mode == 3:
+        lines = []
+    else:
+        line1, line2 = format_specs(meta or {})
+        lines = [(line, True) for line in ((line1,) if line1 else ())]
+        if mode == 1 and line2:
+            lines.append((line2, False))
+    limit = canvas.width - 2*side - (mark_width + round(side*.6) if mark_width else 0)
+    kept = []
+    for line, emphasis in lines:
+        font = emphasis_font if emphasis else regular_font
+        while line and d.textlength(line, font=font) > limit and ' | ' in line:
+            line = line.rsplit(' | ', 1)[0]
+        if line and d.textlength(line, font=font) <= limit:
+            kept.append((line, emphasis))
+    if kept:
+        gap = round(font_px * .55)
+        block = len(kept)*font_px + (len(kept)-1)*gap
+        y = band_top + max(2, (band - block)//2)
+        # Hierarchy like the reference prints: the gear line near-black in the
+        # heavier face; the exposure line lighter gray in the regular face.
+        for line, emphasis in kept:
+            d.text((side, y), line,
+                   font=emphasis_font if emphasis else regular_font,
+                   fill=(30, 30, 30) if emphasis else (115, 115, 115),
+                   stroke_width=stroke if emphasis else 0)
+            y += font_px + gap
+    if logo is not None:
+        canvas.paste(logo, (photo_right - logo_w, band_top + (band - logo_h)//2), logo)
+    elif wordmark:
+        d.text((photo_right - mark_width,
+                band_top + (band - round(font_px*1.6))//2),
+               wordmark, font=mark_font, fill=(40, 40, 40),
+               stroke_width=mark_stroke)
+
+def render(photo, style='A', code=None, caption=None, font_path=None, meta=None):
     one, two, three = choices(style, code)
     w, h = photo.size
     s = min(w, h)
     if s < 16:
         raise ValueError('The shorter image edge must be at least 16 pixels.')
+    if caption:
+        if not font_path:
+            raise ValueError('A Unicode-capable --font file is required for captions.')
+        if '\n' in caption or len(caption) > 200:
+            raise ValueError('Use a single-line caption up to 200 characters.')
     if style == 'A':
         margin = max(4, round(s * {1: .10, 2: .165, 3: .23}[one]))
         size = (w+2*margin, h+2*margin)
-    else:
+    elif style == 'B':
         mat = max(4, round(s * {1: .10, 2: .16, 3: .23}[two]))
         frame = max(2, round(s*.035))
         wall = max(4, round(s*.18))
         fw, fh = w+2*(mat+frame), h+2*(mat+frame)
         size = (fw+2*wall, fh+2*wall)
+    else:
+        side = max(6, round(s * C_MARGINS[one]))
+        font_px = max(9, round(s*.018))
+        band = max(round(s*.12), round(font_px*3.6), 44)
+        size = (w+2*side, h+side+band)
     if size[0]*size[1] > MAX_OUTPUT_PIXELS:
         raise ValueError('Framed output exceeds 60 megapixels; provide a smaller copy.')
     if style == 'A':
@@ -124,7 +377,7 @@ def render(photo, style='A', code=None, caption=None, font_path=None):
         shadow(canvas, box, s*.006, (-s*.006, s*.006), round(41*strength))
         pos = (margin, margin)
         caption_space = margin
-    else:
+    elif style == 'B':
         canvas = Image.new('RGB', size, BACKGROUNDS_B[three])
         box = (wall, wall, wall+fw, wall+fh)
         shadow(canvas, box, s*.032, (0, s*.018), 76)
@@ -143,12 +396,14 @@ def render(photo, style='A', code=None, caption=None, font_path=None):
         canvas.paste(board, (ix, iy))
         pos = (ix+mat, iy+mat)
         caption_space = mat
+    else:
+        canvas = Image.new('RGB', size, BACKGROUNDS_C[two])
+        pos = (side, side)
+        canvas.paste(photo, pos)
+        draw_spec_band(canvas, side, band, three, caption, font_path, font_px, meta)
+        return canvas, pos
     canvas.paste(photo, pos)
     if caption:
-        if not font_path:
-            raise ValueError('A Unicode-capable --font file is required for captions.')
-        if '\n' in caption or len(caption) > 200:
-            raise ValueError('Use a single-line caption up to 200 characters.')
         font = ImageFont.truetype(str(font_path), max(9, round(s*.018)))
         d = ImageDraw.Draw(canvas)
         bounds = d.textbbox((0,0), caption, font=font)
@@ -194,21 +449,22 @@ def save_verified(image, destination, profile, original=None, photo_pos=None):
     finally:
         Path(temporary).unlink(missing_ok=True)
 
-def preview(photo, profile):
+def preview(photo, profile, meta=None):
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
     photo = photo.copy()
     photo.thumbnail((1100,1100), Image.Resampling.LANCZOS)
     photo = ImageCms.profileToProfile(photo,
                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)), outputMode='RGB')
-    results = [render(photo, style)[0] for style in ('A','B')]
+    results = [render(photo, style, meta=meta)[0] for style in ('A','B','C')]
     for image in results:
         image.thumbnail((760,980), Image.Resampling.LANCZOS)
     height = max(i.height for i in results)+90
-    board = Image.new('RGB',(1600,height),(238,238,238))
+    board = Image.new('RGB',(2400,height),(238,238,238))
     d = ImageDraw.Draw(board)
     font = ImageFont.load_default(size=24)
-    for i,(label,image) in enumerate(zip(('A / Floating photo','B / Gallery frame'),results)):
+    labels = ('A / Floating photo','B / Gallery frame','C / Print · spec card')
+    for i,(label,image) in enumerate(zip(labels,results)):
         d.text((i*800+20,18),label,font=font,fill=(30,30,30))
         board.paste(image,(i*800+(800-image.width)//2,65+(height-75-image.height)//2))
     return board
@@ -216,9 +472,9 @@ def preview(photo, profile):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('inputs', type=Path, nargs='+')
-    parser.add_argument('--style', choices=['A','B'], default='A')
-    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background')
-    parser.add_argument('--preview', action='store_true', help='Preview A/B on the first input only')
+    parser.add_argument('--style', choices=['A','B','C'], default='A')
+    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C: margin-background-caption')
+    parser.add_argument('--preview', action='store_true', help='Preview A/B/C on the first input only')
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--share', action='store_true', help='Also export an sRGB JPEG, max 2048 px')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT','TOP','RIGHT','BOTTOM'))
@@ -231,13 +487,14 @@ def main(argv=None):
     results = []
     for path in (args.inputs[:1] if args.preview else args.inputs):
         try:
+            meta, sources = read_capture_metadata(path)
             photo, profile, notes = load_photo(path, args.crop)
             stem = path.stem
             if args.preview:
-                image = preview(photo, profile)
-                outputs = [save_verified(image,args.out_dir/f'{stem}_AB_preview.jpg',SRGB)]
+                image = preview(photo, profile, meta)
+                outputs = [save_verified(image,args.out_dir/f'{stem}_ABC_preview.jpg',SRGB)]
             else:
-                image, pos = render(photo,args.style,args.choices,args.caption,args.font)
+                image, pos = render(photo,args.style,args.choices,args.caption,args.font,meta)
                 outputs = [save_verified(image,args.out_dir/f'{stem}_{args.style}.png',profile,photo,pos)]
                 if args.share:
                     image.thumbnail((2048,2048),Image.Resampling.LANCZOS)
@@ -245,6 +502,20 @@ def main(argv=None):
                                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)),outputMode='RGB')
                     outputs.append(save_verified(image,args.out_dir/f'{stem}_{args.style}_share.jpg',SRGB))
+                if args.style == 'C' and not args.caption:
+                    if sources:
+                        notes.append('Spec caption from ' + ' and '.join(sorted(sources)) + ' metadata.')
+                    else:
+                        notes.append('No capture metadata; spec band left without text.')
+            if args.preview or args.style == 'C':
+                model = meta.get('model')
+                if model and display_model(model) != model:
+                    notes.append(f"Model display formatted: '{model}' -> '{display_model(model)}'.")
+                slug = brand_slug(meta)
+                if slug and (LOGO_DIR / f'{slug}.png').is_file():
+                    notes.append(f'Brand mark: {slug}.')
+                elif brand_wordmark(meta):
+                    notes.append('Brand wordmark drawn; no logo file for this brand.')
             results.append({'input': str(path), 'status':'ok', 'outputs':list(map(str,outputs)), 'notes':notes})
         except Exception as error:
             results.append({'input':str(path),'status':'error','error':str(error)})

@@ -29,16 +29,31 @@ Use the user's language and [menus.md](references/menus.md). Preserve codes acro
 
 - A: floating photo, default **2-2-1**.
 - B: gallery frame, default **1-2-1**.
-- Default style: A. If the user says only "use defaults" / "dùng mặc định", use A unless B is already specified.
+- C: print/spec card, default **2-1-1** (medium margin, white, full caption).
+- Default style: A. If the user says only "use defaults" / "dùng mặc định", use A unless another style is already specified.
 
 Honor supplied choices. For "A default", "B mặc định", or a full code such as "B, 1-3-1", skip questions and comparison.
 
 Otherwise:
-1. Generate an A/B comparison using `--preview` on the first uploaded photo; identify it as representative of the batch.
-2. Display the comparison and ask A or B. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
+1. Generate an A/B/C comparison using `--preview` on the first uploaded photo; identify it as representative of the batch.
+2. Display the comparison and ask A, B or C. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
 3. Once style is chosen, show its three-row menu in one turn, marking defaults. Accept three-number answers, "default", or natural language mapped explicitly to presets.
 4. If the choice UI returns no answer, apply the stated defaults instead of repeating questions. If the user explicitly wants to approve an appearance change, wait.
 5. Apply choices across the batch, splitting runs for per-image exceptions.
+
+## Style C metadata and brand marks
+
+C builds its caption from the photo itself: EXIF first, then the XMP that
+Lightroom writes into exports. Line 1 is `Model | LensModel`; line 2
+(`ISO … f/… …s …mm`) appears only when every value exists. Never invent,
+retype or estimate values. When a file carries no metadata, say so and offer
+user-supplied `--caption` text or a text-free band (`C` with caption choice 3).
+
+The brand mark is matched from Make/Model against `assets/logos/` (sources and
+license terms in that folder's README) and pasted unmodified — no recoloring,
+no distortion. Brands without a bundled logo (e.g. SIGMA, DJI) get a bold text
+wordmark instead. The mark follows the camera body; a third-party lens does
+not change it. Marks are stored next to this skill and need no network.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
 
@@ -55,6 +70,8 @@ python3 "$SKILL_DIR/scripts/frame_photo.py" \
 python3 "$SKILL_DIR/scripts/frame_photo.py" \
   "/path/photo.jpg" --style B --choices 1-3-1 \
   --share --out-dir "/path/output"
+python3 "$SKILL_DIR/scripts/frame_photo.py" \
+  "/path/photo.jpg" --style C --out-dir "/path/output"
 ```
 
 Final PNG adds the frame outside the full-resolution photo. `--share` additionally exports an sRGB JPEG with longest edge at most 2048 px. Label reduced JPEG comparisons as previews.

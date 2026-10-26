@@ -1,6 +1,6 @@
 # Photo Framer
 
-Add floating-photo shadows or gallery frames without regenerating your photographs.
+Add floating-photo shadows, gallery frames, or print-style spec cards without regenerating your photographs.
 
 Photo Framer is a Python renderer and an English–Vietnamese agent skill. It runs locally with Python 3.10+ and Pillow 10.1–12.x. No API key, remote image service, or image-generation model is required.
 
@@ -30,8 +30,9 @@ python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source.jpg --
 | --- | --- | --- |
 | A | Floating photo: light background and soft shadow | `2-2-1`: medium margin, medium shadow, white background |
 | B | Gallery: rigid frame, white mat, inner and outer shadows | `1-2-1`: black frame, medium mat, gray background |
+| C | Print / spec card: flat white border, caption band with EXIF/XMP specs and the camera brand mark | `2-1-1`: medium margin, white background, full caption |
 
-The skill shows an A/B comparison for an unspecified request. Explicit requests such as “A default” or “B, 1-3-1” run without repeating the menu. See [the bilingual menus](skills/photo-framer/references/menus.md).
+The skill shows an A/B/C comparison for an unspecified request. Explicit requests such as “A default” or “B, 1-3-1” run without repeating the menu. See [the bilingual menus](skills/photo-framer/references/menus.md).
 
 ## Run the renderer
 
@@ -52,6 +53,9 @@ python skills/photo-framer/scripts/frame_photo.py "landscape.jpg" "portrait.jpg"
 
 # Gallery plus an additional lightweight sRGB JPEG
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --choices 1-3-1 --share --out-dir "output"
+
+# Print/spec card: caption band from the photo's EXIF/XMP plus the brand mark
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style C --out-dir "output"
 ```
 
 For a caption, supply its exact text and a Unicode font file available on your machine:
@@ -82,6 +86,7 @@ Example requests:
 - Transparent content is composited onto white paper. Alpha and grayscale transparency keys are captured before ICC conversion. Alpha is not retained in the opaque final image.
 - Crop requires explicit user approval. The script never edits the input file.
 - Preview and share JPEGs are reduced/lossy; share images have a longest edge of at most 2048 pixels. They are not pixel-identical archival copies.
+- Style C reads Make/Model/Lens/ISO/aperture/shutter/focal from EXIF, then from the XMP that Lightroom embeds in exports; missing values drop that part of the caption and are never invented. Brand marks come from public-domain Wikimedia Commons files in [`skills/photo-framer/assets/logos/`](skills/photo-framer/assets/logos/), pasted unmodified; brands without a bundled logo use a bold text wordmark.
 - EXIF/GPS are excluded from presentation outputs. Captions are optional, one line, up to 200 characters, and must fit outside the photo.
 
 ## Regression tests
@@ -92,9 +97,9 @@ python skills/photo-framer/scripts/test_frame_photo.py
 
 The tests generate synthetic images and an original grayscale ICC profile. They require only Python and Pillow; no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed.
 
-The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with both styles, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. JSON escapes preserve the exact Unicode paths when parsed.
+The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C adds coverage for spec captions read from EXIF and from XMP-only exports, blank bands for files without metadata, the three caption modes, logo pasting and the text-wordmark fallback. JSON escapes preserve the exact Unicode paths when parsed.
 
-Local validation used Linux, Python 3.12.14 and Pillow 12.3.0. GitHub Actions [Regression tests run 37142845990](https://github.com/trongtrd/photo-framer/actions/runs/37142845990) passed all four matrix jobs: macOS/Python 3.12/Pillow 12.x, Windows/Python 3.12/Pillow 12.x, Ubuntu/Python 3.10/Pillow 10.1.0, and Ubuntu/Python 3.12/Pillow 12.x.
+Local validation used Linux, Python 3.12.14 and Pillow 12.3.0 for v0.1, and Windows, Python 3.12 and Pillow 12.3.0 for v0.2. GitHub Actions [Regression tests run 37142845990](https://github.com/trongtrd/photo-framer/actions/runs/37142845990) passed all four v0.1 matrix jobs: macOS/Python 3.12/Pillow 12.x, Windows/Python 3.12/Pillow 12.x, Ubuntu/Python 3.10/Pillow 10.1.0, and Ubuntu/Python 3.12/Pillow 12.x.
 
 ## Tiếng Việt
 
@@ -102,7 +107,8 @@ Local validation used Linux, Python 3.12.14 and Pillow 12.3.0. GitHub Actions [R
 
 - **A — Ảnh nổi:** mặc định `2-2-1` = khoảng trắng vừa, bóng mềm vừa, nền trắng.
 - **B — Gallery:** mặc định `1-2-1` = khung đen, bo giấy trắng vừa, nền xám.
-- Yêu cầu chung được xem trước A/B; đã nói rõ mã hoặc “mặc định” thì chạy thẳng.
+- **C — Thẻ thông số:** mặc định `2-1-1` = viền vừa, nền trắng, chữ đầy đủ; thông số chụp đọc tự động từ EXIF/XMP (không tự bịa), logo hãng gắn theo máy chụp.
+- Yêu cầu chung được xem trước A/B/C; đã nói rõ mã hoặc “mặc định” thì chạy thẳng.
 - Có thể xử lý nhiều ảnh và tách phong cách theo từng ảnh. Ảnh đã có viền phải được hỏi cách xử lý trước; không tự cắt ảnh hoặc chữ ký sát mép.
 - PNG cuối giữ kích thước và pixel RGB sau giải mã/chuẩn hóa EXIF; các trường hợp chuyển màu, ghép trong suốt lên trắng, crop được duyệt và JPEG chia sẻ có giới hạn riêng như phần trên.
 
@@ -112,4 +118,4 @@ Cần Python 3.10+ và Pillow 10.1–12.x; các lệnh ở trên chạy từ th�
 
 ## License
 
-MIT; see [LICENSE](LICENSE). The code and synthetic test data in this repository are covered by this license. No user photographs or third-party ICC profile files are included.
+MIT; see [LICENSE](LICENSE). The code and synthetic test data in this repository are covered by this license. No user photographs or third-party ICC profile files are included. The bundled camera brand marks are public-domain files from Wikimedia Commons (sources and terms in [`skills/photo-framer/assets/logos/README.md`](skills/photo-framer/assets/logos/README.md)); the trademarks belong to their owners and the marks are only displayed, unmodified, next to photographs taken with that equipment.
