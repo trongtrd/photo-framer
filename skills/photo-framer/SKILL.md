@@ -11,7 +11,7 @@ Use the bundled Python script. Do not regenerate or retouch photographs with AI.
 
 1. Resolve only user-requested images using the host's supported file tools. Inspect images visually for border/crop handling and delivery. For E batches, inspect representative inputs/outputs instead of opening every image for color selection; Python handles each file's color and pixel checks.
 2. Accept JPEG and 8-bit PNG; at most 30 megapixels per input and 60 megapixels per output. Request a smaller copy or explicit resizing authorization if necessary; never quietly downsize final images.
-3. Locate `scripts/frame_photo.py` relative to this skill. Use Python 3.10+ and Pillow 10.1–12.x. If missing, use the host's approved dependency installation procedure. No API key or network is needed by the renderer.
+3. Locate `scripts/frame_photo.py` relative to this skill. Use Python 3.10+ and install dependencies from `scripts/requirements.txt`: Pillow 10.1–12.x and defusedxml for XMP reading. If missing, use the host's approved dependency installation procedure. No API key or network is needed by the renderer.
 4. If code execution or image file access is unavailable, explain the missing capability. Do not claim support for every ChatGPT session or that a GitHub URL alone installs the skill.
 
 ## Existing borders
@@ -190,4 +190,4 @@ Save outputs through the host's authorized artifact mechanism when available. Pr
 
 The skill has no remote image service, analytics, or automatic public upload. See [presets.md](references/presets.md) for constants and the approved default shadow.
 
-When changing image loading or color handling, run `python3 scripts/test_frame_photo.py` from this skill directory. The CLI regression tests generate their own images and grayscale ICC profile; they require only Python and Pillow and do not use personal photos.
+When changing image loading or color handling, run `python3 scripts/test_frame_photo.py` from this skill directory after installing `scripts/requirements.txt`. The CLI regression tests generate their own images and grayscale ICC profile; they use Pillow and defusedxml and do not use personal photos.

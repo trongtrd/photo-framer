@@ -1,4 +1,4 @@
-"""CLI regression tests; synthetic images/profiles only. Run with Python + Pillow."""
+"""CLI regression tests; synthetic images/profiles only. Install requirements.txt first."""
 import hashlib
 import importlib.util
 import io

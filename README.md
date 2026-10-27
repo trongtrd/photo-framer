@@ -177,6 +177,8 @@ Download or clone this repository, then open a terminal in its root folder. Inst
 python -m pip install -r skills/photo-framer/scripts/requirements.txt
 ```
 
+This installs Pillow for image processing and `defusedxml` for reading XMP capture metadata. / Lệnh này cài Pillow để xử lý ảnh và `defusedxml` để đọc thông tin chụp từ XMP.
+
 Use `python3` or `py` instead of `python` if that is how your environment exposes Python. Then run:
 
 ```sh
@@ -311,7 +313,7 @@ After installing dependencies, run:
 python skills/photo-framer/scripts/test_frame_photo.py
 ```
 
-The tests generate synthetic images and an original grayscale ICC profile. They require only Python and Pillow; no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed.
+The tests generate synthetic images and an original grayscale ICC profile. They use Python and the dependencies in `requirements.txt` (Pillow and defusedxml); no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed. GitHub Actions installs that same requirements file while testing each Pillow version in its matrix.
 
 The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C covers EXIF/XMP captions, blank bands, caption modes, logo pasting and wordmark fallback. D covers custom-text validation, matching gear-line typography, Vietnamese text, missing metadata, left-side modes, overflow errors, mixed batches and comparisons with supplied wording. E covers deterministic selection, edge weighting, bounded sampling, neutral fallback, fixed-color batches, invalid colors, border options and pixel preservation. F adds explicit corner choices, blank fields, Vietnamese text, mirrored sprockets, layout variants, overflow rejection, mixed batches and previews. G adds repeatable paper texture and torn edges, shadows, all 27 preset combinations on landscape/portrait/tiny photos, optional Vietnamese captions and mixed batches. JSON escapes preserve the exact Unicode paths when parsed.
 

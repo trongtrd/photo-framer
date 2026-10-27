@@ -1,1 +1,2 @@
 Pillow>=10.1,<13
+defusedxml>=0.7.1,<1
