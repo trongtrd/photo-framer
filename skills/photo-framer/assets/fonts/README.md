@@ -1,8 +1,8 @@
 # Spec-band fonts
 
 Two static instances of **Inter** (by Rasmus Andersson / The Inter Project
-Authors) used by styles C and D to typeset the caption band: Regular for the exposure
-line, SemiBold for the gear line and D's right-side custom text. Inter is a screen-first typeface with full
+Authors) used by styles C, D and F to typeset caption bands: Regular for the exposure
+line, SemiBold for the gear line, D's right-side custom text and F's two corner fields. Inter is a screen-first typeface with full
 Vietnamese coverage, which suits digital spec cards and keeps Vietnamese
 diacritics correct.
 

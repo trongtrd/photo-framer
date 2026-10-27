@@ -1,8 +1,9 @@
 interface:
   display_name: Photo Framer
-  short_description: Frame photos with shadows, mats, EXIF specs or custom text
-  default_prompt: Use $photo-framer to help me choose A, B, C or D for my photos.
-    Ask for my exact custom text if I choose D without supplying it.
+  short_description: Frame photos with shadows, specs, color, film or deckled paper
+  default_prompt: Use $photo-framer to help me choose styles A through G for my photos.
+    Ask for missing D text or F corner choices, including intentional blanks.
+    For E, use automatic colors for the batch without per-image questions.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

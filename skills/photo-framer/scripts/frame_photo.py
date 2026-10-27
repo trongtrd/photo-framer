@@ -2,16 +2,19 @@
 """Deterministic photo framing. Python 3.10+, Pillow; no network or AI APIs."""
 from __future__ import annotations
 import argparse
+import colorsys
 import io
 import json
 import os
+import random
 import re
 from fractions import Fraction
+from functools import lru_cache
 from pathlib import Path
 import tempfile
 import warnings
 
-from PIL import Image, ImageCms, ImageDraw, ImageFilter, ImageFont, ImageOps
+from PIL import Image, ImageChops, ImageCms, ImageColor, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 MAX_INPUT_PIXELS = 30_000_000
 MAX_OUTPUT_PIXELS = 60_000_000
@@ -20,6 +23,13 @@ BACKGROUNDS_A = {1: '#ffffff', 2: '#faf8f3', 3: '#f2f2f2'}
 BACKGROUNDS_B = {1: '#5a5a5a', 2: '#ffffff', 3: '#faf8f3'}
 BACKGROUNDS_C = {1: '#ffffff', 2: '#faf8f3', 3: '#f2f2f2'}
 C_MARGINS = {1: .022, 2: .035, 3: .055}
+E_MARGINS = {1: .045, 2: .08, 3: .12}
+E_NEUTRAL = (232, 228, 220)
+F_SIDES = {1: .055, 2: .075, 3: .10}
+F_BACKGROUNDS = {1: (24, 24, 23), 2: (8, 8, 8), 3: (39, 32, 28)}
+G_MARGINS = {1: .055, 2: .085, 3: .12}
+G_PAPERS = {1: (250, 248, 242), 2: (253, 253, 251), 3: (246, 239, 220)}
+G_BACKGROUND = (224, 223, 218)
 FRAMES = {1: (32, 32, 31), 2: (242, 242, 240), 3: (66, 66, 65)}
 # Uppercase substring of Make/Model -> logo slug in assets/logos/.
 BRAND_LOGOS = (
@@ -43,9 +53,10 @@ SRGB = ImageCms.ImageCmsProfile(ImageCms.createProfile('sRGB')).tobytes()
 
 def choices(style, code=None):
     """Style-specific menu; C and D share margin/background/spec choices."""
-    if style not in ('A', 'B', 'C', 'D'):
-        raise ValueError('Style must be A, B, C or D.')
-    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1', 'D': '2-1-1'}[style]
+    if style not in ('A', 'B', 'C', 'D', 'E', 'F', 'G'):
+        raise ValueError('Style must be A, B, C, D, E, F or G.')
+    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1',
+                    'D': '2-1-1', 'E': '2-1-1', 'F': '2-1-1', 'G': '2-1-1'}[style]
     parts = code.split('-')
     if len(parts) != 3 or any(x not in ('1', '2', '3') for x in parts):
         raise ValueError('Choices must be three numbers from 1 to 3, e.g. 2-2-1.')
@@ -279,6 +290,79 @@ def shadow(canvas, box, blur, offset, opacity):
     mask = mask.filter(ImageFilter.GaussianBlur(blur))
     canvas.paste((0, 0, 0), (0, 0), mask)
 
+
+def color_echo_color(photo, profile=None, tone=1, frame_color=None):
+    """One deterministic sRGB color, from <=96x96 samples; no AI or variants."""
+    if frame_color is not None:
+        try:
+            color = ImageColor.getrgb(frame_color)
+        except (ValueError, TypeError, AttributeError) as error:
+            raise ValueError('Use an opaque RGB --frame-color, e.g. #ad896c or navy.') from error
+        if len(color) != 3 or any(channel < 0 or channel > 255 for channel in color):
+            raise ValueError('--frame-color must be an opaque RGB color.')
+        return color
+
+    scale = min(1, 96 / max(photo.size))
+    sample = photo.resize((max(1, round(photo.width*scale)),
+                           max(1, round(photo.height*scale))), Image.Resampling.BOX)
+    if profile:
+        sample = ImageCms.profileToProfile(sample,
+                    ImageCms.ImageCmsProfile(io.BytesIO(profile)),
+                    ImageCms.ImageCmsProfile(io.BytesIO(SRGB)), outputMode='RGB')
+    buckets = {}
+    width, height = sample.size
+    for y in range(height):
+        for x in range(width):
+            red, green, blue = sample.getpixel((x, y))
+            _, lightness, saturation = colorsys.rgb_to_hls(red/255, green/255, blue/255)
+            if saturation < .10 or not .14 <= lightness <= .86:
+                continue
+            weight = 3 if (x < width*.2 or x >= width*.8 or
+                           y < height*.2 or y >= height*.8) else 1
+            key = (red//24, green//24, blue//24)
+            totals = buckets.setdefault(key, [0, 0, 0, 0])
+            totals[0] += weight
+            for channel, value in enumerate((red, green, blue), 1):
+                totals[channel] += weight*value
+    if not buckets:
+        return E_NEUTRAL
+
+    candidates = []
+    for key, (weight, red, green, blue) in buckets.items():
+        rgb = (red/weight/255, green/weight/255, blue/weight/255)
+        hue, lightness, saturation = colorsys.rgb_to_hls(*rgb)
+        # Midtones count more than dark roof/shadow or bright highlight areas.
+        score = weight * max(.1, 1-abs(lightness-.5)/.4) * (.7+.3*min(saturation/.5, 1))
+        candidates.append((score, key, hue, lightness, saturation))
+    _, _, hue, lightness, saturation = max(candidates)
+    if tone == 1:  # Muted default; adjust the border, never the photo.
+        lightness = min(.68, max(.36, lightness+.06))
+        saturation = min(.48, max(.18, saturation*.7))
+    elif tone == 3:
+        lightness = .80
+        saturation = min(.35, saturation*.5)
+    return tuple(round(value*255) for value in colorsys.hls_to_rgb(hue, lightness, saturation))
+
+
+def color_echo_colors(photo, profile=None, tone=1, frame_color=None):
+    """Base and contrasting inset, expressed in sRGB for reusable hex colors."""
+    base = color_echo_color(photo, profile, tone, frame_color)
+    brightness = sum(value*weight for value, weight in zip(base, (.2126, .7152, .0722)))/255
+    inset = (24, 28, 36) if brightness >= .45 else (244, 240, 232)
+    return base, inset
+
+
+def colors_in_profile(colors, profile):
+    """Convert only decorative sRGB colors; keep source RGB pixels/profile intact."""
+    if not profile:
+        return colors
+    palette = Image.new('RGB', (len(colors), 1))
+    palette.putdata(colors)
+    converted = ImageCms.profileToProfile(palette,
+                    ImageCms.ImageCmsProfile(io.BytesIO(SRGB)),
+                    ImageCms.ImageCmsProfile(io.BytesIO(profile)), outputMode='RGB')
+    return tuple(converted.getpixel((index, 0)) for index in range(len(colors)))
+
 def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta,
                    right_text=None):
     """Auto specs on the left; C has a brand mark, D has exact user text."""
@@ -364,16 +448,148 @@ def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta,
                wordmark, font=mark_font, fill=(40, 40, 40),
                stroke_width=mark_stroke)
 
+def _deckle_mask(canvas_size, pad, paper_size, short, roughness):
+    """A repeatable irregular outer silhouette; each edge has <=770 points."""
+    amplitude = max(2, round(short*{1: .003, 2: .005, 3: .008}[roughness]))
+    rng = random.Random(92753)
+
+    def edge(length):
+        step = max(2, round(short*.002), (length+767)//768)
+        pitch = max(12, round(short*.02), (length+63)//64)
+        knots = [rng.uniform(.2*amplitude, 1.8*amplitude)
+                 for _ in range(length//pitch+2)]
+        clearance = 2*amplitude+1
+        positions = list(range(clearance, length-clearance, step))
+        positions.append(length-clearance-1)
+        points = []
+        for position in positions:
+            index, fraction = divmod(position, pitch)
+            fraction /= pitch
+            offset = knots[index]*(1-fraction)+knots[index+1]*fraction
+            offset += rng.uniform(-.28*amplitude, .28*amplitude)
+            points.append((position, round(min(2*amplitude, max(0, offset)))))
+        return points
+
+    width, height = paper_size
+    top = [(pad+x, pad+offset) for x, offset in edge(width)]
+    right = [(pad+width-1-offset, pad+y) for y, offset in edge(height)]
+    bottom = [(pad+x, pad+height-1-offset) for x, offset in reversed(edge(width))]
+    left = [(pad+offset, pad+y) for y, offset in reversed(edge(height))]
+    mask = Image.new('L', canvas_size)
+    ImageDraw.Draw(mask).polygon(top+right+bottom+left, fill=255)
+    return mask.filter(ImageFilter.GaussianBlur(.6))
+
+
+@lru_cache(maxsize=12)
+def _paper_texture(paper_color, profile):
+    """A small reusable cotton-paper tile; never texture source photo pixels."""
+    rng = random.Random(72819)
+    tile = Image.new('RGB', (256, 256))
+    tile.putdata([tuple(min(255, max(0, channel+noise)) for channel in paper_color)
+                  for noise in (rng.randrange(-3, 4) for _ in range(256*256))])
+    draw = ImageDraw.Draw(tile)
+    for _ in range(450):
+        x, y = rng.randrange(256), rng.randrange(256)
+        shift = rng.choice((-3, -2, 2, 3))
+        color = tuple(min(255, max(0, channel+shift)) for channel in paper_color)
+        draw.line((x, y, x+rng.randrange(2, 13), y+rng.randrange(-2, 3)), fill=color)
+    if profile:
+        tile = ImageCms.profileToProfile(tile,
+                    ImageCms.ImageCmsProfile(io.BytesIO(SRGB)),
+                    ImageCms.ImageCmsProfile(io.BytesIO(profile)), outputMode='RGB')
+    return tile
+
+
+def draw_deckled_paper(canvas, photo_size, margin, pad, paper_color, roughness, profile):
+    width, height = photo_size
+    short = min(photo_size)
+    paper_size = (width+2*margin, height+2*margin)
+    mask = _deckle_mask(canvas.size, pad, paper_size, short, roughness)
+    shade = mask.filter(ImageFilter.GaussianBlur(max(1, round(short*.0035))))
+    shade = shade.point(lambda value: value*52//255)
+    shade = ImageChops.offset(shade, max(1, round(short*.001)), max(1, round(short*.003)))
+    canvas.paste((0, 0, 0), (0, 0), shade)
+    tile = _paper_texture(paper_color, profile)
+    x, y = pad+margin, pad+margin
+    x0, y0, x1, y1 = mask.getbbox()
+    # Only allocate/texture the four margins, not a second full-resolution photo.
+    boxes = ((x0, y0, x1, y), (x0, y+height, x1, y1),
+             (x0, y, x, y+height), (x+width, y, x1, y+height))
+    for left, top, right, bottom in boxes:
+        strip = Image.new('RGB', (right-left, bottom-top))
+        for ty in range(-(top % 256), bottom-top, 256):
+            for tx in range(-(left % 256), right-left, 256):
+                strip.paste(tile, (tx, ty))
+        canvas.paste(strip, (left, top), mask.crop((left, top, right, bottom)))
+
+
+def draw_film_border(canvas, side, top, photo_size, spacing, left_text, right_text,
+                     font_path, ink):
+    """Sprockets stay beside the photo; two verbatim texts sit in the lower band."""
+    width, height = photo_size
+    short = min(photo_size)
+    hole_width = min(max(5, round(short*.018)), side-4)
+    hole_height = min(height, max(6, round(short*.026)))
+    pitch = max(hole_height+4, round(short*{1: .07, 2: .10, 3: .05}[spacing]))
+    count = max(1, (height-hole_height)//pitch+1)
+    start = top+(height-((count-1)*pitch+hole_height))//2
+    draw = ImageDraw.Draw(canvas)
+    for index in range(count):
+        y = start+index*pitch
+        for x in ((side-hole_width)//2, side+width+(side-hole_width)//2):
+            draw.rounded_rectangle((x, y, x+hole_width-1, y+hole_height-1),
+                                   radius=max(1, round(hole_width*.2)), fill=ink)
+
+    font_px = max(9, round(short*.018))
+    _, font, stroke = specs_fonts(font_px, font_path)
+    entries = []
+    for text, alignment in ((left_text, 'left'), (right_text, 'right')):
+        if text.strip():
+            bounds = draw.textbbox((0, 0), text, font=font, stroke_width=stroke)
+            entries.append((text, alignment, bounds))
+    if not entries:
+        return
+    gap = 2*font_px if len(entries) == 2 else 0
+    if sum(bounds[2]-bounds[0] for _, _, bounds in entries)+gap > width:
+        raise ValueError('Film Edge corner texts do not fit together; '
+                         'shorten --left-text or --right-text.')
+    band_top = top+height
+    band_height = canvas.height-band_top
+    min_top = min(bounds[1] for _, _, bounds in entries)
+    max_bottom = max(bounds[3] for _, _, bounds in entries)
+    text_height = max_bottom-min_top
+    if text_height > band_height-4:
+        raise ValueError('Film Edge text is too tall for the lower band.')
+    y = band_top+(band_height-text_height)//2-min_top
+    for text, alignment, bounds in entries:
+        x = side-bounds[0] if alignment == 'left' else side+width-bounds[2]
+        draw.text((x, y), text, font=font, fill=ink, stroke_width=stroke)
+
+
 def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
-           right_text=None):
+           right_text=None, frame_color=None, profile=None, echo_colors=None,
+           left_text=None):
     one, two, three = choices(style, code)
+    if left_text is not None and style != 'F':
+        raise ValueError('--left-text is supported only with style F (or --preview).')
+    if frame_color is not None and style != 'E':
+        raise ValueError('--frame-color is supported only with style E (or --preview).')
     if style == 'D':
         if right_text is None or not right_text.strip():
             raise ValueError('Style D requires --right-text with your exact text.')
         if len(right_text) > 200 or any(char in right_text for char in '\r\n\t'):
             raise ValueError('Use a single-line --right-text up to 200 characters.')
+    elif style == 'F':
+        if left_text is None or right_text is None:
+            raise ValueError('Style F requires --left-text and --right-text; '
+                             'use an empty string for an intentionally blank corner.')
+        for text in (left_text, right_text):
+            if len(text) > 200 or any(char in text for char in '\r\n\t'):
+                raise ValueError('Use single-line Film Edge corner texts up to 200 characters each.')
+        if caption is not None:
+            raise ValueError('For style F, use --left-text and --right-text instead of --caption.')
     elif right_text is not None:
-        raise ValueError('--right-text is supported only with style D (or --preview).')
+        raise ValueError('--right-text is supported only with style D or F (or --preview).')
     w, h = photo.size
     s = min(w, h)
     if s < 16:
@@ -392,6 +608,20 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         wall = max(4, round(s*.18))
         fw, fh = w+2*(mat+frame), h+2*(mat+frame)
         size = (fw+2*wall, fh+2*wall)
+    elif style == 'E':
+        margin = max(6, round(s*E_MARGINS[one]))
+        inset = {1: max(1, round(s*.004)), 2: 0, 3: max(2, round(s*.008))}[three]
+        padding = margin + inset
+        size = (w+2*padding, h+2*padding)
+    elif style == 'F':
+        side = max(12, round(s*F_SIDES[one]))
+        top = max(8, round(s*.04))
+        bottom = max(44, round(s*.09), 3*max(9, round(s*.018)))
+        size = (w+2*side, h+top+bottom)
+    elif style == 'G':
+        margin = max(12, round(s*G_MARGINS[one]))
+        pad = max(10, round(s*.025))
+        size = (w+2*(margin+pad), h+2*(margin+pad))
     else:
         side = max(6, round(s * C_MARGINS[one]))
         font_px = max(9, round(s*.018))
@@ -399,6 +629,7 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         size = (w+2*side, h+side+band)
     if size[0]*size[1] > MAX_OUTPUT_PIXELS:
         raise ValueError('Framed output exceeds 60 megapixels; provide a smaller copy.')
+    caption_ink = (100, 100, 100)
     if style == 'A':
         canvas = Image.new('RGB', size, BACKGROUNDS_A[three])
         box = (margin, margin, margin+w, margin+h)
@@ -426,6 +657,30 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         canvas.paste(board, (ix, iy))
         pos = (ix+mat, iy+mat)
         caption_space = mat
+    elif style == 'E':
+        colors = echo_colors if echo_colors is not None else color_echo_colors(
+            photo, profile, two, frame_color)
+        base_color, inset_color = colors_in_profile(colors, profile)
+        canvas = Image.new('RGB', size, base_color)
+        if inset:
+            ImageDraw.Draw(canvas).rectangle(
+                (margin, margin, margin+w+2*inset-1, margin+h+2*inset-1), fill=inset_color)
+        pos = (padding, padding)
+        caption_space = margin
+        caption_ink = inset_color
+    elif style == 'F':
+        background, ink = colors_in_profile((F_BACKGROUNDS[two], (245, 239, 221)), profile)
+        canvas = Image.new('RGB', size, background)
+        draw_film_border(canvas, side, top, (w, h), three, left_text, right_text,
+                         font_path, ink)
+        pos = (side, top)
+    elif style == 'G':
+        background, caption_ink = colors_in_profile((G_BACKGROUND, (100, 100, 100)), profile)
+        canvas = Image.new('RGB', size, background)
+        draw_deckled_paper(canvas, (w, h), margin, pad, G_PAPERS[two], three, profile)
+        pos = (pad+margin, pad+margin)
+        amplitude = max(2, round(s*{1: .003, 2: .005, 3: .008}[three]))
+        caption_space = max(0, margin-2*amplitude-4)
     else:
         canvas = Image.new('RGB', size, BACKGROUNDS_C[two])
         pos = (side, side)
@@ -443,7 +698,7 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
             raise ValueError('Caption does not fit; shorten it or choose a wider border.')
         left = pos[0]+w-tw-bounds[0]
         top = pos[1]+h+(caption_space-th)//2-bounds[1]
-        d.text((left, top), caption, font=font, fill=(100,100,100))
+        d.text((left, top), caption, font=font, fill=caption_ink)
     return canvas, pos
 
 def save_verified(image, destination, profile, original=None, photo_pos=None):
@@ -480,26 +735,48 @@ def save_verified(image, destination, profile, original=None, photo_pos=None):
     finally:
         Path(temporary).unlink(missing_ok=True)
 
-def preview(photo, profile, meta=None, right_text=None):
+def preview_styles(right_text=None, left_text=None):
+    """F may preview without wording; final F always needs two explicit fields."""
+    if left_text is not None and right_text is None:
+        raise ValueError('Supply both --left-text and --right-text for the Film Edge preview; '
+                         'use an empty string for a blank corner.')
+    include_d = right_text is not None and (left_text is None or bool(right_text.strip()))
+    return 'ABC' + ('D' if include_d else '') + 'EFG'
+
+
+def preview(photo, profile, meta=None, right_text=None, frame_color=None,
+            left_text=None):
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
+    # Resolve E once from the original prepared photo, so its preview matches the final.
+    styles = preview_styles(right_text, left_text)
+    echo_colors = color_echo_colors(photo, profile, frame_color=frame_color)
     photo = photo.copy()
     photo.thumbnail((1100,1100), Image.Resampling.LANCZOS)
     photo = ImageCms.profileToProfile(photo,
                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)), outputMode='RGB')
     results = [render(photo, style, meta=meta)[0] for style in ('A','B','C')]
-    if right_text is not None:
+    if 'D' in styles:
         results.append(render(photo, 'D', meta=meta, right_text=right_text)[0])
+    results.append(render(photo, 'E', echo_colors=echo_colors)[0])
+    results.append(render(photo, 'F', left_text=left_text if left_text is not None else '',
+                          right_text=right_text if left_text is not None else '')[0])
+    results.append(render(photo, 'G')[0])
     for image in results:
         image.thumbnail((760,980), Image.Resampling.LANCZOS)
     height = max(i.height for i in results)+90
-    columns = 2 if right_text is not None else 3
-    rows = 2 if right_text is not None else 1
+    columns = 2 if len(results) == 4 else 3
+    rows = (len(results)+columns-1)//columns
     board = Image.new('RGB',(columns*800,rows*height),(238,238,238))
     d = ImageDraw.Draw(board)
     font = ImageFont.load_default(size=24)
-    labels = ('A / Floating photo','B / Gallery frame','C / Print · spec card',
-              'D / Custom text')
+    labels = ['A / Floating photo','B / Gallery frame','C / Print · spec card']
+    if 'D' in styles:
+        labels.append('D / Custom text')
+    labels.append('E / Color Echo')
+    labels.append('F / Film Edge' if left_text is not None else
+                  'F / Film Edge (text after choosing)')
+    labels.append('G / Deckled Paper')
     for i,(label,image) in enumerate(zip(labels,results)):
         left, top = (i % columns)*800, (i // columns)*height
         d.text((left+20,top+18),label,font=font,fill=(30,30,30))
@@ -509,14 +786,16 @@ def preview(photo, profile, meta=None, right_text=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('inputs', type=Path, nargs='+')
-    parser.add_argument('--style', choices=['A','B','C','D'], default='A')
-    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C/D: margin-background-left-specs')
-    parser.add_argument('--preview', action='store_true', help='Preview A/B/C; include D when --right-text is supplied, first input only')
+    parser.add_argument('--style', choices=['A','B','C','D','E','F','G'], default='A')
+    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C/D: margin-background-left-specs; E: margin-auto-tone-inset; F: border-background-sprocket-spacing; G: margin-paper-deckle')
+    parser.add_argument('--preview', action='store_true', help='Preview A/B/C/E/F/G; include D when nonempty --right-text is supplied, first input only')
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--share', action='store_true', help='Also export an sRGB JPEG, max 2048 px')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT','TOP','RIGHT','BOTTOM'))
     parser.add_argument('--caption')
-    parser.add_argument('--right-text', help='Style D: exact text instead of the brand mark, same font as the gear line')
+    parser.add_argument('--left-text', help='Style F: exact lower-left text; empty string means intentionally blank')
+    parser.add_argument('--right-text', help='Style D or F: exact lower-right text; F allows an intentionally empty string')
+    parser.add_argument('--frame-color', help='Style E: one fixed sRGB hex/name for the entire batch, skips auto analysis')
     parser.add_argument('--font', type=Path)
     args = parser.parse_args(argv)
     choices(args.style, args.choices)
@@ -525,16 +804,19 @@ def main(argv=None):
     results = []
     for path in (args.inputs[:1] if args.preview else args.inputs):
         try:
-            meta, sources = read_capture_metadata(path)
+            meta, sources = ({}, set()) if args.style in ('E', 'F', 'G') and not args.preview else read_capture_metadata(path)
             photo, profile, notes = load_photo(path, args.crop)
             stem = path.stem
             if args.preview:
-                image = preview(photo, profile, meta, args.right_text)
-                styles = 'ABCD' if args.right_text is not None else 'ABC'
+                image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text)
+                styles = preview_styles(args.right_text, args.left_text)
                 outputs = [save_verified(image,args.out_dir/f'{stem}_{styles}_preview.jpg',SRGB)]
             else:
+                echo_colors = (color_echo_colors(photo, profile,
+                               choices('E', args.choices)[1], args.frame_color)
+                               if args.style == 'E' else None)
                 image, pos = render(photo,args.style,args.choices,args.caption,args.font,
-                                    meta,args.right_text)
+                                    meta,args.right_text,args.frame_color,profile,echo_colors,args.left_text)
                 outputs = [save_verified(image,args.out_dir/f'{stem}_{args.style}.png',profile,photo,pos)]
                 if args.share:
                     image.thumbnail((2048,2048),Image.Resampling.LANCZOS)
@@ -549,6 +831,18 @@ def main(argv=None):
                         notes.append('No capture metadata; left spec area left without text.'
                                      if args.style == 'D' else
                                      'No capture metadata; spec band left without text.')
+                if args.style == 'E':
+                    color_hex = '#' + ''.join(f'{channel:02x}' for channel in echo_colors[0])
+                    notes.append(f'Color Echo: fixed sRGB frame color {color_hex}; automatic analysis skipped.'
+                                 if args.frame_color is not None else
+                                 f'Color Echo: automatic sRGB frame color {color_hex}, selected locally from '
+                                 'an edge-weighted sample no larger than 96x96; neutral fallback if needed.')
+                if args.style == 'F':
+                    notes.append('Film Edge: two user-supplied corner fields; explicit empty '
+                                 'fields stay blank. No film brand, frame number or metadata inferred.')
+                if args.style == 'G':
+                    notes.append('Deckled Paper: deterministic cotton-paper texture, torn outer '
+                                 'edges and a soft shadow; the rectangular photo region stays untouched.')
             if args.preview or args.style in ('C', 'D'):
                 model = meta.get('model')
                 if model and display_model(model) != model:
@@ -559,7 +853,7 @@ def main(argv=None):
                         notes.append(f'Brand mark: {slug}.')
                     elif brand_wordmark(meta):
                         notes.append('Brand wordmark drawn; no logo file for this brand.')
-                if args.right_text is not None:
+                if (args.preview and 'D' in styles) or (not args.preview and args.style == 'D'):
                     notes.append('Style D: user text replaces the brand mark; '
                                  'same font, size and weight as the gear line.')
             results.append({'input': str(path), 'status':'ok', 'outputs':list(map(str,outputs)), 'notes':notes})
