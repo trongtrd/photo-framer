@@ -54,7 +54,7 @@ Per-style behaviour lives in `references/styles/`. Open the file for the chosen 
 - E: [e-color-echo.md](references/styles/e-color-echo.md). One automatic color per photo for the whole batch, no per-image questions or color variants; `--frame-color` once for a shared color.
 - F: [f-film-edge.md](references/styles/f-film-edge.md). Both `--left-text` and `--right-text` are required, an empty value only when the user chose a blank corner; ask for missing fields together.
 - G: [g-deckled-paper.md](references/styles/g-deckled-paper.md). Texture and torn edges stay outside the intact photo; no text by default.
-- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border, plus `--ratio 3:4|9:16` and `--background blur`; the photo is fitted and centered, never cropped or scaled.
+- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border, plus `--ratio 3:4|9:16`, `--background blur` and a gallery label (`--title`/`--subtitle`); the photo is fitted and centered, never cropped or scaled.
 - Named flags and the styles that accept them: the matrix at the end of [menus.md](references/menus.md#named-options--tùy-chọn-có-tên). Choice codes never change meaning.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
@@ -98,7 +98,7 @@ Keep RGB photo pixels and their ICC profile in final PNGs; normalize EXIF rotati
 
 The renderer checks PNG bit depth before decoding, including RGB and alpha PNGs. For grayscale images with an ICC profile, it preserves alpha/transparency-key information before converting color, then composites onto white paper.
 
-Add a caption/signature only when requested, using exact supplied wording. D uses `--right-text`; F uses both `--left-text` and `--right-text`; these use the bundled fonts. For a separate caption on A–E, G or H, pass `--caption` and `--font` with an available Unicode-capable font file. Visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a suitable layout choice.
+Add a caption, gallery label or signature only when requested, using exact supplied wording. H's gallery label uses `--title` and optional `--subtitle` (bundled serif/sans fonts, no `--font` needed); never infer them from metadata, filenames or the photo. `--signature` takes only a PNG the user supplies as their own signature or logo (A, B, E, G, H; `--signature-position`, `--signature-width`, `--signature-opacity`); never draw, generate or copy a signature yourself. If a label or signature does not fit or would overlap, ask for shorter wording, a smaller size or another position. D uses `--right-text`; F uses both `--left-text` and `--right-text`; these use the bundled fonts. For a separate caption on A–E, G or H, pass `--caption` and `--font` with an available Unicode-capable font file. Visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a suitable layout choice.
 
 ## Verification and delivery
 
