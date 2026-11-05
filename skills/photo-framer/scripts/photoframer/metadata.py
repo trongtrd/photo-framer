@@ -1,10 +1,27 @@
-"""Capture metadata (EXIF first, then XMP), display formatting and brand mapping."""
+"""Capture metadata (EXIF first, then XMP, user values on top), display names,
+brand mapping, and the EXIF block copied into outputs."""
 from __future__ import annotations
 
 from fractions import Fraction
+from functools import lru_cache
+import json
 import re
 
 from PIL import Image
+
+from .constants import SKILL_DIR
+
+CAMERAS_FILE = SKILL_DIR / 'assets' / 'cameras.json'
+# Settings field -> capture metadata key, in display order.
+USER_SPEC_FIELDS = (('camera', 'model'), ('lens', 'lens'), ('iso', 'iso'),
+                    ('aperture', 'fnumber'), ('shutter', 'exposure'), ('focal', 'focal'))
+USER_SPEC_FLAGS = {'camera': '--camera', 'lens': '--lens', 'iso': '--iso',
+                   'aperture': '--aperture', 'shutter': '--shutter', 'focal': '--focal'}
+# EXIF tags that are pointers to sub-IFDs; values are offsets, never copied.
+EXIF_POINTERS = (0x8769, 0x8825, 0xA005)
+EXIF_DROPPED = {0x927C,   # MakerNote: undocumented vendor data, often large.
+                700,      # XMLPacket: XMP, including edit history.
+                0x8773}   # InterColorProfile: the ICC profile is written separately.
 
 # Uppercase substring of Make/Model -> logo slug in assets/logos/.
 BRAND_LOGOS = (
@@ -76,10 +93,10 @@ def _text(value):
 def read_capture_metadata(path):
     """Merge capture metadata; EXIF wins, XMP (Lightroom exports) fills the gaps.
 
-    Returns (metadata dict, set of source names). Never raises: a file the
+    Returns (metadata dict, {key: 'EXIF' or 'XMP'}). Never raises: a file the
     renderer would reject is reported by load_photo instead.
     """
-    meta, sources = {}, set()
+    meta, origins = {}, {}
     try:
         with Image.open(path) as source:
             exif = source.getexif()
@@ -98,7 +115,7 @@ def read_capture_metadata(path):
             value = _text(value)
             if value:
                 meta[key] = value
-                sources.add(origin)
+                origins[key] = origin
         for key, exif_value, xmp_keys in (
                 ('iso', _scalar(sub.get(34855)), ('ISOSpeedRatings',)),
                 ('fnumber', sub.get(33437), ('FNumber',)),
@@ -108,10 +125,27 @@ def read_capture_metadata(path):
             number = _fraction(_scalar(value)) if value is not None else None
             if number:
                 meta[key] = number
-                sources.add(origin)
+                origins[key] = origin
     except Exception:
-        return {}, set()
-    return meta, sources
+        return {}, {}
+    return meta, origins
+
+
+def apply_user_specs(meta, origins, settings):
+    """Overlay user-supplied capture details; they win over EXIF/XMP field by field.
+
+    The camera text is shown verbatim (no display-name lookup). Brand marks keep
+    following the file's own Make/Model, never the user's camera wording.
+    """
+    meta, origins = dict(meta), dict(origins)
+    for field, key in USER_SPEC_FIELDS:
+        value = getattr(settings, field, None)
+        if value is not None:
+            meta[key] = value
+            origins[key] = 'user'
+    if origins.get('model') == 'user':
+        meta['model_verbatim'] = True
+    return meta, origins
 
 
 def display_model(name):
@@ -126,9 +160,37 @@ def display_model(name):
     return MARK_SPACING.sub(' Mark ', name)
 
 
-def format_specs(meta):
+@lru_cache(maxsize=1)
+def _camera_names():
+    with open(CAMERAS_FILE, encoding='utf-8') as stream:
+        return json.load(stream)['brands']
+
+
+def camera_display_name(meta, with_brand):
+    """Marketing name for a known EXIF model, e.g. 'ILCE-7C' -> 'Sony α7C' / 'α7C'.
+
+    with_brand=False is for layouts that already show the brand mark. Returns
+    None for models not listed in assets/cameras.json; names are never guessed.
+    """
+    slug, model = brand_slug(meta), meta.get('model')
+    entry = (_camera_names().get(slug) or {}).get(model) if slug and model else None
+    if not entry:
+        return None
+    return entry['name'] if with_brand else entry['short']
+
+
+def gear_name(meta, with_brand=True, raw_model=False):
+    """Camera text for the gear line: user wording, display name, or the EXIF model."""
+    model = meta.get('model') or meta.get('make')
+    if not model or meta.get('model_verbatim'):
+        return model
+    named = None if raw_model or not meta.get('model') else camera_display_name(meta, with_brand)
+    return named or display_model(model)
+
+
+def format_specs(meta, with_brand=True, raw_model=False):
     """Two style-C caption lines: gear line and exposure line."""
-    gear = display_model(meta.get('model') or meta.get('make'))
+    gear = gear_name(meta, with_brand, raw_model)
     line1 = ' | '.join(part for part in (gear, meta.get('lens')) if part) or None
     iso, fnumber, exposure, focal = (meta.get(key)
                                      for key in ('iso', 'fnumber', 'exposure', 'focal'))
@@ -155,3 +217,52 @@ def brand_wordmark(meta):
     words = [word for word in str(make).replace(',', ' ').split()
              if word.upper() not in COMPANY_SUFFIXES]
     return ' '.join(words).upper() or None
+
+
+def read_source_exif(path):
+    """The source file's EXIF, or None. Never raises."""
+    try:
+        with Image.open(path) as source:
+            exif = source.getexif()
+            return exif if exif else None
+    except Exception:
+        return None
+
+
+def _sub_ifd(exif, pointer):
+    value = exif.get(pointer)
+    if isinstance(value, dict):  # Built in memory rather than read from a file.
+        return value
+    return exif.get_ifd(pointer) if value is not None else {}
+
+
+def exif_for_output(exif, size):
+    """EXIF bytes for a framed output of `size`, or None when there is nothing to keep.
+
+    Keeps IFD0, the Exif sub-IFD and GPS (including location). Orientation is
+    reset to 1 because pixels are already rotated; pixel dimensions follow the
+    output. The embedded thumbnail (IFD1), maker notes, XMP packets and the
+    interoperability pointer are dropped. A fresh block is built so Pillow
+    rewrites every offset. Raises on malformed source EXIF.
+    """
+    if not exif:
+        return None
+    out = Image.Exif()
+    for tag, value in exif.items():
+        if tag not in EXIF_POINTERS and tag not in EXIF_DROPPED:
+            out[tag] = value
+    if 274 in out:
+        out[274] = 1
+    for tag, value in ((256, size[0]), (257, size[1])):
+        if tag in out:
+            out[tag] = value
+    for pointer in (0x8769, 0x8825):
+        ifd = {tag: value for tag, value in _sub_ifd(exif, pointer).items()
+               if tag not in EXIF_POINTERS and tag not in EXIF_DROPPED}
+        if pointer == 0x8769:
+            for tag, value in ((0xA002, size[0]), (0xA003, size[1])):
+                if tag in ifd:
+                    ifd[tag] = value
+        if ifd:
+            out[pointer] = ifd  # A dict value is written as a sub-IFD.
+    return out.tobytes() if len(out) else None

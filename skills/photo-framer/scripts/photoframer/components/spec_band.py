@@ -21,8 +21,12 @@ def load_logo(slug):
 
 
 def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta,
-                   right_text=None):
-    """Auto specs on the left; C has a brand mark, D has exact user text."""
+                   right_text=None, specs=None, raw_model=False):
+    """Auto specs on the left; C has a brand mark, D has exact user text.
+
+    meta (the file's own metadata) picks the brand mark; specs (meta plus any
+    user-supplied details) fills the text lines.
+    """
     band_top = canvas.height - band
     photo_right = canvas.width - side
     regular_font, emphasis_font, stroke = text.specs_fonts(font_px, font_path)
@@ -58,7 +62,9 @@ def draw_spec_band(canvas, side, band, mode, caption, font_path, font_px, meta,
     elif mode == 3:
         lines = []
     else:
-        line1, line2 = format_specs(meta or {})
+        # C shows the brand mark beside the text, so its display name omits the brand.
+        line1, line2 = format_specs(specs if specs is not None else meta or {},
+                                    with_brand=right_text is not None, raw_model=raw_model)
         lines = [(line, True) for line in ((line1,) if line1 else ())]
         if mode == 1 and line2:
             lines.append((line2, False))

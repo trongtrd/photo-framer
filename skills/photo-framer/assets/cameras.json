@@ -1,0 +1,219 @@
+{
+  "_comment": [
+    "EXIF Model -> manufacturer display name, keyed by the brand slug used for assets/logos.",
+    "\"name\" is shown where no brand mark is drawn (style D); \"short\" next to the brand mark (style C).",
+    "Add only names confirmed against the manufacturer's own product naming. Unlisted models keep their EXIF text."
+  ],
+  "brands": {
+    "sony": {
+      "ILCE-1": {
+        "name": "Sony α1",
+        "short": "α1"
+      },
+      "ILCE-1M2": {
+        "name": "Sony α1 II",
+        "short": "α1 II"
+      },
+      "ILCE-9": {
+        "name": "Sony α9",
+        "short": "α9"
+      },
+      "ILCE-9M2": {
+        "name": "Sony α9 II",
+        "short": "α9 II"
+      },
+      "ILCE-9M3": {
+        "name": "Sony α9 III",
+        "short": "α9 III"
+      },
+      "ILCE-7": {
+        "name": "Sony α7",
+        "short": "α7"
+      },
+      "ILCE-7M2": {
+        "name": "Sony α7 II",
+        "short": "α7 II"
+      },
+      "ILCE-7M3": {
+        "name": "Sony α7 III",
+        "short": "α7 III"
+      },
+      "ILCE-7M4": {
+        "name": "Sony α7 IV",
+        "short": "α7 IV"
+      },
+      "ILCE-7R": {
+        "name": "Sony α7R",
+        "short": "α7R"
+      },
+      "ILCE-7RM2": {
+        "name": "Sony α7R II",
+        "short": "α7R II"
+      },
+      "ILCE-7RM3": {
+        "name": "Sony α7R III",
+        "short": "α7R III"
+      },
+      "ILCE-7RM3A": {
+        "name": "Sony α7R III",
+        "short": "α7R III"
+      },
+      "ILCE-7RM4": {
+        "name": "Sony α7R IV",
+        "short": "α7R IV"
+      },
+      "ILCE-7RM4A": {
+        "name": "Sony α7R IV",
+        "short": "α7R IV"
+      },
+      "ILCE-7RM5": {
+        "name": "Sony α7R V",
+        "short": "α7R V"
+      },
+      "ILCE-7S": {
+        "name": "Sony α7S",
+        "short": "α7S"
+      },
+      "ILCE-7SM2": {
+        "name": "Sony α7S II",
+        "short": "α7S II"
+      },
+      "ILCE-7SM3": {
+        "name": "Sony α7S III",
+        "short": "α7S III"
+      },
+      "ILCE-7C": {
+        "name": "Sony α7C",
+        "short": "α7C"
+      },
+      "ILCE-7CM2": {
+        "name": "Sony α7C II",
+        "short": "α7C II"
+      },
+      "ILCE-7CR": {
+        "name": "Sony α7CR",
+        "short": "α7CR"
+      },
+      "ILCE-6000": {
+        "name": "Sony α6000",
+        "short": "α6000"
+      },
+      "ILCE-6100": {
+        "name": "Sony α6100",
+        "short": "α6100"
+      },
+      "ILCE-6300": {
+        "name": "Sony α6300",
+        "short": "α6300"
+      },
+      "ILCE-6400": {
+        "name": "Sony α6400",
+        "short": "α6400"
+      },
+      "ILCE-6500": {
+        "name": "Sony α6500",
+        "short": "α6500"
+      },
+      "ILCE-6600": {
+        "name": "Sony α6600",
+        "short": "α6600"
+      },
+      "ILCE-6700": {
+        "name": "Sony α6700",
+        "short": "α6700"
+      }
+    },
+    "lumix": {
+      "DC-S1": {
+        "name": "LUMIX S1",
+        "short": "S1"
+      },
+      "DC-S1R": {
+        "name": "LUMIX S1R",
+        "short": "S1R"
+      },
+      "DC-S1H": {
+        "name": "LUMIX S1H",
+        "short": "S1H"
+      },
+      "DC-S1RM2": {
+        "name": "LUMIX S1RII",
+        "short": "S1RII"
+      },
+      "DC-S5": {
+        "name": "LUMIX S5",
+        "short": "S5"
+      },
+      "DC-S5M2": {
+        "name": "LUMIX S5II",
+        "short": "S5II"
+      },
+      "DC-S5M2X": {
+        "name": "LUMIX S5IIX",
+        "short": "S5IIX"
+      },
+      "DC-S9": {
+        "name": "LUMIX S9",
+        "short": "S9"
+      },
+      "DC-GH6": {
+        "name": "LUMIX GH6",
+        "short": "GH6"
+      },
+      "DC-GH7": {
+        "name": "LUMIX GH7",
+        "short": "GH7"
+      },
+      "DC-G9M2": {
+        "name": "LUMIX G9II",
+        "short": "G9II"
+      }
+    },
+    "nikon": {
+      "NIKON Z 5": {
+        "name": "Nikon Z5",
+        "short": "Z5"
+      },
+      "NIKON Z 6": {
+        "name": "Nikon Z6",
+        "short": "Z6"
+      },
+      "NIKON Z 7": {
+        "name": "Nikon Z7",
+        "short": "Z7"
+      },
+      "NIKON Z 6_2": {
+        "name": "Nikon Z6II",
+        "short": "Z6II"
+      },
+      "NIKON Z 7_2": {
+        "name": "Nikon Z7II",
+        "short": "Z7II"
+      },
+      "NIKON Z 6_3": {
+        "name": "Nikon Z6III",
+        "short": "Z6III"
+      },
+      "NIKON Z 8": {
+        "name": "Nikon Z8",
+        "short": "Z8"
+      },
+      "NIKON Z 9": {
+        "name": "Nikon Z9",
+        "short": "Z9"
+      },
+      "NIKON Z fc": {
+        "name": "Nikon Z fc",
+        "short": "Z fc"
+      },
+      "NIKON Z 50": {
+        "name": "Nikon Z50",
+        "short": "Z50"
+      },
+      "NIKON Z 30": {
+        "name": "Nikon Z30",
+        "short": "Z30"
+      }
+    }
+  }
+}

@@ -6,6 +6,8 @@ from typing import NamedTuple
 from PIL import Image
 
 from ..components.spec_band import draw_spec_band
+from ..metadata import USER_SPEC_FIELDS, USER_SPEC_FLAGS, apply_user_specs
+from ..settings import SPEC_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .022, 2: .035, 3: .055}
@@ -37,17 +39,26 @@ def paint(photo, plan, settings, ctx):
     canvas = Image.new('RGB', plan.size, BACKGROUNDS[two])
     pos = (plan.side, plan.side)
     canvas.paste(photo, pos)
+    meta = ctx.meta or {}
     draw_spec_band(canvas, plan.side, plan.band, three, settings.caption, settings.font_path,
-                   plan.font_px, ctx.meta or {}, settings.right_text)
+                   plan.font_px, meta, settings.right_text,
+                   specs=apply_user_specs(meta, {}, settings)[0], raw_model=bool(settings.raw_model))
     return canvas, pos
 
 
-def spec_notes(settings, *, share, sources, echo_colors, missing='spec band left without text'):
+def spec_notes(settings, *, share, origins, echo_colors, missing='spec band left without text'):
     if settings.caption:
         return []
+    _, origins = apply_user_specs({}, origins, settings)
+    notes = []
+    sources = set(origins.values()) - {'user'}
     if sources:
-        return ['Spec caption from ' + ' and '.join(sorted(sources)) + ' metadata.']
-    return [f'No capture metadata; {missing}.']
+        notes.append('Spec caption from ' + ' and '.join(sorted(sources)) + ' metadata.')
+    supplied = [USER_SPEC_FLAGS[field] for field, key in USER_SPEC_FIELDS
+                if origins.get(key) == 'user']
+    if supplied:
+        notes.append('Capture details supplied by the user: ' + ', '.join(supplied) + '.')
+    return notes or [f'No capture metadata; {missing}.']
 
 
 STYLE = Style(
@@ -59,5 +70,5 @@ STYLE = Style(
           Row(('Caption', 'Chữ'), (('Camera + lens + exposure', 'Máy + ống kính + thông số'),
                                    ('Camera + lens only', 'Chỉ máy + ống kính'),
                                    ('No text', 'Không chữ')))),
-    choices_hint='margin-background-left-specs', accepts=COMMON,
+    choices_hint='margin-background-left-specs', accepts=COMMON | SPEC_OPTIONS,
     layout=layout, paint=paint, uses_metadata=True, notes=spec_notes)

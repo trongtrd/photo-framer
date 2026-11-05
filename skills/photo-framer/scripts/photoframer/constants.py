@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PIL import Image, ImageCms
 
-VERSION = '0.8.0'
+VERSION = '0.9.0'
 
 MAX_INPUT_PIXELS = 30_000_000
 MAX_OUTPUT_PIXELS = 60_000_000

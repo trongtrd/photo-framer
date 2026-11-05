@@ -52,7 +52,7 @@ def paint(photo, plan, settings, ctx):
     return canvas, pos
 
 
-def notes(settings, *, share, sources, echo_colors):
+def notes(settings, *, share, origins, echo_colors):
     color = hex_color(echo_colors[0])
     if settings.frame_color is not None:
         return [f'Color Echo: fixed sRGB frame color {color}; automatic analysis skipped.']
