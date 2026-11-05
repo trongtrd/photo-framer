@@ -29,5 +29,6 @@ STYLE = Style(
               (('Camera + lens + exposure', 'Máy + ống kính + thông số'),
                ('Camera + lens only', 'Chỉ máy + ống kính'),
                ('No details', 'Không thông tin')))),
-    choices_hint='margin-background-left-specs', accepts=COMMON | {'right_text'},
+    choices_hint='margin-background-left-specs',
+    accepts=COMMON | {'right_text'}, requires=frozenset({'right_text'}),
     layout=layout, paint=paint, validate=validate, uses_metadata=True, notes=notes)

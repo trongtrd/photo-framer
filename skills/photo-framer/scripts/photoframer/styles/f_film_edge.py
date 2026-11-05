@@ -70,4 +70,5 @@ STYLE = Style(
     choices_hint='border-background-sprocket-spacing',
     # F replaces --caption with its two corner fields; validate() rejects it.
     accepts=frozenset({'font_path', 'left_text', 'right_text'}),
+    requires=frozenset({'left_text', 'right_text'}),
     layout=layout, paint=paint, validate=validate, notes=notes)
