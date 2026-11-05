@@ -157,7 +157,7 @@ def gallery_block():
                       f'{html.escape(item.hint or item.code or STYLES[code].default)}</code>'
                       for item in row]
             pictures = [f'<a href="docs/images/gallery/{item.key}.jpg">'
-                        f'<img src="docs/images/gallery/thumbs/{item.key}.jpg" height="160" '
+                        f'<img src="docs/images/gallery/thumbs/{item.key}.jpg" width="240" '
                         f'alt="{html.escape(code + ": " + item.label, quote=True)}"></a>' for item in row]
             lines += ['| ' + ' | '.join(labels) + ' |', '| ' + ' | '.join(':---:' for _ in row) + ' |',
                        '| ' + ' | '.join(pictures) + ' |', '']
