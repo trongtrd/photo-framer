@@ -6,6 +6,12 @@ from PIL import ImageFont
 from . import constants
 from .constants import MAX_TEXT_LENGTH, SPECS_FONT_FILES
 
+# One palette for text on light backgrounds in every style (sRGB): primary
+# lines (D's camera line, H's title) and secondary lines (exposure line,
+# H's subtitle, captions).
+PRIMARY_INK = (30, 30, 30)
+SECONDARY_INK = (115, 115, 115)
+
 # Read through the module at call time so tests can point it elsewhere.
 FONTS_DIR = constants.FONTS_DIR
 

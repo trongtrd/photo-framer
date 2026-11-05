@@ -1029,6 +1029,13 @@ class LabelsAndOverlays(unittest.TestCase):
                 self.assertEqual(default.tobytes(), explicit.tobytes())
                 x, y = pos
                 self.assertEqual(default.crop((x, y, x+900, y+600)).tobytes(), self.photo.tobytes())
+        # Caption gray is the exposure line's and the H subtitle's gray (E keeps its contrast edge color).
+        from photoframer.components import caption
+        self.assertEqual(caption.CAPTION_INK, spec_band.EXPOSURE_INK)
+        self.assertEqual(caption.CAPTION_INK, h_minimal_mat.LABEL_INKS['dark'][1])
+        im, (x, y) = render(Image.new('RGB', (900, 600), 'white'), 'A', caption='Hà Nội')
+        darkest = min(im.crop((0, y+600, im.width, im.height)).getdata())
+        self.assertEqual(darkest, (115, 115, 115))
 
     def test_label_contrast_on_blur_and_validation(self):
         dark_photo = Image.new('RGB', (900, 600), (20, 20, 25))
