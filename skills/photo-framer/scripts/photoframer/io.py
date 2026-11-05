@@ -75,7 +75,7 @@ def load_photo(path, crop=None):
     return photo, profile, notes
 
 
-def save_verified(image, destination, profile, original=None, photo_pos=None):
+def save_verified(image, destination, profile, original=None, photo_pos=None, exif=None):
     """Validate complete encoded file before publishing; never overwrite an existing file."""
     destination = Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -83,8 +83,10 @@ def save_verified(image, destination, profile, original=None, photo_pos=None):
     try:
         fmt = 'JPEG' if destination.suffix.lower() in ('.jpg', '.jpeg') else 'PNG'
         with os.fdopen(fd, 'wb') as stream:
-            image.save(stream, format=fmt, icc_profile=profile,
-                       **({'quality': 92, 'subsampling': 0} if fmt == 'JPEG' else {}))
+            options = {'quality': 92, 'subsampling': 0} if fmt == 'JPEG' else {}
+            if exif:
+                options['exif'] = exif
+            image.save(stream, format=fmt, icc_profile=profile, **options)
             stream.flush()
             os.fsync(stream.fileno())
         with Image.open(temporary) as check:

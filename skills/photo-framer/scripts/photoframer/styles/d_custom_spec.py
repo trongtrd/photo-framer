@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from ..text import is_single_line
+from ..settings import SPEC_OPTIONS
 from .base import COMMON, Row, Style
 from .c_spec_card import BACKGROUND_ROW, MARGIN_ROW, layout, paint, spec_notes
 
@@ -30,5 +31,5 @@ STYLE = Style(
                ('Camera + lens only', 'Chỉ máy + ống kính'),
                ('No details', 'Không thông tin')))),
     choices_hint='margin-background-left-specs',
-    accepts=COMMON | {'right_text'}, requires=frozenset({'right_text'}),
+    accepts=COMMON | SPEC_OPTIONS | {'right_text'}, requires=frozenset({'right_text'}),
     layout=layout, paint=paint, validate=validate, uses_metadata=True, notes=notes)

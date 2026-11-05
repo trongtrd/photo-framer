@@ -41,7 +41,9 @@ Bóng trong/ngoài và độ dày khung phối sẵn; bo giấy luôn trắng �
 
 Trả lời theo thứ tự **viền–nền–chữ**, ví dụ `2-1-1`, hoặc `mặc định`.
 Thông số đọc tự động từ EXIF/XMP của ảnh, không tự bịa; logo hãng gắn theo máy chụp,
-hãng chưa có logo thì dùng chữ đậm. Ảnh mất metadata sẽ được hỏi trước khi bỏ chữ.
+hãng chưa có logo thì dùng chữ đậm. Mã máy quen thuộc hiện bằng tên thương mại
+(`ILCE-7C` → `α7C`). Ảnh mất metadata (ví dụ scan phim) có thể tự nhập máy, ống kính,
+ISO, khẩu, tốc, tiêu cự; nếu không, sẽ được hỏi trước khi bỏ chữ.
 
 ### D — Thẻ thông số có chữ riêng
 <!-- generated:menu-vi-D -->
@@ -165,7 +167,9 @@ Frame thickness and shadows are coordinated; mat remains white in v0.1.
 Reply in **margin–background–caption** order, e.g. `2-1-1`, or `default`.
 Specs come from the photo's EXIF/XMP and are never invented; the brand logo follows
 the camera body, with a bold text wordmark for brands without a bundled logo.
-Files without metadata are flagged before text is skipped.
+Known camera codes show their product name (`ILCE-7C` → `α7C`). Files without
+metadata (e.g. film scans) can take typed camera, lens and exposure values;
+otherwise they are flagged before text is skipped.
 
 ### D — Custom spec card
 <!-- generated:menu-en-D -->
@@ -265,6 +269,14 @@ Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có 
 | `--right-text` | — | — | — | required | — | required | — | — |
 | `--caption` | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
 | `--font` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--camera` | — | — | ✓ | ✓ | — | — | — | — |
+| `--lens` | — | — | ✓ | ✓ | — | — | — | — |
+| `--iso` | — | — | ✓ | ✓ | — | — | — | — |
+| `--aperture` | — | — | ✓ | ✓ | — | — | — | — |
+| `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
+| `--focal` | — | — | ✓ | ✓ | — | — | — | — |
+| `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 <!-- /generated:option-matrix -->

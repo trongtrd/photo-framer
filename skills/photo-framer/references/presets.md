@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H)
+# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -37,6 +37,13 @@ Flat presentation: no shadow, frame or keyline.
   changes.
 - Metadata read from EXIF first, then XMP (Lightroom exports keep XMP only);
   line 2 requires every value, otherwise it is skipped. Nothing is fabricated.
+- User-typed `--camera/--lens/--iso/--aperture/--shutter/--focal` override
+  EXIF/XMP field by field (v0.9). Typed camera text is shown verbatim and never
+  selects a brand mark. Shutter below 1 s prints as `1/ns`, otherwise `ns`.
+- Display names (v0.9): EXIF codes listed in `assets/cameras.json` print as
+  `short` in C (beside the brand mark) and `name` in D (`ILCE-7C` → `α7C` /
+  `Sony α7C`). `--raw-model` keeps the EXIF code. Mark spacing still applies
+  to unlisted models.
 - Brand mark from `assets/logos/<slug>.png`, pasted unmodified (no recolor):
   height ≤ 2.8 × caption font and ≤ 66% of the band, width ≤ 34% of the photo.
   Brands without a bundled logo get a bold text wordmark. Marks persist when
@@ -158,4 +165,4 @@ Flat presentation: no shadow, frame or keyline.
   ratio 3 uses the standard 2048 px limit.
 - Choices: ratio–mat–keyline, default 1-1-1. The 60 MP output limit still applies.
 
-Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. EXIF/GPS are excluded. Cropping/resizing requires explicit authorization; reduced previews are not final files.
+Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. Output EXIF (v0.9): `--metadata keep` (default) copies IFD0, the Exif sub-IFD and GPS into the final PNG (eXIf) and share JPEG (APP1), sets Orientation 1 when present, updates ImageWidth/ImageLength and PixelX/YDimension to each output, and drops IFD1 thumbnails, MakerNote, XMLPacket, InterColorProfile and the interoperability pointer; JPEG EXIF over 65,000 bytes is an error. `--metadata strip` writes none. Previews never carry metadata. Cropping/resizing requires explicit authorization; reduced previews are not final files.

@@ -6,7 +6,8 @@ Owner: project owner (writes in Vietnamese; reply in Vietnamese, use photography
 ## Status
 
 - **Phase 0**: branch `claude/happy-ptolemy-vpmy5z` (style H, portrait demo, this handoff) is open as PR trongtrd/photo-framer#1 into `main` (awaiting owner review).
-- **Phase 1 implemented** on branch `claude/tender-lovelace-j9q91m`, stacked on `claude/happy-ptolemy-vpmy5z` (rebase onto `main` once #1 merges). Output verified byte-identical with `tools/golden.py compare --base 97c89fc`. Next: phase 2.
+- **Phase 1 implemented** on branch `claude/tender-lovelace-j9q91m`, stacked on `claude/happy-ptolemy-vpmy5z` (rebase onto `main` once #1 merges). Output verified byte-identical with `tools/golden.py compare --base 97c89fc`.
+- **Phase 2 implemented** on branch `claude/phase2-metadata`, stacked on phase 1 (owner choices: `--metadata keep|strip`; C shows `α7C` beside the logo, D `Sony α7C`; one flag per typed field). Next: phase 3.
 
 ## Where to read first (do not duplicate here)
 
