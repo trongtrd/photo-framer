@@ -27,9 +27,18 @@ OPTIONS = (
     Option('right_text', '--right-text'),
     Option('caption', '--caption', generic=False),
     Option('font_path', '--font'),
+    # Capture details typed by the user (film scans, files without EXIF).
+    Option('camera', '--camera'),
+    Option('lens', '--lens'),
+    Option('iso', '--iso'),
+    Option('aperture', '--aperture'),
+    Option('shutter', '--shutter'),
+    Option('focal', '--focal'),
+    Option('raw_model', '--raw-model'),
 )
+SPEC_OPTIONS = frozenset({'camera', 'lens', 'iso', 'aperture', 'shutter', 'focal', 'raw_model'})
 # Flags handled by the CLI for every style; listed in the generated matrix.
-GLOBAL_FLAGS = ('--share', '--crop')
+GLOBAL_FLAGS = ('--share', '--crop', '--metadata')
 
 
 def parse_choices(style, code=None):
@@ -55,6 +64,13 @@ class Settings:
     left_text: str | None = None
     right_text: str | None = None
     frame_color: str | None = None
+    camera: str | None = None
+    lens: str | None = None
+    iso: float | None = None
+    aperture: float | None = None
+    shutter: float | None = None      # seconds
+    focal: float | None = None        # millimetres
+    raw_model: bool | None = None     # True: EXIF model code instead of the display name
     choices: tuple[int, int, int] = field(init=False)
 
     def __post_init__(self):

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from fractions import Fraction
 import json
 from pathlib import Path
 
@@ -10,14 +11,43 @@ from PIL import Image
 from .color import convert_profile
 from .constants import LOGO_DIR, SHARE_MAX_EDGE, SRGB, VERSION
 from .io import load_photo, save_verified
-from .metadata import brand_slug, brand_wordmark, display_model, read_capture_metadata
+from .metadata import (brand_slug, brand_wordmark, exif_for_output, gear_name,
+                       read_capture_metadata, read_source_exif)
 from .preview import preview, preview_styles
 from .registry import DEFAULT_STYLE, STYLES
 from .renderer import render
-from .settings import Settings
+from .settings import SPEC_OPTIONS, Settings
 from .styles.e_color_echo import resolve_colors
+from .text import is_single_line
 
+JPEG_EXIF_LIMIT = 65_000  # A JPEG APP1 segment holds at most 65,533 bytes.
 DESCRIPTION = 'Deterministic photo framing. Python 3.10+, Pillow; no network or AI APIs.'
+
+
+def _text_value(flag):
+    def parse(value):
+        if not value.strip() or not is_single_line(value):
+            raise argparse.ArgumentTypeError(f'{flag} must be one non-empty line up to 200 characters')
+        return value
+    return parse
+
+
+def _number(flag, prefix='', suffix='', fraction=False):
+    """Positive number, tolerating the usual prefix/suffix ('f/2.8', '50mm', '1/125s')."""
+    def parse(value):
+        text = value.strip()
+        if prefix and text.lower().startswith(prefix):
+            text = text[len(prefix):]
+        if suffix and text.lower().endswith(suffix):
+            text = text[:-len(suffix)]
+        try:
+            number = float(Fraction(text.strip())) if fraction else float(text)
+        except (ValueError, ZeroDivisionError):
+            number = None
+        if number is None or not number > 0 or number == float('inf'):
+            raise argparse.ArgumentTypeError(f'{flag} must be a positive number, got {value!r}')
+        return number
+    return parse
 
 
 def build_parser():
@@ -40,15 +70,38 @@ def build_parser():
     parser.add_argument('--right-text', help='Style D or F: exact lower-right text; F allows an intentionally empty string')
     parser.add_argument('--frame-color', help='Style E: one fixed sRGB hex/name for the entire batch, skips auto analysis')
     parser.add_argument('--font', type=Path)
+    parser.add_argument('--metadata', choices=('keep', 'strip'), default='keep',
+                        help='keep (default): copy the source EXIF, including GPS, into the final PNG '
+                             'and share JPEG, with orientation reset and thumbnail/maker notes removed; '
+                             'strip: write no EXIF. Previews never carry metadata')
+    specs = parser.add_argument_group('capture details for C/D', 'Typed values win over EXIF/XMP, '
+                                      'field by field; nothing is filled in that was not supplied.')
+    specs.add_argument('--camera', type=_text_value('--camera'), help='exact camera text, shown verbatim')
+    specs.add_argument('--lens', type=_text_value('--lens'), help='exact lens text')
+    specs.add_argument('--iso', type=_number('--iso', prefix='iso'), help='e.g. 400')
+    specs.add_argument('--aperture', type=_number('--aperture', prefix='f/'), help='e.g. 2.8 or f/2.8')
+    specs.add_argument('--shutter', type=_number('--shutter', suffix='s', fraction=True),
+                       help='seconds, e.g. 1/125 or 2')
+    specs.add_argument('--focal', type=_number('--focal', suffix='mm'), help='millimetres, e.g. 50')
+    specs.add_argument('--raw-model', action='store_true',
+                       help='show the EXIF model code (e.g. ILCE-7C) instead of the display name (Sony α7C)')
     return parser
 
 
-def metadata_notes(meta, shown):
+def metadata_notes(meta, shown, settings):
     """Notes about displayed capture details for the styles in `shown`."""
     notes = []
     model = meta.get('model')
-    if model and display_model(model) != model:
-        notes.append(f"Model display formatted: '{model}' -> '{display_model(model)}'.")
+    if model and settings.camera is None:
+        raw = bool(settings.raw_model)
+        names = {code: gear_name(meta, with_brand=code == 'D', raw_model=raw)
+                 for code in shown if code in ('C', 'D')}
+        changed = {code: name for code, name in names.items() if name != model}
+        if changed:
+            values = list(dict.fromkeys(changed.values()))
+            shown_as = (f"'{values[0]}'" if len(values) == 1 else
+                        ', '.join(f"'{name}' ({code})" for code, name in changed.items()))
+            notes.append(f"Model display formatted: '{model}' -> {shown_as}.")
     if 'C' in shown:
         slug = brand_slug(meta)
         if slug and (LOGO_DIR / f'{slug}.png').is_file():
@@ -71,30 +124,52 @@ def share_copy(image, profile, style, choices):
     return convert_profile(image, profile, SRGB)
 
 
+def output_exif(exif, image, args):
+    if args.metadata != 'keep' or exif is None:
+        return None
+    return exif_for_output(exif, image.size)
+
+
 def process(path, args, settings):
     style = STYLES[settings.style]
     if style.uses_metadata or args.preview:
-        meta, sources = read_capture_metadata(path)
+        meta, origins = read_capture_metadata(path)
     else:
-        meta, sources = {}, set()
+        meta, origins = {}, {}
     photo, profile, notes = load_photo(path, args.crop)
     stem = path.stem
     if args.preview:
-        image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text)
+        specs = {field: getattr(settings, field) for field in SPEC_OPTIONS
+                 if getattr(settings, field) is not None}
+        image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text,
+                        specs)
         shown = preview_styles(args.right_text, args.left_text)
         outputs = [save_verified(image, args.out_dir/f'{stem}_{shown}_preview.jpg', SRGB)]
     else:
         shown = settings.style
         echo_colors = resolve_colors(photo, profile, settings) if settings.style == 'E' else None
         image, pos = render(photo, settings, profile=profile, meta=meta, echo_colors=echo_colors)
+        exif = read_source_exif(path) if args.metadata == 'keep' else None
+        try:
+            final_exif = output_exif(exif, image, args)
+        except Exception:  # Malformed source EXIF must not cost the framed photo.
+            exif = final_exif = None
+            notes.append('Source EXIF could not be read for copying; outputs carry no EXIF.')
+        if args.share and final_exif and len(final_exif) > JPEG_EXIF_LIMIT:
+            raise ValueError('Source EXIF is too large for a JPEG share copy; '
+                             'use --metadata strip or omit --share.')
         outputs = [save_verified(image, args.out_dir/f'{stem}_{settings.style}.png',
-                                 profile, photo, pos)]
+                                 profile, photo, pos, exif=final_exif)]
         if args.share:
             image = share_copy(image, profile, style, settings.choices)
-            outputs.append(save_verified(image, args.out_dir/f'{stem}_{settings.style}_share.jpg', SRGB))
-        notes += style.notes(settings, share=args.share, sources=sources, echo_colors=echo_colors)
+            outputs.append(save_verified(image, args.out_dir/f'{stem}_{settings.style}_share.jpg', SRGB,
+                                         exif=output_exif(exif, image, args)))
+        notes += style.notes(settings, share=args.share, origins=origins, echo_colors=echo_colors)
+        if final_exif:
+            notes.append('Source EXIF copied into the outputs; orientation reset to 1, '
+                         'embedded thumbnail and maker notes removed.')
     if any(STYLES[code].uses_metadata for code in shown):
-        notes += metadata_notes(meta, shown)
+        notes += metadata_notes(meta, shown, settings)
     return {'input': str(path), 'status': 'ok', 'outputs': list(map(str, outputs)), 'notes': notes}
 
 
@@ -103,7 +178,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     settings = Settings(args.style, args.choices, caption=args.caption, font_path=args.font,
                         left_text=args.left_text, right_text=args.right_text,
-                        frame_color=args.frame_color)
+                        frame_color=args.frame_color, camera=args.camera, lens=args.lens,
+                        iso=args.iso, aperture=args.aperture, shutter=args.shutter, focal=args.focal,
+                        raw_model=True if args.raw_model else None)
     if args.crop and len(args.inputs) != 1:
         parser.error('--crop accepts exactly one input to avoid unintended batch cropping.')
     results = []

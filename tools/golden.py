@@ -312,7 +312,7 @@ def load_renderer(skill_dir):
     return module
 
 
-def record(skill_dir, manifest_path):
+def record(skill_dir, manifest_path, extra_flags=()):
     skill_dir = Path(skill_dir).resolve()
     renderer = load_renderer(skill_dir)
     font = str(skill_dir / 'assets' / 'fonts' / 'Inter-Regular.ttf')
@@ -322,7 +322,7 @@ def record(skill_dir, manifest_path):
         inputs = build_corpus(temp / 'in')
         for name, images, flags in cases(font):
             out_dir = temp / 'out' / name
-            argv = [str(inputs[i]) for i in images] + ['--out-dir', str(out_dir), *flags]
+            argv = [str(inputs[i]) for i in images] + ['--out-dir', str(out_dir), *flags, *extra_flags]
             stdout = io.StringIO()
             entry = {}
             try:
@@ -346,12 +346,15 @@ def record(skill_dir, manifest_path):
     print(f'Recorded {len(manifest)} cases, {files} output files -> {manifest_path}')
 
 
-def _record_subprocess(skill_dir, manifest_path):
-    subprocess.run([sys.executable, __file__, 'record', str(skill_dir), str(manifest_path)], check=True)
+def _record_subprocess(skill_dir, manifest_path, extra_flags=()):
+    command = [sys.executable, __file__, 'record', str(skill_dir), str(manifest_path)]
+    if extra_flags:
+        command.append('--extra-flags=' + ' '.join(extra_flags))
+    subprocess.run(command, check=True)
     return json.loads(Path(manifest_path).read_text(encoding='utf-8'))
 
 
-def compare(base, keep=None):
+def compare(base, keep=None, new_flags=()):
     with tempfile.TemporaryDirectory(prefix='golden-base-') as temp:
         temp = Path(temp)
         archive = subprocess.run(['git', '-C', str(ROOT), 'archive', base, 'skills/photo-framer'],
@@ -360,7 +363,7 @@ def compare(base, keep=None):
             safe = {'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}
             tar.extractall(temp / 'base', **safe)
         old = _record_subprocess(temp / 'base' / 'skills' / 'photo-framer', temp / 'base.json')
-        new = _record_subprocess(SKILL, temp / 'new.json')
+        new = _record_subprocess(SKILL, temp / 'new.json', new_flags)
         if keep:
             Path(keep).mkdir(parents=True, exist_ok=True)
             for name in ('base.json', 'new.json'):
@@ -394,14 +397,18 @@ def main(argv=None):
     rec = sub.add_parser('record', help='render the corpus with one skill folder')
     rec.add_argument('skill_dir', type=Path)
     rec.add_argument('manifest', type=Path)
+    rec.add_argument('--extra-flags', default='', help='flags appended to every case')
     cmp_ = sub.add_parser('compare', help='compare the working tree against a git revision')
     cmp_.add_argument('--base', default='HEAD', help='git revision of the reference skill (default HEAD)')
     cmp_.add_argument('--keep', type=Path, help='directory to keep both manifests for inspection')
+    cmp_.add_argument('--new-flags', default='',
+                      help='flags appended to every case on the working-tree side only, e.g. '
+                           '"--metadata strip" to compare a new opt-out with old behaviour')
     args = parser.parse_args(argv)
     if args.command == 'record':
-        record(args.skill_dir, args.manifest)
+        record(args.skill_dir, args.manifest, args.extra_flags.split())
         return 0
-    return compare(args.base, args.keep)
+    return compare(args.base, args.keep, args.new_flags.split())
 
 
 if __name__ == '__main__':
