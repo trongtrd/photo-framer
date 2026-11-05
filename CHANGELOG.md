@@ -5,7 +5,7 @@ Versions follow the rendering specification in `skills/photo-framer/references/p
 ## v0.11.0 (2026-11-05): labels and signatures
 
 - **Slots**: each style that can take overlays (A, B, E, G, H) exposes the margin below the photo as a slot. Text and images claim exact boxes there; anything that would leave the slot or overlap another item is rejected with a clear error. Nothing is ever drawn over the photo.
-- **Gallery label for H**: `--title` in bold serif (bundled Noto Serif Bold, OFL, full Vietnamese coverage) and `--subtitle` in Inter Regular gray, centered below the photo. On fixed canvases the photo and label are centered together, so the photo moves up (as in the owner's 1:1 reference); on the thin border the canvas grows. The ink turns light on dark blurred backgrounds.
+- **Gallery label for H**: `--title` in Inter SemiBold near-black and `--subtitle` in Inter Regular gray, the same faces and inks as D's camera line and exposure line, so one typeface runs through every style; centered below the photo. On fixed canvases the photo and label are centered together, so the photo moves up (as in the owner's 1:1 reference); on the thin border the canvas grows. The ink turns light on dark blurred backgrounds.
 - **`--signature`** for A, B, E, G and H: the user's own PNG signature or logo, transparency kept, placed bottom-right (default), bottom-center or bottom-left in the margin below the photo, with `--signature-width` and `--signature-opacity`. On H with a label it shares the label's row.
 - `--caption` is unchanged and kept separate (owner decision); it cannot be combined with the H gallery label.
 - New README example: the Prague portrait on 1:1 with a gallery label.

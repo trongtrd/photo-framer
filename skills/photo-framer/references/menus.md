@@ -129,7 +129,7 @@ chỉ thêm viền mỏng đều quanh ảnh theo đúng tỷ lệ ảnh. Mặc 
 Bản chia sẻ JPEG của 4:5 và 1:1 có đúng kích thước 1080×1350 và 1080×1080.
 Ngoài menu: `--ratio 3:4` hoặc `--ratio 9:16` (story, reels; bản chia sẻ 1080×1440,
 1080×1920) và `--background blur` để dùng chính ảnh làm nền mờ, tối nhẹ, thay màu nền.
-Nhãn gallery: `--title` (serif đậm) và `--subtitle` (chữ xám nhỏ) căn giữa dưới ảnh,
+Nhãn gallery: `--title` (Inter SemiBold như D) và `--subtitle` (chữ xám nhỏ) căn giữa dưới ảnh,
 dùng nguyên văn chữ bạn cung cấp; ảnh dịch lên để chừa chỗ.
 
 ## English
@@ -261,7 +261,7 @@ Share JPEGs for 4:5 and 1:1 are exactly 1080×1350 and 1080×1080.
 Beyond the menu: `--ratio 3:4` or `--ratio 9:16` (stories, reels; share copies
 1080×1440, 1080×1920) and `--background blur` for a softly blurred, slightly
 darkened copy of the photo instead of the mat color. Gallery label: `--title`
-(bold serif) and `--subtitle` (small gray sans), centered below the photo,
+(Inter SemiBold, as in D) and `--subtitle` (small gray Inter), centered below the photo,
 verbatim; the photo moves up to make room.
 
 ## Named options / Tùy chọn có tên

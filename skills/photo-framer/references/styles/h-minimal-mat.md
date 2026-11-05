@@ -33,8 +33,9 @@ unasked.
 
 ## Gallery label
 
-`--title` adds a centered line in bold serif below the photo; `--subtitle`
-adds a second, smaller gray sans line (it needs a title). Ask for the exact
+`--title` adds a centered line below the photo in Inter SemiBold, the face and
+near-black ink of D's camera line; `--subtitle` adds a second, smaller line in
+gray Inter Regular, like the exposure line (it needs a title). Ask for the exact
 wording, for example a place and a date, and use it verbatim; never take it
 from GPS, capture dates or filenames. On fixed canvases the photo and label
 are centered as one block, so the photo moves up; on the thin border the

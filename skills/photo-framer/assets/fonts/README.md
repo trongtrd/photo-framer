@@ -1,10 +1,10 @@
 # Bundled fonts
 
-## Inter (spec bands, corner texts, gallery subtitles)
+## Inter (spec bands, corner texts, gallery labels)
 
 Two static instances of **Inter** (by Rasmus Andersson / The Inter Project
 Authors) used by styles C, D and F to typeset caption bands: Regular for the exposure
-line, SemiBold for the gear line, D's right-side custom text and F's two corner fields. Inter Regular also sets the H gallery-label subtitle. Inter is a screen-first typeface with full
+line, SemiBold for the gear line, D's right-side custom text and F's two corner fields. H's gallery label uses the same pair: SemiBold for the title, Regular for the subtitle, so one typeface runs through every style. Inter is a screen-first typeface with full
 Vietnamese coverage, which suits digital spec cards and keeps Vietnamese
 diacritics correct.
 
@@ -15,14 +15,3 @@ Alternatives evaluated for the same role: IBM Plex Sans, Manrope.
 
 If both files are removed, the renderer falls back to Pillow's bundled default
 face and re-applies a thin stroke to imitate the weight hierarchy.
-
-## Noto Serif Bold (gallery-label titles)
-
-`NotoSerif-Bold.ttf`, a static hinted instance of **Noto Serif** (The Noto
-Project Authors), sets the bold serif `--title` of H's gallery label. It covers
-Vietnamese, including stacked diacritics such as `ặ`, `ữ` and `Ỷ`.
-
-Licensed under the [SIL Open Font License 1.1](OFL-NotoSerif.txt); keep that
-license file with the font. Fetched from the Noto project's published files
-(`notofonts.github.io`, `fonts/NotoSerif/hinted/ttf/NotoSerif-Bold.ttf`).
-A user `--font` replaces it for the title and subtitle.

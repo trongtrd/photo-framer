@@ -85,7 +85,7 @@ c. `--background blur` (overrides menu row 2): fill canvas with the photo scaled
 
 ### Phase 4 — Text and overlays (v0.11)
 a. **Slot system**: each style exposes free regions outside the photo (e.g. H bottom/top margin, C/D band, A/G margins). Text/overlays request a slot; if it does not fit → error asking for shorter text or wider margin. Never draw over the photo.
-b. **Gallery label**: `--title` / `--subtitle` (exact wording, one line each, ≤200 chars, Vietnamese accents preserved). Bundle an OFL serif with Vietnamese glyphs (e.g. Noto Serif) in `assets/fonts/` with licence file. In H fixed ratios, shift the photo up to make room below (as in the owner's 1:1 reference). Decide whether existing `--caption` maps onto this (keep backward compatibility).
+b. **Gallery label**: `--title` / `--subtitle` (exact wording, one line each, ≤200 chars, Vietnamese accents preserved). ~~Bundle an OFL serif~~ Owner decision (phase 4 review): use the spec cards' Inter faces for one typeface across styles; no serif is bundled. In H fixed ratios, shift the photo up to make room below (as in the owner's 1:1 reference). Decide whether existing `--caption` maps onto this (keep backward compatibility).
 c. **PNG signature/logo**: `--signature path.png` with placement options within slots (e.g. bottom-right/bottom-center), size relative to canvas, opacity; keep transparency; error if it would touch the photo.
 
 ## Practical notes for the next agent

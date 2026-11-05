@@ -42,7 +42,8 @@ BLUR_WORK_EDGE = 384     # Blur runs on a copy whose longer edge is at most this
 BLUR_RADIUS = .04        # Gaussian radius as a fraction of the working copy's short edge.
 
 
-# Gallery label below the photo: bold serif title, smaller gray sans subtitle.
+# Gallery label below the photo, in the spec cards' typeface and inks: Inter
+# SemiBold near-black title (as D's gear line), Inter Regular gray subtitle.
 TITLE_SIZE = .05       # x photo short edge
 SUBTITLE_SIZE = .026
 LABEL_GAP = .05        # photo edge to title, x photo short edge

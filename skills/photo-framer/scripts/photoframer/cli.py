@@ -97,9 +97,9 @@ def build_parser():
     mat.add_argument('--blur-tone', choices=list(H_BLUR_TONES),
                      help=f'with --background blur: {H_DEFAULT_BLUR_TONE} (default), neutral or light')
     mat.add_argument('--title', type=_text_value('--title'),
-                     help='gallery label: exact title, bold serif, centered below the photo')
+                     help='gallery label: exact title in Inter SemiBold (as style D), centered below the photo')
     mat.add_argument('--subtitle', type=_text_value('--subtitle'),
-                     help='gallery label: exact second line in a smaller gray sans (needs --title)')
+                     help='gallery label: exact second line in smaller gray Inter Regular (needs --title)')
     overlay = parser.add_argument_group('signature or logo (A, B, E, G, H)',
                                         'A PNG placed in the margin below the photo, never over it.')
     overlay.add_argument('--signature', type=Path, help='transparent PNG signature or logo')

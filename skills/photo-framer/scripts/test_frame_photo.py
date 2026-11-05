@@ -1003,6 +1003,19 @@ class LabelsAndOverlays(unittest.TestCase):
                     self.assertGreater(im.height, bare.height)
                     self.assertEqual(im.width, bare.width)
 
+    def test_label_uses_the_spec_card_typeface(self):
+        """One typeface across styles: the label matches D's gear line and exposure line."""
+        title, subtitle = text.title_fonts(30, 16)
+        _, gear, _ = text.specs_fonts(30)
+        exposure, _, _ = text.specs_fonts(16)
+        self.assertEqual(title.getname(), gear.getname())
+        self.assertEqual(title.getname(), ('Inter', 'SemiBold'))
+        self.assertEqual(subtitle.getname(), exposure.getname())
+        self.assertEqual(subtitle.getname(), ('Inter', 'Regular'))
+        self.assertEqual(h_minimal_mat.LABEL_INKS['dark'], (spec_band.GEAR_INK, spec_band.EXPOSURE_INK))
+        self.assertEqual(sorted(p.name for p in text.FONTS_DIR.glob('*.ttf')),
+                         ['Inter-Regular.ttf', 'Inter-SemiBold.ttf'])
+
     def test_label_contrast_on_blur_and_validation(self):
         dark_photo = Image.new('RGB', (900, 600), (20, 20, 25))
         im, (x, y) = render(dark_photo, 'H', ratio='9:16', background='blur', title='Đêm')
