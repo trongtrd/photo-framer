@@ -110,4 +110,4 @@ Save outputs through the host's authorized artifact mechanism when available. Pr
 
 The skill has no remote image service, analytics, or automatic public upload. See [presets.md](references/presets.md) for constants and the approved default shadow.
 
-When changing the renderer (`scripts/photoframer/`: one module per style under `styles/`, shared drawing in `components/`), run `python3 scripts/test_frame_photo.py` from this skill directory after installing `scripts/requirements.txt`. The CLI regression tests generate their own images and grayscale ICC profile; they use Pillow and defusedxml and do not use personal photos.
+When changing the renderer (`scripts/photoframer/`: one module per style under `styles/`, shared drawing in `components/`), run `python3 scripts/test_frame_photo.py` from this skill directory after installing `scripts/requirements.txt` (it runs every module in `scripts/tests/`; `-k NAME` filters, shared helpers are in `tests/support.py`). The CLI regression tests generate their own images and grayscale ICC profile; they use Pillow and defusedxml and do not use personal photos.
