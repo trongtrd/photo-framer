@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G)
+# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H)
 
 All geometry scales with the shorter oriented photo edge `s`.
 

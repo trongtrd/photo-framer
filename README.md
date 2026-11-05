@@ -262,6 +262,21 @@ For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` f
 
 Filesystems must support hard links for the renderer's atomic, no-overwrite final save. Existing output filenames receive numeric suffixes. The CLI returns JSON per input; inspect every item and report successes and errors separately.
 
+#### Maintaining the renderer / Bảo trì
+
+The renderer is the `skills/photo-framer/scripts/photoframer/` package (one module per style in `styles/`, shared drawing in `components/`); `frame_photo.py` is its CLI entry point. Release notes are in [CHANGELOG.md](CHANGELOG.md). / Renderer nằm trong package `photoframer/`, mỗi phong cách một module; lịch sử phiên bản ở [CHANGELOG.md](CHANGELOG.md).
+
+```sh
+# Regression tests
+python skills/photo-framer/scripts/test_frame_photo.py
+
+# Regenerate the style, menu and flag tables from the style registry (CI runs --check)
+python tools/gen_docs.py
+
+# Prove a refactor leaves every output byte unchanged against a git revision
+python tools/golden.py compare --base main
+```
+
 <a id="technical-notes"></a>
 
 ### Technical limits and preservation
