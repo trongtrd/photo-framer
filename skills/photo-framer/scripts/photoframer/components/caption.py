@@ -3,9 +3,9 @@ from __future__ import annotations
 
 from PIL import ImageDraw
 
-from ..text import specs_fonts
+from ..text import SECONDARY_INK, specs_fonts
 
-CAPTION_INK = (100, 100, 100)
+CAPTION_INK = SECONDARY_INK  # Same gray as the exposure line and H's subtitle.
 
 
 def draw_caption(canvas, caption, font_path, short, photo_pos, photo_size, space,
