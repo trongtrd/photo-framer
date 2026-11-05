@@ -40,22 +40,14 @@ def wordmark_font(font_px, font_path=None):
         return ImageFont.load_default(size=size), max(1, round(font_px * .028))
 
 
-TITLE_FONT_FILE = 'NotoSerif-Bold.ttf'
-
-
 def title_fonts(title_px, subtitle_px, font_path=None):
-    """Gallery label: bold serif title, regular sans subtitle; --font replaces both."""
-    if font_path:
-        return (ImageFont.truetype(str(font_path), title_px),
-                ImageFont.truetype(str(font_path), subtitle_px))
-    try:
-        title = ImageFont.truetype(str(FONTS_DIR / TITLE_FONT_FILE), title_px)
-    except OSError:
-        title = ImageFont.load_default(size=title_px)
-    try:
-        subtitle = ImageFont.truetype(str(FONTS_DIR / SPECS_FONT_FILES[0]), subtitle_px)
-    except OSError:
-        subtitle = ImageFont.load_default(size=subtitle_px)
+    """Gallery label faces, matching the spec cards for one typeface across styles.
+
+    Title: Inter SemiBold, like D's gear line and right-side text. Subtitle:
+    Inter Regular, like the exposure line. --font replaces both.
+    """
+    _, title, _ = specs_fonts(title_px, font_path)
+    subtitle, _, _ = specs_fonts(subtitle_px, font_path)
     return title, subtitle
 
 

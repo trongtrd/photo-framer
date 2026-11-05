@@ -173,8 +173,8 @@ Flat presentation: no shadow, frame or keyline.
   default), neutral, or light (channels + 12% toward white), then enlarged
   with BICUBIC to the canvas. No color conversion; keyline and photo are
   drawn on top. Row 2 (mat) is unused.
-- v0.11 gallery label (H): title Noto Serif Bold max(12, 0.05s), subtitle Inter
-  Regular max(9, 0.026s); gap photo→title 0.05s, line spacing 0.35 × title size,
+- v0.11 gallery label (H): title Inter SemiBold max(12, 0.05s), subtitle Inter
+  Regular max(9, 0.026s) — the spec-card faces, one typeface across styles; gap photo→title 0.05s, line spacing 0.35 × title size,
   heights from font ascent+descent. The label height joins the photo box before
   fitting, so the block is centered and the photo moves up (thin border: canvas
   grows). Text must fit inside the canvas minimum margins. Ink sRGB (30,30,30) /

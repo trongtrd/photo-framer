@@ -86,7 +86,7 @@ class Settings:
     ratio: str | None = None          # H canvas ratio, overrides menu row 1
     background: str | None = None     # H: 'blur' replaces the plain mat
     blur_tone: str | None = None      # H blur: 'dark' (default), 'neutral', 'light'
-    title: str | None = None          # H gallery label, bold serif line below the photo
+    title: str | None = None          # H gallery label, Inter SemiBold line below the photo
     subtitle: str | None = None       # H gallery label, second line (needs a title)
     signature: str | Path | None = None   # PNG placed in the margin below the photo
     signature_position: str | None = None  # bottom-right (default), bottom-center, bottom-left
