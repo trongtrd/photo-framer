@@ -5,8 +5,9 @@ Part of the [Photo Framer skill](../../SKILL.md); global rules there still apply
 C and D build the left-side details from the photo itself: EXIF first, then the XMP that
 Lightroom writes into exports. Line 1 is `Model | LensModel`; line 2
 (`ISO … f/… …s …mm`) appears only when every value exists. Never invent,
-retype or estimate values. When a file carries no metadata, say so and offer
-user-supplied `--caption` text or a text-free band (`C` with caption choice 3).
+retype or estimate values. When a file carries no metadata (for example a film
+scan), say so and offer: typed capture details, user-supplied `--caption` text,
+or a text-free band (`C` with caption choice 3).
 For D without metadata, keep the supplied right-side text and explain that
 the left-side capture details are unavailable.
 
@@ -24,6 +25,26 @@ the right-side custom text remains visible in every mode. Keep it to one line,
 up to 200 characters. If the text cannot fit alongside the details, ask for
 shorter wording or fewer left-side details. Never shrink, truncate, rewrite
 or wrap the supplied text to make it fit.
+
+## Typed capture details
+
+Pass only values the user stated: `--camera` and `--lens` take exact text
+(shown verbatim, one line, up to 200 characters); `--iso 400`, `--aperture 2.8`
+(or `f/2.8`), `--shutter 1/125` (seconds, or `2`), `--focal 50` (or `50mm`).
+They override EXIF/XMP field by field, so a single correction such as
+`--iso 800` keeps the other values from the file. The exposure line still
+needs all four exposure values. Typed camera text never selects a brand mark;
+the mark follows only the file's own Make/Model. One set of values applies to
+the whole batch: split runs when photos used different gear or settings.
+JSON notes list which flags the user supplied.
+
+## Camera display names
+
+Known EXIF codes are shown by product name from `assets/cameras.json`
+(`ILCE-7C` → `α7C` in C, next to the SONY mark; `Sony α7C` in D). Unlisted
+models keep their EXIF text. Use `--raw-model` when the user prefers the code.
+JSON notes record each rename. Add names to the file only when confirmed
+against the manufacturer's own naming.
 
 ## Asking for D's text
 
