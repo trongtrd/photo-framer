@@ -329,7 +329,7 @@ Filesystems must support hard links for the renderer's atomic, no-overwrite fina
 The renderer is the `skills/photo-framer/scripts/photoframer/` package (one module per style in `styles/`, shared drawing in `components/`); `frame_photo.py` is its CLI entry point. Release notes are in [CHANGELOG.md](CHANGELOG.md). / Renderer nằm trong package `photoframer/`, mỗi phong cách một module; lịch sử phiên bản ở [CHANGELOG.md](CHANGELOG.md).
 
 ```sh
-# Regression tests
+# Regression tests (all of skills/photo-framer/scripts/tests/; add -k NAME to filter)
 python skills/photo-framer/scripts/test_frame_photo.py
 
 # Regenerate the style, menu and flag tables from the style registry (CI runs --check)
@@ -437,6 +437,8 @@ After installing dependencies, run:
 ```sh
 python skills/photo-framer/scripts/test_frame_photo.py
 ```
+
+The entry point runs every module in [`skills/photo-framer/scripts/tests/`](skills/photo-framer/scripts/tests/), split by area: input files and color handling, C/D spec cards, E/F/G, H, labels and signatures, metadata, and the style registry. Run one area with `python -m unittest tests.test_metadata` from the `scripts` folder, or filter by name with `-k`.
 
 The tests generate synthetic images and an original grayscale ICC profile. They use Python and the dependencies in `requirements.txt` (Pillow and defusedxml); no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed. GitHub Actions installs that same requirements file while testing each Pillow version in its matrix.
 
