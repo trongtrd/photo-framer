@@ -6,13 +6,15 @@ from typing import NamedTuple
 
 import math
 
-from PIL import Image, ImageDraw, ImageFilter, ImageOps, ImageStat
+from PIL import Image, ImageFilter, ImageOps
 
 from ..color import colors_in_profile
 from ..components.caption import draw_caption
+from ..components.gallery_label import (Label, LABEL_INKS, label_metrics, validate_label,
+                                         draw_label as paint_label)
 from ..components.keyline import draw_keyline
 from ..components.slots import Slot
-from ..text import PRIMARY_INK, SECONDARY_INK, is_single_line, title_fonts
+from ..constants import MAX_OUTPUT_PIXELS
 from .base import COMMON, Row, Style
 
 # Canvas ratio (width/height); None follows the photo with a thin even border.
@@ -29,32 +31,13 @@ KEYLINE_COLOR = (10, 10, 10)
 SHARE_SIZES = {'4:5': (1080, 1350), '1:1': (1080, 1080), '3:4': (1080, 1440), '9:16': (1080, 1920)}
 RATIO_NOTES = {'4:5': 'fixed 4:5 canvas', '1:1': 'fixed 1:1 canvas', '3:4': 'fixed 3:4 canvas',
                '9:16': 'fixed 9:16 canvas', 'original': "thin even border following the photo's ratio"}
-# Fixed canvases keep every photo pixel, so a 9:16 canvas around a landscape
-# photo is large; H allows more than the 60 MP limit of the other styles.
-MAX_OUTPUT_PIXELS = 100_000_000
+# The shared output cap is checked before a full-sized canvas is allocated.
 
 BACKGROUND_MODES = ('blur',)
 BLUR_TONES = {'dark': ('multiply', .88), 'neutral': None, 'light': ('lighten', .12)}
 DEFAULT_BLUR_TONE = 'dark'
 BLUR_WORK_EDGE = 384     # Blur runs on a copy whose longer edge is at most this.
 BLUR_RADIUS = .04        # Gaussian radius as a fraction of the working copy's short edge.
-
-
-# Gallery label below the photo, in the spec cards' typeface and inks: Inter
-# SemiBold near-black title (as D's gear line), Inter Regular gray subtitle.
-TITLE_SIZE = .05       # x photo short edge
-SUBTITLE_SIZE = .026
-LABEL_GAP = .05        # photo edge to title, x photo short edge
-LINE_SPACING = .35     # x title size
-LABEL_INKS = {'dark': (PRIMARY_INK, SECONDARY_INK), 'light': ((246, 244, 238), (214, 212, 206))}
-
-
-class Label(NamedTuple):
-    height: int
-    gap: int
-    spacing: int
-    title_px: int
-    subtitle_px: int
 
 
 class Layout(NamedTuple):
@@ -101,31 +84,12 @@ def validate(settings):
         raise ValueError('--ratio must be one of ' + ', '.join(RATIOS) + '.')
     if settings.background is not None and settings.background not in BACKGROUND_MODES:
         raise ValueError('--background must be blur.')
-    for value, flag in ((settings.title, '--title'), (settings.subtitle, '--subtitle')):
-        if value is not None and (not value.strip() or not is_single_line(value)):
-            raise ValueError(f'Use a single-line {flag} up to 200 characters.')
-    if settings.subtitle is not None and settings.title is None:
-        raise ValueError('--subtitle requires --title.')
-    if settings.title is not None and settings.caption:
-        raise ValueError('Use either the gallery label (--title/--subtitle) or --caption, not both.')
+    validate_label(settings)
     if settings.blur_tone is not None:
         if settings.background != 'blur':
             raise ValueError('--blur-tone requires --background blur.')
         if settings.blur_tone not in BLUR_TONES:
             raise ValueError('--blur-tone must be dark, neutral or light.')
-
-
-def label_metrics(photo_size, settings):
-    if settings.title is None:
-        return None
-    s = min(photo_size)
-    title_px, subtitle_px = max(12, round(s*TITLE_SIZE)), max(9, round(s*SUBTITLE_SIZE))
-    title_font, subtitle_font = title_fonts(title_px, subtitle_px, settings.font_path)
-    gap, spacing = round(s*LABEL_GAP), round(title_px*LINE_SPACING)
-    height = gap + sum(title_font.getmetrics())
-    if settings.subtitle is not None:
-        height += spacing + sum(subtitle_font.getmetrics())
-    return Label(height, gap, spacing, title_px, subtitle_px)
 
 
 def layout(photo_size, settings):
@@ -148,28 +112,10 @@ def text_limits(plan, photo_size, ratio):
 def draw_label(canvas, plan, photo_size, settings, profile, slot):
     """Centered title (and subtitle) in the band reserved below the photo."""
     w, h = photo_size
-    label = plan.label
-    title_font, subtitle_font = title_fonts(label.title_px, label.subtitle_px, settings.font_path)
     top = plan.pos[1]+h+plan.keyline
     left, right = text_limits(plan, photo_size, ratio_name(settings))
-    band = canvas.crop((left, top, right, top+label.height)).convert('L')
-    tone = 'light' if ImageStat.Stat(band).mean[0] < 128 else 'dark'
-    title_ink, subtitle_ink = colors_in_profile(LABEL_INKS[tone], profile)
-    d = ImageDraw.Draw(canvas)
-    center = plan.pos[0]+w//2
-    lines = [(settings.title, title_font, title_ink, top+label.gap, '--title')]
-    if settings.subtitle is not None:
-        lines.append((settings.subtitle, subtitle_font, subtitle_ink,
-                      top+label.gap+sum(title_font.getmetrics())+label.spacing, '--subtitle'))
-    boxes = []
-    for text, font, ink, y, flag in lines:
-        box = d.textbbox((center, y), text, font=font, anchor='ma')
-        if box[0] < left or box[2] > right:
-            raise ValueError(f'{flag} is too wide for the canvas; shorten it.')
-        boxes.append((text, font, ink, y, box))
-    for text, font, ink, y, box in boxes:
-        d.text((center, y), text, font=font, fill=ink, anchor='ma')
-        slot.claim(box, 'Gallery label', check=False)
+    paint_label(canvas, plan.label, settings, profile, slot, top=top, left=left, right=right,
+                center=plan.pos[0]+w//2)
 
 
 def blurred_background(photo, size, tone):

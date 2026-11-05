@@ -6,10 +6,12 @@ from typing import NamedTuple
 from PIL import Image
 
 from ..components.caption import draw_caption
+from ..components.gallery_label import (Label, draw_margin_label, label_metrics, label_notes,
+                                         lower_margin, validate_label)
 from ..components.shadow import shadow
 from ..components.signature import draw_signature
 from ..components.slots import Slot
-from ..settings import SIGNATURE_OPTIONS
+from ..settings import LABEL_OPTIONS, SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .10, 2: .165, 3: .23}
@@ -20,13 +22,17 @@ BACKGROUNDS = {1: '#ffffff', 2: '#faf8f3', 3: '#f2f2f2'}
 class Layout(NamedTuple):
     size: tuple
     margin: int
+    bottom: int
+    label: Label | None = None
 
 
 def layout(photo_size, settings):
     choices = settings.choices
     w, h = photo_size
     margin = max(4, round(min(w, h) * MARGINS[choices[0]]))
-    return Layout((w+2*margin, h+2*margin), margin)
+    label = label_metrics(photo_size, settings)
+    bottom = lower_margin(photo_size, margin, label)
+    return Layout((w+2*margin, h+margin+bottom), margin, bottom, label)
 
 
 def paint(photo, plan, settings, ctx):
@@ -46,6 +52,7 @@ def paint(photo, plan, settings, ctx):
         slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
                                 margin), 'Caption', check=False)
     draw_signature(canvas, slot, settings, ctx.profile)
+    draw_margin_label(canvas, plan, photo.size, settings, ctx.profile, slot, pos)
     return canvas, pos
 
 
@@ -58,5 +65,5 @@ STYLE = Style(
           Row(('Shadow', 'Bóng đổ'), (('Light', 'Nhẹ'), ('Soft medium', 'Mềm vừa'), ('Strong', 'Rõ'))),
           Row(('Background', 'Nền'), (('White', 'Trắng'), ('Ivory', 'Trắng ngà'),
                                        ('Light gray', 'Xám rất nhạt')))),
-    choices_hint='margin-shadow-background', accepts=COMMON | SIGNATURE_OPTIONS,
-    layout=layout, paint=paint)
+    choices_hint='margin-shadow-background', accepts=COMMON | SIGNATURE_OPTIONS | LABEL_OPTIONS,
+    layout=layout, paint=paint, validate=validate_label, notes=label_notes)

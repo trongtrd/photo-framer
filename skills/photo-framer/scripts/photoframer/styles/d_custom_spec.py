@@ -31,5 +31,5 @@ STYLE = Style(
                ('Camera + lens only', 'Chỉ máy + ống kính'),
                ('No details', 'Không thông tin')))),
     choices_hint='margin-background-left-specs',
-    accepts=COMMON | SPEC_OPTIONS | {'right_text'}, requires=frozenset({'right_text'}),
+    accepts=COMMON | SPEC_OPTIONS | {'right_text', 'capture_sidecar'}, requires=frozenset({'right_text'}),
     layout=layout, paint=paint, validate=validate, uses_metadata=True, notes=notes)

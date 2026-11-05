@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata) / v0.10 (H ratios, blur) / v0.11 (labels, signatures) / v0.11.1 (fixed sRGB profile)
+# Rendering specification v0.1–v0.12 (24 MP cap, capture sidecars, A/B/G labels)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -184,8 +184,28 @@ Flat presentation: no shadow, frame or keyline.
   grows). Text must fit inside the canvas minimum margins. Ink sRGB (30,30,30) /
   (115,115,115), or (246,244,238) / (214,212,206) when the label band's mean
   luminance is below 128 (dark blur).
-- H output limit 100 MP (other styles 60 MP). Verification re-opens the
-  output with Pillow's pixel limit raised to exactly the encoded size.
+- v0.12: all styles share a 24 MP complete output cap, replacing H's 100 MP
+  and the other styles' 60 MP limits. Check the oriented/cropped dimensions
+  before allocating a canvas (JPEGs before decode); report a proportionate
+  smaller source size that fits the exact selected geometry. Never resize
+  silently; preprocessing a separate copy requires explicit permission.
+  Verification re-opens the output with Pillow's pixel limit raised to
+  exactly the encoded size, then restores the previous limit.
+
+## A/B/G gallery labels and capture sidecars (v0.12)
+- A/B/G accept the same `--title`/`--subtitle`, fonts, sizes, inks and gap as H.
+  Text is centered between the photo edges. Keep the photo's size and position.
+  The lower surround (A), mat/frame (B), or paper (G) grows as needed: lower
+  margin = max(original margin, label height + max(4, round(0.05s)) + clearance).
+  G reserves clearance = 2 × deckle amplitude + 4; A/B clearance is zero.
+- Use the gallery label separately from `--caption` and `--signature` to avoid
+  the unbalanced centered-label/corner-mark combination. H still rejects
+  signatures entirely. Reject text overflow; never shrink, wrap or rewrite.
+- `--capture-sidecar` on C/D reads the exact sibling `<input filename>.json`,
+  a UTF-8 object of at most 16 KiB with any of camera/lens/iso/aperture/shutter/focal.
+  Explicit flags > JSON > EXIF > XMP, field by field. Missing files produce a
+  note; invalid files fail only their own image. Values affect the displayed
+  spec band only, not EXIF or logo selection. Nothing is read without opt-in.
 
 ## Slots and signatures (v0.11)
 - Slot = the margin below the photo, aligned to the photo edges: A margin; B

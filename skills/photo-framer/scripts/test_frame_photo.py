@@ -7,7 +7,8 @@ Install requirements.txt first. Examples, from this folder:
     python -m unittest tests.test_metadata          # one module
 
 Modules: test_cli_and_input, test_color_profile, test_spec_cards (C, D), test_styles_efg,
-test_style_h, test_labels_overlays, test_metadata, test_registry; shared helpers live in tests/support.py.
+test_style_h, test_labels_overlays, test_metadata, test_registry, test_capture_sidecars,
+test_output_limits; shared helpers live in tests/support.py.
 """
 from pathlib import Path
 import sys
