@@ -132,6 +132,10 @@ Ngoài menu: `--ratio 3:4` hoặc `--ratio 9:16` (story, reels; bản chia sẻ 
 Nhãn gallery: `--title` (Inter SemiBold như D) và `--subtitle` (chữ xám nhỏ) căn giữa dưới ảnh,
 dùng nguyên văn chữ bạn cung cấp; ảnh dịch lên để chừa chỗ.
 
+H also supports `--ratio 16:9` for a fixed landscape canvas (share 1920×1080).
+Blur works with every ratio: square blur is `--ratio 1:1 --background blur`;
+landscape blur is `--ratio 16:9 --background blur`. The menu codes keep their meaning.
+
 ## English
 
 **Choose style:** A — Floating photo (default); B — Gallery frame; C — Print / spec card; D — Custom spec card; E — Color Echo; F — Film Edge; G — Deckled Paper; H — Minimal Mat.

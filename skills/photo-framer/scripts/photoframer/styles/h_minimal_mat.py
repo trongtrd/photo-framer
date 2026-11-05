@@ -19,18 +19,21 @@ from .base import COMMON, Row, Style
 
 # Canvas ratio (width/height); None follows the photo with a thin even border.
 RATIOS = {'4:5': Fraction(4, 5), '1:1': Fraction(1, 1), '3:4': Fraction(3, 4),
-          '9:16': Fraction(9, 16), 'original': None}
-# Menu row 1 keeps its frozen meaning; 3:4 and 9:16 exist only as --ratio.
+          '9:16': Fraction(9, 16), '16:9': Fraction(16, 9), 'original': None}
+# Menu row 1 keeps its frozen meaning; other fixed ratios exist only as --ratio.
 ROW_RATIOS = {1: '4:5', 2: '1:1', 3: 'original'}
 # Minimum margin on the binding side, as a fraction of canvas width.
-MARGINS = {'4:5': .036, '1:1': .024, '3:4': .040, '9:16': .050}
+# 16:9 mirrors 9:16's 5% of the short edge: 5% of height = 2.8125% of width.
+MARGINS = {'4:5': .036, '1:1': .024, '3:4': .040, '9:16': .050, '16:9': .028125}
 THIN_MARGIN = .015  # 'original': uniform border, fraction of the photo's short edge.
 BACKGROUNDS = {1: (255, 255, 255), 2: (235, 229, 229), 3: (250, 248, 243)}
 KEYLINES = {1: .0055, 2: 0, 3: .011}
 KEYLINE_COLOR = (10, 10, 10)
-SHARE_SIZES = {'4:5': (1080, 1350), '1:1': (1080, 1080), '3:4': (1080, 1440), '9:16': (1080, 1920)}
+SHARE_SIZES = {'4:5': (1080, 1350), '1:1': (1080, 1080), '3:4': (1080, 1440),
+               '9:16': (1080, 1920), '16:9': (1920, 1080)}
 RATIO_NOTES = {'4:5': 'fixed 4:5 canvas', '1:1': 'fixed 1:1 canvas', '3:4': 'fixed 3:4 canvas',
-               '9:16': 'fixed 9:16 canvas', 'original': "thin even border following the photo's ratio"}
+               '9:16': 'fixed 9:16 canvas', '16:9': 'fixed 16:9 canvas',
+               'original': "thin even border following the photo's ratio"}
 # The shared output cap is checked before a full-sized canvas is allocated.
 
 BACKGROUND_MODES = ('blur',)
@@ -185,9 +188,9 @@ def notes(settings, *, share, **context):
 STYLE = Style(
     code='H', name=('Minimal Mat', 'Minimal Mat / Khung tối giản'),
     readme_title='H · Minimal Mat / Khung tối giản',
-    look=('Fixed 4:5, 1:1, 3:4 or 9:16 canvas for any photo, or a thin border; '
+    look=('Fixed 4:5, 1:1, 3:4, 9:16 or 16:9 canvas for any photo, or a thin border; '
           'black keyline; plain or blurred background',
-          'Khung cố định 4:5, 1:1, 3:4 hoặc 9:16 cho mọi ảnh, hoặc viền mỏng; '
+          'Khung cố định 4:5, 1:1, 3:4, 9:16 hoặc 16:9 cho mọi ảnh, hoặc viền mỏng; '
           'viền đen; nền trơn hoặc nền mờ từ ảnh'),
     preview_label='H / Minimal Mat 4:5', default='1-1-1',
     rows=(Row(('Canvas ratio', 'Tỷ lệ khung'), (('4:5 portrait', '4:5 dọc'), ('1:1 square', '1:1 vuông'),

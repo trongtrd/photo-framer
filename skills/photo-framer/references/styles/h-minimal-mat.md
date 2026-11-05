@@ -18,10 +18,14 @@ required for an explicit "H default".
 
 ## More ratios and a blurred background (named flags)
 
-`--ratio 4:5|1:1|3:4|9:16|original` overrides row 1; the menu codes keep their
-meaning, so 3:4 and 9:16 are reachable only through the flag. Map requests such
+`--ratio 4:5|1:1|3:4|9:16|16:9|original` overrides row 1; the menu codes keep their
+meaning, so 3:4, 9:16 and 16:9 are reachable only through the flag. Map requests such
 as "story", "reels", "9:16" or "phone wallpaper" to `--ratio 9:16`, and "3:4" to
 `--ratio 3:4`. Minimum margins are 4.0% (3:4) and 5.0% (9:16) of the canvas width.
+For a fixed landscape canvas use `--ratio 16:9`; its minimum margin is 5% of
+the canvas height (2.8125% of width), mirroring 9:16's 5% of the short edge.
+Map an explicit request for a 16:9 or widescreen landscape canvas to that flag;
+an ordinary landscape photograph alone does not imply a fixed canvas.
 
 `--background blur` fills the canvas with the same photo, scaled to cover and
 softly blurred, instead of the mat color (row 2 is then unused). The tone is
@@ -30,6 +34,11 @@ slightly darkened by default so the photo stands out; `--blur-tone neutral` or
 last, unchanged, and the keyline still applies. Offer it when the user asks
 for a blurred, "frosted" or photo-colored background; do not switch it on
 unasked.
+
+Blur works with every ratio, including `--ratio 1:1 --background blur` for a
+square canvas and `--ratio 16:9 --background blur` for a landscape canvas.
+The effect is the same existing deterministic blur; these are H options,
+not separate styles or new three-digit codes.
 
 ## Gallery label
 
@@ -55,5 +64,6 @@ more than triple the pixel count. Check the final layout before allocating
 the canvas; oversized results report a suitable smaller source size. Offer a
 smaller export or ask explicit permission to resize a separate copy first.
 Never change the original or silently shrink the final photo. With `--share`, fixed ratios export exactly
-1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16) sRGB
+1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4), 1080×1920 (9:16) or
+1920×1080 (16:9) sRGB
 JPEGs; the thin border uses the usual 2048 px limit.

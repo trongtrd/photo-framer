@@ -51,7 +51,8 @@ def build_parser():
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--share', action='store_true',
                         help=f'Also export an sRGB JPEG, max {SHARE_MAX_EDGE} px; '
-                             'H 4:5/1:1/3:4/9:16 use exact 1080x1350/1080x1080/1080x1440/1080x1920')
+                             'H 4:5/1:1/3:4/9:16/16:9 use exact '
+                             '1080x1350/1080x1080/1080x1440/1080x1920/1920x1080')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT', 'TOP', 'RIGHT', 'BOTTOM'))
     parser.add_argument('--caption')
     parser.add_argument('--left-text', help='Style F: exact lower-left text; empty string means intentionally blank')

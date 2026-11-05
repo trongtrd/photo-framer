@@ -1,6 +1,6 @@
 # Handoff: Photo Framer
 
-Last updated: 2026-11-06 (approved v0.12 development; v0.11.1 released).
+Last updated: 2026-11-06 (v0.12 merged; v0.13 PR #11 approved for integration).
 Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography and post-processing terms. Ask with `AskUserQuestion` and give a recommended option when a decision is really the owner's. Otherwise proceed.
 
 ## Where to read first (do not duplicate here)
@@ -15,6 +15,7 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 | Renderer | `skills/photo-framer/scripts/photoframer/`: `styles/` (one module per style), `components/`, `registry.py`, `settings.py` (`Settings` and the `OPTIONS` matrix), `cli.py`. Entry point: `scripts/frame_photo.py` |
 | Tests | `skills/photo-framer/scripts/test_frame_photo.py` runs every module in `scripts/tests/`. Areas include input/color, C/D, E/F/G, H, labels/signatures, metadata, registry, capture sidecars and output preflight. Shared helpers and the `FramerCase` base class are in `tests/support.py`. One module: `python -m unittest tests.test_metadata` from `scripts/`; filter by name with `-k` |
 | Docs generator | `tools/gen_docs.py`; CI runs `--check` |
+| README gallery | `tools/gallery.py` defines and renders 91 representative examples; `docs/gallery.md` documents sources/recipes, `docs/images/gallery/manifest.json` records hashes. CI runs `python tools/gallery.py --check` |
 | Byte-identity check | `tools/golden.py compare --base <rev> [--new-flags "..."]` (~1.5 min, compares two code versions on one machine; every byte is compared, add `--ignore-icc-dates` only for a `--base` older than v0.11.1) |
 | CI | `.github/workflows/test.yml` (Ubuntu Python 3.10 with Pillow 10.1, plus Python 3.12 on Ubuntu, Windows and macOS, and Python 3.13 on Ubuntu) |
 | Fonts and licences | `skills/photo-framer/assets/fonts/README.md` (Inter only) |
@@ -23,7 +24,11 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 
 ## Current state
 
-This handoff accompanies unreleased v0.12.0: a 24 MP complete output cap, per-image capture sidecars for C/D, and gallery labels on A/B/G. v0.11.1 was merged at `2f64ad0` and released separately. The seven earlier stacked PRs (#1 to #7) were merged in order on 2026-11-05 with merge commits; no stacked PRs remain.
+The latest verified `main` is `5f49b92`: PR #10 merged v0.12.0 (24 MP complete output cap, capture sidecars, A/B/G labels). All 75 tests and all five main CI jobs passed after merging (run 60). The existing GitHub Release is still v0.11.1 at `2f64ad0`; v0.12.0 has no separate release. Earlier stacked PRs (#1–#7) and maintenance PRs (#8–#9) are also merged.
+
+This change prepares unreleased v0.13.0 on `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. On 2026-11-06 the owner explicitly requested opening and merging this change after checks pass. The resulting PR is #11: https://github.com/trongtrd/photo-framer/pull/11. This authorization applies to PR #11 only; it does not authorize another PR, a release or branch deletion. Verify its actual merge status and the latest `main` checks on GitHub.
+
+The owner also requested a black or colored gallery background to distinguish white frames. Thumbnails now use exact-black 432×432 PNG presentation squares, with the intact reduced frame centered inside at least 16 px of padding. Only this thumbnail surround is black; linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged.
 
 Takeover verified `main` at `2f64ad0`, all nine PRs merged, 64 tests passing and CI run 55 successful in all five jobs. The local checkout was stale at `6408659` and was fast-forwarded without edits. The current workstation is Windows, Python 3.14.8/Pillow 12.3.0, rather than the previous session's Linux environment.
 
@@ -31,7 +36,7 @@ The owner approved publishing v0.11.1 and deleting the final merged branch. The 
 
 The owner approved capture sidecars and gallery labels on A/B/G, then explicitly approved a 24 MP total output cap with no silent resizing. This work was developed on `codex/capture-sidecars-gallery-labels` as unreleased v0.12.0. On 2026-11-06 the owner explicitly requested opening and merging the PR for this branch once checks pass. That authorization applies only to this change, not future PRs, a v0.12.0 GitHub Release, or publication of the private signature files. Verify the resulting PR's merge status and the latest `main` checks on GitHub.
 
-Local v0.12 validation: 75 regression tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 86 seconds), generated docs are current, and golden against v0.11.1 passed all 302 cases / 1,044 output files byte for byte, including H labels on every ratio. The new 24 MP rejection policy is covered separately; the golden corpus uses smaller outputs. Development commit `a76e933` passed all five CI jobs (run 57). Read the latest PR or `main` checks before reporting final cross-platform status.
+Local v0.13 validation: 76 tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 81 seconds initially, 75 seconds after the thumbnail update). Generated docs and all 91 gallery recipes/assets pass their checks. Golden against `5f49b92` passed 303 cases / 1,047 output files byte for byte, including previously supported square blur. New 16:9 behavior has separate geometry, pixel, share-size, preview and limit tests. All five branch CI jobs passed at `eeef0b9` (run 65). Native GitHub rendering was verified: all 93 black-surround thumbnails load at the intended size and wide rows scroll horizontally; the 91 larger previews remain unchanged. Check the final PR head and post-merge `main` CI before reporting integration complete.
 
 Working rules for the next session:
 
@@ -54,9 +59,9 @@ Working rules for the next session:
 - **Signatures**
   - `--signature` is a user-supplied PNG only. No text-signature option and no font are involved.
   - Allowed on A, B, E and G. **H has no signature**: a corner mark beside the centered label looked unbalanced.
-  - Never create or copy a signature. The README has no signature example until the owner supplies a PNG.
+  - Never generate a signature or take one from a reference photo. Use only a supplied PNG. The owner approved selected sample 3 for public README examples on 2026-11-06; the asset is `docs/images/gallery/signature.png`, placed at width 0.12. That artwork is not part of the installed renderer and is never automatically added to users' photos.
   - Gallery labels and signatures are separate choices on A/B/G to avoid the same centered-label/corner-mark imbalance.
-- **H parameters**: 3:4 margin 4.0%, 9:16 margin 5.0%. Share copies 1080×1440 and 1080×1920. Blur darkens about 12% by default.
+- **H parameters**: 3:4 margin 4.0% of width, 9:16 margin 5.0% of width; shares 1080×1440 and 1080×1920. New 16:9 uses 5.0% of height (2.8125% of width), share 1920×1080. Blur works with every ratio, including 1:1, and darkens about 12% by default. The original three menu choices keep their meanings.
 - **Output size (owner approved 2026-11-06):** every style is capped at 24 MP for the complete framed canvas, replacing H's 100 MP and the other styles' 60 MP limits. Check dimensions before allocating the canvas; report a suitable smaller source size when rejected. Ask before resizing a separate copy; never silently downsize or modify the original. Compressed MB is not a RAM budget.
 - **Capture sidecars:** opt-in `--capture-sidecar` on C/D reads only the exact sibling `<input filename>.json` (UTF-8, at most 16 KiB, six capture fields). Explicit flags > JSON > EXIF > XMP. Display only; never invent fields, alter EXIF or select a logo from typed camera text. Missing siblings produce notes; malformed siblings fail only their own image.
 - **Process**
@@ -77,8 +82,8 @@ Working rules for the next session:
 
 ## Open proposals and owner choices
 
-1. Signature: the owner selected **sample 3**, then requested a smaller mark. Its reviewed mockup uses width **0.12** (down from 0.15), bottom-right on A, opacity 1.0. Three supplied PNGs were background-removed and tightly cropped with explicitly approved Python/Pillow processing, without regenerating lettering; white recompositing exactly reproduces all cropped source pixels. Review files are outside the repository under the owner's Dropbox `05_TEMP/Photoframer/signature-review-2026-11-06`, with the chosen version in `selected-signature-3/`. Obtain explicit permission before publishing the private signature in README.
+1. Signature selection and publication are resolved: **sample 3**, width **0.12**, bottom-right, opacity 1.0. The owner approved public README use on 2026-11-06. The original three sources and comparison files remain in their Dropbox; only the selected transparent PNG is used by the documentation gallery. Background extraction/cropping used explicitly approved Python/Pillow processing; white recompositing exactly reproduces the cropped source pixels.
 2. Camera names: the owner uses Sony α7C, already supported correctly; no expansion is needed for their current body. Other names remain subject to manufacturer verification before addition.
-3. Capture sidecars, A/B/G labels and the 24 MP cap are implemented and validated. The owner requested opening and merging their PR on 2026-11-06; approval remains scoped to that PR. No further feature is pending under this approval.
+3. Capture sidecars, A/B/G labels and the 24 MP cap are complete on `main` through PR #10. The owner authorized opening and merging the v0.13 landscape/gallery change in PR #11 after checks pass. Future PRs still require their own request and specific merge approval.
 
 No other new feature or release is authorized. Commits, PR text and repository docs stay in English; conversation stays in Vietnamese.

@@ -1,4 +1,4 @@
-# Rendering specification v0.1–v0.12 (24 MP cap, capture sidecars, A/B/G labels)
+# Rendering specification v0.1–v0.13 (24 MP cap, capture sidecars, labels, landscape H)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -171,6 +171,12 @@ Flat presentation: no shadow, frame or keyline.
 - v0.10 `--ratio 4:5|1:1|3:4|9:16|original` overrides row 1 (codes unchanged).
   3:4 minimum margin 0.040 × canvas width, 9:16 0.050; widths are multiples of
   3 and 9. Share copies 3:4 → 1080×1440, 9:16 → 1080×1920.
+- v0.13 `--ratio 16:9` adds a landscape canvas. Minimum margin is 5% of the
+  short edge (height), or 0.028125 × canvas width, mirroring 9:16. Widths are
+  multiples of 16; share copies are exactly 1920×1080. Codes stay unchanged.
+  Plain backgrounds, blur (including all three tones), labels and the 24 MP
+  total output cap apply as for the other H ratios. Square blur was already
+  supported through `--ratio 1:1 --background blur`.
 - v0.10 `--background blur`: the photo is fitted to cover the canvas
   (ImageOps.fit, BOX) on a working copy whose longer edge is at most 384 px,
   Gaussian radius 0.04 × the copy's short edge, tone dark (channels × 0.88,

@@ -1,0 +1,1965 @@
+{
+  "renderer_version": "0.13.0",
+  "pillow": "12.3.0",
+  "renderer_sha256": "30c4d739c1dc992032796934bdaf714408fa0cc1cb476d5e4a46ef8e0c2150e8",
+  "recipe": {
+    "version": 1,
+    "preview_edge": 1280,
+    "thumb_edge": 400,
+    "quality": 88
+  },
+  "thumbnail_recipe": {
+    "version": 1,
+    "edge": 432,
+    "image_edge": 400,
+    "background": "#000000"
+  },
+  "sources": {
+    "landscape": {
+      "recipe": {
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "thumbnail_recipe": {
+          "version": 1,
+          "edge": 432,
+          "image_edge": 400,
+          "background": "#000000"
+        }
+      },
+      "sha256": "c26aa6a073a910746dea4cb476d90224f65da1b374955c97aed3028cb0718ee9"
+    },
+    "portrait": {
+      "recipe": {
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "thumbnail_recipe": {
+          "version": 1,
+          "edge": 432,
+          "image_edge": 400,
+          "background": "#000000"
+        }
+      },
+      "sha256": "3a2a6c11bf66ee67fde38790ce8f2f9e81aba351fb5915236c570282921f94af"
+    }
+  },
+  "examples": {
+    "a-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-default.jpg": "bdee709c4076726adfe928896a9d11f0b40d2da0e55b3405ed350f34b55ed4d4",
+        "docs/images/gallery/thumbs/a-default.png": "60e8c4d25fe1947a36533789a6a673201b07a77dece0261c2f63e20cf36336a6"
+      }
+    },
+    "a-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row1-1.jpg": "3b54a4115097ef45c767cb25368bf8045b461a3e86c75a065f31a661ff865915",
+        "docs/images/gallery/thumbs/a-row1-1.png": "cd4ba9037cb9ae5be5e45054b805d83aaf10361cdfc6dd7cd2c394241c57e697"
+      }
+    },
+    "a-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "3-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row1-3.jpg": "3c5a4ef53d158ced40f0d3f92e78d5a9eaa5f6cbe0ec4f4e17089bc4b7623113",
+        "docs/images/gallery/thumbs/a-row1-3.png": "78b8f9be035c1a62c5b41b57d794f84709c1efd192550e918442eabcd99810e2"
+      }
+    },
+    "a-row2-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row2-1.jpg": "8383b060a0b18abd3d2b34bf60d497f8918878e6eca4b23a388649152aaebbe8",
+        "docs/images/gallery/thumbs/a-row2-1.png": "04e645d5cbad907711a3327234892c53ad369bce5e2f4d628b01bc4b3e4d95cd"
+      }
+    },
+    "a-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row2-3.jpg": "4c2e4cce38da966ba87c1fd5827b186f0601703a2e66252fe3a9b75de650f44b",
+        "docs/images/gallery/thumbs/a-row2-3.png": "6ffc0bc343217c3c0e9a4720bc0bc820754cfe6c067525df1282e63f46c63de4"
+      }
+    },
+    "a-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row3-2.jpg": "83f283606ca852fe762cc9fbd34fc95970f157aca0dfe94e3ffdcedd969beccd",
+        "docs/images/gallery/thumbs/a-row3-2.png": "7982298534772fa81c4d29a5e369f27ced0e40657b10987a0c333f0fc377e037"
+      }
+    },
+    "a-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row3-3.jpg": "88492ef0b4a7155867164f5ab7049657be32f06e4604b23097312af1da89cedd",
+        "docs/images/gallery/thumbs/a-row3-3.png": "7a83c6ee4cbd920fe213d90c4ffc976bce8a2b17c6b173c2e32ed9c34e2ebf68"
+      }
+    },
+    "a-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-caption.jpg": "53963ad4d5fbc2299d59f38d8aa37863919511b189d34add819873be788c4728",
+        "docs/images/gallery/thumbs/a-caption.png": "ab35f136d2154d873b3f7d919fc73e0b0dac12b7d2fd9edb85837090b0ad2d60"
+      }
+    },
+    "a-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-label.jpg": "65a2ec62e550406d4411fc349d55ccc90fcd506dc63bb8ac899cd6f43ece165f",
+        "docs/images/gallery/thumbs/a-label.png": "201090d590707de66a0b8b45d69b1dc094632a7670df11f5a0bdf717205a78e3"
+      }
+    },
+    "a-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/a-signature.jpg": "50cccdd3b920dde474083bf8bcb7891f61f50d57cf202a6c9be4ede9fc4cf73e",
+        "docs/images/gallery/thumbs/a-signature.png": "6aa8a33b2312ad1245c5ce9443653f0ee1c00f81ae75c08346017e21f597d43c"
+      }
+    },
+    "b-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-default.jpg": "53b086c90bd767748d9b97bb647af5d81e68a3d552925544e2807f70700e6534",
+        "docs/images/gallery/thumbs/b-default.png": "7162a7334ed390b72e8c36714cc01a80acfac4b413d83fb003274b92041d4e7f"
+      }
+    },
+    "b-row1-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row1-2.jpg": "8ebff8f8715b11006db17c5860d18c864b39f28566f6a6e8af9c125f00bee028",
+        "docs/images/gallery/thumbs/b-row1-2.png": "e13c5b4ec4b24dc82119b4238ae89d45e810dba29d68d59a8eb7c2d3c34d08ee"
+      }
+    },
+    "b-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "3-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row1-3.jpg": "e1db032c1c141c4a568f88164f8f1a92b4f910e3ab8b87c11dd60f84a5f3455f",
+        "docs/images/gallery/thumbs/b-row1-3.png": "136ad67d0d027c59a0ea85b74808f6984ad6f88a9a3384daa6f31fe5d3336c4e"
+      }
+    },
+    "b-row2-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row2-1.jpg": "ee6b584340b16dfccb520f65cf88685cc958b7b1dcad0748aa5e7b9485da810b",
+        "docs/images/gallery/thumbs/b-row2-1.png": "7694fe86c1978cff32f8b588d1c396133e9e1e4d471bed1ea5abebe02692f9d1"
+      }
+    },
+    "b-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row2-3.jpg": "56594c35fdf2701a22378245d59ed84bed2c1efbceeba594e22ffff2ce1e3640",
+        "docs/images/gallery/thumbs/b-row2-3.png": "c23ca99a0847f087c262a1d29a3ad358200b5300850670a8160ee1ca9a832578"
+      }
+    },
+    "b-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row3-2.jpg": "376884ea2be0e7c77fc14a7eda12208cedb4ce7da7ecb56d4cd669d2d45415a3",
+        "docs/images/gallery/thumbs/b-row3-2.png": "c4f30b9dd46a520061c68c87516cdd007178edbd79379ae1d0707d392d7d6d9f"
+      }
+    },
+    "b-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row3-3.jpg": "204818be091f2a6b11bfd892d515a011c19d8342cd838d16163de624b2744be4",
+        "docs/images/gallery/thumbs/b-row3-3.png": "09d5298e13058f03ee11c578e9a13ba37ba71024630274a410bcaed721fb2395"
+      }
+    },
+    "b-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-caption.jpg": "9ca4c104b581a14fdaad81fc2d1e6112886911601ad1234a2537d175ad6e7b43",
+        "docs/images/gallery/thumbs/b-caption.png": "11d5b1283ef25d5b86d4237b7768d50038eb35aaec9f7421d5c5442264a17923"
+      }
+    },
+    "b-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-label.jpg": "78cb3e65cd5b308e1610c8ecbeb2c77d4734c627c65affbdd26d442128f052bc",
+        "docs/images/gallery/thumbs/b-label.png": "3021f63bc48c1c938dec7317855160d17173fa251ce7247876e80de8763ed89e"
+      }
+    },
+    "b-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/b-signature.jpg": "2a8b7c579fbb79db277025bfff6f9c258ff9ab4d889bb901ab72f13030d63bad",
+        "docs/images/gallery/thumbs/b-signature.png": "6e98c92703797195829ae6681947b438ec0de4613c2fde8038a73148d8f0a517"
+      }
+    },
+    "c-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-default.jpg": "bdb959dd744b36539bace99c9cb24dad57e6f7592ba6ddcb15dab562e2f890f4",
+        "docs/images/gallery/thumbs/c-default.png": "c399f432839bd46eedef3e06105ccb93c0e894ef8297906dc0ac6f3fa70a3171"
+      }
+    },
+    "c-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row1-1.jpg": "9ada85c234c194ce95f05e59c585e1624257649d1cb9f66a8fb1024d2bb8f252",
+        "docs/images/gallery/thumbs/c-row1-1.png": "73f5122c44398b36e7d365f960f19aac71c54e0b7dac052eb2740a8821368fa1"
+      }
+    },
+    "c-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row1-3.jpg": "da81d29d2e17f5cc743bcada48da3c838cdfc7bcbfe9ad5e5692b1b2fd1d3f96",
+        "docs/images/gallery/thumbs/c-row1-3.png": "d0e1400d8528b20f0934d7e3abcf7ffcda4906b8d26fcf01411d34c81d25afba"
+      }
+    },
+    "c-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row2-2.jpg": "f5f222b08da1785424acdf2eb5384e6a2539a300dc0c658dd1bda2a6a641d171",
+        "docs/images/gallery/thumbs/c-row2-2.png": "d7d4ad31b6879c5f32c4d8d886edbb304b09ae6ff293b0ede42d8d6f3bb928fb"
+      }
+    },
+    "c-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row2-3.jpg": "f688d78939ceb606eac64cc961f591110d9c53d84c74086cad2675a642b5216e",
+        "docs/images/gallery/thumbs/c-row2-3.png": "5a9a8522f4e0d8226d84a273bf870c3282c6babcdf6ba09e9046d5233bb76d6d"
+      }
+    },
+    "c-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row3-2.jpg": "a219e1093322140cdc2ca7c95858d67ced0d948fc3e52ce49fb907c7728b800c",
+        "docs/images/gallery/thumbs/c-row3-2.png": "ede96f1d43f0a90bbb27c2398726aaf5eebc412ab1c282729f019cab6e033672"
+      }
+    },
+    "c-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row3-3.jpg": "21350b7719011dfe117ac474b1456b8f079d840c363bd66cd0d17c24fcb474ce",
+        "docs/images/gallery/thumbs/c-row3-3.png": "d14bfd86253e8bd020406f55b4477be7c1a918ef7fde9d13f61c3db726812b29"
+      }
+    },
+    "c-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-caption.jpg": "4cbc182d9a5b1cfd338f1623ce01d08058487a870bcaec428d4b3f7f531d4e6d",
+        "docs/images/gallery/thumbs/c-caption.png": "5650b7a523495fb5edb2e480706232b211affa672f308395588f916357ca3867"
+      }
+    },
+    "c-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-raw-model.jpg": "6eec01d053ee43b3847c28eae63df67c799f31d92f81738e64235211affb205e",
+        "docs/images/gallery/thumbs/c-raw-model.png": "df7421b0bc92f3a0d5ae5e640fc811a5b9bb40f71227d0fd419dec3d02e79a84"
+      }
+    },
+    "c-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/c-sidecar.jpg": "10e2e64fd43ed0ab6af250f1f9e4393f846e45fec74f4fb53b9a5601d471975e",
+        "docs/images/gallery/thumbs/c-sidecar.png": "dc30c3750bb96a07e341f0733f0dde49969c1d1804c23eb9cd49a5e1ad6920bd"
+      }
+    },
+    "d-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-default.jpg": "55143a61b71e3cb0eb00af01350b607774ff3a39df3ea41378e5bfc202229cc1",
+        "docs/images/gallery/thumbs/d-default.png": "e592e63ef155d9ec21d426056a7d9604b708439fb1d2468e485884fd314494a2"
+      }
+    },
+    "d-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "1-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row1-1.jpg": "cf2e188fad67375caca34e537e94d1588c4b007b0b2de8189a89f992d7b3c8ec",
+        "docs/images/gallery/thumbs/d-row1-1.png": "086ade2c83a1338d0992972e0a4001cdf662ca18bbc1ce13714fe79013e8f8d9"
+      }
+    },
+    "d-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "3-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row1-3.jpg": "482fc496ea6c37654c10d9f026711d1ff62b01f3621c8d6a90baefd3bea60897",
+        "docs/images/gallery/thumbs/d-row1-3.png": "6cdcd63761488d4b4e109a5087fc9c11b116a1be5827095b6596a5e87a8b58c3"
+      }
+    },
+    "d-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-2-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row2-2.jpg": "495c9a05ccc58a63a763734ed218c2ab414dfc0c174cd3b360f0403220626ee6",
+        "docs/images/gallery/thumbs/d-row2-2.png": "e7e331a93b07a3f1e4c4a4e2dfb16a3a08dc6202f166441caa31a72790742479"
+      }
+    },
+    "d-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-3-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row2-3.jpg": "3d5cd6d746d85096c4f3fdd2963f63a6b2f097e2199defa7ed3589e130cd9d90",
+        "docs/images/gallery/thumbs/d-row2-3.png": "29492dff11ec16fe70d9e68d65f4d5eeeeb6d5c2f5157062ffe9eb683ed96c63"
+      }
+    },
+    "d-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-2",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row3-2.jpg": "17da90492c3630a98edeaaf2672fb7884f5d697498e7b912448bdc1c79a1a19d",
+        "docs/images/gallery/thumbs/d-row3-2.png": "144aa8f5a537acfad88f972defdbd253e99dfa9fb82606de23fdd28eaedd431b"
+      }
+    },
+    "d-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-3",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row3-3.jpg": "15f47941ce2916448a70b2efa6e3c2e9d0f162ab4a4963b8b869b034d630f114",
+        "docs/images/gallery/thumbs/d-row3-3.png": "30e80c2eb0cdd75939473c57ff79f55926e7ec9d3ba83008565f23d208798ff2"
+      }
+    },
+    "d-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-caption.jpg": "d23eaf696c0ed9311d223e6219b57d076117b13783eaa16decb2d628bccf553e",
+        "docs/images/gallery/thumbs/d-caption.png": "bf81a9ed46337e05932e82a5c496c268dcf07e3b2f3de69cec969921e348b6df"
+      }
+    },
+    "d-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-raw-model.jpg": "c9fbf0a5b49973e3236ec450ac71e0c4695494101846846d03eba00a7e7e72fe",
+        "docs/images/gallery/thumbs/d-raw-model.png": "50f5a42f74a1ba392a096c772025c07885d197d1e61325c1e6959f4dbc38111d"
+      }
+    },
+    "d-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/d-sidecar.jpg": "63a2d7fd9c32d86db8cd3839d3f0bbc3c4a528bb2ef2293e9d3a066b6713c290",
+        "docs/images/gallery/thumbs/d-sidecar.png": "fcfcf818a441fc5a011bb8ce0b54d4e75715bce4629976a4ec30569f138b310f"
+      }
+    },
+    "e-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-default.jpg": "51a99024a7ec07ea677d1e393b3b6a4784846a0d7b90691b5b131f68aa949ab2",
+        "docs/images/gallery/thumbs/e-default.png": "43963736b9d1a46e6c70028dc6360f7bc76bb45c196689b1e6d6ea108e9a49bf"
+      }
+    },
+    "e-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row1-1.jpg": "f722c6359597301f2ca7595b3a1b1627a45afe546d04da0a61f7ba1dd8a39cc1",
+        "docs/images/gallery/thumbs/e-row1-1.png": "f32339bd08494061fb587d2acc9a31c51e8bad343f2ef2fca8fd72f988f13756"
+      }
+    },
+    "e-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row1-3.jpg": "aeb4c4a1c72fcbf2244923f706f4133e033b85c44e43b1b75f7b6e8cc0c7b349",
+        "docs/images/gallery/thumbs/e-row1-3.png": "6a1d1c812b2adffbc967df60f709e5e8e7aff05eed096cbfd56a6fba2683cb16"
+      }
+    },
+    "e-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row2-2.jpg": "0366c4f7fe555df90f0860e893e11bcde0d02a579cb2a675acce229a1b34d565",
+        "docs/images/gallery/thumbs/e-row2-2.png": "dddc8fd263da02aa6c740b9415ba3f29658706dee380652067e1e6b7b89cd141"
+      }
+    },
+    "e-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row2-3.jpg": "a87a189c485dcd8770af762ecf7eb5f138654035d20a875c6b46a24288973d5a",
+        "docs/images/gallery/thumbs/e-row2-3.png": "920b868ba47e5e559704be7f1d83eaeb1397b9ea472b155d53713aa8164b78c5"
+      }
+    },
+    "e-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row3-2.jpg": "9789c53204a773907d1fb052df9f0aac78ef4538fb4418c800e94d5cd0ee4264",
+        "docs/images/gallery/thumbs/e-row3-2.png": "ba88ac268f5971e7dbd6feb00e0f10b89e01b5cae39cf806bdb1e90b35df6fa9"
+      }
+    },
+    "e-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row3-3.jpg": "f0bb403aeed57d780690e742d0b1189e0086c522d434fdd170a553d08a4fc5ad",
+        "docs/images/gallery/thumbs/e-row3-3.png": "1f89d6964a5ee1852cf30693aeae75e06fc87e64d4ce9e5dd937a1b8c7102395"
+      }
+    },
+    "e-fixed-color": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "frame_color": "#ad896c"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-fixed-color.jpg": "9f7312315bbd813f8ca838d7d719a66ad2fd7c62dc0202b0982f42a2ef24823e",
+        "docs/images/gallery/thumbs/e-fixed-color.png": "4768fe10f4fa055967488f87b52ca8da486afa76e8388157c1dadfe986d65ba4"
+      }
+    },
+    "e-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-caption.jpg": "474a0914ff385ee56f0a1129eb1ccd413cbb1a613204db10a092816c7439f468",
+        "docs/images/gallery/thumbs/e-caption.png": "8eefbe81026ca8c21dfe8b2a222fb6012e8e4b71240f30e6dcc1ed649ba8e338"
+      }
+    },
+    "e-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/e-signature.jpg": "7697c5ac823dac8111faca54150b02441e328ce3e0e973084971c4d5603c12c0",
+        "docs/images/gallery/thumbs/e-signature.png": "3114e87628c8725b7481e2bf6d588c5d9c5771e41fdd7d007559307fa78ec8b3"
+      }
+    },
+    "f-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-default.jpg": "36029188fa18d97f322b92dbb648379f4058a5cad2f4a842fea0c963846733ba",
+        "docs/images/gallery/thumbs/f-default.png": "a82c753d75863552f72cb8f260dd995ae18e619c0a0aeeb8ba4ac73950bd32fa"
+      }
+    },
+    "f-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "1-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row1-1.jpg": "3014136b58bf7e0e91e0d4b97fbb8d6eb97ed9ff1b2fd79abc84d88febc82f9c",
+        "docs/images/gallery/thumbs/f-row1-1.png": "42937bc1a500654594493387df7e2ef8aa3551d252a45740da324d21ad9b8cd6"
+      }
+    },
+    "f-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "3-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row1-3.jpg": "3f63d140ebd729b9431fe33b9f058830fea15418dc1791306d2158b8be9c1c27",
+        "docs/images/gallery/thumbs/f-row1-3.png": "392a6f1c66e723caab7f5a011a7aea51afbf7ef7e36f00739582b04d12116b64"
+      }
+    },
+    "f-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-2-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row2-2.jpg": "2402ad6ab77ff2b211845699ab13c9660fc1394a95bd2cb481948569aced0b3e",
+        "docs/images/gallery/thumbs/f-row2-2.png": "53c3b0587642b27047a7759ab76fc6ee1a83ae62697821b56642bc45ad7390f0"
+      }
+    },
+    "f-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-3-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row2-3.jpg": "8f45fa0cc41e50a133be51c65ceb68c4d049f825b324ceadfd6ade74d4bdc152",
+        "docs/images/gallery/thumbs/f-row2-3.png": "fdd7b294e2fd724c1bfe6d993fc07ccd43777b8f5679bae6ea641a853b77b009"
+      }
+    },
+    "f-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-2",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row3-2.jpg": "6eebf6fcc79b10529a9042f67165aadea23e5074b7d28f9f6d48f6df325fb6cd",
+        "docs/images/gallery/thumbs/f-row3-2.png": "f0b5088092db225c63797d77c5752d4b3c4a0ee725f267fdbab5d1ddc290dd28"
+      }
+    },
+    "f-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-3",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row3-3.jpg": "e0f35647af6bd642f88a605d64ab65901a6fe23e7b6d28ffecf1ac22de0998ae",
+        "docs/images/gallery/thumbs/f-row3-3.png": "28603c683a00368b6798dc9d80ce22538f2df63017aff1d9aa304f902780bff3"
+      }
+    },
+    "f-text-blank": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "",
+          "right_text": ""
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-blank.jpg": "a28bac640f8345d38485e452305eb2c8ee05040cf15edc163d2d5c4645cbd809",
+        "docs/images/gallery/thumbs/f-text-blank.png": "7f4e4d993ea35c9663da404d5c485ad88310f7680a99b9537135056bc0c98eac"
+      }
+    },
+    "f-text-left": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": ""
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-left.jpg": "5111e7caebb2bf4d9dd50c515577a3c8b4b835ec200a1d76bbc7783e209fd787",
+        "docs/images/gallery/thumbs/f-text-left.png": "07ab2ed647b3fac49a45ee7db915676e04427c2c5986fd607d65e3ad1cd30085"
+      }
+    },
+    "f-text-right": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-right.jpg": "039745efdb62f9851934fd41691847ec2c830ec8c1425f2d867927efd78b2bfc",
+        "docs/images/gallery/thumbs/f-text-right.png": "45d1b493c42052376a81d8cc58822eb632d2840e1578d2ce124c97868b924d5a"
+      }
+    },
+    "g-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-default.jpg": "acabb277865c462a6fe1c9ff97eb3d0ee9b8d90b82243a4cfca7477a38e331c2",
+        "docs/images/gallery/thumbs/g-default.png": "7c13682c3c6f50c9e092cb2c8bc024627dcc7fe6ee97c4b130cfbd3aa57d7420"
+      }
+    },
+    "g-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row1-1.jpg": "84efd425eb0bd0f70ad38b6eeea09c58946bf27c63bc8dcb0256cfe5aa045693",
+        "docs/images/gallery/thumbs/g-row1-1.png": "bd943c4d93510723fc73353c8dc321a5f4dd2655afaba20978d75d8ca037de03"
+      }
+    },
+    "g-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row1-3.jpg": "425731ca267ab580a440587770f5389116681e0008fe4c679423cea9d620f606",
+        "docs/images/gallery/thumbs/g-row1-3.png": "451fa36fff3ce5f204355e3c5630c9d2e93dd5b832d2806e1e13f6744e99d4e4"
+      }
+    },
+    "g-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row2-2.jpg": "a890353be7160dc6b6b70d6fcfc371d9671ae3fc2fe1b042460d7ceceaa7d5de",
+        "docs/images/gallery/thumbs/g-row2-2.png": "cf098b414ad9c4a660f6781c920b48a01d7ee2680bf00f58c9437b11b5c9174a"
+      }
+    },
+    "g-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row2-3.jpg": "17db427d9e5441713c4231baccef1d650ea073a9c91dbe01553d9e9e57e4f9c2",
+        "docs/images/gallery/thumbs/g-row2-3.png": "d12acede375401a07993b5fdf0a06ca43e92afd4f102bcdf5a6544c3e5848b28"
+      }
+    },
+    "g-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row3-2.jpg": "f55cee4c870a90eff3a1cc113af4ea8b852b1237e2b562a5a3a3ce4d75f6a039",
+        "docs/images/gallery/thumbs/g-row3-2.png": "8953e0d6c6e7fbf67caf6c54df6491301c62daccbde85e078090deb92a3a5e64"
+      }
+    },
+    "g-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row3-3.jpg": "77f32c68587a465f4a3e2e1793872b9d6578686098cdc487b1c90149b7942652",
+        "docs/images/gallery/thumbs/g-row3-3.png": "514b103cb87d58b8dbcbb4c5fdefb86ea2dd7b08ff7cab49d08a84d829dfd0a2"
+      }
+    },
+    "g-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-caption.jpg": "44a7e30e18e3016723e3403b5ceb111b1b8a4fc52143af7ec2e00fafbc127e9b",
+        "docs/images/gallery/thumbs/g-caption.png": "e5ad540754013b230f962d674ea623cf83b2cd09f25fc7c807baaa1e0114dc44"
+      }
+    },
+    "g-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-label.jpg": "707940d94570347ea05527cba33479127037ea0ce4de58fa429b13fa3ba4cb09",
+        "docs/images/gallery/thumbs/g-label.png": "3a698320551a51d815b3fa0e3ac804222d23e12d2a1e8d8c20e07aa94ab6a0b2"
+      }
+    },
+    "g-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/g-signature.jpg": "6820fe9691bef41a8659dd4061f75f33939fe23856a6a4c4172463821c9b6db5",
+        "docs/images/gallery/thumbs/g-signature.png": "e384be0f33688fbeee1b1aeef8a61901100873bacd4eddf796df9555bcbef368"
+      }
+    },
+    "h-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-default.jpg": "0bcc0b56415d7f711bd8047d0cea19076f4609269e12019cc9abc29049609a46",
+        "docs/images/gallery/thumbs/h-default.png": "284a735320a3272e0fc0f54590b45008918cb25cd54a9c9e9495fd7fc349a329"
+      }
+    },
+    "h-ratio-1x1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-1x1.jpg": "3fbb9d602265c54aaa0b26b22a5fd78b5095cf75193adc1642ab542a64db6e19",
+        "docs/images/gallery/thumbs/h-ratio-1x1.png": "8ad9d62f2e405cde1fe9441869b86cb57138337f07afdc1953db378c2ff288d3"
+      }
+    },
+    "h-ratio-original": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "original"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-original.jpg": "03872069f602c26548266ffcf982c1ea6114d8184ff7336be391845974725979",
+        "docs/images/gallery/thumbs/h-ratio-original.png": "b0760a2f7e73cb1fd3ee12e98b08ecadb9499008e95620f7861ba40b183764c6"
+      }
+    },
+    "h-ratio-3x4": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "3:4"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-3x4.jpg": "82d3aed8da962bc5ecc88734c7aed40dd76a088a1e19ebda5c4fa55f0f6e7bf2",
+        "docs/images/gallery/thumbs/h-ratio-3x4.png": "3dd01c0cd990b51d41f25c02fac27a71de19259440f9a0f7772527dce3d36496"
+      }
+    },
+    "h-ratio-9x16": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "9:16"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-9x16.jpg": "54bc2c582d1ff3fa0955269f47b145b215567d75efa781f327948d3f2a26cf61",
+        "docs/images/gallery/thumbs/h-ratio-9x16.png": "9d743bd103a6bee3e3c9cc601fc5c350ae822c43c03fbacddfc8c887a7d34b1e"
+      }
+    },
+    "h-ratio-16x9": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-16x9.jpg": "767899ddc162e87808846af6e8269855cde2b95d4effa879ef19304b07e3ceb7",
+        "docs/images/gallery/thumbs/h-ratio-16x9.png": "dcff19aadfef3831563b8b4f56827d2964c38325beb618fe217b8870755902c8"
+      }
+    },
+    "h-blur-16x9": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-16x9.jpg": "cb202f7a4270d8e7d51e1b112599f8cd9e642e2aa91c910261f076b9579b51b1",
+        "docs/images/gallery/thumbs/h-blur-16x9.png": "b553681ccad1c79fd6b0dfb610c4f03c370979a65e189729cf10d312ad158385"
+      }
+    },
+    "h-blur-1x1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-1x1.jpg": "a87aeb9bb726f464996fc9f7a010c90811c0c37dbc22a87e4e0a58d6da9a076f",
+        "docs/images/gallery/thumbs/h-blur-1x1.png": "8b4d20c9448d38db7d87fdeb182146a3d55966c40e0b8e3995eeb6b3e2bd750c"
+      }
+    },
+    "h-blur-9x16": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "9:16",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-9x16.jpg": "6402a64a52aed3a99847cdc542f197d3aea1f9a2eee77d1e1b0822cd7ffc3710",
+        "docs/images/gallery/thumbs/h-blur-9x16.png": "cc47417f2b4d1e44eee3823c9ae56003a891e15e196d592a753dc27504294fee"
+      }
+    },
+    "h-blur-4x5": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "4:5",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-4x5.jpg": "51fb9521162be01f99cbf096d2097cebb6eb075eb14014bc57d073a8e452e515",
+        "docs/images/gallery/thumbs/h-blur-4x5.png": "a01606ad65d73d8fd5b4167e3f1f8c3e997baeb88cce2c27c52141f68155c576"
+      }
+    },
+    "h-blur-3x4": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "3:4",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-3x4.jpg": "49396c6f7c7fbe6f8a18812bd19613a44b3aacd0b47ef2f911e321b5555c06a5",
+        "docs/images/gallery/thumbs/h-blur-3x4.png": "7031692706b422a602d47e9ee536aaea6374bf2d2b769c47a4be3a58b3bc25fd"
+      }
+    },
+    "h-blur-original": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "original",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-original.jpg": "f35a091627bb79c78c6cb2ab71c4105c1991ebe5367053ad1fa244ae7588939f",
+        "docs/images/gallery/thumbs/h-blur-original.png": "234ed042068c6e5da00ba385f088abcbcf91ee028b8433dc6e8cf0e97910b1e3"
+      }
+    },
+    "h-blur-tone-neutral": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur",
+          "blur_tone": "neutral"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-tone-neutral.jpg": "c30f8ec251233f0ee9b6cc226d7b6c97e6e89d24af78b047a4484aa44811f0ab",
+        "docs/images/gallery/thumbs/h-blur-tone-neutral.png": "5308dec59cfe98237b6f1ff800502f9c9db4c59b37dee831b62e00fb3fe43c67"
+      }
+    },
+    "h-blur-tone-light": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur",
+          "blur_tone": "light"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-tone-light.jpg": "fcc6d278a8365c37463129aa5584499cbe04502e636ca637c3b7221b19228028",
+        "docs/images/gallery/thumbs/h-blur-tone-light.png": "14cb4216c1b9f5bb194b1270b5361343e0e38f03a3d50e25cbbfc4814c028a18"
+      }
+    },
+    "h-gray": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-gray.jpg": "2e09e5387dbe388245e2ffda24f668c00e577df7d69b5b913cf2521e22af108f",
+        "docs/images/gallery/thumbs/h-gray.png": "c10430046ea7b0585f7b94a50cb0814416c59e47990a6f799b18142215eb875b"
+      }
+    },
+    "h-ivory": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ivory.jpg": "8bd2fcb797b6ef381ee7e50d72a964b6c485fcd0f7c8de9083f566685fe837d4",
+        "docs/images/gallery/thumbs/h-ivory.png": "4fbf36fb639300c471e091ae10ce2fc8a25303c6b665fa832cf2b8be8dd0658f"
+      }
+    },
+    "h-no-keyline": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-no-keyline.jpg": "e74d5d6da75b5e36ca2cd7529ac77e9edb9b08609f13130d698c10ee05c05960",
+        "docs/images/gallery/thumbs/h-no-keyline.png": "4e30c700422f7f86b55441d7c78a6237db6d65bf29778ca9d9adae7aa5210560"
+      }
+    },
+    "h-thick-keyline": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-thick-keyline.jpg": "0bfc62ec6ab16c394144d0f598edb7819af1b69260377718c32a014929f75612",
+        "docs/images/gallery/thumbs/h-thick-keyline.png": "0d883eec2bd92db7dc857ee951868250c651c08e0f36c8b14f233ea5ffa33f04"
+      }
+    },
+    "h-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-caption.jpg": "5cd6c45c93720bb9fa3b6c0fc5700827394b8184c25ebafa69b2d4c2e087ff06",
+        "docs/images/gallery/thumbs/h-caption.png": "78816754e4cdc76e58fc78a315295ef40bc25af0b3135dcb5b14760d2724b377"
+      }
+    },
+    "h-portrait": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-portrait.jpg": "8c23e1e8c7aee9757b06f3d944af24220c7acc32d0f31104a5a4e50133671d85",
+        "docs/images/gallery/thumbs/h-portrait.png": "17e92348271b1548bf14e105bc2209c3ab4c8cfd8135db97a2bdad70c97a0159"
+      }
+    },
+    "h-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-label.jpg": "5d8cafcf7d5be0a6cf8790a59c6114368efe6fa009624e13f3fbaf0e5f11a84a",
+        "docs/images/gallery/thumbs/h-label.png": "342b8256eea2ad486aed57719c449e58e5952cfc3c983103cbbd670cb7204e75"
+      }
+    }
+  }
+}
