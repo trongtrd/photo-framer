@@ -13,16 +13,17 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 | Menus (VI/EN), named-flag matrix | `skills/photo-framer/references/menus.md` (tables generated) |
 | Geometry, colors, fonts, slots, EXIF rules | `skills/photo-framer/references/presets.md` |
 | Renderer | `skills/photo-framer/scripts/photoframer/`: `styles/` (one module per style), `components/`, `registry.py`, `settings.py` (`Settings` and the `OPTIONS` matrix), `cli.py`. Entry point: `scripts/frame_photo.py` |
-| Tests | `skills/photo-framer/scripts/test_frame_photo.py` runs every module in `scripts/tests/` (60 tests, ~30 s). Modules by area: `test_cli_and_input`, `test_spec_cards` (C, D), `test_styles_efg`, `test_style_h`, `test_labels_overlays`, `test_metadata`, `test_registry`; shared helpers and the `FramerCase` base class in `tests/support.py`. One module: `python -m unittest tests.test_metadata` from `scripts/`; filter by name with `-k` |
+| Tests | `skills/photo-framer/scripts/test_frame_photo.py` runs every module in `scripts/tests/` (63 tests, ~35 s). Modules by area: `test_cli_and_input`, `test_color_profile`, `test_spec_cards` (C, D), `test_styles_efg`, `test_style_h`, `test_labels_overlays`, `test_metadata`, `test_registry`; shared helpers and the `FramerCase` base class in `tests/support.py`. One module: `python -m unittest tests.test_metadata` from `scripts/`; filter by name with `-k` |
 | Docs generator | `tools/gen_docs.py`; CI runs `--check` |
-| Byte-identity check | `tools/golden.py compare --base <rev> [--new-flags "..."]` (~1.5 min, compares two code versions on one machine) |
-| CI | `.github/workflows/test.yml` (Ubuntu Python 3.10 with Pillow 10.1, plus Python 3.12 on Ubuntu, Windows and macOS) |
+| Byte-identity check | `tools/golden.py compare --base <rev> [--new-flags "..."]` (~1.5 min, compares two code versions on one machine; every byte is compared, add `--ignore-icc-dates` only for a `--base` older than v0.11.1) |
+| CI | `.github/workflows/test.yml` (Ubuntu Python 3.10 with Pillow 10.1, plus Python 3.12 on Ubuntu, Windows and macOS, and Python 3.13 on Ubuntu) |
 | Fonts and licences | `skills/photo-framer/assets/fonts/README.md` (Inter only) |
+| Bundled sRGB profile | `skills/photo-framer/assets/profiles/README.md` (`srgb.icc`: LittleCMS's built-in sRGB with a fixed date; how to rebuild it) |
 | Camera display names | `skills/photo-framer/assets/cameras.json` |
 
 ## Current state
 
-Everything through v0.11.0 is on `main`. The seven stacked PRs (#1 to #7: style H, the foundation refactor, the metadata layer, H ratios and blur, labels and signatures, one typeface, C and preview polish) were merged in order on 2026-11-05 with merge commits, each retargeted to `main` after the one below it. No stacked PRs remain. The old `claude/*` branches of that stack are fully merged and carry nothing that `main` lacks.
+Everything through v0.11.1 is on `main` (or in the PR that carries this handoff). The seven stacked PRs (#1 to #7: style H, the foundation refactor, the metadata layer, H ratios and blur, labels and signatures, one typeface, C and preview polish) were merged in order on 2026-11-05 with merge commits, each retargeted to `main` after the one below it. No stacked PRs remain. The old `claude/*` branches of that stack are fully merged and carry nothing that `main` lacks.
 
 Working rules for the next session:
 
@@ -57,18 +58,17 @@ Working rules for the next session:
 - **Photo data.** Never crop, alter or invent owner photos or test data without saying so. Use `docs/images/demo-source-final.jpg` and `demo-portrait-source.jpg`; the owner authorised both for publication.
 - **Test assets in previews.** Stand-in assets shown to the owner must be visibly neutral. A test signature PNG drawn in a serif font caused confusion.
 - **Typography.** The owner checks visual consistency closely: fonts, colors and balance. Compare new text against the C/D spec band before proposing it.
-- **Generated sRGB profile.** Outputs that embed it carry a LittleCMS timestamp, so reruns differ in bytes (pixels are identical). `golden.py` zeroes the timestamp before hashing.
+- **sRGB profile.** Since v0.11.1 the embedded sRGB is the committed `assets/profiles/srgb.icc`, so outputs are reproducible and `golden.py` compares every byte. The same bytes come out of LittleCMS 2.15 and 2.19 (checked), but a new LittleCMS could change the built-in profile: `test_color_profile` compares the bundled file with the installed build's, ignoring the date, and will say so.
 - **Pillow bomb limit.** It also applies when re-opening our own outputs. `io._allow_pixels` raises it to exactly the encoded size.
 - **Memory.** A 97 MP H render peaks at about 1.24 GB RSS.
 - **Moving tests.** When tests are reorganised, check that the set of test names and their bodies are unchanged (the 2026-11-05 split was verified by comparing the AST of every test method before and after) and mutate one rendering constant to confirm the suite still fails.
 
 ## Open proposals (not started; owner has not prioritised)
 
-1. Reproducible outputs: commit a fixed sRGB ICC profile. This changes bytes but not pixels, so it needs the owner's approval; it would also remove the timestamp workaround in `golden.py`.
-2. Lower memory for large H outputs: verify the photo region in strips instead of decoding it whole. Worth doing only if near-100 MP renders are real use.
-3. Expand `cameras.json` after the owner reviews the list added in v0.9 (many names were written from memory).
-4. A README signature example, once the owner supplies their PNG.
-5. Per-image sidecar JSON for typed capture details in batches (new feature, ask first).
-6. Possibly extend the gallery label to A/B/G through the matrix (ask first; weigh the balance argument that removed the H signature).
+1. Lower memory for large H outputs: verify the photo region in strips instead of decoding it whole. Worth doing only if near-100 MP renders are real use.
+2. Expand `cameras.json` after the owner reviews the list added in v0.9 (many names were written from memory).
+3. A README signature example, once the owner supplies their PNG.
+4. Per-image sidecar JSON for typed capture details in batches (new feature, ask first).
+5. Possibly extend the gallery label to A/B/G through the matrix (ask first; weigh the balance argument that removed the H signature).
 
-Done since the last handoff: the test file was split by area (this PR), and #1 to #7 were merged.
+Done since the last handoff: #1 to #7 were merged; the test file was split by area (#8); the sRGB profile is now a committed file, golden compares every byte, and CI runs Python 3.13.

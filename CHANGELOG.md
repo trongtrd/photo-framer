@@ -2,11 +2,15 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
-## Unreleased: maintenance
+## v0.11.1 (2026-11-05): reproducible outputs and maintenance
 
+- **Reproducible bytes.** Previews, share copies and photos without a profile used to embed an sRGB profile that LittleCMS built at run time with the current second in its header, so the same command gave different bytes from one second to the next. The renderer now embeds the committed `assets/profiles/srgb.icc`: LittleCMS's built-in sRGB (description "sRGB built-in", copyright "No copyright, use freely") with its creation date fixed at 2026-11-05. The bytes are identical for LittleCMS 2.15 (Pillow 10.1) and 2.19 (Pillow 12.3) apart from that date, which a test checks. Pixels are unchanged: `tools/golden.py compare --base <v0.11.0 revision> --ignore-icc-dates` finds all 296 cases and every output file identical on Python 3.13/Pillow 12.3 and Python 3.12/Pillow 10.1.0.
+- `tools/golden.py` now compares every byte by default; `--ignore-icc-dates` restores the old date-zeroing for comparisons with revisions before this one.
+- CI also runs Python 3.13 (Ubuntu, Pillow 12.x).
+- New tests (`tests/test_color_profile.py`): the bundled profile equals LittleCMS's sRGB apart from the date, the renderer embeds exactly those bytes, and outputs rendered a second apart are byte-identical.
 - The regression tests moved from one 1,400-line file into `scripts/tests/`, split by area (input files and color, C/D, E/F/G, H, labels and signatures, metadata, registry) with shared helpers in `tests/support.py`. `scripts/test_frame_photo.py` stays the entry point, so CI and every documented command are unchanged. The same 60 tests run with identical bodies.
 - `docs/HANDOFF.md` rewritten after the seven stacked PRs (#1 to #7) were merged into `main`.
-- No change to the renderer or to any output.
+- Apart from the embedded profile's creation date, every output is byte-identical to v0.11.0.
 
 ## v0.11.0 (2026-11-05): labels and signatures
 
