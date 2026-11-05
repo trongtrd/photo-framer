@@ -8,9 +8,10 @@ three rows: canvas ratios, blurred backgrounds, and mats/keylines/text.
 
 The number of columns is independent for every row. Wide tables can scroll
 horizontally on GitHub; each thumbnail links to a larger JPEG. The README
-uses HTML tables with explicit cell widths and image links rather than custom
-CSS. Cell widths keep GitHub from shrinking seven images into tiny thumbnails;
-setting image width alone does not establish a minimum column width.
+uses HTML tables and image links rather than custom CSS. GitHub shrinks image
+and cell width attributes to fit its container, so an accessibility-hidden
+nonbreaking spacer supplies an intrinsic minimum width in each image cell.
+This keeps the previews readable and activates native horizontal table scrolling.
 
 ## Rebuild
 
