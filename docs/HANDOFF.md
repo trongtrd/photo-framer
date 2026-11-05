@@ -23,15 +23,15 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 
 ## Current state
 
-Everything through v0.11.1 is on `main` (or in the PR that carries this handoff). The seven stacked PRs (#1 to #7: style H, the foundation refactor, the metadata layer, H ratios and blur, labels and signatures, one typeface, C and preview polish) were merged in order on 2026-11-05 with merge commits, each retargeted to `main` after the one below it. No stacked PRs remain. The old `claude/*` branches of that stack are fully merged and carry nothing that `main` lacks.
+This handoff accompanies unreleased v0.12.0: a 24 MP complete output cap, per-image capture sidecars for C/D, and gallery labels on A/B/G. v0.11.1 was merged at `2f64ad0` and released separately. The seven earlier stacked PRs (#1 to #7) were merged in order on 2026-11-05 with merge commits; no stacked PRs remain.
 
 Takeover verified `main` at `2f64ad0`, all nine PRs merged, 64 tests passing and CI run 55 successful in all five jobs. The local checkout was stale at `6408659` and was fast-forwarded without edits. The current workstation is Windows, Python 3.14.8/Pillow 12.3.0, rather than the previous session's Linux environment.
 
 The owner approved publishing v0.11.1 and deleting the final merged branch. The GitHub Release and tag now point exactly at `2f64ad02db53c5aa5a1b3380cea051c6cd19b3b0`; `claude/lucid-shannon-h9z9t5` was deleted using the normal GitHub API. The old session's branch-deletion proxy restriction does not apply to this workstation. Automatic branch deletion was not enabled.
 
-The owner approved capture sidecars and gallery labels on A/B/G, then explicitly approved a 24 MP total output cap with no silent resizing. This work is on `codex/capture-sidecars-gallery-labels` as unreleased v0.12.0. Do not treat that approval as permission to open or merge a PR, publish v0.12.0, or publish the owner's private signature files.
+The owner approved capture sidecars and gallery labels on A/B/G, then explicitly approved a 24 MP total output cap with no silent resizing. This work was developed on `codex/capture-sidecars-gallery-labels` as unreleased v0.12.0. On 2026-11-06 the owner explicitly requested opening and merging the PR for this branch once checks pass. That authorization applies only to this change, not future PRs, a v0.12.0 GitHub Release, or publication of the private signature files. Verify the resulting PR's merge status and the latest `main` checks on GitHub.
 
-Local v0.12 validation: 75 regression tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 86 seconds), generated docs are current, and golden against v0.11.1 passed all 302 cases / 1,044 output files byte for byte, including H labels on every ratio. The new 24 MP rejection policy is covered separately; the golden corpus uses smaller outputs. Read the development branch's latest CI checks before reporting cross-platform status.
+Local v0.12 validation: 75 regression tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 86 seconds), generated docs are current, and golden against v0.11.1 passed all 302 cases / 1,044 output files byte for byte, including H labels on every ratio. The new 24 MP rejection policy is covered separately; the golden corpus uses smaller outputs. Development commit `a76e933` passed all five CI jobs (run 57). Read the latest PR or `main` checks before reporting final cross-platform status.
 
 Working rules for the next session:
 
@@ -79,6 +79,6 @@ Working rules for the next session:
 
 1. Signature: the owner selected **sample 3**, then requested a smaller mark. Its reviewed mockup uses width **0.12** (down from 0.15), bottom-right on A, opacity 1.0. Three supplied PNGs were background-removed and tightly cropped with explicitly approved Python/Pillow processing, without regenerating lettering; white recompositing exactly reproduces all cropped source pixels. Review files are outside the repository under the owner's Dropbox `05_TEMP/Photoframer/signature-review-2026-11-06`, with the chosen version in `selected-signature-3/`. Obtain explicit permission before publishing the private signature in README.
 2. Camera names: the owner uses Sony α7C, already supported correctly; no expansion is needed for their current body. Other names remain subject to manufacturer verification before addition.
-3. Capture sidecars, A/B/G labels and the 24 MP cap are approved and implemented on the development branch. Finish validation and obtain an explicit PR request; merge approval remains per PR.
+3. Capture sidecars, A/B/G labels and the 24 MP cap are implemented and validated. The owner requested opening and merging their PR on 2026-11-06; approval remains scoped to that PR. No further feature is pending under this approval.
 
 No other new feature or release is authorized. Commits, PR text and repository docs stay in English; conversation stays in Vietnamese.
