@@ -28,6 +28,8 @@ The latest verified `main` is `5f49b92`: PR #10 merged v0.12.0 (24 MP complete o
 
 This change prepares unreleased v0.13.0 on `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. No PR or merge has been requested for this branch yet. The earlier approval to merge applied only to PR #10.
 
+The owner also requested a black or colored gallery background to distinguish white frames. Thumbnails now use exact-black 432×432 PNG presentation squares, with the intact reduced frame centered inside at least 16 px of padding. Only this thumbnail surround is black; linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged.
+
 Takeover verified `main` at `2f64ad0`, all nine PRs merged, 64 tests passing and CI run 55 successful in all five jobs. The local checkout was stale at `6408659` and was fast-forwarded without edits. The current workstation is Windows, Python 3.14.8/Pillow 12.3.0, rather than the previous session's Linux environment.
 
 The owner approved publishing v0.11.1 and deleting the final merged branch. The GitHub Release and tag now point exactly at `2f64ad02db53c5aa5a1b3380cea051c6cd19b3b0`; `claude/lucid-shannon-h9z9t5` was deleted using the normal GitHub API. The old session's branch-deletion proxy restriction does not apply to this workstation. Automatic branch deletion was not enabled.

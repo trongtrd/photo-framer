@@ -34,6 +34,8 @@ SOURCES = {'landscape': 'docs/images/demo-source-final.jpg',
 SIGNATURE = 'docs/images/gallery/signature.png'
 RIGHT_TEXT = 'Berlin, Germany | October 2022'
 RECIPE = {'version': 1, 'preview_edge': 1280, 'thumb_edge': 400, 'quality': 88}
+THUMBNAIL = {'version': 1, 'edge': 432, 'image_edge': RECIPE['thumb_edge'],
+             'background': '#000000'}
 
 
 @dataclass
@@ -138,10 +140,12 @@ def gallery_block():
     lines = ['Each style has its own gallery. Preset examples change one setting from the default; '
              'text, signatures and other named options have a separate row. H has three rows. '
              'Scroll a wide row horizontally and click any preview to enlarge it.', '',
-             'These are reduced JPEG previews, not full-resolution PNGs. The originals stay untouched. '
+             'These are reduced previews, not full-resolution outputs. The originals stay untouched. '
+             'The black surrounds belong only to the thumbnail display, not to the frame. '
+             'Click through to see the framed image without that surround. '
              'The sample text is supplied wording, never inferred metadata.', '',
              '| Original landscape | Original portrait |', '| :---: | :---: |']
-    cells = [f'<a href="{SOURCES[source]}"><img src="docs/images/gallery/thumbs/source-{source}.jpg" '
+    cells = [f'<a href="{SOURCES[source]}"><img src="docs/images/gallery/thumbs/source-{source}.png" '
              f'height="140" alt="Original {source} photograph"></a>'
              for source in ('landscape', 'portrait')]
     lines += ['| ' + ' | '.join(cells) + ' |', '']
@@ -157,7 +161,7 @@ def gallery_block():
                       f'{html.escape(item.hint or item.code or STYLES[code].default)}</code>'
                       for item in row]
             pictures = [f'<a href="docs/images/gallery/{item.key}.jpg">'
-                        f'<img src="docs/images/gallery/thumbs/{item.key}.jpg" width="240" '
+                        f'<img src="docs/images/gallery/thumbs/{item.key}.png" width="240" '
                         f'alt="{html.escape(code + ": " + item.label, quote=True)}"></a>' for item in row]
             # GitHub shrinks even explicit image/cell widths. An aria-hidden
             # nonbreaking spacer supplies an intrinsic minimum without CSS.
@@ -210,6 +214,20 @@ def save_preview(image, path, edge):
     reduced.save(path, quality=RECIPE['quality'], subsampling=0, icc_profile=SRGB)
 
 
+def save_thumbnail(image, path):
+    reduced = image.convert('RGB')
+    reduced.thumbnail((THUMBNAIL['image_edge'], THUMBNAIL['image_edge']), Image.Resampling.LANCZOS)
+    edge = THUMBNAIL['edge']
+    stage = Image.new('RGB', (edge, edge), THUMBNAIL['background'])
+    stage.paste(reduced, ((edge-reduced.width)//2, (edge-reduced.height)//2))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    stage.save(path, icc_profile=SRGB)
+
+
+def file_matches(path, files):
+    return path.is_file() and files.get(path.relative_to(ROOT).as_posix()) == digest(path)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='check recipes, assets and their hashes; write nothing')
@@ -221,45 +239,49 @@ def main(argv=None):
     for item in examples():
         expected = recipe(item)
         saved = old.get('examples', {}).get(item.key, {})
-        paths = [ASSETS/f'{item.key}.jpg', THUMBS/f'{item.key}.jpg']
-        valid = (old.get('renderer_sha256') == fingerprint and saved.get('recipe') == expected
-                 and all(path.is_file() and saved.get('files', {}).get(path.relative_to(ROOT).as_posix())
-                         == digest(path) for path in paths))
-        if valid:
+        preview, thumbnail = ASSETS/f'{item.key}.jpg', THUMBS/f'{item.key}.png'
+        preview_valid = (old.get('renderer_sha256') == fingerprint and saved.get('recipe') == expected
+                         and file_matches(preview, saved.get('files', {})))
+        thumbnail_valid = (preview_valid and old.get('thumbnail_recipe') == THUMBNAIL
+                           and file_matches(thumbnail, saved.get('files', {})))
+        if preview_valid and thumbnail_valid:
             records[item.key] = saved
             continue
         stale.append(item.key)
         if args.check:
             continue
-        render_root = (ROOT/'output/gallery-renders').resolve()
-        render_root.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix=item.key+'-', dir=render_root) as temporary:
-            Path(temporary).resolve().relative_to(render_root)  # bound automatic cleanup to our workspace
-            command = [sys.executable, str(SCRIPTS/'frame_photo.py'), str(ROOT/SOURCES[item.source]),
-                       '--share', '--metadata', 'strip', '--out-dir', temporary]
-            for name, value in item.settings().items():
-                flag = '--'+name.replace('_', '-')
-                if value is True:
-                    command.append(flag)
-                elif name == 'signature':
-                    command += [flag, str(ROOT/value)]
-                else:
-                    command.append(f'{flag}={value}')
-            process = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', check=True)
-            row = json.loads(process.stdout)['results'][0]
-            if row['status'] != 'ok':
-                raise ValueError(row)
-            with Image.open(row['outputs'][1]) as source:
-                image = source.convert('RGB')
-                save_preview(image, paths[0], RECIPE['preview_edge'])
-                save_preview(image, paths[1], RECIPE['thumb_edge'])
+        if not preview_valid:
+            render_root = (ROOT/'output/gallery-renders').resolve()
+            render_root.mkdir(parents=True, exist_ok=True)
+            with tempfile.TemporaryDirectory(prefix=item.key+'-', dir=render_root) as temporary:
+                Path(temporary).resolve().relative_to(render_root)  # bound automatic cleanup to our workspace
+                command = [sys.executable, str(SCRIPTS/'frame_photo.py'), str(ROOT/SOURCES[item.source]),
+                           '--share', '--metadata', 'strip', '--out-dir', temporary]
+                for name, value in item.settings().items():
+                    flag = '--'+name.replace('_', '-')
+                    if value is True:
+                        command.append(flag)
+                    elif name == 'signature':
+                        command += [flag, str(ROOT/value)]
+                    else:
+                        command.append(f'{flag}={value}')
+                process = subprocess.run(command, capture_output=True, text=True, encoding='utf-8', check=True)
+                row = json.loads(process.stdout)['results'][0]
+                if row['status'] != 'ok':
+                    raise ValueError(row)
+                with Image.open(row['outputs'][1]) as source:
+                    save_preview(source.convert('RGB'), preview, RECIPE['preview_edge'])
+            print('Rendered '+item.key, flush=True)
+        with Image.open(preview) as image:
+            save_thumbnail(image, thumbnail)
         records[item.key] = {'recipe': expected, 'files': {
-            path.relative_to(ROOT).as_posix(): digest(path) for path in paths}}
-        print('Rendered '+item.key, flush=True)
+            path.relative_to(ROOT).as_posix(): digest(path) for path in (preview, thumbnail)}}
+        print('Updated thumbnail '+item.key, flush=True)
     source_records = {}
     for name in ('landscape', 'portrait'):
-        path = THUMBS/f'source-{name}.jpg'
-        expected = {'source_sha256': digest(ROOT/SOURCES[name]), 'recipe': RECIPE}
+        path = THUMBS/f'source-{name}.png'
+        expected = {'source_sha256': digest(ROOT/SOURCES[name]), 'recipe': RECIPE,
+                    'thumbnail_recipe': THUMBNAIL}
         saved = old.get('sources', {}).get(name, {})
         if not (saved.get('recipe') == expected and path.is_file() and saved.get('sha256') == digest(path)):
             stale.append('source-'+name)
@@ -267,7 +289,7 @@ def main(argv=None):
                 from photoframer.io import load_photo
                 from photoframer.color import convert_profile
                 photo, profile, _ = load_photo(ROOT/SOURCES[name])
-                save_preview(convert_profile(photo, profile, SRGB), path, RECIPE['thumb_edge'])
+                save_thumbnail(convert_profile(photo, profile, SRGB), path)
         if path.exists():
             source_records[name] = {'recipe': expected, 'sha256': digest(path)}
     if args.check:
@@ -278,6 +300,7 @@ def main(argv=None):
         return 0
     MANIFEST.write_text(json.dumps({'renderer_version': VERSION, 'pillow': PILLOW_VERSION,
                                    'renderer_sha256': fingerprint, 'recipe': RECIPE,
+                                   'thumbnail_recipe': THUMBNAIL,
                                    'sources': source_records, 'examples': records},
                                   ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
     print(f'Gallery ready: {len(records)} examples. Run python tools/gen_docs.py.')
