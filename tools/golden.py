@@ -245,6 +245,7 @@ def cases(font):
                     '--title', 'Praha', '--subtitle', 'Prague · Czech Republic']))
     out.append(('H_blur_label', base[:3], ['--style', 'H', '--ratio', '9:16',
                 '--background', 'blur', '--title', 'Praha', '--subtitle', 'Prague']))
+    out.append(('H_square_blur', base[:3], ['--style', 'H', '--ratio', '1:1', '--background', 'blur']))
     # Previews.
     for name, flags in (('plain', []), ('right', ['--right-text', 'Berlin']),
                         ('film', ['--left-text', 'Berlin', '--right-text', 'October 2022']),

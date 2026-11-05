@@ -1,6 +1,6 @@
 ---
 name: photo-framer
-description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, Deckled Paper, or Minimal Mat (fixed 4:5 / 1:1 / 3:4 / 9:16 canvas, thin border, optional blurred background) frames to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, khung 4:5, khung vuông, viền trắng mỏng, camera details, or batch framing. Offer styles A/B/C/D/E/F/G/H while preserving photo content.
+description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, Deckled Paper, or Minimal Mat (fixed 4:5 / 1:1 / 3:4 / 9:16 / 16:9 canvas, thin border, optional blurred background) frames to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, khung 4:5, khung vuông, khung ngang 16:9, viền trắng mỏng, camera details, or batch framing. Offer styles A/B/C/D/E/F/G/H while preserving photo content.
 ---
 
 # Photo Framer
@@ -55,7 +55,7 @@ Per-style behaviour lives in `references/styles/`. Open the file for the chosen 
 - E: [e-color-echo.md](references/styles/e-color-echo.md). One automatic color per photo for the whole batch, no per-image questions or color variants; `--frame-color` once for a shared color.
 - F: [f-film-edge.md](references/styles/f-film-edge.md). Both `--left-text` and `--right-text` are required, an empty value only when the user chose a blank corner; ask for missing fields together.
 - G: [g-deckled-paper.md](references/styles/g-deckled-paper.md). Texture and torn edges stay outside the intact photo; no text by default.
-- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border, plus `--ratio 3:4|9:16`, `--background blur` and a gallery label (`--title`/`--subtitle`); the photo is fitted and centered, never cropped or scaled.
+- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border, plus `--ratio 3:4|9:16|16:9`, `--background blur` on every ratio, and a gallery label (`--title`/`--subtitle`); the photo is fitted and centered, never cropped or scaled. Square blur uses `--ratio 1:1 --background blur`; landscape blur uses `--ratio 16:9 --background blur`.
 - Named flags and the styles that accept them: the matrix at the end of [menus.md](references/menus.md#named-options--tùy-chọn-có-tên). Choice codes never change meaning.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
