@@ -357,7 +357,8 @@ def compare(base, keep=None):
         archive = subprocess.run(['git', '-C', str(ROOT), 'archive', base, 'skills/photo-framer'],
                                  check=True, capture_output=True).stdout
         with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
-            tar.extractall(temp / 'base')
+            safe = {'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}
+            tar.extractall(temp / 'base', **safe)
         old = _record_subprocess(temp / 'base' / 'skills' / 'photo-framer', temp / 'base.json')
         new = _record_subprocess(SKILL, temp / 'new.json')
         if keep:
