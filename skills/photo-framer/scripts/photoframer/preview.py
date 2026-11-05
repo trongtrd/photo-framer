@@ -19,7 +19,12 @@ def preview_styles(right_text=None, left_text=None):
     return ''.join(code for code in STYLES if code != 'D' or include_d)
 
 
-def _preview_settings(code, right_text, left_text, specs):
+H_OPTIONS = ('ratio', 'background', 'blur_tone')
+
+
+def _preview_settings(code, right_text, left_text, specs, h_options):
+    if code == 'H':
+        return Settings('H', **h_options)
     if code == 'C':
         return Settings('C', **specs)
     if code == 'D':
@@ -32,8 +37,9 @@ def _preview_settings(code, right_text, left_text, specs):
 
 
 def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_text=None,
-            specs=None):
-    """specs: user-supplied capture details (Settings fields) applied to C and D."""
+            specs=None, h_options=None):
+    """specs: user-typed capture details for C and D; h_options: H ratio/background."""
+    h_options = h_options or {}
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
     # Resolve E once from the original prepared photo, so its preview matches the final.
     styles = preview_styles(right_text, left_text)
@@ -46,10 +52,15 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
         context = {'meta': meta} if STYLES[code].uses_metadata else {}
         if code == 'E':
             context = {'echo_colors': echo_colors}
-        results.append(render(photo, _preview_settings(code, right_text, left_text, specs or {}), **context)[0])
+        results.append(render(photo, _preview_settings(code, right_text, left_text, specs or {}, h_options), **context)[0])
         label = STYLES[code].preview_label
         if code == 'F' and left_text is None:
             label += ' (text after choosing)'
+        if code == 'H' and h_options.get('ratio'):
+            ratio = h_options['ratio']
+            label = 'H / Minimal Mat ' + ('thin border' if ratio == 'original' else ratio)
+        if code == 'H' and h_options.get('background') == 'blur':
+            label += ' · blur'
         labels.append(label)
     for image in results:
         image.thumbnail((760, 980), Image.Resampling.LANCZOS)

@@ -22,7 +22,8 @@ class Layout(NamedTuple):
     frame_size: tuple
 
 
-def layout(photo_size, choices):
+def layout(photo_size, settings):
+    choices = settings.choices
     w, h = photo_size
     s = min(w, h)
     mat = max(4, round(s * MATS[choices[1]]))

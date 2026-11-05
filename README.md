@@ -83,7 +83,7 @@ Click a style to see its full-size example below. / Bấm vào phong cách để
 | [**E · Color Echo / Viền đồng sắc**](#style-e) | A border color drawn from each photo<br>Màu viền được chọn từ từng ảnh | `2-1-1` |
 | [**F · Film Edge / Viền phim**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng | `2-1-1` |
 | [**G · Deckled Paper / Giấy mép xé**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé | `2-1-1` |
-| [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5 or 1:1 canvas for any photo, or a thin border; optional black keyline<br>Khung cố định 4:5 hoặc 1:1 cho mọi ảnh, hoặc viền mỏng; tùy chọn viền đen | `1-1-1` |
+| [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5, 1:1, 3:4 or 9:16 canvas for any photo, or a thin border; black keyline; plain or blurred background<br>Khung cố định 4:5, 1:1, 3:4 hoặc 9:16 cho mọi ảnh, hoặc viền mỏng; viền đen; nền trơn hoặc nền mờ từ ảnh | `1-1-1` |
 <!-- /generated:styles -->
 
 Say **“A default”** or **“A mặc định”**; you do not need to remember the codes. If you only say “use defaults,” A is used unless another style is already chosen. For other settings, use your own words or the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
@@ -177,6 +177,20 @@ A second real photograph, a 1000 × 1500 (2:3) portrait, shows how H fits portra
 | :---: | :---: | :---: | :---: |
 | ![Portrait source: Prague rooftops and the Lesser Town Bridge Tower seen from above](docs/images/demo-portrait-source.jpg) | ![The full portrait photo centered on a white 4:5 canvas with a thin black keyline](docs/images/demo-portrait-h-4x5.jpg) | ![The full portrait photo centered on a warm light gray 1:1 canvas without a keyline](docs/images/demo-portrait-h-1x1.jpg) | ![The full portrait photo with a thin even white border and a thick black keyline](docs/images/demo-portrait-h-thin.jpg) |
 
+### 9:16 and blurred background / Khung 9:16 và nền mờ
+
+`--ratio` adds 3:4 and 9:16 canvases (stories, reels, phone wallpapers) beside the menu's 4:5, 1:1 and thin border. `--background blur` fills the canvas with a softly blurred, slightly darkened copy of the same photo instead of a flat mat; the photo itself stays sharp, whole and uncropped, with its keyline. Share copies are exactly 1080×1440 (3:4) or 1080×1920 (9:16).
+
+`--ratio` thêm khung 3:4 và 9:16 (story, reels, hình nền điện thoại) bên cạnh 4:5, 1:1 và viền mỏng trong menu. `--background blur` dùng chính bức ảnh, làm mờ và tối nhẹ, để phủ nền thay cho màu trơn; ảnh chính vẫn nét, nguyên vẹn, không bị cắt và giữ viền đen. Bản chia sẻ có đúng kích thước 1080×1440 (3:4) hoặc 1080×1920 (9:16).
+
+> Use Photo Framer, H default, 9:16 with a blurred background.
+>
+> Dùng Photo Framer, H mặc định, khung 9:16 nền mờ.
+
+| Landscape / Ảnh ngang · H `--ratio 9:16 --background blur` | Portrait / Ảnh dọc · H `--ratio 9:16 --background blur` |
+| :---: | :---: |
+| ![The full landscape colonnade photo centered on a 9:16 canvas filled with a dark, softly blurred copy of itself, thin black keyline](docs/images/demo-after-h-9x16-blur.jpg) | ![The full Prague portrait photo centered on a 9:16 canvas filled with a softly blurred copy of itself, thin black keyline](docs/images/demo-portrait-h-9x16-blur.jpg) |
+
 [↑ Choose another style / Chọn phong cách khác](#choose-a-style)
 
 ## Python and maintenance
@@ -231,6 +245,9 @@ python skills/photo-framer/scripts/frame_photo.py "photo-1.jpg" "photo-2.jpg" --
 # Minimal Mat: landscape and portrait share one 4:5 canvas; share copies are exactly 1080x1350
 python skills/photo-framer/scripts/frame_photo.py "landscape.jpg" "portrait.jpg" --style H --choices 1-1-1 --share --out-dir "output"
 
+# Minimal Mat on a 9:16 story canvas with a blurred background; share copies are exactly 1080x1920
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style H --ratio 9:16 --background blur --share --out-dir "output"
+
 # Film scan without EXIF: type the capture details (C/D); typed values are shown as given
 python skills/photo-framer/scripts/frame_photo.py "scan.jpg" --style C --camera "Pentax 67" --lens "SMC Takumar 105mm F2.4" --iso 400 --aperture 2.4 --shutter 1/125 --focal 105 --out-dir "output"
 
@@ -267,6 +284,9 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 | `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
 | `--focal` | — | — | ✓ | ✓ | — | — | — | — |
 | `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
+| `--ratio` | — | — | — | — | — | — | — | ✓ |
+| `--background` | — | — | — | — | — | — | — | ✓ |
+| `--blur-tone` | — | — | — | — | — | — | — | ✓ |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -298,7 +318,7 @@ python tools/golden.py compare --base main
 <details>
 <summary>Formats, pixels, color and metadata / Định dạng, pixel, màu và metadata</summary>
 
-- **Inputs:** JPEG and 8-bit PNG, up to 30 million pixels per input and 60 million pixels per framed output. Smaller PNG bit depths remain supported when decoded by Pillow. Animated images are rejected.
+- **Inputs:** JPEG and 8-bit PNG, up to 30 million pixels per input and 60 million pixels per framed output (100 million for H, whose fixed canvases keep every photo pixel; the largest H outputs need about 1.3 GB of memory). Smaller PNG bit depths remain supported when decoded by Pillow. Animated images are rejected.
 - **16-bit PNG:** encoded bit depth is inspected before decoding. All 16-bit PNG color types are rejected rather than silently reduced to 8-bit.
 - **RGB preservation:** full-size final PNGs keep the prepared photo region's dimensions and decoded RGB pixel values after EXIF orientation, and retain valid source RGB ICC profiles. The frame increases the overall output dimensions; frames and shadows stay outside the photo.
 - **Color conversion:** grayscale/CMYK with suitable profiles are converted to sRGB. Unprofiled CMYK is rejected; unprofiled RGB is treated as sRGB.
@@ -310,7 +330,7 @@ python tools/golden.py compare --base main
 - **Output metadata:** by default the final PNG and the share JPEG keep the source EXIF, including GPS location. Orientation is reset to 1 because the pixels are already rotated, pixel dimensions are updated, and the embedded thumbnail, maker notes and XMP (including edit history) are dropped. `--metadata strip` writes no EXIF. Previews never carry metadata. / Mặc định PNG cuối và JPEG chia sẻ giữ EXIF của ảnh gốc, kể cả vị trí GPS; hướng xoay đặt lại 1, cập nhật kích thước, bỏ ảnh thu nhỏ, maker notes và XMP. Dùng `--metadata strip` để không ghi EXIF.
 - **Style E:** one deterministic sRGB color is selected from a sample no larger than 96×96, favoring colors near the edges and midtones. Near-neutral or unusable samples fall back to warm neutral #e8e4dc. Default tone is muted; natural and light variants are optional settings. `--frame-color` bypasses this selection and applies one exact color across the batch. E converts only its decorative colors into the source RGB ICC profile; photo pixels and ICC bytes stay unchanged. No per-image AI color analysis or candidate variants are needed.
 - **Style F:** sprockets and both corner texts stay outside the rectangular photo region. Charcoal, black and dark-brown backgrounds are available, with standard, sparse or dense sprockets. Both custom fields preserve the supplied wording; no metadata, counter, film brand or photo effect is generated. F converts its decorative sRGB colors into the source RGB profile while retaining photo pixels and ICC bytes.
-- **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. Because the full-resolution photo is kept, the canvas grows with it: a very large landscape on 4:5 can exceed the 60-megapixel limit and is rejected. Share copies are exactly 1080×1350 (4:5) or 1080×1080 (1:1).
+- **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. `--ratio` also offers 3:4 and 9:16 (minimum margin 4.0% and 5.0% of the canvas width) and overrides the first menu row. `--background blur` replaces the mat with a blurred copy of the photo scaled to cover the canvas (blurred on a copy of at most 384 px, then enlarged; `--blur-tone` dark by default, neutral or light), drawn only outside the photo. Because the full-resolution photo is kept, the canvas grows with it; H accepts outputs up to 100 megapixels, enough for a 29 MP landscape on 9:16. Share copies are exactly 1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16).
 - **Style G:** paper grain, torn edges and a soft shadow stay outside the rectangular photo. Choose narrow/medium/wide margins, warm-white/bright-white/ivory paper and subtle/medium/rough edges. A fixed procedural pattern and a reusable 256×256 texture tile support batches without AI calls or external texture files. Decorative colors convert into the source RGB profile; photo pixels and ICC bytes remain unchanged. No caption or logo is added by default.
 
 Ở PNG cuối, vùng ảnh đã được chuẩn bị giữ nguyên kích thước và pixel RGB sau giải mã/chuẩn hóa hướng xoay EXIF. Khung được thêm bên ngoài nên kích thước toàn bộ ảnh đầu ra tăng lên. Các trường hợp chuyển màu, ghép nội dung trong suốt lên trắng, cắt ảnh đã được duyệt và JPEG chia sẻ có giới hạn riêng như mô tả trên.
@@ -347,9 +367,11 @@ The portrait H examples use separate folders because all three settings share th
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 1-1-1 --share --out-dir output/demo-portrait/4x5
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 2-2-2 --share --out-dir output/demo-portrait/1x1
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 3-1-2 --share --out-dir output/demo-portrait/thin
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --ratio 9:16 --background blur --share --out-dir output/demo-portrait/9x16-blur
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style H --ratio 9:16 --background blur --share --out-dir output/demo-h-9x16-blur
 ```
 
-The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`.
+The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`. The two blurred 9:16 examples come from `output/demo-portrait/9x16-blur/` and `output/demo-h-9x16-blur/` (`demo-source-final_H_share.jpg` → `docs/images/demo-after-h-9x16-blur.jpg`).
 
 The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP (no GPS) for reproduction; since v0.9 re-rendered examples carry that EXIF by default (C and D were re-rendered for v0.9). EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`, shown as `α7C` in C and `Sony α7C` in D; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
 

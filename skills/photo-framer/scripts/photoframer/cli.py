@@ -13,11 +13,13 @@ from .constants import LOGO_DIR, SHARE_MAX_EDGE, SRGB, VERSION
 from .io import load_photo, save_verified
 from .metadata import (brand_slug, brand_wordmark, exif_for_output, gear_name,
                        read_capture_metadata, read_source_exif)
-from .preview import preview, preview_styles
+from .preview import H_OPTIONS as H_PREVIEW_OPTIONS, preview, preview_styles
 from .registry import DEFAULT_STYLE, STYLES
 from .renderer import render
 from .settings import SPEC_OPTIONS, Settings
 from .styles.e_color_echo import resolve_colors
+from .styles.h_minimal_mat import (BACKGROUND_MODES as H_BACKGROUND_MODES, BLUR_TONES as H_BLUR_TONES,
+                                   DEFAULT_BLUR_TONE as H_DEFAULT_BLUR_TONE, RATIOS as H_RATIOS)
 from .text import is_single_line
 
 JPEG_EXIF_LIMIT = 65_000  # A JPEG APP1 segment holds at most 65,533 bytes.
@@ -63,7 +65,7 @@ def build_parser():
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--share', action='store_true',
                         help=f'Also export an sRGB JPEG, max {SHARE_MAX_EDGE} px; '
-                             'H 4:5/1:1 use exact 1080x1350/1080x1080')
+                             'H 4:5/1:1/3:4/9:16 use exact 1080x1350/1080x1080/1080x1440/1080x1920')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT', 'TOP', 'RIGHT', 'BOTTOM'))
     parser.add_argument('--caption')
     parser.add_argument('--left-text', help='Style F: exact lower-left text; empty string means intentionally blank')
@@ -74,6 +76,13 @@ def build_parser():
                         help='keep (default): copy the source EXIF, including GPS, into the final PNG '
                              'and share JPEG, with orientation reset and thumbnail/maker notes removed; '
                              'strip: write no EXIF. Previews never carry metadata')
+    mat = parser.add_argument_group('style H options')
+    mat.add_argument('--ratio', choices=list(H_RATIOS),
+                     help='canvas ratio, overrides the first menu row (1=4:5, 2=1:1, 3=original)')
+    mat.add_argument('--background', choices=list(H_BACKGROUND_MODES),
+                     help='blur: fill the canvas with a blurred copy of the photo instead of the mat color')
+    mat.add_argument('--blur-tone', choices=list(H_BLUR_TONES),
+                     help=f'with --background blur: {H_DEFAULT_BLUR_TONE} (default), neutral or light')
     specs = parser.add_argument_group('capture details for C/D', 'Typed values win over EXIF/XMP, '
                                       'field by field; nothing is filled in that was not supplied.')
     specs.add_argument('--camera', type=_text_value('--camera'), help='exact camera text, shown verbatim')
@@ -114,8 +123,8 @@ def metadata_notes(meta, shown, settings):
     return notes
 
 
-def share_copy(image, profile, style, choices):
-    exact = style.share_size(choices)
+def share_copy(image, profile, style, settings):
+    exact = style.share_size(settings)
     if exact:
         # The canvas ratio is exact, so this resize never distorts.
         image = image.resize(exact, Image.Resampling.LANCZOS)
@@ -141,8 +150,10 @@ def process(path, args, settings):
     if args.preview:
         specs = {field: getattr(settings, field) for field in SPEC_OPTIONS
                  if getattr(settings, field) is not None}
+        h_options = {field: getattr(settings, field) for field in H_PREVIEW_OPTIONS
+                     if getattr(settings, field) is not None}
         image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text,
-                        specs)
+                        specs, h_options)
         shown = preview_styles(args.right_text, args.left_text)
         outputs = [save_verified(image, args.out_dir/f'{stem}_{shown}_preview.jpg', SRGB)]
     else:
@@ -161,7 +172,7 @@ def process(path, args, settings):
         outputs = [save_verified(image, args.out_dir/f'{stem}_{settings.style}.png',
                                  profile, photo, pos, exif=final_exif)]
         if args.share:
-            image = share_copy(image, profile, style, settings.choices)
+            image = share_copy(image, profile, style, settings)
             outputs.append(save_verified(image, args.out_dir/f'{stem}_{settings.style}_share.jpg', SRGB,
                                          exif=output_exif(exif, image, args)))
         notes += style.notes(settings, share=args.share, origins=origins, echo_colors=echo_colors)
@@ -180,7 +191,8 @@ def main(argv=None):
                         left_text=args.left_text, right_text=args.right_text,
                         frame_color=args.frame_color, camera=args.camera, lens=args.lens,
                         iso=args.iso, aperture=args.aperture, shutter=args.shutter, focal=args.focal,
-                        raw_model=True if args.raw_model else None)
+                        raw_model=True if args.raw_model else None, ratio=args.ratio,
+                        background=args.background, blur_tone=args.blur_tone)
     if args.crop and len(args.inputs) != 1:
         parser.error('--crop accepts exactly one input to avoid unintended batch cropping.')
     results = []

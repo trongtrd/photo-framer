@@ -24,7 +24,7 @@ def render(photo, settings, *, profile=None, meta=None, echo_colors=None):
             raise ValueError('A Unicode-capable --font file is required for captions.')
         if '\n' in caption or len(caption) > MAX_TEXT_LENGTH:
             raise ValueError(f'Use a single-line caption up to {MAX_TEXT_LENGTH} characters.')
-    plan = style.layout((w, h), settings.choices)
+    plan = style.layout((w, h), settings)
     limit = style.max_output_pixels
     if plan.size[0]*plan.size[1] > limit:
         raise ValueError(f'Framed output exceeds {limit // 1_000_000} megapixels; '
