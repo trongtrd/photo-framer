@@ -238,6 +238,13 @@ def cases(font):
                         ['--style', style, '--choices', code,
                          '--caption', 'Hà Nội — mùa thu.', '--font', font]))
     out.append(('C_font_only', base[:3], ['--style', 'C', '--font', font]))
+    # Existing H labels and blur must remain byte-identical after sharing their
+    # typography with A/B/G. These flags are supported by v0.11.1 too.
+    for ratio in ('4:5', '1:1', '3:4', '9:16', 'original'):
+        out.append((f'H_label_{ratio.replace(":", "x")}', base[:3], ['--style', 'H', '--ratio', ratio,
+                    '--title', 'Praha', '--subtitle', 'Prague · Czech Republic']))
+    out.append(('H_blur_label', base[:3], ['--style', 'H', '--ratio', '9:16',
+                '--background', 'blur', '--title', 'Praha', '--subtitle', 'Prague']))
     # Previews.
     for name, flags in (('plain', []), ('right', ['--right-text', 'Berlin']),
                         ('film', ['--left-text', 'Berlin', '--right-text', 'October 2022']),
@@ -323,7 +330,9 @@ def record(skill_dir, manifest_path, extra_flags=(), ignore_icc_dates=False):
     font = str(skill_dir / 'assets' / 'fonts' / 'Inter-Regular.ttf')
     manifest = {}
     with tempfile.TemporaryDirectory(prefix='golden-') as temp:
-        temp = Path(temp)
+        # Windows temp roots may use an 8.3 user-directory alias. Output paths
+        # are resolved by save_verified(), so normalize the root first too.
+        temp = Path(temp).resolve()
         inputs = build_corpus(temp / 'in')
         for name, images, flags in cases(font):
             out_dir = temp / 'out' / name
@@ -363,7 +372,7 @@ def _record_subprocess(skill_dir, manifest_path, extra_flags=(), ignore_icc_date
 
 def compare(base, keep=None, new_flags=(), ignore_icc_dates=False):
     with tempfile.TemporaryDirectory(prefix='golden-base-') as temp:
-        temp = Path(temp)
+        temp = Path(temp).resolve()
         archive = subprocess.run(['git', '-C', str(ROOT), 'archive', base, 'skills/photo-framer'],
                                  check=True, capture_output=True).stdout
         with tarfile.open(fileobj=io.BytesIO(archive)) as tar:

@@ -49,8 +49,11 @@ unbalanced. Offer A, B, E or G when the user wants a signature or logo.
 ## Size limits and sharing
 
 Because final PNGs keep every photo pixel, the canvas grows with the photo. H
-allows outputs up to 100 megapixels (other styles: 60), enough for a 29 MP
-landscape on 9:16; the largest outputs need about 1.3 GB of memory. Larger
-results are reported as errors. With `--share`, fixed ratios export exactly
+shares the **24 megapixel total output cap** with every other style (owner
+decision, v0.12, replacing the former 100 MP H cap). A landscape on 9:16 can
+more than triple the pixel count. Check the final layout before allocating
+the canvas; oversized results report a suitable smaller source size. Offer a
+smaller export or ask explicit permission to resize a separate copy first.
+Never change the original or silently shrink the final photo. With `--share`, fixed ratios export exactly
 1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16) sRGB
 JPEGs; the thin border uses the usual 2048 px limit.

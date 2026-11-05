@@ -193,6 +193,14 @@ A second real photograph, a 1000 × 1500 (2:3) portrait, shows how H fits portra
 
 ### Gallery label and signature / Nhãn gallery và chữ ký
 
+Since v0.12, A, B and G also accept `--title` and `--subtitle`, using the same Inter faces and inks as H. The title is centered under the photo; the lower background (A), white mat and frame (B), or paper (G) grows only as needed, with the photo's size and position unchanged. Choose a gallery label, a caption, or a signature separately: a centered label cannot be combined with `--caption` or `--signature`. H continues to reject signatures.
+
+The existing portrait and wording from the H example are reused below to compare the new layouts:
+
+| A · Gallery label | B · Gallery label | G · Gallery label |
+| :---: | :---: | :---: |
+| ![Praha gallery label beneath the intact photo in style A](docs/images/demo-portrait-a-label.jpg) | ![Praha gallery label beneath the intact photo in style B](docs/images/demo-portrait-b-label.jpg) | ![Praha gallery label beneath the intact photo on deckled paper](docs/images/demo-portrait-g-label.jpg) |
+
 H can add a gallery label below the photo: `--title` and an optional `--subtitle` in the same typeface as the spec cards: Inter SemiBold near-black for the title (like D's camera line and custom text) and smaller gray Inter Regular for the subtitle (like the exposure line), with full Vietnamese support. The photo moves up to make room on fixed canvases; on the thin border the canvas grows. The wording is always yours, used verbatim. A, B, E and G can also place your own transparent PNG signature or logo with `--signature`, in the margin below the photo (bottom-right by default, or bottom-center/bottom-left), sized by `--signature-width` and faded with `--signature-opacity`. Nothing is ever drawn over the photo: if text or a signature does not fit, or two items would overlap, the renderer asks for shorter wording, a smaller signature or another position.
 
 H có thể thêm nhãn gallery dưới ảnh: `--title` và `--subtitle` tùy chọn dùng cùng kiểu chữ với thẻ thông số: tiêu đề Inter SemiBold màu gần đen (như dòng máy và chữ riêng của D), phụ đề Inter Regular xám, nhỏ hơn (như dòng thông số), đủ dấu tiếng Việt. Với khung cố định, ảnh dịch lên để chừa chỗ; với viền mỏng, khung cao thêm. Nội dung chữ luôn do bạn cung cấp, giữ nguyên văn. A, B, E và G còn có thể đặt chữ ký hoặc logo PNG nền trong suốt của bạn bằng `--signature`, ở lề dưới ảnh (mặc định góc phải, hoặc giữa/trái), chỉnh cỡ bằng `--signature-width` và độ mờ bằng `--signature-opacity`. Không bao giờ vẽ đè lên ảnh: nếu chữ hoặc chữ ký không vừa, hay hai thành phần chồng nhau, renderer sẽ đề nghị rút gọn chữ, thu nhỏ chữ ký hoặc đổi vị trí.
@@ -267,7 +275,10 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style H --ratio 
 # Film scan without EXIF: type the capture details (C/D); typed values are shown as given
 python skills/photo-framer/scripts/frame_photo.py "scan.jpg" --style C --camera "Pentax 67" --lens "SMC Takumar 105mm F2.4" --iso 400 --aperture 2.4 --shutter 1/125 --focal 105 --out-dir "output"
 
-# Gallery label below the photo (H)
+# Per-image capture details for a batch: scan.jpg.json and next.jpg.json
+python skills/photo-framer/scripts/frame_photo.py "scan.jpg" "next.jpg" --style C --capture-sidecar --out-dir "output"
+
+# Gallery label below the photo (A, B, G, H)
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style H --choices 2-1-1 --title "Hồ Hoàn Kiếm" --subtitle "Hà Nội · Tháng 10, 2022" --out-dir "output"
 
 # Your own PNG signature at the bottom right (A, B, E, G)
@@ -306,11 +317,12 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 | `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
 | `--focal` | — | — | ✓ | ✓ | — | — | — | — |
 | `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
+| `--capture-sidecar` | — | — | ✓ | ✓ | — | — | — | — |
 | `--ratio` | — | — | — | — | — | — | — | ✓ |
 | `--background` | — | — | — | — | — | — | — | ✓ |
 | `--blur-tone` | — | — | — | — | — | — | — | ✓ |
-| `--title` | — | — | — | — | — | — | — | ✓ |
-| `--subtitle` | — | — | — | — | — | — | — | ✓ |
+| `--title` | ✓ | ✓ | — | — | — | — | ✓ | ✓ |
+| `--subtitle` | ✓ | ✓ | — | — | — | — | ✓ | ✓ |
 | `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
@@ -323,6 +335,31 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 For Vietnamese captions, pass `--caption` as above; the bundled Inter covers Vietnamese. Add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` như ví dụ; font Inter đi kèm đủ dấu tiếng Việt. Thêm `--share` để xuất bản chia sẻ.
 
 Filesystems must support hard links for the renderer's atomic, no-overwrite final save. Existing output filenames receive numeric suffixes. The CLI returns JSON per input; inspect every item and report successes and errors separately.
+
+#### Per-image capture sidecars (C/D)
+
+`--capture-sidecar` opts into a UTF-8 JSON sibling for each image, named with its complete filename: `scan.jpg.json` for `scan.jpg`, or `scan.png.json` for `scan.png`. Nothing is read automatically without the flag. The object accepts only `camera`, `lens`, `iso`, `aperture`, `shutter` and `focal`; partial objects are allowed. For example:
+
+```json
+{
+  "camera": "Pentax 67",
+  "lens": "SMC Takumar 105mm F2.4",
+  "iso": 400,
+  "aperture": "f/2.4",
+  "shutter": "1/125",
+  "focal": "105mm"
+}
+```
+
+Explicit capture flags override that image's JSON, which overrides EXIF/XMP, field by field. A missing sibling uses the existing capture values and is reported in the JSON notes. A malformed file, duplicate or unknown field, invalid value, or file over 16 KiB fails that image while the remaining batch continues. Typed camera text never chooses a logo. Sidecar values affect the displayed spec band only: they are not written into source or output EXIF. A preview reads only the first image's sidecar.
+
+Try the synthetic example without a personal photograph:
+
+```sh
+python skills/photo-framer/scripts/frame_photo.py docs/examples/scan.png --style C --capture-sidecar --share --out-dir output/sidecar-example
+```
+
+![Synthetic scan with the capture details from its JSON sibling](docs/images/demo-sidecar-c.jpg)
 
 #### Maintaining the renderer / Bảo trì
 
@@ -347,7 +384,7 @@ python tools/golden.py compare --base main
 <details>
 <summary>Formats, pixels, color and metadata / Định dạng, pixel, màu và metadata</summary>
 
-- **Inputs:** JPEG and 8-bit PNG, up to 30 million pixels per input and 60 million pixels per framed output (100 million for H, whose fixed canvases keep every photo pixel; the largest H outputs need about 1.3 GB of memory). Smaller PNG bit depths remain supported when decoded by Pillow. Animated images are rejected.
+- **Inputs and memory:** JPEG and 8-bit PNG, up to 30 million encoded pixels per input and **24 million pixels for the complete framed output in every style**, including H. The usable source size is smaller and depends on the chosen frame: H 9:16 around a landscape can exceed three times the source pixel count. Layout is checked before a full-size canvas is allocated (JPEGs are checked before decoding); an oversized result reports the expected canvas dimensions and a suitable smaller source size. The renderer never silently resizes. Export a smaller copy or explicitly authorize the assistant to resize a separate copy first; the original stays untouched. The 24 MP cap limits pixel buffers, not compressed file size in MB, and is not an absolute RAM guarantee. Smaller PNG bit depths remain supported when decoded by Pillow. Animated images are rejected.
 - **16-bit PNG:** encoded bit depth is inspected before decoding. All 16-bit PNG color types are rejected rather than silently reduced to 8-bit.
 - **RGB preservation:** full-size final PNGs keep the prepared photo region's dimensions and decoded RGB pixel values after EXIF orientation, and retain valid source RGB ICC profiles. The frame increases the overall output dimensions; frames and shadows stay outside the photo.
 - **Color conversion:** grayscale/CMYK with suitable profiles are converted to sRGB. Unprofiled CMYK is rejected; unprofiled RGB is treated as sRGB.
@@ -360,8 +397,8 @@ python tools/golden.py compare --base main
 - **Output metadata:** by default the final PNG and the share JPEG keep the source EXIF, including GPS location. Orientation is reset to 1 because the pixels are already rotated, pixel dimensions are updated, and the embedded thumbnail, maker notes and XMP (including edit history) are dropped. `--metadata strip` writes no EXIF. Previews never carry metadata. / Mặc định PNG cuối và JPEG chia sẻ giữ EXIF của ảnh gốc, kể cả vị trí GPS; hướng xoay đặt lại 1, cập nhật kích thước, bỏ ảnh thu nhỏ, maker notes và XMP. Dùng `--metadata strip` để không ghi EXIF.
 - **Style E:** one deterministic sRGB color is selected from a sample no larger than 96×96, favoring colors near the edges and midtones. Near-neutral or unusable samples fall back to warm neutral #e8e4dc. Default tone is muted; natural and light variants are optional settings. `--frame-color` bypasses this selection and applies one exact color across the batch. E converts only its decorative colors into the source RGB ICC profile; photo pixels and ICC bytes stay unchanged. No per-image AI color analysis or candidate variants are needed.
 - **Style F:** sprockets and both corner texts stay outside the rectangular photo region. Charcoal, black and dark-brown backgrounds are available, with standard, sparse or dense sprockets. Both custom fields preserve the supplied wording; no metadata, counter, film brand or photo effect is generated. F converts its decorative sRGB colors into the source RGB profile while retaining photo pixels and ICC bytes.
-- **Gallery label and signature (v0.11):** `--title` (Inter SemiBold, as D's camera line, 5% of the photo's short edge) and `--subtitle` (Inter Regular, as the exposure line, 2.6%) are centered below the photo in H; dark ink on light mats and light ink on dark blurred backgrounds. `--signature` takes a PNG up to 4096 px, keeps its transparency, converts its colors like other decorations and places it in the margin below the photo of A, B, E or G, aligned to the photo edges. H takes no signature: a corner mark beside its centered label looks unbalanced. Each item claims its own box; leaving the margin or overlapping another item is an error. `--caption` keeps its previous behavior and cannot be combined with the gallery label.
-- **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. `--ratio` also offers 3:4 and 9:16 (minimum margin 4.0% and 5.0% of the canvas width) and overrides the first menu row. `--background blur` replaces the mat with a blurred copy of the photo scaled to cover the canvas (blurred on a copy of at most 384 px, then enlarged; `--blur-tone` dark by default, neutral or light), drawn only outside the photo. Because the full-resolution photo is kept, the canvas grows with it; H accepts outputs up to 100 megapixels, enough for a 29 MP landscape on 9:16. Share copies are exactly 1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16).
+- **Gallery label and signature (v0.11–v0.12):** `--title` (Inter SemiBold, as D's camera line, 5% of the photo's short edge) and `--subtitle` (Inter Regular, as the exposure line, 2.6%) are centered below the photo in A/B/G/H; dark ink on light backgrounds and light ink on dark blurred backgrounds. A/B/G grow the lower margin as needed without moving the photo; H retains its centered photo/label block. `--signature` takes a PNG up to 4096 px, keeps its transparency, converts its colors like other decorations and places it in the margin below the photo of A, B, E or G, aligned to the photo edges. H takes no signature: a corner mark beside its centered label looks unbalanced. Each item claims its own box; leaving the margin or overlapping another item is an error. `--caption` keeps its previous behavior. A gallery label cannot be combined with a caption or signature.
+- **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. `--ratio` also offers 3:4 and 9:16 (minimum margin 4.0% and 5.0% of the canvas width) and overrides the first menu row. `--background blur` replaces the mat with a blurred copy of the photo scaled to cover the canvas (blurred on a copy of at most 384 px, then enlarged; `--blur-tone` dark by default, neutral or light), drawn only outside the photo. Because the full-resolution photo is kept, the canvas grows with it; H shares the 24 MP complete output cap; large source photos need a smaller, explicitly authorized copy before framing. Share copies are exactly 1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16).
 - **Style G:** paper grain, torn edges and a soft shadow stay outside the rectangular photo. Choose narrow/medium/wide margins, warm-white/bright-white/ivory paper and subtle/medium/rough edges. A fixed procedural pattern and a reusable 256×256 texture tile support batches without AI calls or external texture files. Decorative colors convert into the source RGB profile; photo pixels and ICC bytes remain unchanged. No caption or logo is added by default.
 
 Ở PNG cuối, vùng ảnh đã được chuẩn bị giữ nguyên kích thước và pixel RGB sau giải mã/chuẩn hóa hướng xoay EXIF. Khung được thêm bên ngoài nên kích thước toàn bộ ảnh đầu ra tăng lên. Các trường hợp chuyển màu, ghép nội dung trong suốt lên trắng, cắt ảnh đã được duyệt và JPEG chia sẻ có giới hạn riêng như mô tả trên.

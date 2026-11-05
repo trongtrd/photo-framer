@@ -72,13 +72,13 @@ class MinimalMatBasics(FramerCase):
                         else:
                             self.assertEqual(shared.size, final.size)
                             self.assertLessEqual(max(shared.size), 2048)
-        # H allows 100 MP (fixed canvases keep every pixel); other styles keep 60 MP.
+        # Every style now shares the owner-approved 24 MP total output cap.
         # Mode '1' stand-ins: the limit is checked before any canvas is allocated.
-        with self.assertRaisesRegex(ValueError, '100 megapixels'):
+        with self.assertRaisesRegex(ValueError, '24 megapixels'):
             render(Image.new('1', (9486, 3162)), 'H', ratio='9:16')
-        with self.assertRaisesRegex(ValueError, '60 megapixels'):
+        with self.assertRaisesRegex(ValueError, '24 megapixels'):
             render(Image.new('1', (6000, 5000)), 'B', '1-3-1')
-        # A 29 MP landscape on 9:16 needs ~96 MP, which H now allows.
+        # Geometry stays unchanged; large H layouts are rejected before painting.
         width, height = h_minimal_mat.layout((6600, 4400), Settings('H', ratio='9:16')).size
         self.assertTrue(60_000_000 < width*height <= 100_000_000)
         font = RENDERER.parent.parent/'assets/fonts/Inter-Regular.ttf'
@@ -93,7 +93,7 @@ class MinimalMatBasics(FramerCase):
 
 
 class MinimalMatExtensions(unittest.TestCase):
-    """v0.10: --ratio 3:4/9:16, the 100 MP limit for H and --background blur."""
+    """Named ratios and blurred backgrounds; total output cap is now 24 MP."""
 
     @staticmethod
     def two_tone(size):
@@ -161,7 +161,7 @@ class MinimalMatExtensions(unittest.TestCase):
             render(photo, 'A', background='blur')
 
     def test_verification_reopens_outputs_beyond_the_input_limit(self):
-        """Outputs may exceed Pillow's bomb limit (2x the 30 MP input cap) up to 100 MP."""
+        """Verification restores Pillow's limit even when a custom limit is smaller."""
         from photoframer import io as photo_io
         image = Image.new('RGB', (60, 50), 'red')
         with tempfile.TemporaryDirectory() as temp, \

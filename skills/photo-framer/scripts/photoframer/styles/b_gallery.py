@@ -6,10 +6,12 @@ from typing import NamedTuple
 from PIL import Image, ImageDraw, ImageFilter
 
 from ..components.caption import draw_caption
+from ..components.gallery_label import (Label, draw_margin_label, label_metrics, label_notes,
+                                         lower_margin, validate_label)
 from ..components.shadow import shadow
 from ..components.signature import draw_signature
 from ..components.slots import Slot
-from ..settings import SIGNATURE_OPTIONS
+from ..settings import LABEL_OPTIONS, SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MATS = {1: .10, 2: .16, 3: .23}
@@ -23,6 +25,8 @@ class Layout(NamedTuple):
     frame: int
     wall: int
     frame_size: tuple
+    bottom: int
+    label: Label | None = None
 
 
 def layout(photo_size, settings):
@@ -32,8 +36,10 @@ def layout(photo_size, settings):
     mat = max(4, round(s * MATS[choices[1]]))
     frame = max(2, round(s*.035))
     wall = max(4, round(s*.18))
-    fw, fh = w+2*(mat+frame), h+2*(mat+frame)
-    return Layout((fw+2*wall, fh+2*wall), mat, frame, wall, (fw, fh))
+    label = label_metrics(photo_size, settings)
+    bottom = lower_margin(photo_size, mat, label)
+    fw, fh = w+2*(mat+frame), h+mat+bottom+2*frame
+    return Layout((fw+2*wall, fh+2*wall), mat, frame, wall, (fw, fh), bottom, label)
 
 
 def paint(photo, plan, settings, ctx):
@@ -51,7 +57,7 @@ def paint(photo, plan, settings, ctx):
     d.rectangle((wall, wall, wall+fw-1, wall+fh-1), fill=frame_color)
     d.line((wall, wall, wall+fw-1, wall), fill=tuple(min(255, c+10) for c in frame_color))
     ix, iy = wall+frame, wall+frame
-    iw, ih = w+2*mat, h+2*mat
+    iw, ih = w+2*mat, h+mat+plan.bottom
     mask = Image.new('L', size, 105)
     ImageDraw.Draw(mask).rectangle((ix, iy, ix+iw-1, iy+ih-1), fill=0)
     mask = mask.filter(ImageFilter.GaussianBlur(s*.011))
@@ -61,11 +67,12 @@ def paint(photo, plan, settings, ctx):
     pos = (ix+mat, iy+mat)
     canvas.paste(photo, pos)
     # The white mat below the photo, inside the frame.
-    slot = Slot((pos[0], pos[1]+h, pos[0]+w, pos[1]+h+mat))
+    slot = Slot((pos[0], pos[1]+h, pos[0]+w, pos[1]+h+plan.bottom))
     if settings.caption:
         slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
                                 mat), 'Caption', check=False)
     draw_signature(canvas, slot, settings, ctx.profile)
+    draw_margin_label(canvas, plan, photo.size, settings, ctx.profile, slot, pos)
     return canvas, pos
 
 
@@ -79,5 +86,5 @@ STYLE = Style(
           Row(('White mat', 'Bo giấy trắng'), (('Narrow', 'Hẹp'), ('Medium', 'Vừa'), ('Wide', 'Rộng'))),
           Row(('Outer background', 'Nền ngoài khung'), (('Gray', 'Xám'), ('White', 'Trắng'),
                                                          ('Ivory', 'Trắng ngà')))),
-    choices_hint='frame-mat-background', accepts=COMMON | SIGNATURE_OPTIONS,
-    layout=layout, paint=paint)
+    choices_hint='frame-mat-background', accepts=COMMON | SIGNATURE_OPTIONS | LABEL_OPTIONS,
+    layout=layout, paint=paint, validate=validate_label, notes=label_notes)

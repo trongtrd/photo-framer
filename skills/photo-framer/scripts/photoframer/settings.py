@@ -35,10 +35,11 @@ OPTIONS = (
     Option('shutter', '--shutter'),
     Option('focal', '--focal'),
     Option('raw_model', '--raw-model'),
+    Option('capture_sidecar', '--capture-sidecar'),
     Option('ratio', '--ratio'),
     Option('background', '--background'),
     Option('blur_tone', '--blur-tone'),
-    # Gallery label (H) and a PNG signature/logo in the margin below the photo.
+    # Gallery label (A/B/G/H) and a PNG signature/logo below the photo.
     Option('title', '--title'),
     Option('subtitle', '--subtitle'),
     Option('signature', '--signature'),
@@ -49,6 +50,7 @@ OPTIONS = (
 SIGNATURE_OPTIONS = frozenset({'signature', 'signature_position', 'signature_width',
                                'signature_opacity'})
 SPEC_OPTIONS = frozenset({'camera', 'lens', 'iso', 'aperture', 'shutter', 'focal', 'raw_model'})
+LABEL_OPTIONS = frozenset({'title', 'subtitle'})
 # Flags handled by the CLI for every style; listed in the generated matrix.
 GLOBAL_FLAGS = ('--share', '--crop', '--metadata')
 
@@ -83,11 +85,12 @@ class Settings:
     shutter: float | None = None      # seconds
     focal: float | None = None        # millimetres
     raw_model: bool | None = None     # True: EXIF model code instead of the display name
+    capture_sidecar: bool | None = None  # CLI: read <input filename>.json for C/D
     ratio: str | None = None          # H canvas ratio, overrides menu row 1
     background: str | None = None     # H: 'blur' replaces the plain mat
     blur_tone: str | None = None      # H blur: 'dark' (default), 'neutral', 'light'
-    title: str | None = None          # H gallery label, Inter SemiBold line below the photo
-    subtitle: str | None = None       # H gallery label, second line (needs a title)
+    title: str | None = None          # A/B/G/H gallery label, Inter SemiBold
+    subtitle: str | None = None       # gallery label, second line (needs a title)
     signature: str | Path | None = None   # PNG placed in the margin below the photo
     signature_position: str | None = None  # bottom-right (default), bottom-center, bottom-left
     signature_width: float | None = None   # fraction of canvas width, default 0.15
