@@ -20,7 +20,20 @@ from PIL.PngImagePlugin import PngInfo
 RENDERER = Path(__file__).with_name('frame_photo.py')
 _spec = importlib.util.spec_from_file_location('frame_photo', RENDERER)
 frame_photo = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(frame_photo)
+_spec.loader.exec_module(frame_photo)  # Adds this folder to sys.path.
+
+import photoframer  # noqa: E402
+from photoframer import Settings, color, metadata, text  # noqa: E402
+from photoframer.components import paper, spec_band  # noqa: E402
+from photoframer.registry import STYLES  # noqa: E402
+from photoframer.settings import OPTIONS  # noqa: E402
+from photoframer.styles import f_film_edge, g_deckled_paper, h_minimal_mat  # noqa: E402
+
+
+def render(photo, style='A', code=None, *, profile=None, meta=None, echo_colors=None, **options):
+    """Shorthand for photoframer.render with a Settings built from keyword options."""
+    return photoframer.render(photo, Settings(style, code, **options), profile=profile,
+                              meta=meta, echo_colors=echo_colors)
 
 
 def xmp_packet(**overrides):
@@ -255,17 +268,17 @@ class FramerRegression(unittest.TestCase):
         self.assertTrue(any('wordmark' in note for note in row['notes']), row['notes'])
 
     def test_bundled_spec_fonts_and_fallback(self):
-        regular = ImageFont.truetype(str(frame_photo.FONTS_DIR / 'Inter-Regular.ttf'), 24)
-        semibold = ImageFont.truetype(str(frame_photo.FONTS_DIR / 'Inter-SemiBold.ttf'), 24)
+        regular = ImageFont.truetype(str(text.FONTS_DIR / 'Inter-Regular.ttf'), 24)
+        semibold = ImageFont.truetype(str(text.FONTS_DIR / 'Inter-SemiBold.ttf'), 24)
         self.assertEqual(regular.getname(), ('Inter', 'Regular'))
         self.assertEqual(semibold.getname(), ('Inter', 'SemiBold'))
-        face, emphasis, stroke = frame_photo.specs_fonts(24)
+        face, emphasis, stroke = text.specs_fonts(24)
         self.assertEqual(face.getname(), ('Inter', 'Regular'))
         self.assertEqual(emphasis.getname(), ('Inter', 'SemiBold'))
         self.assertEqual(stroke, 0)
-        missing = frame_photo.FONTS_DIR.with_name('fonts-missing')
-        with unittest.mock.patch.object(frame_photo, 'FONTS_DIR', missing):
-            face, emphasis, stroke = frame_photo.specs_fonts(24)
+        missing = text.FONTS_DIR.with_name('fonts-missing')
+        with unittest.mock.patch.object(text, 'FONTS_DIR', missing):
+            face, emphasis, stroke = text.specs_fonts(24)
             self.assertIs(face, emphasis)
             self.assertGreater(stroke, 0)
 
@@ -292,10 +305,10 @@ class FramerRegression(unittest.TestCase):
     def test_style_d_uses_gear_font_and_never_loads_logo(self):
         photo = Image.new('RGB', (1200, 800), 'red')
         # Identical strings must produce identical glyphs on both sides.
-        for font_path in (None, frame_photo.FONTS_DIR / 'Inter-Regular.ttf'):
+        for font_path in (None, text.FONTS_DIR / 'Inter-Regular.ttf'):
             with self.subTest(font_path=font_path), unittest.mock.patch.object(
-                    frame_photo, 'load_logo', side_effect=AssertionError('D must not load logos')):
-                result, _ = frame_photo.render(
+                    spec_band, 'load_logo', side_effect=AssertionError('D must not load logos')):
+                result, _ = render(
                     photo, 'D', meta={'make': 'SONY', 'model': 'ILCE-7C'},
                     right_text='ILCE-7C', font_path=font_path)
             left = result.crop((0, 828, 600, result.height)).convert('L')
@@ -366,8 +379,8 @@ class FramerRegression(unittest.TestCase):
         photo.paste('red', (0, 0, 40, 200))
         photo.paste('red', (160, 0, 200, 200))
         before = photo.tobytes()
-        first, pos = frame_photo.render(photo, 'E')
-        second, _ = frame_photo.render(photo, 'E')
+        first, pos = render(photo, 'E')
+        second, _ = render(photo, 'E')
         self.assertEqual(first.tobytes(), second.tobytes())
         red, green, blue = first.getpixel((0, 0))
         self.assertGreater(red, green)
@@ -379,14 +392,14 @@ class FramerRegression(unittest.TestCase):
     def test_style_e_sampling_is_bounded_and_fixed_colors_skip_analysis(self):
         photo = Image.new('RGB', (1600, 1000), 'orange')
         with unittest.mock.patch.object(photo, 'resize', wraps=photo.resize) as resize:
-            frame_photo.color_echo_color(photo)
+            color.color_echo_color(photo)
         sample_size = resize.call_args.args[0]
         self.assertLessEqual(max(sample_size), 96)
         # A supplied color can be resolved without touching any photo object.
-        self.assertEqual(frame_photo.color_echo_color(None, frame_color='#123456'), (18, 52, 86))
-        self.assertEqual(frame_photo.color_echo_color(None, frame_color='navy'), (0, 0, 128))
+        self.assertEqual(color.color_echo_color(None, frame_color='#123456'), (18, 52, 86))
+        self.assertEqual(color.color_echo_color(None, frame_color='navy'), (0, 0, 128))
         for value in (0, 127, 255):
-            self.assertEqual(frame_photo.color_echo_color(
+            self.assertEqual(color.color_echo_color(
                 Image.new('RGB', (80, 60), (value, value, value))), (232, 228, 220))
 
     def test_style_e_batch_auto_fixed_color_and_mixed_errors(self):
@@ -419,17 +432,17 @@ class FramerRegression(unittest.TestCase):
         photo = Image.new('RGB', (400, 300), 'red')
         for edge in (1, 2, 3):
             with self.subTest(edge=edge):
-                result, (x, y) = frame_photo.render(
+                result, (x, y) = render(
                     photo, 'E', f'2-1-{edge}', frame_color='#ad896c')
                 self.assertEqual(result.crop((x, y, x+400, y+300)).tobytes(), photo.tobytes())
                 border_pixel = result.getpixel((x-1, y+100))
                 self.assertEqual(border_pixel == (173, 137, 108), edge == 2)
         for invalid in ('', 'not-a-color', '#12345', '#11223344', 'rgba(1,2,3,4)', 'rgb(999,0,0)'):
             with self.subTest(invalid=invalid), self.assertRaises(ValueError):
-                frame_photo.render(photo, 'E', frame_color=invalid)
+                render(photo, 'E', frame_color=invalid)
         with self.assertRaisesRegex(ValueError, 'only with style E'):
-            frame_photo.render(photo, 'A', frame_color='red')
-        tones = [frame_photo.render(photo, 'E', f'2-{tone}-1')[0].getpixel((0, 0))
+            render(photo, 'A', frame_color='red')
+        tones = [render(photo, 'E', f'2-{tone}-1')[0].getpixel((0, 0))
                  for tone in (1, 2, 3)]
         self.assertEqual(len(set(tones)), 3)
 
@@ -459,15 +472,15 @@ class FramerRegression(unittest.TestCase):
         photo = Image.new('RGB', (1200, 800), 'red')
         for left, right in (('', ''), ('Hà Nội', ''), ('', 'Tháng 10, 2022')):
             with self.subTest(left=left, right=right):
-                im, (side, top) = frame_photo.render(photo, 'F', left_text=left, right_text=right)
+                im, (side, top) = render(photo, 'F', left_text=left, right_text=right)
                 band_top = top+800
                 left_light = im.crop((side, band_top, 600, im.height)).convert('L').getextrema()[1]
                 right_light = im.crop((600, band_top, side+1200, im.height)).convert('L').getextrema()[1]
                 self.assertEqual(left_light > 200, bool(left))
                 self.assertEqual(right_light > 200, bool(right))
         text = 'Trong Trương | Hà Nội'
-        with unittest.mock.patch.object(frame_photo, 'load_logo', side_effect=AssertionError('No F logos')):
-            im, (_, top) = frame_photo.render(photo, 'F', left_text=text, right_text=text,
+        with unittest.mock.patch.object(spec_band, 'load_logo', side_effect=AssertionError('No F logos')):
+            im, (_, top) = render(photo, 'F', left_text=text, right_text=text,
                                              meta={'make': 'SONY', 'model': 'ILCE-7C'})
         left = im.crop((0, top+800, 600, im.height)).convert('L')
         right = im.crop((600, top+800, im.width, im.height)).convert('L')
@@ -493,17 +506,17 @@ class FramerRegression(unittest.TestCase):
                 self.assertNotIn('outputs', rows[0])
         self.assertFalse((self.root / 'output').exists())
         with self.assertRaisesRegex(ValueError, 'only with style F'):
-            frame_photo.render(Image.new('RGB', (40, 32)), 'A', left_text='Berlin')
+            render(Image.new('RGB', (40, 32)), 'A', left_text='Berlin')
 
     def test_style_f_layout_variants_and_batch_errors(self):
         for size in ((400, 300), (300, 400), (40, 32)):
             photo = Image.new('RGB', size, 'red')
             for option in (1, 2, 3):
                 with self.subTest(size=size, option=option):
-                    im, (x, y) = frame_photo.render(photo, 'F', f'{option}-{option}-{option}',
+                    im, (x, y) = render(photo, 'F', f'{option}-{option}-{option}',
                                                     left_text='', right_text='')
                     self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(), photo.tobytes())
-                    self.assertEqual(im.getpixel((0, 0)), frame_photo.F_BACKGROUNDS[option])
+                    self.assertEqual(im.getpixel((0, 0)), f_film_edge.BACKGROUNDS[option])
                     self.assertGreater(im.crop((0, y, x, y+size[1])).convert('L').getextrema()[1], 200)
         small, large = self.root/'small film.png', self.root/'large film.png'
         Image.new('RGB', (40, 32), 'red').save(small)
@@ -527,16 +540,16 @@ class FramerRegression(unittest.TestCase):
     def test_style_g_deckled_edges_texture_shadow_and_repeatability(self):
         photo = Image.new('RGB', (900, 600), (200, 50, 80))
         state = random.getstate()
-        first, pos = frame_photo.render(photo, 'G')
-        second, second_pos = frame_photo.render(photo, 'G')
+        first, pos = render(photo, 'G')
+        second, second_pos = render(photo, 'G')
         self.assertEqual(pos, second_pos)
         self.assertEqual(first.tobytes(), second.tobytes())
         self.assertEqual(random.getstate(), state)
         x, y = pos
         self.assertEqual(first.crop((x, y, x+900, y+600)).tobytes(), photo.tobytes())
-        self.assertEqual(first.getpixel((0, 0)), frame_photo.G_BACKGROUND)
+        self.assertEqual(first.getpixel((0, 0)), g_deckled_paper.BACKGROUND)
         pad = 15
-        mask = frame_photo._deckle_mask(first.size, pad, (1002, 702), 600, 1)
+        mask = paper._deckle_mask(first.size, pad, (1002, 702), 600, 1)
         # The paper covers the entire photo opening, with irregular outer edges.
         self.assertEqual(mask.crop((x, y, x+900, y+600)).getextrema(), (255, 255))
         starts = [next(py for py in range(pad+12) if mask.getpixel((px, py)) > 128)
@@ -547,11 +560,11 @@ class FramerRegression(unittest.TestCase):
         # Contact shadow extends beyond the paper without reaching the canvas corner.
         outside = first.crop((x, first.height-pad+3, x+900, first.height-pad+7))
         self.assertLess(outside.convert('L').getextrema()[0],
-                        Image.new('RGB', (1, 1), frame_photo.G_BACKGROUND).convert('L').getpixel((0, 0)))
-        frame_photo._paper_texture.cache_clear()
-        third, _ = frame_photo.render(photo, 'G')
+                        Image.new('RGB', (1, 1), g_deckled_paper.BACKGROUND).convert('L').getpixel((0, 0)))
+        paper._paper_texture.cache_clear()
+        third, _ = render(photo, 'G')
         self.assertEqual(first.tobytes(), third.tobytes())
-        self.assertEqual(frame_photo._paper_texture(frame_photo.G_PAPERS[1], None).size, (256, 256))
+        self.assertEqual(paper._paper_texture(g_deckled_paper.PAPERS[1], None).size, (256, 256))
 
     def test_style_g_all_options_keep_rectangular_photo(self):
         for size in ((400, 300), (300, 400), (40, 32), (16, 16)):
@@ -560,16 +573,16 @@ class FramerRegression(unittest.TestCase):
                 for paper in (1, 2, 3):
                     for roughness in (1, 2, 3):
                         with self.subTest(size=size, code=(width, paper, roughness)):
-                            im, (x, y) = frame_photo.render(photo, 'G', f'{width}-{paper}-{roughness}')
+                            im, (x, y) = render(photo, 'G', f'{width}-{paper}-{roughness}')
                             self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(),
                                              photo.tobytes())
                             self.assertEqual(x, y)
                             self.assertEqual(im.size, (size[0]+2*x, size[1]+2*y))
-                            self.assertEqual(im.getpixel((0, 0)), frame_photo.G_BACKGROUND)
+                            self.assertEqual(im.getpixel((0, 0)), g_deckled_paper.BACKGROUND)
                             # Interior paper has texture around the selected tone.
                             center = im.getpixel((x+size[0]//2, y-4))
                             self.assertTrue(all(abs(a-b) <= 4 for a, b in
-                                                zip(center, frame_photo.G_PAPERS[paper])))
+                                                zip(center, g_deckled_paper.PAPERS[paper])))
 
     def test_style_g_batch_errors_sharing_and_caption(self):
         bad, good = self.root/'16bit paper.png', self.root/'paper photo.png'
@@ -586,15 +599,15 @@ class FramerRegression(unittest.TestCase):
             self.assertFalse(shared.getexif())
         font = RENDERER.parent.parent/'assets/fonts/Inter-Regular.ttf'
         photo = Image.new('RGB', (1200, 800), 'red')
-        plain, (x, y) = frame_photo.render(photo, 'G')
-        captioned, _ = frame_photo.render(photo, 'G', caption='Hà Nội — mùa thu.', font_path=str(font))
+        plain, (x, y) = render(photo, 'G')
+        captioned, _ = render(photo, 'G', caption='Hà Nội — mùa thu.', font_path=str(font))
         self.assertEqual(captioned.crop((x, y, x+1200, y+800)).tobytes(), photo.tobytes())
         self.assertNotEqual(plain.crop((x, y+800, x+1200, plain.height)).tobytes(),
                             captioned.crop((x, y+800, x+1200, plain.height)).tobytes())
         with self.assertRaisesRegex(ValueError, 'fit'):
-            frame_photo.render(photo, 'G', caption='W'*200, font_path=str(font))
-        with unittest.mock.patch.object(frame_photo, 'load_logo', side_effect=AssertionError('No G logos')):
-            im, _ = frame_photo.render(photo, 'G', meta={'make': 'SONY', 'model': 'ILCE-7C'})
+            render(photo, 'G', caption='W'*200, font_path=str(font))
+        with unittest.mock.patch.object(spec_band, 'load_logo', side_effect=AssertionError('No G logos')):
+            im, _ = render(photo, 'G', meta={'make': 'SONY', 'model': 'ILCE-7C'})
         self.assertEqual(im.tobytes(), plain.tobytes())
 
     def test_style_h_fixed_ratios_center_photo_with_keyline(self):
@@ -603,7 +616,7 @@ class FramerRegression(unittest.TestCase):
             s = min(size)
             for ratio, keyline, background in ((1, 1, 1), (2, 2, 2), (1, 3, 3), (2, 1, 1)):
                 with self.subTest(size=size, code=f'{ratio}-{background}-{keyline}'):
-                    im, (x, y) = frame_photo.render(photo, 'H', f'{ratio}-{background}-{keyline}')
+                    im, (x, y) = render(photo, 'H', f'{ratio}-{background}-{keyline}')
                     self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(), photo.tobytes())
                     num, den = (4, 5) if ratio == 1 else (1, 1)
                     self.assertEqual(im.width*den, im.height*num)
@@ -616,7 +629,7 @@ class FramerRegression(unittest.TestCase):
                     fraction = .036 if ratio == 1 else .024
                     self.assertGreaterEqual(min(left, right, top, bottom), int(im.width*fraction))
                     self.assertLessEqual(min(left, top), round(im.width*fraction)+num)
-                    bg = frame_photo.H_BACKGROUNDS[background]
+                    bg = h_minimal_mat.BACKGROUNDS[background]
                     self.assertEqual(im.getpixel((0, 0)), bg)
                     if k:
                         self.assertEqual(im.getpixel((x-1, y+size[1]//2)), (10, 10, 10))
@@ -628,7 +641,7 @@ class FramerRegression(unittest.TestCase):
     def test_style_h_thin_border_follows_photo_ratio(self):
         for size in ((1200, 800), (900, 1200)):
             photo = Image.new('RGB', size, 'red')
-            im, (x, y) = frame_photo.render(photo, 'H', '3-1-2')
+            im, (x, y) = render(photo, 'H', '3-1-2')
             margin = max(4, round(min(size)*.015))
             self.assertEqual((x, y), (margin, margin))
             self.assertEqual(im.size, (size[0]+2*margin, size[1]+2*margin))
@@ -655,28 +668,28 @@ class FramerRegression(unittest.TestCase):
                             self.assertEqual(shared.size, final.size)
                             self.assertLessEqual(max(shared.size), 2048)
         with self.assertRaisesRegex(ValueError, '60 megapixels'):
-            frame_photo.render(Image.new('RGB', (6600, 4400)), 'H')
+            render(Image.new('RGB', (6600, 4400)), 'H')
         font = RENDERER.parent.parent/'assets/fonts/Inter-Regular.ttf'
         photo = Image.new('RGB', (1200, 800), 'red')
-        plain, (x, y) = frame_photo.render(photo, 'H')
-        captioned, _ = frame_photo.render(photo, 'H', caption='Hà Nội — mùa thu.', font_path=str(font))
+        plain, (x, y) = render(photo, 'H')
+        captioned, _ = render(photo, 'H', caption='Hà Nội — mùa thu.', font_path=str(font))
         self.assertEqual(captioned.crop((x, y, x+1200, y+800)).tobytes(), photo.tobytes())
         self.assertNotEqual(plain.tobytes(), captioned.tobytes())
         for flag in ({'right_text': 'x'}, {'left_text': 'x'}, {'frame_color': 'red'}):
             with self.assertRaises(ValueError):
-                frame_photo.render(photo, 'H', **flag)
+                render(photo, 'H', **flag)
 
     def test_spec_formatting_and_brand_mapping(self):
-        line1, line2 = frame_photo.format_specs(
+        line1, line2 = metadata.format_specs(
             {'model': 'E-M10MarkIV', 'lens': 'OM 12-45mm F4.0',
              'iso': 800, 'fnumber': 4.0, 'exposure': 1/200, 'focal': 12.0})
         self.assertEqual(line1, 'E-M10 Mark IV | OM 12-45mm F4.0')
         self.assertEqual(line2, 'ISO 800  f/4  1/200s  12mm')
-        _, line2 = frame_photo.format_specs(
+        _, line2 = metadata.format_specs(
             {'model': 'X', 'lens': 'Y', 'iso': 100, 'fnumber': 2.8,
              'exposure': 2.0, 'focal': 35.0})
         self.assertEqual(line2, 'ISO 100  f/2.8  2s  35mm')
-        self.assertIsNone(frame_photo.format_specs({'model': 'X'})[1])
+        self.assertIsNone(metadata.format_specs({'model': 'X'})[1])
         for raw, shown in (('E-M10MarkIV', 'E-M10 Mark IV'),
                            ('E-M1MarkIII', 'E-M1 Mark III'),
                            ('R6Mark2', 'R6 Mark 2'),
@@ -686,15 +699,15 @@ class FramerRegression(unittest.TestCase):
                            ('', ''),
                            (None, None)):
             with self.subTest(model=raw):
-                self.assertEqual(frame_photo.display_model(raw), shown)
-        self.assertEqual(frame_photo.brand_slug({'make': 'OLYMPUS CORPORATION'}),
+                self.assertEqual(metadata.display_model(raw), shown)
+        self.assertEqual(metadata.brand_slug({'make': 'OLYMPUS CORPORATION'}),
                          'om-system')
-        self.assertEqual(frame_photo.brand_slug({'make': 'NIKON CORPORATION'}), 'nikon')
-        self.assertEqual(frame_photo.brand_slug({'model': 'iPhone 15 Pro'}), 'apple')
-        self.assertEqual(frame_photo.brand_slug({'make': 'RICOH IMAGING'}), 'ricoh')
-        self.assertIsNone(frame_photo.brand_slug({'make': 'SIGMA'}))
-        self.assertEqual(frame_photo.brand_wordmark({'make': 'SIGMA'}), 'SIGMA')
-        self.assertEqual(frame_photo.brand_wordmark({'make': 'OLYMPUS CORPORATION'}),
+        self.assertEqual(metadata.brand_slug({'make': 'NIKON CORPORATION'}), 'nikon')
+        self.assertEqual(metadata.brand_slug({'model': 'iPhone 15 Pro'}), 'apple')
+        self.assertEqual(metadata.brand_slug({'make': 'RICOH IMAGING'}), 'ricoh')
+        self.assertIsNone(metadata.brand_slug({'make': 'SIGMA'}))
+        self.assertEqual(metadata.brand_wordmark({'make': 'SIGMA'}), 'SIGMA')
+        self.assertEqual(metadata.brand_wordmark({'make': 'OLYMPUS CORPORATION'}),
                          'OLYMPUS')
 
     def test_reject_all_16bit_color_types_before_output(self):
@@ -803,6 +816,67 @@ class FramerRegression(unittest.TestCase):
                 _, rerun = self.cli([path], '--style', style, *flags)
                 self.assertNotEqual(rerun[0]['outputs'][0], str(final))
                 self.assertEqual(hashlib.sha256(final.read_bytes()).digest(), first_hash)
+
+
+class RegistryAndSettings(unittest.TestCase):
+    """The style registry and the named-option matrix that the CLI and docs use."""
+
+    def test_registry_order_menus_and_defaults(self):
+        self.assertEqual(''.join(STYLES), 'ABCDEFGH')
+        fields = {option.field for option in OPTIONS}
+        for code, style in STYLES.items():
+            with self.subTest(style=code):
+                self.assertEqual(style.code, code)
+                self.assertEqual(len(style.rows), 3)
+                self.assertTrue(all(len(row.options) == 3 for row in style.rows))
+                self.assertEqual(Settings(code).choices, style.default_choices)
+                self.assertLessEqual(style.accepts, fields)
+
+    def test_settings_parse_and_reject_codes(self):
+        self.assertEqual(Settings('B', '1-3-1').choices, (1, 3, 1))
+        self.assertEqual(Settings('H').choices, (1, 1, 1))
+        for code in ('4-1-1', '1-1', '1-1-1-1', 'a-b-c', '0-1-1'):
+            with self.subTest(code=code), self.assertRaisesRegex(ValueError, 'three numbers'):
+                Settings('A', code)
+        with self.assertRaisesRegex(ValueError, 'A, B, C, D, E, F, G or H'):
+            Settings('Z')
+
+    def test_option_matrix_matches_enforcement(self):
+        """Every style rejects exactly the named options it does not accept."""
+        photo = Image.new('RGB', (900, 600), 'red')
+        font = str(text.FONTS_DIR / 'Inter-Regular.ttf')
+        values = {'left_text': 'x', 'right_text': 'x', 'frame_color': '#ad896c',
+                  'caption': 'x', 'font_path': font}
+        required = {'D': {'right_text': 'Berlin'}, 'F': {'left_text': '', 'right_text': ''}}
+        for code, style in STYLES.items():
+            for option in OPTIONS:
+                with self.subTest(style=code, option=option.flag):
+                    options = dict(required.get(code, {}))
+                    options[option.field] = values[option.field]
+                    if option.field == 'caption':
+                        options['font_path'] = font
+                    if option.field in style.accepts:
+                        render(photo, code, **options)
+                    else:
+                        with self.assertRaises(ValueError):
+                            render(photo, code, **options)
+
+    def test_required_options_are_enforced(self):
+        photo = Image.new('RGB', (900, 600), 'red')
+        full = {'left_text': 'Berlin', 'right_text': 'October'}
+        for code, style in STYLES.items():
+            self.assertLessEqual(style.requires, style.accepts)
+            for field in style.requires:
+                with self.subTest(style=code, missing=field):
+                    options = {key: full[key] for key in style.requires if key != field}
+                    with self.assertRaisesRegex(ValueError, 'requires'):
+                        render(photo, code, **options)
+
+    def test_cli_version(self):
+        process = subprocess.run([sys.executable, str(RENDERER), '--version'],
+                                 capture_output=True, text=True)
+        self.assertEqual(process.returncode, 0)
+        self.assertEqual(process.stdout.strip(), f'Photo Framer {photoframer.VERSION}')
 
 
 if __name__ == '__main__':
