@@ -276,13 +276,13 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style A --metada
 
 To include D in the comparison, add `--right-text "your exact text"` to `--preview`. F's preview corners stay blank until both text fields are supplied; these preview blanks are not a choice of blank final corners. Add both `--left-text` and `--right-text` to preview F with your wording. An empty F right field omits D, which requires nonempty text. E's `--frame-color` accepts an opaque sRGB hex code or a supported English color name; it overrides the auto-tone choice. Selected colors are recorded as sRGB hex in the JSON notes.
 
-For custom text, supply the exact caption and a font file with the required characters:
+For custom text, supply the exact caption; it is set in the bundled Inter, like every other text in Photo Framer:
 
 ```sh
-python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --caption "Hà Nội — mùa thu." --font "/path/to/unicode-font.ttf" --out-dir "output"
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --caption "Hà Nội — mùa thu." --out-dir "output"
 ```
 
-Text supplied with `--caption` must fit on one line, contain at most 200 characters, and stay outside the photo. It requires an explicit `--font` path; check Vietnamese glyphs when needed. C/D's automatic spec band can contain two lines and uses the bundled Inter Regular and SemiBold fonts. D requires `--right-text`, also one line of at most 200 characters, and uses the gear line's SemiBold face and size without requiring `--font`. A font override applies to both sides. If the text and capture details cannot fit together, the renderer reports an error.
+Text supplied with `--caption` must fit on one line, contain at most 200 characters, and stay outside the photo. It uses the bundled Inter Regular, the spec cards' typeface (C uses Inter SemiBold, as its caption replaces the camera line); `--font` with another font file overrides it, and then Vietnamese glyphs should be checked. C/D's automatic spec band can contain two lines and uses the bundled Inter Regular and SemiBold fonts. D requires `--right-text`, also one line of at most 200 characters, and uses the gear line's SemiBold face and size without requiring `--font`. A font override applies to both sides. If the text and capture details cannot fit together, the renderer reports an error.
 
 F requires both `--left-text` and `--right-text`, including explicit empty values for blank corners. Each accepts one line of at most 200 characters. Both use bundled Inter SemiBold in warm white; `--font` overrides both. The renderer rejects texts that overlap or do not fit; it does not shrink, wrap, uppercase or truncate them. F uses these two fields instead of `--caption`.
 
@@ -317,7 +317,7 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 <!-- /generated:option-matrix -->
 
-For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` và `--font` như ví dụ; thêm `--share` để xuất bản chia sẻ.
+For Vietnamese captions, pass `--caption` as above; the bundled Inter covers Vietnamese. Add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` như ví dụ; font Inter đi kèm đủ dấu tiếng Việt. Thêm `--share` để xuất bản chia sẻ.
 
 Filesystems must support hard links for the renderer's atomic, no-overwrite final save. Existing output filenames receive numeric suffixes. The CLI returns JSON per input; inspect every item and report successes and errors separately.
 
