@@ -100,7 +100,7 @@ def build_parser():
                      help='gallery label: exact title in Inter SemiBold (as style D), centered below the photo')
     mat.add_argument('--subtitle', type=_text_value('--subtitle'),
                      help='gallery label: exact second line in smaller gray Inter Regular (needs --title)')
-    overlay = parser.add_argument_group('signature or logo (A, B, E, G, H)',
+    overlay = parser.add_argument_group('signature or logo (A, B, E, G)',
                                         'A PNG placed in the margin below the photo, never over it.')
     overlay.add_argument('--signature', type=Path, help='transparent PNG signature or logo')
     overlay.add_argument('--signature-position', choices=SIGNATURE_POSITIONS,

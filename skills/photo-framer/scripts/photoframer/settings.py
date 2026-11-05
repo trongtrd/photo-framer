@@ -105,6 +105,6 @@ def check_options(settings, style):
         if not option.generic or option.field in style.accepts:
             continue
         if getattr(settings, option.field) is not None:
-            allowed = ' or '.join(code for code, other in STYLES.items()
-                                  if option.field in other.accepts)
+            codes = [code for code, other in STYLES.items() if option.field in other.accepts]
+            allowed = codes[0] if len(codes) == 1 else ', '.join(codes[:-1]) + ' or ' + codes[-1]
             raise ValueError(f'{option.flag} is supported only with style {allowed} (or --preview).')
