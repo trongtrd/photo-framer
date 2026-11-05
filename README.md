@@ -165,6 +165,16 @@ F dùng `Berlin, Germany` bên trái và `October 2022` bên phải. Cả hai l�
 
 C/D read capture details from EXIF/XMP and never invent missing values. Without metadata, C can use your caption or a blank band; D keeps your text on the right. / C/D đọc EXIF/XMP, không tự bịa thông tin thiếu. Khi mất metadata, C có thể dùng chữ bạn cung cấp hoặc dải không chữ; D vẫn giữ chữ của bạn bên phải.
 
+### Portrait photos in style H / Ảnh dọc với style H
+
+A second real photograph, a 1000 × 1500 (2:3) portrait, shows how H fits portrait photos without cropping or scaling: on the fixed 4:5 and 1:1 canvases the spare space goes to the sides, while the top and bottom keep the minimum margin.
+
+Ảnh thật thứ hai, khổ dọc 1000 × 1500 (2:3), minh họa cách H đặt ảnh dọc mà không cắt hay thu nhỏ: với khung cố định 4:5 và 1:1, phần dư nằm hai bên, trên và dưới giữ lề tối thiểu.
+
+| Original / Ảnh gốc | H `1-1-1` · 4:5 | H `2-2-2` · 1:1 | H `3-1-2` · thin border / viền mỏng |
+| :---: | :---: | :---: | :---: |
+| ![Portrait source: Prague rooftops and the Lesser Town Bridge Tower seen from above](docs/images/demo-portrait-source.jpg) | ![The full portrait photo centered on a white 4:5 canvas with a thin black keyline](docs/images/demo-portrait-h-4x5.jpg) | ![The full portrait photo centered on a warm light gray 1:1 canvas without a keyline](docs/images/demo-portrait-h-1x1.jpg) | ![The full portrait photo with a thin even white border and a thick black keyline](docs/images/demo-portrait-h-thin.jpg) |
+
 [↑ Choose another style / Chọn phong cách khác](#choose-a-style)
 
 ## Python and maintenance
@@ -286,6 +296,16 @@ python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.
 
 Each command creates `demo-source-final_<STYLE>.png` and `demo-source-final_<STYLE>_share.jpg` in `output/demo`.
 
+The portrait H examples use separate folders because all three settings share the `_H` filename:
+
+```sh
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 1-1-1 --share --out-dir output/demo-portrait/4x5
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 2-2-2 --share --out-dir output/demo-portrait/1x1
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 3-1-2 --share --out-dir output/demo-portrait/thin
+```
+
+The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`.
+
 The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP for reproduction. EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
 
 E's automatic color for this source is sRGB `#a98e84`, with inner edge `#181c24`. It comes from the local selection algorithm, not an AI-generated mockup.
@@ -332,4 +352,4 @@ Recorded local validation used Linux, Python 3.12.14 and Pillow 12.3.0 for v0.1,
 
 ## License
 
-MIT; see [LICENSE](LICENSE). The code and synthetic test data in this repository are covered by this license. The README examples use a real photograph supplied by the project owner in [`docs/images/demo-source-final.jpg`](docs/images/demo-source-final.jpg). The bundled camera brand marks are public-domain files from Wikimedia Commons (sources and terms in [`skills/photo-framer/assets/logos/README.md`](skills/photo-framer/assets/logos/README.md)); the trademarks belong to their owners and the marks are only displayed, unmodified, next to photographs taken with that equipment.
+MIT; see [LICENSE](LICENSE). The code and synthetic test data in this repository are covered by this license. The README examples use real photographs supplied by the project owner in [`docs/images/demo-source-final.jpg`](docs/images/demo-source-final.jpg) and [`docs/images/demo-portrait-source.jpg`](docs/images/demo-portrait-source.jpg). The bundled camera brand marks are public-domain files from Wikimedia Commons (sources and terms in [`skills/photo-framer/assets/logos/README.md`](skills/photo-framer/assets/logos/README.md)); the trademarks belong to their owners and the marks are only displayed, unmodified, next to photographs taken with that equipment.
