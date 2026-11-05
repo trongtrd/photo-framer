@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata)
+# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata) / v0.10 (H ratios, blur)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -163,6 +163,17 @@ Flat presentation: no shadow, frame or keyline.
   bytes remain intact.
 - Share copies: 4:5 → exactly 1080×1350, 1:1 → exactly 1080×1080 sRGB JPEG;
   ratio 3 uses the standard 2048 px limit.
-- Choices: ratio–mat–keyline, default 1-1-1. The 60 MP output limit still applies.
+- Choices: ratio–mat–keyline, default 1-1-1.
+- v0.10 `--ratio 4:5|1:1|3:4|9:16|original` overrides row 1 (codes unchanged).
+  3:4 minimum margin 0.040 × canvas width, 9:16 0.050; widths are multiples of
+  3 and 9. Share copies 3:4 → 1080×1440, 9:16 → 1080×1920.
+- v0.10 `--background blur`: the photo is fitted to cover the canvas
+  (ImageOps.fit, BOX) on a working copy whose longer edge is at most 384 px,
+  Gaussian radius 0.04 × the copy's short edge, tone dark (channels × 0.88,
+  default), neutral, or light (channels + 12% toward white), then enlarged
+  with BICUBIC to the canvas. No color conversion; keyline and photo are
+  drawn on top. Row 2 (mat) is unused.
+- H output limit 100 MP (other styles 60 MP). Verification re-opens the
+  output with Pillow's pixel limit raised to exactly the encoded size.
 
 Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. Output EXIF (v0.9): `--metadata keep` (default) copies IFD0, the Exif sub-IFD and GPS into the final PNG (eXIf) and share JPEG (APP1), sets Orientation 1 when present, updates ImageWidth/ImageLength and PixelX/YDimension to each output, and drops IFD1 thumbnails, MakerNote, XMLPacket, InterColorProfile and the interoperability pointer; JPEG EXIF over 65,000 bytes is an error. `--metadata strip` writes none. Previews never carry metadata. Cropping/resizing requires explicit authorization; reduced previews are not final files.

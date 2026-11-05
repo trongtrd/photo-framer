@@ -2,6 +2,15 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
+## v0.10.0 (2026-11-05): style H extensions
+
+- `--ratio 4:5|1:1|3:4|9:16|original` for H. 3:4 and 9:16 are new (minimum margins 4.0% and 5.0% of the canvas width, share copies exactly 1080×1440 and 1080×1920); the menu codes keep their meaning.
+- `--background blur` for H: the canvas is filled with a blurred copy of the photo itself (computed on a small copy, then enlarged), slightly darkened by default; `--blur-tone dark|neutral|light`. The photo stays intact on top, with its keyline.
+- H output limit raised to 100 MP (other styles stay at 60 MP). Fixed a verification bug that rejected any output above 60 MP: Pillow's decompression-bomb limit (twice the 30 MP input cap) also applied when re-opening the file just written.
+- `--preview` honours `--ratio` and `--background` for H, and labels it accordingly.
+- New README examples: landscape and portrait on 9:16 with a blurred background.
+- Without the new flags, every output is byte-identical to v0.9 (`tools/golden.py compare --base claude/phase2-metadata`).
+
 ## v0.9.0 (2026-11-05): metadata layer
 
 - **Output EXIF is now kept by default** (deliberate behaviour change, approved by the owner). The final PNG and the share JPEG carry the source EXIF, including GPS location, with Orientation reset to 1, pixel dimensions updated, and the embedded thumbnail, maker notes and XMP (including edit history) dropped. `--metadata strip` restores the previous behaviour of writing no EXIF. Previews never carry metadata.

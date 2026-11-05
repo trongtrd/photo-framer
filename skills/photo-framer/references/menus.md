@@ -127,6 +127,8 @@ Với 4:5 và 1:1, ảnh ngang hay dọc đều dùng chung một khung cố đ�
 hiển thị trọn trong feed Instagram/Facebook, hợp màn hình điện thoại. Lựa chọn 3
 chỉ thêm viền mỏng đều quanh ảnh theo đúng tỷ lệ ảnh. Mặc định không có chữ.
 Bản chia sẻ JPEG của 4:5 và 1:1 có đúng kích thước 1080×1350 và 1080×1080.
+Ngoài menu: `--ratio 3:4` hoặc `--ratio 9:16` (story, reels; bản chia sẻ 1080×1440,
+1080×1920) và `--background blur` để dùng chính ảnh làm nền mờ, tối nhẹ, thay màu nền.
 
 ## English
 
@@ -254,6 +256,9 @@ photo is fitted, centered, never cropped or scaled. 4:5 is the tallest ratio
 shown uncropped in Instagram/Facebook feeds, best on phone screens. Option 3
 adds only a thin even border in the photo's own ratio. No text by default.
 Share JPEGs for 4:5 and 1:1 are exactly 1080×1350 and 1080×1080.
+Beyond the menu: `--ratio 3:4` or `--ratio 9:16` (stories, reels; share copies
+1080×1440, 1080×1920) and `--background blur` for a softly blurred, slightly
+darkened copy of the photo instead of the mat color.
 
 ## Named options / Tùy chọn có tên
 
@@ -276,6 +281,9 @@ Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có 
 | `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
 | `--focal` | — | — | ✓ | ✓ | — | — | — | — |
 | `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
+| `--ratio` | — | — | — | — | — | — | — | ✓ |
+| `--background` | — | — | — | — | — | — | — | ✓ |
+| `--blur-tone` | — | — | — | — | — | — | — | ✓ |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |

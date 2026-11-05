@@ -21,7 +21,8 @@ class Layout(NamedTuple):
     top: int
 
 
-def layout(photo_size, choices):
+def layout(photo_size, settings):
+    choices = settings.choices
     w, h = photo_size
     s = min(w, h)
     side = max(12, round(s*SIDES[choices[0]]))

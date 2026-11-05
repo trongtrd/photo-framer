@@ -1,6 +1,6 @@
 ---
 name: photo-framer
-description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, Deckled Paper, or Minimal Mat (fixed 4:5 / 1:1 canvas or thin border) frames to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, khung 4:5, khung vuông, viền trắng mỏng, camera details, or batch framing. Offer styles A/B/C/D/E/F/G/H while preserving photo content.
+description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, Deckled Paper, or Minimal Mat (fixed 4:5 / 1:1 / 3:4 / 9:16 canvas, thin border, optional blurred background) frames to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, khung 4:5, khung vuông, viền trắng mỏng, camera details, or batch framing. Offer styles A/B/C/D/E/F/G/H while preserving photo content.
 ---
 
 # Photo Framer
@@ -10,7 +10,7 @@ Use the bundled Python script. Do not regenerate or retouch photographs with AI.
 ## Inputs and runtime
 
 1. Resolve only user-requested images using the host's supported file tools. Inspect images visually for border/crop handling and delivery. For E batches, inspect representative inputs/outputs instead of opening every image for color selection; Python handles each file's color and pixel checks.
-2. Accept JPEG and 8-bit PNG; at most 30 megapixels per input and 60 megapixels per output. Request a smaller copy or explicit resizing authorization if necessary; never quietly downsize final images.
+2. Accept JPEG and 8-bit PNG; at most 30 megapixels per input and 60 megapixels per output (100 for H). Request a smaller copy or explicit resizing authorization if necessary; never quietly downsize final images.
 3. Locate `scripts/frame_photo.py` relative to this skill; it needs the `scripts/photoframer/` package beside it. Use Python 3.10+ and install dependencies from `scripts/requirements.txt`: Pillow 10.1–12.x and defusedxml for XMP reading. If missing, use the host's approved dependency installation procedure. No API key or network is needed by the renderer.
 4. If code execution or image file access is unavailable, explain the missing capability. Do not claim support for every ChatGPT session or that a GitHub URL alone installs the skill.
 
@@ -54,7 +54,7 @@ Per-style behaviour lives in `references/styles/`. Open the file for the chosen 
 - E: [e-color-echo.md](references/styles/e-color-echo.md). One automatic color per photo for the whole batch, no per-image questions or color variants; `--frame-color` once for a shared color.
 - F: [f-film-edge.md](references/styles/f-film-edge.md). Both `--left-text` and `--right-text` are required, an empty value only when the user chose a blank corner; ask for missing fields together.
 - G: [g-deckled-paper.md](references/styles/g-deckled-paper.md). Texture and torn edges stay outside the intact photo; no text by default.
-- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border; the photo is fitted and centered, never cropped or scaled.
+- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border, plus `--ratio 3:4|9:16` and `--background blur`; the photo is fitted and centered, never cropped or scaled.
 - Named flags and the styles that accept them: the matrix at the end of [menus.md](references/menus.md#named-options--tùy-chọn-có-tên). Choice codes never change meaning.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
