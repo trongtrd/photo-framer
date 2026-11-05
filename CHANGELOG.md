@@ -2,6 +2,12 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
+## Unreleased: maintenance
+
+- The regression tests moved from one 1,400-line file into `scripts/tests/`, split by area (input files and color, C/D, E/F/G, H, labels and signatures, metadata, registry) with shared helpers in `tests/support.py`. `scripts/test_frame_photo.py` stays the entry point, so CI and every documented command are unchanged. The same 60 tests run with identical bodies.
+- `docs/HANDOFF.md` rewritten after the seven stacked PRs (#1 to #7) were merged into `main`.
+- No change to the renderer or to any output.
+
 ## v0.11.0 (2026-11-05): labels and signatures
 
 - **Slots**: each style that can take overlays (A, B, E, G, H) exposes the margin below the photo as a slot. Text and images claim exact boxes there; anything that would leave the slot or overlap another item is rejected with a clear error. Nothing is ever drawn over the photo.
