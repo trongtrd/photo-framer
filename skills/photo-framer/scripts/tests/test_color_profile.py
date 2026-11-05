@@ -20,15 +20,29 @@ class BundledSrgbProfile(FramerCase):
     """v0.11.1: the renderer's sRGB profile is a committed file, not built at run time."""
 
     @staticmethod
-    def without_date(profile):
-        return profile[:24] + profile[36:]
+    def without_stamps(profile):
+        """Drop the two header fields LittleCMS fills in per run or per OS.
+
+        Bytes 24-35 hold the creation date; bytes 40-43 the primary platform, which is
+        'MSFT' on Windows builds and 'APPL' elsewhere. Everything else is the profile itself.
+        """
+        return profile[:24] + profile[36:40] + profile[44:]
+
+    def test_stamp_masking_hides_only_the_date_and_platform(self):
+        bundled = PROFILE.read_bytes()
+        windows = bundled[:24] + bytes(12) + bundled[36:40] + b'MSFT' + bundled[44:]
+        self.assertEqual(self.without_stamps(windows), self.without_stamps(bundled))
+        changed = bytearray(bundled)
+        changed[200] ^= 1  # a tag byte: this must still be noticed
+        self.assertNotEqual(self.without_stamps(bytes(changed)), self.without_stamps(bundled))
 
     def test_bundled_file_is_littlecms_srgb_with_a_fixed_date(self):
         built = ImageCms.ImageCmsProfile(ImageCms.createProfile('sRGB')).tobytes()
         bundled = PROFILE.read_bytes()
-        # Whatever LittleCMS build is installed, it makes this profile apart from the stamp.
-        self.assertEqual(self.without_date(bundled), self.without_date(built))
+        # Whatever LittleCMS build is installed, it makes this profile apart from its stamps.
+        self.assertEqual(self.without_stamps(bundled), self.without_stamps(built))
         self.assertEqual(struct.unpack('>6H', bundled[24:36]), FIXED_DATE)
+        self.assertEqual(bundled[40:44], b'APPL')  # the same bytes on every OS
         profile = ImageCms.ImageCmsProfile(io.BytesIO(bundled))
         self.assertEqual(ImageCms.getProfileDescription(profile).strip(), 'sRGB built-in')
         self.assertEqual(bundled[16:20], b'RGB ')
