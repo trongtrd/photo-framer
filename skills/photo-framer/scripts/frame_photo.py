@@ -30,6 +30,14 @@ F_BACKGROUNDS = {1: (24, 24, 23), 2: (8, 8, 8), 3: (39, 32, 28)}
 G_MARGINS = {1: .055, 2: .085, 3: .12}
 G_PAPERS = {1: (250, 248, 242), 2: (253, 253, 251), 3: (246, 239, 220)}
 G_BACKGROUND = (224, 223, 218)
+# H: canvas ratio (width/height) and minimum margin as a fraction of canvas width.
+H_RATIOS = {1: Fraction(4, 5), 2: Fraction(1, 1), 3: None}
+H_MARGINS = {1: .036, 2: .024}
+H_THIN_MARGIN = .015  # Ratio 3: uniform border, fraction of the photo's short edge.
+H_BACKGROUNDS = {1: (255, 255, 255), 2: (235, 229, 229), 3: (250, 248, 243)}
+H_KEYLINES = {1: .0055, 2: 0, 3: .011}
+H_KEYLINE_COLOR = (10, 10, 10)
+H_SHARE_SIZES = {1: (1080, 1350), 2: (1080, 1080)}
 FRAMES = {1: (32, 32, 31), 2: (242, 242, 240), 3: (66, 66, 65)}
 # Uppercase substring of Make/Model -> logo slug in assets/logos/.
 BRAND_LOGOS = (
@@ -53,10 +61,10 @@ SRGB = ImageCms.ImageCmsProfile(ImageCms.createProfile('sRGB')).tobytes()
 
 def choices(style, code=None):
     """Style-specific menu; C and D share margin/background/spec choices."""
-    if style not in ('A', 'B', 'C', 'D', 'E', 'F', 'G'):
-        raise ValueError('Style must be A, B, C, D, E, F or G.')
-    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1',
-                    'D': '2-1-1', 'E': '2-1-1', 'F': '2-1-1', 'G': '2-1-1'}[style]
+    if style not in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
+        raise ValueError('Style must be A, B, C, D, E, F, G or H.')
+    code = code or {'A': '2-2-1', 'B': '1-2-1', 'C': '2-1-1', 'D': '2-1-1',
+                    'E': '2-1-1', 'F': '2-1-1', 'G': '2-1-1', 'H': '1-1-1'}[style]
     parts = code.split('-')
     if len(parts) != 3 or any(x not in ('1', '2', '3') for x in parts):
         raise ValueError('Choices must be three numbers from 1 to 3, e.g. 2-2-1.')
@@ -566,6 +574,32 @@ def draw_film_border(canvas, side, top, photo_size, spacing, left_text, right_te
         draw.text((x, y), text, font=font, fill=ink, stroke_width=stroke)
 
 
+def minimal_mat_geometry(photo_size, ratio_choice, keyline_choice):
+    """Style H layout: (canvas size, photo position, keyline width).
+
+    Fixed ratios fit the full-resolution photo plus keyline inside an exact
+    4:5 or 1:1 canvas with a minimum margin, centered both ways; the photo is
+    never scaled or cropped. Ratio 3 follows the photo with a thin even border.
+    """
+    w, h = photo_size
+    s = min(w, h)
+    keyline = max(1, round(s*H_KEYLINES[keyline_choice])) if H_KEYLINES[keyline_choice] else 0
+    box_w, box_h = w+2*keyline, h+2*keyline
+    ratio = H_RATIOS[ratio_choice]
+    if ratio is None:
+        margin = max(4, round(s*H_THIN_MARGIN))
+        size = (box_w+2*margin, box_h+2*margin)
+    else:
+        fraction = H_MARGINS[ratio_choice]
+        width = max(box_w/(1-2*fraction), box_h/(1/float(ratio)-2*fraction))
+        # Width is a multiple of the ratio numerator so the canvas ratio is exact.
+        unit = ratio.numerator
+        width = -(-int(width+.999999)//unit)*unit
+        size = (width, width*ratio.denominator//unit)
+    pos = ((size[0]-box_w)//2+keyline, (size[1]-box_h)//2+keyline)
+    return size, pos, keyline
+
+
 def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
            right_text=None, frame_color=None, profile=None, echo_colors=None,
            left_text=None):
@@ -618,6 +652,8 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         top = max(8, round(s*.04))
         bottom = max(44, round(s*.09), 3*max(9, round(s*.018)))
         size = (w+2*side, h+top+bottom)
+    elif style == 'H':
+        size, h_pos, keyline = minimal_mat_geometry((w, h), one, three)
     elif style == 'G':
         margin = max(12, round(s*G_MARGINS[one]))
         pad = max(10, round(s*.025))
@@ -681,6 +717,16 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         pos = (pad+margin, pad+margin)
         amplitude = max(2, round(s*{1: .003, 2: .005, 3: .008}[three]))
         caption_space = max(0, margin-2*amplitude-4)
+    elif style == 'H':
+        background, keyline_color = colors_in_profile(
+            (H_BACKGROUNDS[two], H_KEYLINE_COLOR), profile)
+        canvas = Image.new('RGB', size, background)
+        pos = h_pos
+        if keyline:
+            ImageDraw.Draw(canvas).rectangle(
+                (pos[0]-keyline, pos[1]-keyline, pos[0]+w+keyline-1, pos[1]+h+keyline-1),
+                fill=keyline_color)
+        caption_space = size[1]-(pos[1]+h+keyline)
     else:
         canvas = Image.new('RGB', size, BACKGROUNDS_C[two])
         pos = (side, side)
@@ -697,7 +743,8 @@ def render(photo, style='A', code=None, caption=None, font_path=None, meta=None,
         if tw > w or th > caption_space*.65:
             raise ValueError('Caption does not fit; shorten it or choose a wider border.')
         left = pos[0]+w-tw-bounds[0]
-        top = pos[1]+h+(caption_space-th)//2-bounds[1]
+        below = pos[1]+h+(keyline if style == 'H' else 0)
+        top = below+(caption_space-th)//2-bounds[1]
         d.text((left, top), caption, font=font, fill=caption_ink)
     return canvas, pos
 
@@ -741,7 +788,7 @@ def preview_styles(right_text=None, left_text=None):
         raise ValueError('Supply both --left-text and --right-text for the Film Edge preview; '
                          'use an empty string for a blank corner.')
     include_d = right_text is not None and (left_text is None or bool(right_text.strip()))
-    return 'ABC' + ('D' if include_d else '') + 'EFG'
+    return 'ABC' + ('D' if include_d else '') + 'EFGH'
 
 
 def preview(photo, profile, meta=None, right_text=None, frame_color=None,
@@ -762,6 +809,7 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None,
     results.append(render(photo, 'F', left_text=left_text if left_text is not None else '',
                           right_text=right_text if left_text is not None else '')[0])
     results.append(render(photo, 'G')[0])
+    results.append(render(photo, 'H')[0])
     for image in results:
         image.thumbnail((760,980), Image.Resampling.LANCZOS)
     height = max(i.height for i in results)+90
@@ -777,6 +825,7 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None,
     labels.append('F / Film Edge' if left_text is not None else
                   'F / Film Edge (text after choosing)')
     labels.append('G / Deckled Paper')
+    labels.append('H / Minimal Mat 4:5')
     for i,(label,image) in enumerate(zip(labels,results)):
         left, top = (i % columns)*800, (i // columns)*height
         d.text((left+20,top+18),label,font=font,fill=(30,30,30))
@@ -786,11 +835,11 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None,
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('inputs', type=Path, nargs='+')
-    parser.add_argument('--style', choices=['A','B','C','D','E','F','G'], default='A')
-    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C/D: margin-background-left-specs; E: margin-auto-tone-inset; F: border-background-sprocket-spacing; G: margin-paper-deckle')
-    parser.add_argument('--preview', action='store_true', help='Preview A/B/C/E/F/G; include D when nonempty --right-text is supplied, first input only')
+    parser.add_argument('--style', choices=['A','B','C','D','E','F','G','H'], default='A')
+    parser.add_argument('--choices', help='A: margin-shadow-background; B: frame-mat-background; C/D: margin-background-left-specs; E: margin-auto-tone-inset; F: border-background-sprocket-spacing; G: margin-paper-deckle; H: ratio-background-keyline')
+    parser.add_argument('--preview', action='store_true', help='Preview A/B/C/E/F/G/H; include D when nonempty --right-text is supplied, first input only')
     parser.add_argument('--out-dir', type=Path, required=True)
-    parser.add_argument('--share', action='store_true', help='Also export an sRGB JPEG, max 2048 px')
+    parser.add_argument('--share', action='store_true', help='Also export an sRGB JPEG, max 2048 px; H 4:5/1:1 use exact 1080x1350/1080x1080')
     parser.add_argument('--crop', type=int, nargs=4, metavar=('LEFT','TOP','RIGHT','BOTTOM'))
     parser.add_argument('--caption')
     parser.add_argument('--left-text', help='Style F: exact lower-left text; empty string means intentionally blank')
@@ -804,7 +853,7 @@ def main(argv=None):
     results = []
     for path in (args.inputs[:1] if args.preview else args.inputs):
         try:
-            meta, sources = ({}, set()) if args.style in ('E', 'F', 'G') and not args.preview else read_capture_metadata(path)
+            meta, sources = ({}, set()) if args.style in ('E', 'F', 'G', 'H') and not args.preview else read_capture_metadata(path)
             photo, profile, notes = load_photo(path, args.crop)
             stem = path.stem
             if args.preview:
@@ -819,7 +868,12 @@ def main(argv=None):
                                     meta,args.right_text,args.frame_color,profile,echo_colors,args.left_text)
                 outputs = [save_verified(image,args.out_dir/f'{stem}_{args.style}.png',profile,photo,pos)]
                 if args.share:
-                    image.thumbnail((2048,2048),Image.Resampling.LANCZOS)
+                    h_ratio = choices('H', args.choices)[0] if args.style == 'H' else None
+                    if h_ratio in H_SHARE_SIZES:
+                        # The canvas ratio is exact, so this resize never distorts.
+                        image = image.resize(H_SHARE_SIZES[h_ratio], Image.Resampling.LANCZOS)
+                    else:
+                        image.thumbnail((2048,2048),Image.Resampling.LANCZOS)
                     image = ImageCms.profileToProfile(image,
                                 ImageCms.ImageCmsProfile(io.BytesIO(profile)),
                                 ImageCms.ImageCmsProfile(io.BytesIO(SRGB)),outputMode='RGB')
@@ -840,6 +894,13 @@ def main(argv=None):
                 if args.style == 'F':
                     notes.append('Film Edge: two user-supplied corner fields; explicit empty '
                                  'fields stay blank. No film brand, frame number or metadata inferred.')
+                if args.style == 'H':
+                    h_ratio = choices('H', args.choices)[0]
+                    notes.append('Minimal Mat: ' + {1: 'fixed 4:5 canvas', 2: 'fixed 1:1 canvas',
+                                 3: "thin even border following the photo's ratio"}[h_ratio]
+                                 + '; full-resolution photo centered, never scaled or cropped.'
+                                 + (f' Share copy is exactly {H_SHARE_SIZES[h_ratio][0]}x'
+                                    f'{H_SHARE_SIZES[h_ratio][1]}.' if args.share and h_ratio in H_SHARE_SIZES else ''))
                 if args.style == 'G':
                     notes.append('Deckled Paper: deterministic cotton-paper texture, torn outer '
                                  'edges and a soft shadow; the rectangular photo region stays untouched.')

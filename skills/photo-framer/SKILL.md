@@ -1,6 +1,6 @@
 ---
 name: photo-framer
-description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, or Deckled Paper borders to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, camera details, or batch framing. Offer styles A/B/C/D/E/F/G while preserving photo content.
+description: Add floating shadows, gallery frames, EXIF spec cards, custom text, Color Echo, Film Edge, Deckled Paper, or Minimal Mat (fixed 4:5 / 1:1 canvas or thin border) frames to JPEG/PNG photographs with deterministic Python processing. Use for framing, matting, khung ảnh, ảnh nổi, bo giấy, viền phim, giấy xé, khung 4:5, khung vuông, viền trắng mỏng, camera details, or batch framing. Offer styles A/B/C/D/E/F/G/H while preserving photo content.
 ---
 
 # Photo Framer
@@ -34,13 +34,14 @@ Use the user's language and [menus.md](references/menus.md). Preserve codes acro
 - E: Color Echo, default **2-1-1** (medium border, muted auto color, thin inner edge).
 - F: Film Edge, default **2-1-1** (medium border, charcoal, standard sprockets).
 - G: Deckled Paper, default **2-1-1** (medium margin, warm-white paper, subtle torn edges).
+- H: Minimal Mat, default **1-1-1** (fixed 4:5 portrait canvas, white, thin black keyline).
 - Default style: A. If the user says only "use defaults" / "dùng mặc định", use A unless another style is already specified.
 
 Honor supplied choices. For "A default", "B mặc định", or a full code such as "B, 1-3-1", skip style/settings questions and comparison. D still requires its right-side text; F requires an explicit choice for both corner fields, including intentional blanks.
 
 Otherwise:
-1. Generate an A/B/C/E/F/G comparison using `--preview` on the first uploaded photo; identify it as representative of the batch. F's preview corners stay blank until wording is supplied, and its label says text is chosen later. Add `--right-text` to include D. Add both `--left-text` and `--right-text` to preview F with supplied wording; empty fields are allowed and an empty right field omits D. Do not invent placeholder text or infer consent to final blank corners from a preview.
-2. Display the comparison and offer A, B, C, D, E, F or G. Explain that D uses C's layout with user text instead of the logo. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
+1. Generate an A/B/C/E/F/G/H comparison using `--preview` on the first uploaded photo; identify it as representative of the batch. F's preview corners stay blank until wording is supplied, and its label says text is chosen later. Add `--right-text` to include D. Add both `--left-text` and `--right-text` to preview F with supplied wording; empty fields are allowed and an empty right field omits D. Do not invent placeholder text or infer consent to final blank corners from a preview.
+2. Display the comparison and offer A, B, C, D, E, F, G or H. Explain that D uses C's layout with user text instead of the logo, and that H's preview shows its 4:5 canvas while 1:1 and a thin border are also available. Use interactive choices when available, with codes in labels; otherwise use a short text menu.
 3. Once style is chosen, show its three-row menu in one turn, marking defaults. Accept three-number answers, "default", or natural language mapped explicitly to presets.
 4. If the choice UI returns no answer, apply the stated defaults instead of repeating questions. If the user explicitly wants to approve an appearance change, wait.
 5. Apply choices across the batch, splitting runs for per-image exceptions.
@@ -115,6 +116,27 @@ An explicit "G default" runs directly with 2-1-1, without a preview or questions
 No text, capture details or logo is added by default. If a caption is requested,
 use the exact wording with `--caption` and `--font`, and keep it on the paper.
 
+## Style H: Minimal Mat (fixed canvas or thin border)
+
+H places the intact photograph on a plain mat. Row 1 chooses the canvas:
+1 = fixed **4:5 portrait** (the tallest ratio Instagram/Facebook feeds show
+uncropped, best on phone screens), 2 = fixed **1:1 square**, 3 = a thin even
+border that follows the photo's own ratio. With 4:5 and 1:1, landscape and
+portrait photos share the same canvas: the photo is fitted (letterboxed, never
+cropped or scaled) and centered both ways, keeping a minimum margin of 3.6%
+(4:5) or 2.4% (1:1) of the canvas width on the binding side. Ratio 3 uses a
+uniform border of 1.5% of the photo's short edge.
+
+Row 2 is the mat: white, warm light gray (`#EBE5E5`) or ivory. Row 3 is the
+black keyline drawn just outside the photo edge: thin (default), none or thick.
+No text is added by default. Run a batch with one setting; previews are not
+required for an explicit "H default".
+
+Because final PNGs keep every photo pixel, the canvas grows with the photo; a
+very large landscape on 4:5 can exceed the 60-megapixel output limit and is
+reported as an error. With `--share`, 4:5 and 1:1 export exactly 1080×1350 and
+1080×1080 sRGB JPEGs; ratio 3 uses the usual 2048 px limit.
+
 ## Styles C/D: capture details, brand marks and custom text
 
 C and D build the left-side details from the photo itself: EXIF first, then the XMP that
@@ -170,6 +192,9 @@ python3 "$SKILL_DIR/scripts/frame_photo.py" \
   --right-text "October 2022" --out-dir "/path/output"
 python3 "$SKILL_DIR/scripts/frame_photo.py" \
   "/path/photo-1.jpg" "/path/photo-2.jpg" --style G --out-dir "/path/output"
+python3 "$SKILL_DIR/scripts/frame_photo.py" \
+  "/path/landscape.jpg" "/path/portrait.jpg" --style H --choices 1-1-1 \
+  --share --out-dir "/path/output"
 ```
 
 Final PNG adds the frame outside the full-resolution photo. `--share` additionally exports an sRGB JPEG with longest edge at most 2048 px. Label reduced JPEG comparisons as previews.
@@ -178,7 +203,7 @@ Keep RGB photo pixels and their ICC profile in final PNGs; normalize EXIF rotati
 
 The renderer checks PNG bit depth before decoding, including RGB and alpha PNGs. For grayscale images with an ICC profile, it preserves alpha/transparency-key information before converting color, then composites onto white paper.
 
-Add a caption/signature only when requested, using exact supplied wording. D uses `--right-text`; F uses both `--left-text` and `--right-text`; these use the bundled fonts. For a separate caption on A–E or G, pass `--caption` and `--font` with an available Unicode-capable font file. Visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a suitable layout choice.
+Add a caption/signature only when requested, using exact supplied wording. D uses `--right-text`; F uses both `--left-text` and `--right-text`; these use the bundled fonts. For a separate caption on A–E, G or H, pass `--caption` and `--font` with an available Unicode-capable font file. Visually check Vietnamese glyphs. Keep text outside the photo. Never copy signatures from reference images. If text cannot fit, ask for shorter text or a suitable layout choice.
 
 ## Verification and delivery
 
