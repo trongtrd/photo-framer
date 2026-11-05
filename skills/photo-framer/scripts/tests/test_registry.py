@@ -48,7 +48,8 @@ class RegistryAndSettings(unittest.TestCase):
         values = {'left_text': 'x', 'right_text': 'x', 'frame_color': '#ad896c',
                   'caption': 'x', 'font_path': font, 'camera': 'Pentax 67', 'lens': '105mm',
                   'iso': 400.0, 'aperture': 2.4, 'shutter': 1/125, 'focal': 105.0,
-                  'raw_model': True, 'ratio': '9:16', 'background': 'blur', 'blur_tone': 'light',
+                  'raw_model': True, 'capture_sidecar': True,
+                  'ratio': '9:16', 'background': 'blur', 'blur_tone': 'light',
                   'title': 'Hà Nội', 'subtitle': 'Mùa thu 2022', 'signature': signature,
                   'signature_position': 'bottom-left', 'signature_width': .1, 'signature_opacity': .8}
         required = {'D': {'right_text': 'Berlin'}, 'F': {'left_text': '', 'right_text': ''}}

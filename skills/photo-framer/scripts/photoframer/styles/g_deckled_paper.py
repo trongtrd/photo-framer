@@ -7,10 +7,12 @@ from PIL import Image
 
 from ..color import colors_in_profile
 from ..components.caption import CAPTION_INK, draw_caption
+from ..components.gallery_label import (Label, draw_margin_label, label_metrics, label_notes,
+                                         lower_margin, validate_label)
 from ..components.paper import deckle_amplitude, draw_deckled_paper
 from ..components.signature import draw_signature
 from ..components.slots import Slot
-from ..settings import SIGNATURE_OPTIONS
+from ..settings import LABEL_OPTIONS, SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .055, 2: .085, 3: .12}
@@ -22,6 +24,8 @@ class Layout(NamedTuple):
     size: tuple
     margin: int
     pad: int
+    bottom: int
+    label: Label | None = None
 
 
 def layout(photo_size, settings):
@@ -30,7 +34,10 @@ def layout(photo_size, settings):
     s = min(w, h)
     margin = max(12, round(s*MARGINS[choices[0]]))
     pad = max(10, round(s*.025))
-    return Layout((w+2*(margin+pad), h+2*(margin+pad)), margin, pad)
+    label = label_metrics(photo_size, settings)
+    clearance = 2*deckle_amplitude(s, choices[2])+4
+    bottom = lower_margin(photo_size, margin, label, clearance)
+    return Layout((w+2*(margin+pad), h+margin+bottom+2*pad), margin, pad, bottom, label)
 
 
 def paint(photo, plan, settings, ctx):
@@ -38,23 +45,25 @@ def paint(photo, plan, settings, ctx):
     s = min(photo.size)
     background, caption_ink = colors_in_profile((BACKGROUND, CAPTION_INK), ctx.profile)
     canvas = Image.new('RGB', plan.size, background)
-    draw_deckled_paper(canvas, photo.size, plan.margin, plan.pad, PAPERS[two], three, ctx.profile)
+    draw_deckled_paper(canvas, photo.size, plan.margin, plan.pad, PAPERS[two], three, ctx.profile,
+                       bottom_margin=plan.bottom)
     pos = (plan.pad+plan.margin, plan.pad+plan.margin)
     canvas.paste(photo, pos)
     # Paper below the photo, clear of the torn edge (which reaches 2x amplitude inward).
-    space = max(0, plan.margin-2*deckle_amplitude(s, three)-4)
+    space = max(0, plan.bottom-2*deckle_amplitude(s, three)-4)
     w, h = photo.size
     slot = Slot((pos[0], pos[1]+h, pos[0]+w, pos[1]+h+space))
     if settings.caption:
         slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
                                 space, ink=caption_ink), 'Caption', check=False)
     draw_signature(canvas, slot, settings, ctx.profile)
+    draw_margin_label(canvas, plan, photo.size, settings, ctx.profile, slot, pos)
     return canvas, pos
 
 
 def notes(settings, **context):
     return ['Deckled Paper: deterministic cotton-paper texture, torn outer '
-            'edges and a soft shadow; the rectangular photo region stays untouched.']
+            'edges and a soft shadow; the rectangular photo region stays untouched.'] + label_notes(settings)
 
 
 STYLE = Style(
@@ -67,5 +76,5 @@ STYLE = Style(
           Row(('Paper tone', 'Màu giấy'), (('Warm white', 'Trắng ấm'), ('Bright white', 'Trắng sáng'),
                                            ('Ivory', 'Ngà'))),
           Row(('Torn edges', 'Mép xé'), (('Subtle', 'Nhẹ'), ('Medium', 'Vừa'), ('Rough', 'Rõ')))),
-    choices_hint='margin-paper-deckle', accepts=COMMON | SIGNATURE_OPTIONS,
-    layout=layout, paint=paint, notes=notes)
+    choices_hint='margin-paper-deckle', accepts=COMMON | SIGNATURE_OPTIONS | LABEL_OPTIONS,
+    layout=layout, paint=paint, notes=notes, validate=validate_label)

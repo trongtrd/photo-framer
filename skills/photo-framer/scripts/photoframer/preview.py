@@ -20,17 +20,16 @@ def preview_styles(right_text=None, left_text=None):
     return ''.join(code for code in STYLES if code != 'D' or include_d)
 
 
-H_OPTIONS = ('ratio', 'background', 'blur_tone', 'title', 'subtitle')
-OVERLAY_OPTIONS = ('signature', 'signature_position', 'signature_width', 'signature_opacity')
+H_OPTIONS = ('ratio', 'background', 'blur_tone')
+OVERLAY_OPTIONS = ('signature', 'signature_position', 'signature_width', 'signature_opacity',
+                   'title', 'subtitle')
 
 
 def _preview_settings(code, right_text, left_text, specs, h_options, overlays):
-    if overlays and 'signature' in STYLES[code].accepts:
-        if code == 'H':
-            return Settings('H', **h_options, **overlays)
-        return Settings(code, **overlays)
+    accepted = {field: value for field, value in (overlays or {}).items()
+                if field in STYLES[code].accepts}
     if code == 'H':
-        return Settings('H', **h_options)
+        return Settings('H', **(dict(h_options) | accepted))
     if code == 'C':
         return Settings('C', **specs)
     if code == 'D':
@@ -39,7 +38,7 @@ def _preview_settings(code, right_text, left_text, specs, h_options, overlays):
         # Blank corners until both fields are supplied; not a final blank choice.
         return Settings('F', left_text=left_text if left_text is not None else '',
                         right_text=right_text if left_text is not None else '')
-    return Settings(code)
+    return Settings(code, **accepted)
 
 
 def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_text=None,
@@ -69,9 +68,12 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
                 raise
             # One style's margin may be too small for the signature; keep the
             # comparison and say so on that panel instead of failing the sheet.
+            label_only = {field: value for field, value in overlays.items()
+                          if field in ('title', 'subtitle')}
             image = render(photo, _preview_settings(code, right_text, left_text, specs or {},
-                                                    h_options, {}), **context)[0]
-            note = ' (signature does not fit)'
+                                                    h_options, label_only), **context)[0]
+            note = (' (label shown without signature)' if settings.title is not None
+                    else ' (signature does not fit)')
         results.append(image)
         label = STYLES[code].preview_label
         if code == 'F' and left_text is None:
@@ -81,7 +83,7 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
             label = 'H / Minimal Mat ' + ('thin border' if ratio == 'original' else ratio)
         if code == 'H' and h_options.get('background') == 'blur':
             label += ' · blur'
-        if code == 'H' and h_options.get('title') is not None:
+        if settings.title is not None:
             label += ' · label'
         labels.append(label + note)
     for image in results:
