@@ -28,7 +28,7 @@ def _no_share_size(choices):
     return None
 
 
-def _no_notes(settings, *, share, sources, echo_colors):
+def _no_notes(settings, *, share, origins, echo_colors):
     return []
 
 

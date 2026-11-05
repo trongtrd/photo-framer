@@ -19,9 +19,11 @@ def preview_styles(right_text=None, left_text=None):
     return ''.join(code for code in STYLES if code != 'D' or include_d)
 
 
-def _preview_settings(code, right_text, left_text):
+def _preview_settings(code, right_text, left_text, specs):
+    if code == 'C':
+        return Settings('C', **specs)
     if code == 'D':
-        return Settings('D', right_text=right_text)
+        return Settings('D', right_text=right_text, **specs)
     if code == 'F':
         # Blank corners until both fields are supplied; not a final blank choice.
         return Settings('F', left_text=left_text if left_text is not None else '',
@@ -29,7 +31,9 @@ def _preview_settings(code, right_text, left_text):
     return Settings(code)
 
 
-def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_text=None):
+def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_text=None,
+            specs=None):
+    """specs: user-supplied capture details (Settings fields) applied to C and D."""
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
     # Resolve E once from the original prepared photo, so its preview matches the final.
     styles = preview_styles(right_text, left_text)
@@ -42,7 +46,7 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
         context = {'meta': meta} if STYLES[code].uses_metadata else {}
         if code == 'E':
             context = {'echo_colors': echo_colors}
-        results.append(render(photo, _preview_settings(code, right_text, left_text), **context)[0])
+        results.append(render(photo, _preview_settings(code, right_text, left_text, specs or {}), **context)[0])
         label = STYLES[code].preview_label
         if code == 'F' and left_text is None:
             label += ' (text after choosing)'

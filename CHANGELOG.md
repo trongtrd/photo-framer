@@ -2,6 +2,14 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
+## v0.9.0 (2026-11-05): metadata layer
+
+- **Output EXIF is now kept by default** (deliberate behaviour change, approved by the owner). The final PNG and the share JPEG carry the source EXIF, including GPS location, with Orientation reset to 1, pixel dimensions updated, and the embedded thumbnail, maker notes and XMP (including edit history) dropped. `--metadata strip` restores the previous behaviour of writing no EXIF. Previews never carry metadata.
+- **Camera display names** for C/D from `assets/cameras.json` (selected Sony α, Panasonic LUMIX and Nikon Z bodies): `ILCE-7C` shows as `α7C` in C beside the SONY mark and `Sony α7C` in D. Unlisted models are unchanged. `--raw-model` keeps the EXIF code; JSON notes record each rename.
+- **Typed capture details** for C/D: `--camera`, `--lens`, `--iso`, `--aperture`, `--shutter`, `--focal` for film scans and files without EXIF. They override EXIF/XMP field by field, are shown as given, never select a brand mark, and are listed in the JSON notes.
+- The C and D README examples were re-rendered with the display name.
+- Checked with `tools/golden.py compare --new-flags "--metadata strip"` against v0.8: the only output changes are the C/D/preview renders of a camera now shown by its product name.
+
 ## v0.8.0 (2026-11-05): foundation refactor
 
 No change to rendered output: every style, every choice code, text variants, captions, `--share` and `--preview` were checked byte-for-byte against v0.7 with `tools/golden.py` (Python 3.13 with Pillow 12.3, and Python 3.10 with Pillow 10.1).
