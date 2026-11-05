@@ -1107,6 +1107,28 @@ class LabelsAndOverlays(unittest.TestCase):
             render(self.photo, 'H', title='Praha', signature=self.signature,
                    signature_position='bottom-center', signature_width=.08)
 
+    def test_preview_shows_label_and_signature(self):
+        path = self.root / 'photo.png'
+        self.photo.save(path)
+        def sheet(*flags):
+            process = subprocess.run([sys.executable, str(RENDERER), str(path), '--preview', *flags,
+                                      '--out-dir', str(self.root / f'p{len(flags)}')],
+                                     capture_output=True, text=True, encoding='utf-8')
+            self.assertEqual(process.returncode, 0, process.stderr)
+            row = json.loads(process.stdout)['results'][0]
+            self.assertEqual(row['status'], 'ok', row)
+            with Image.open(row['outputs'][0]) as im:
+                return im.convert('RGB').copy()
+        plain = sheet()
+        labeled = sheet('--title', 'Praha', '--signature', str(self.signature), '--signature-width', '0.1')
+        self.assertEqual(plain.size, labeled.size)
+        # Panels differ: A, B, E, G gain the signature; H gains the label.
+        self.assertNotEqual(plain.crop((0, 0, 800, plain.height//2)).tobytes(),
+                            labeled.crop((0, 0, 800, labeled.height//2)).tobytes())
+        # A signature too large for some margins keeps the sheet and marks those panels.
+        square = signature_png(self.root / 'square.png', size=(100, 100))
+        sheet('--signature', str(square), '--signature-width', '0.3')
+
     def test_cli_label_signature_notes_and_flag_errors(self):
         path = self.root / 'photo.png'
         self.photo.save(path)
@@ -1213,6 +1235,30 @@ class MetadataLayer(unittest.TestCase):
         self.assertEqual(metadata.gear_name({'make': 'SONY', 'model': 'ZV-E10'}), 'ZV-E10')
         self.assertEqual(metadata.gear_name({'make': 'OLYMPUS', 'model': 'E-M10MarkIV'}), 'E-M10 Mark IV')
         self.assertEqual(metadata.gear_name({'make': 'Canon', 'model': 'ILCE-7C'}), 'ILCE-7C')
+
+    def test_c_drops_the_brand_already_shown_by_its_mark(self):
+        cases = (({'make': 'Canon', 'model': 'Canon EOS R5'}, 'EOS R5'),
+                 ({'make': 'NIKON CORPORATION', 'model': 'NIKON D850'}, 'D850'),
+                 ({'make': 'LEICA CAMERA AG', 'model': 'LEICA Q2'}, 'Q2'),
+                 ({'make': 'Canon', 'model': 'Canon'}, 'Canon'),
+                 ({'make': 'SIGMA', 'model': 'fp L'}, 'fp L'),
+                 ({'make': 'RICOH IMAGING COMPANY, LTD.', 'model': 'PENTAX K-3 Mark III'},
+                  'PENTAX K-3 Mark III'),
+                 ({'make': 'OLYMPUS CORPORATION', 'model': 'E-M10MarkIV'}, 'E-M10 Mark IV'))
+        for meta, short in cases:
+            with self.subTest(meta=meta):
+                self.assertEqual(metadata.gear_name(meta, with_brand=False), short)
+                full = metadata.gear_name(meta)
+                self.assertEqual(full, metadata.display_model(meta['model']))
+                self.assertEqual(metadata.gear_name(meta, with_brand=False, raw_model=True), full)
+        exif = Image.Exif()
+        exif[271], exif[272] = 'Canon', 'Canon EOS R5'
+        path = self.root / 'canon.png'
+        Image.new('RGB', (900, 600), 'gray').save(path, exif=exif)
+        process, rows = self.run_cli([path], '--style', 'C')
+        self.assertIn("Model display formatted: 'Canon EOS R5' -> 'EOS R5'.", rows[0]['notes'])
+        process, rows = self.run_cli([path], '--style', 'D', '--right-text', 'Hà Nội')
+        self.assertFalse(any(n.startswith('Model display') for n in rows[0]['notes']))
 
     def test_camera_list_is_well_formed(self):
         with open(metadata.CAMERAS_FILE, encoding='utf-8') as stream:
