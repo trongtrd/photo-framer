@@ -165,7 +165,7 @@ F uses `Berlin, Germany` on the left and `October 2022` on the right. Both are s
 
 F dùng `Berlin, Germany` bên trái và `October 2022` bên phải. Cả hai là chữ được cung cấp, không suy đoán từ metadata.
 
-C/D read capture details from EXIF/XMP and never invent missing values. Without metadata, C can use your caption or a blank band; D keeps your text on the right. / C/D đọc EXIF/XMP, không tự bịa thông tin thiếu. Khi mất metadata, C có thể dùng chữ bạn cung cấp hoặc dải không chữ; D vẫn giữ chữ của bạn bên phải.
+C/D read capture details from EXIF/XMP and never invent missing values. Known camera codes are shown by their product names (`ILCE-7C` → `α7C` beside the SONY logo in C, `Sony α7C` in D). Without metadata, such as film scans, you can type the camera, lens and exposure yourself, or C can use your caption or a blank band; D keeps your text on the right. / C/D đọc EXIF/XMP, không tự bịa thông tin thiếu. Mã máy quen thuộc được hiển thị bằng tên thương mại (`ILCE-7C` → `α7C` cạnh logo SONY ở C, `Sony α7C` ở D). Khi mất metadata, ví dụ ảnh scan phim, bạn có thể tự nhập máy, ống kính và thông số chụp, hoặc C dùng chữ bạn cung cấp hay dải không chữ; D vẫn giữ chữ của bạn bên phải.
 
 ### Portrait photos in style H / Ảnh dọc với style H
 
@@ -230,6 +230,12 @@ python skills/photo-framer/scripts/frame_photo.py "photo-1.jpg" "photo-2.jpg" --
 
 # Minimal Mat: landscape and portrait share one 4:5 canvas; share copies are exactly 1080x1350
 python skills/photo-framer/scripts/frame_photo.py "landscape.jpg" "portrait.jpg" --style H --choices 1-1-1 --share --out-dir "output"
+
+# Film scan without EXIF: type the capture details (C/D); typed values are shown as given
+python skills/photo-framer/scripts/frame_photo.py "scan.jpg" --style C --camera "Pentax 67" --lens "SMC Takumar 105mm F2.4" --iso 400 --aperture 2.4 --shutter 1/125 --focal 105 --out-dir "output"
+
+# Remove all EXIF, including GPS location, from the outputs
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style A --metadata strip --out-dir "output"
 ```
 
 To include D in the comparison, add `--right-text "your exact text"` to `--preview`. F's preview corners stay blank until both text fields are supplied; these preview blanks are not a choice of blank final corners. Add both `--left-text` and `--right-text` to preview F with your wording. An empty F right field omits D, which requires nonempty text. E's `--frame-color` accepts an opaque sRGB hex code or a supported English color name; it overrides the auto-tone choice. Selected colors are recorded as sRGB hex in the JSON notes.
@@ -254,8 +260,16 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 | `--right-text` | — | — | — | required | — | required | — | — |
 | `--caption` | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
 | `--font` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--camera` | — | — | ✓ | ✓ | — | — | — | — |
+| `--lens` | — | — | ✓ | ✓ | — | — | — | — |
+| `--iso` | — | — | ✓ | ✓ | — | — | — | — |
+| `--aperture` | — | — | ✓ | ✓ | — | — | — | — |
+| `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
+| `--focal` | — | — | ✓ | ✓ | — | — | — | — |
+| `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 <!-- /generated:option-matrix -->
 
 For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` và `--font` như ví dụ; thêm `--share` để xuất bản chia sẻ.
@@ -291,9 +305,9 @@ python tools/golden.py compare --base main
 - **Transparency:** transparent content is composited onto white paper, so the output is opaque. Alpha and grayscale transparency keys are captured before ICC conversion. Original alpha is not retained.
 - **Cropping:** requires explicit user approval. The script never edits the input file, and the skill asks how to handle existing borders before proceeding.
 - **Previews and sharing:** JPEG previews and sharing copies are reduced/lossy, with sharing copies limited to a longest edge of 2048 pixels. They are not pixel-identical archival copies; preview/share versions convert to sRGB.
-- **Styles C/D:** Make, Model, LensModel, ISO, aperture, shutter speed and focal length are read from EXIF first; embedded XMP, such as a Lightroom export's capture data, fills missing fields. The exposure line is omitted unless all four exposure values exist. No values are invented. D uses exact user text on the right with the same typography as the gear line; it rejects overflow instead of shrinking, truncating or hiding left-side details.
+- **Styles C/D:** Make, Model, LensModel, ISO, aperture, shutter speed and focal length are read from EXIF first; embedded XMP, such as a Lightroom export's capture data, fills missing fields; values typed with `--camera`, `--lens`, `--iso`, `--aperture`, `--shutter` and `--focal` win field by field. The exposure line is omitted unless all four exposure values exist. No values are invented. Camera codes listed in [`assets/cameras.json`](skills/photo-framer/assets/cameras.json) are shown by product name (C omits the brand beside its brand mark); `--raw-model` shows the EXIF code. Typed camera text is shown verbatim and never selects a brand mark. D uses exact user text on the right with the same typography as the gear line; it rejects overflow instead of shrinking, truncating or hiding left-side details.
 - **Brand marks (C):** selected from the camera body and pasted without recoloring or distortion. Sources are documented in [`assets/logos/`](skills/photo-framer/assets/logos/). Brands without a bundled logo use a bold text wordmark. D draws no logo or wordmark.
-- **Output metadata:** presentation files omit EXIF/XMP/GPS. C/D display selected capture details as visible text in the image; D's custom wording is supplied by the user.
+- **Output metadata:** by default the final PNG and the share JPEG keep the source EXIF, including GPS location. Orientation is reset to 1 because the pixels are already rotated, pixel dimensions are updated, and the embedded thumbnail, maker notes and XMP (including edit history) are dropped. `--metadata strip` writes no EXIF. Previews never carry metadata. / Mặc định PNG cuối và JPEG chia sẻ giữ EXIF của ảnh gốc, kể cả vị trí GPS; hướng xoay đặt lại 1, cập nhật kích thước, bỏ ảnh thu nhỏ, maker notes và XMP. Dùng `--metadata strip` để không ghi EXIF.
 - **Style E:** one deterministic sRGB color is selected from a sample no larger than 96×96, favoring colors near the edges and midtones. Near-neutral or unusable samples fall back to warm neutral #e8e4dc. Default tone is muted; natural and light variants are optional settings. `--frame-color` bypasses this selection and applies one exact color across the batch. E converts only its decorative colors into the source RGB ICC profile; photo pixels and ICC bytes stay unchanged. No per-image AI color analysis or candidate variants are needed.
 - **Style F:** sprockets and both corner texts stay outside the rectangular photo region. Charcoal, black and dark-brown backgrounds are available, with standard, sparse or dense sprockets. Both custom fields preserve the supplied wording; no metadata, counter, film brand or photo effect is generated. F converts its decorative sRGB colors into the source RGB profile while retaining photo pixels and ICC bytes.
 - **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. Because the full-resolution photo is kept, the canvas grows with it: a very large landscape on 4:5 can exceed the 60-megapixel limit and is rejected. Share copies are exactly 1080×1350 (4:5) or 1080×1080 (1:1).
@@ -337,7 +351,7 @@ python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-sour
 
 The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`.
 
-The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP for reproduction. EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
+The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP (no GPS) for reproduction; since v0.9 re-rendered examples carry that EXIF by default (C and D were re-rendered for v0.9). EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`, shown as `α7C` in C and `Sony α7C` in D; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
 
 E's automatic color for this source is sRGB `#a98e84`, with inner edge `#181c24`. It comes from the local selection algorithm, not an AI-generated mockup.
 
