@@ -38,6 +38,25 @@ the mark follows only the file's own Make/Model. One set of values applies to
 the whole batch: split runs when photos used different gear or settings.
 JSON notes list which flags the user supplied.
 
+## Per-image JSON sidecars (v0.12)
+
+Use `--capture-sidecar` when the user requests per-image typed values. The
+exact sibling is `<complete input filename>.json`: `scan.jpg.json` for
+`scan.jpg`. No JSON is discovered without the flag. One flat UTF-8 object
+may contain any of `camera`, `lens`, `iso`, `aperture`, `shutter` and `focal`.
+Camera/lens must be exact text; numeric fields accept positive JSON numbers
+or the same strings as the CLI (`"f/2.8"`, `"1/125s"`, `"50mm"`).
+
+Explicit capture flags override JSON; JSON overrides EXIF/XMP field by field.
+Missing siblings retain existing values and produce a note. Invalid JSON,
+unknown or duplicate fields, invalid values, and files over 16 KiB fail only
+that image. Preview uses the first image's sibling. Never invent values,
+select a brand from typed camera text, or write these fields into EXIF.
+
+Example: `{"camera":"Pentax 67","iso":400,"aperture":"f/2.4",
+"shutter":"1/125","focal":"105mm"}`. See the README for a runnable
+synthetic example and the precedence rules.
+
 ## Camera display names
 
 Known EXIF codes are shown by product name from `assets/cameras.json`

@@ -2,12 +2,12 @@
 from __future__ import annotations
 
 import argparse
-from fractions import Fraction
 import json
 from pathlib import Path
 
 from PIL import Image
 
+from .capture import load_capture_sidecar, number as _number, text_value as _text_value
 from .color import convert_profile
 from .constants import LOGO_DIR, SHARE_MAX_EDGE, SRGB, VERSION
 from .io import load_photo, save_verified
@@ -16,41 +16,14 @@ from .metadata import (brand_slug, brand_wordmark, exif_for_output, gear_name,
 from .preview import H_OPTIONS as H_PREVIEW_OPTIONS, OVERLAY_OPTIONS, preview, preview_styles
 from .registry import DEFAULT_STYLE, STYLES
 from .renderer import render
-from .settings import SPEC_OPTIONS, Settings
+from .settings import SPEC_OPTIONS, Settings, check_options
 from .components.signature import POSITIONS as SIGNATURE_POSITIONS
 from .styles.e_color_echo import resolve_colors
 from .styles.h_minimal_mat import (BACKGROUND_MODES as H_BACKGROUND_MODES, BLUR_TONES as H_BLUR_TONES,
                                    DEFAULT_BLUR_TONE as H_DEFAULT_BLUR_TONE, RATIOS as H_RATIOS)
-from .text import is_single_line
 
 JPEG_EXIF_LIMIT = 65_000  # A JPEG APP1 segment holds at most 65,533 bytes.
 DESCRIPTION = 'Deterministic photo framing. Python 3.10+, Pillow; no network or AI APIs.'
-
-
-def _text_value(flag):
-    def parse(value):
-        if not value.strip() or not is_single_line(value):
-            raise argparse.ArgumentTypeError(f'{flag} must be one non-empty line up to 200 characters')
-        return value
-    return parse
-
-
-def _number(flag, prefix='', suffix='', fraction=False):
-    """Positive number, tolerating the usual prefix/suffix ('f/2.8', '50mm', '1/125s')."""
-    def parse(value):
-        text = value.strip()
-        if prefix and text.lower().startswith(prefix):
-            text = text[len(prefix):]
-        if suffix and text.lower().endswith(suffix):
-            text = text[:-len(suffix)]
-        try:
-            number = float(Fraction(text.strip())) if fraction else float(text)
-        except (ValueError, ZeroDivisionError):
-            number = None
-        if number is None or not number > 0 or number == float('inf'):
-            raise argparse.ArgumentTypeError(f'{flag} must be a positive number, got {value!r}')
-        return number
-    return parse
 
 
 def _fraction(flag, low, high):
@@ -96,9 +69,11 @@ def build_parser():
                      help='blur: fill the canvas with a blurred copy of the photo instead of the mat color')
     mat.add_argument('--blur-tone', choices=list(H_BLUR_TONES),
                      help=f'with --background blur: {H_DEFAULT_BLUR_TONE} (default), neutral or light')
-    mat.add_argument('--title', type=_text_value('--title'),
+    label = parser.add_argument_group('gallery label (A, B, G, H)',
+                                       'Centered text below the photo; separate from captions and signatures.')
+    label.add_argument('--title', type=_text_value('--title'),
                      help='gallery label: exact title in Inter SemiBold (as style D), centered below the photo')
-    mat.add_argument('--subtitle', type=_text_value('--subtitle'),
+    label.add_argument('--subtitle', type=_text_value('--subtitle'),
                      help='gallery label: exact second line in smaller gray Inter Regular (needs --title)')
     overlay = parser.add_argument_group('signature or logo (A, B, E, G)',
                                         'A PNG placed in the margin below the photo, never over it.')
@@ -120,6 +95,9 @@ def build_parser():
     specs.add_argument('--focal', type=_number('--focal', suffix='mm'), help='millimetres, e.g. 50')
     specs.add_argument('--raw-model', action='store_true',
                        help='show the EXIF model code (e.g. ILCE-7C) instead of the display name (Sony α7C)')
+    specs.add_argument('--capture-sidecar', action='store_true',
+                       help='read exact sibling <input filename>.json for each C/D image; '
+                            'explicit capture flags override JSON, which overrides EXIF/XMP')
     return parser
 
 
@@ -167,18 +145,24 @@ def output_exif(exif, image, args):
 
 def process(path, args, settings):
     style = STYLES[settings.style]
+    sidecar_notes = []
+    if settings.capture_sidecar:
+        if not args.preview:
+            check_options(settings, style)
+        settings, sidecar_notes = load_capture_sidecar(path, settings)
     if style.uses_metadata or args.preview:
         meta, origins = read_capture_metadata(path)
     else:
         meta, origins = {}, {}
-    photo, profile, notes = load_photo(path, args.crop)
+    photo, profile, notes = load_photo(path, args.crop, None if args.preview else settings)
+    notes += sidecar_notes
     stem = path.stem
     if args.preview:
         specs = {field: getattr(settings, field) for field in SPEC_OPTIONS
                  if getattr(settings, field) is not None}
         h_options = {field: getattr(settings, field) for field in H_PREVIEW_OPTIONS
                      if getattr(settings, field) is not None}
-        image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text,
+        image = preview(photo, profile, meta, settings.right_text, settings.frame_color, settings.left_text,
                         specs, h_options,
                         {field: getattr(settings, field) for field in OVERLAY_OPTIONS
                          if getattr(settings, field) is not None})
@@ -224,6 +208,7 @@ def main(argv=None):
                         frame_color=args.frame_color, camera=args.camera, lens=args.lens,
                         iso=args.iso, aperture=args.aperture, shutter=args.shutter, focal=args.focal,
                         raw_model=True if args.raw_model else None, ratio=args.ratio,
+                        capture_sidecar=True if args.capture_sidecar else None,
                         background=args.background, blur_tone=args.blur_tone, title=args.title,
                         subtitle=args.subtitle, signature=args.signature,
                         signature_position=args.signature_position,

@@ -267,6 +267,13 @@ verbatim; the photo moves up to make room.
 
 ## Named options / Tùy chọn có tên
 
+Since v0.12, `--title`/`--subtitle` are supported on A/B/G/H; labels are separate
+from `--caption` and `--signature`. A/B/G grow only the lower margin as needed.
+C/D accept opt-in `--capture-sidecar` for per-image `<input filename>.json`;
+explicit capture flags override JSON, which overrides EXIF/XMP. See the C/D
+style reference for the six allowed fields. All styles share a 24 MP complete
+output cap; oversized results require a smaller source copy, with no silent resize.
+
 Choice codes never change meaning; additional features use named flags. Your own PNG signature or logo (`--signature`) goes in the margin below the photo for A, B, E and G. ✓ accepted, `required` must be supplied (F accepts an explicit empty string for a blank corner), — rejected with an error.
 
 Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có tên. Chữ ký/logo PNG của bạn (`--signature`) đặt ở lề dưới ảnh với A, B, E, G. ✓ dùng được, `required` bắt buộc (F chấp nhận chuỗi rỗng để chủ động để trống một góc), — báo lỗi.
@@ -286,11 +293,12 @@ Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có 
 | `--shutter` | — | — | ✓ | ✓ | — | — | — | — |
 | `--focal` | — | — | ✓ | ✓ | — | — | — | — |
 | `--raw-model` | — | — | ✓ | ✓ | — | — | — | — |
+| `--capture-sidecar` | — | — | ✓ | ✓ | — | — | — | — |
 | `--ratio` | — | — | — | — | — | — | — | ✓ |
 | `--background` | — | — | — | — | — | — | — | ✓ |
 | `--blur-tone` | — | — | — | — | — | — | — | ✓ |
-| `--title` | — | — | — | — | — | — | — | ✓ |
-| `--subtitle` | — | — | — | — | — | — | — | ✓ |
+| `--title` | ✓ | ✓ | — | — | — | — | ✓ | ✓ |
+| `--subtitle` | ✓ | ✓ | — | — | — | — | ✓ | ✓ |
 | `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |

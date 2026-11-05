@@ -71,5 +71,5 @@ STYLE = Style(
           Row(('Caption', 'Chữ'), (('Camera + lens + exposure', 'Máy + ống kính + thông số'),
                                    ('Camera + lens only', 'Chỉ máy + ống kính'),
                                    ('No text', 'Không chữ')))),
-    choices_hint='margin-background-left-specs', accepts=COMMON | SPEC_OPTIONS,
+    choices_hint='margin-background-left-specs', accepts=COMMON | SPEC_OPTIONS | {'capture_sidecar'},
     layout=layout, paint=paint, uses_metadata=True, notes=spec_notes)

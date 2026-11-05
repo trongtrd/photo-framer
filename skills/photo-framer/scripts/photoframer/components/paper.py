@@ -66,10 +66,12 @@ def _paper_texture(paper_color, profile):
     return tile
 
 
-def draw_deckled_paper(canvas, photo_size, margin, pad, paper_color, roughness, profile):
+def draw_deckled_paper(canvas, photo_size, margin, pad, paper_color, roughness, profile,
+                       bottom_margin=None):
     width, height = photo_size
     short = min(photo_size)
-    paper_size = (width+2*margin, height+2*margin)
+    bottom_margin = margin if bottom_margin is None else bottom_margin
+    paper_size = (width+2*margin, height+margin+bottom_margin)
     mask = _deckle_mask(canvas.size, pad, paper_size, short, roughness)
     shade = mask.filter(ImageFilter.GaussianBlur(max(1, round(short*.0035))))
     shade = shade.point(lambda value: value*52//255)

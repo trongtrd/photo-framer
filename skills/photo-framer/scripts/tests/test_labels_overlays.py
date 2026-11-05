@@ -104,8 +104,44 @@ class LabelsAndOverlays(unittest.TestCase):
                                    'Inter-Regular.ttf')}, 'not both')):
             with self.subTest(options=options), self.assertRaisesRegex(ValueError, message):
                 render(self.photo, 'H', **options)
-        with self.assertRaisesRegex(ValueError, 'only with style H'):
-            render(self.photo, 'A', title='x')
+        with self.assertRaisesRegex(ValueError, 'only with style A, B, G or H'):
+            render(self.photo, 'E', title='x')
+
+    def test_gallery_labels_on_a_b_g_keep_photo_position_and_pixels(self):
+        for style in 'ABG':
+            for size in ((900, 600), (600, 900)):
+                photo = Image.new('RGB', size, (90, 120, 150))
+                for code in ('1-1-1', '2-2-2', '3-3-3'):
+                    with self.subTest(style=style, size=size, code=code):
+                        plain, pos = render(photo, style, code)
+                        labeled, labeled_pos = render(photo, style, code, title='Praha',
+                                                       subtitle='Prague · Czech Republic')
+                        self.assertEqual(pos, labeled_pos)
+                        self.assertEqual(labeled.width, plain.width)
+                        self.assertGreaterEqual(labeled.height, plain.height)
+                        x, y = pos
+                        self.assertEqual(labeled.crop((x, y, x+size[0], y+size[1])).tobytes(),
+                                         photo.tobytes())
+                        # Layout grows at the bottom; the upper photograph is never moved.
+                        self.assertEqual(labeled.crop((x, 0, x+size[0], y+size[1])).tobytes(),
+                                         plain.crop((x, 0, x+size[0], y+size[1])).tobytes())
+                        self.assertLess(labeled.crop((x, y+size[1], x+size[0], labeled.height))
+                                        .convert('L').getextrema()[0], 60)
+                        again, _ = render(photo, style, code, title='Praha',
+                                          subtitle='Prague · Czech Republic')
+                        self.assertEqual(labeled.tobytes(), again.tobytes())
+
+    def test_gallery_label_choices_do_not_mix_text_or_corner_signatures(self):
+        for style in 'ABG':
+            for options, message in (({'subtitle': 'x'}, 'requires --title'),
+                                     ({'title': ' '}, 'single-line'),
+                                     ({'title': 'a\nb'}, 'single-line'),
+                                     ({'title': 'W'*100}, 'too wide'),
+                                     ({'title': 'x', 'caption': 'y'}, 'not both'),
+                                     ({'title': 'x', 'signature': self.signature}, 'not both')):
+                with self.subTest(style=style, options=options), \
+                        self.assertRaisesRegex(ValueError, message):
+                    render(self.photo, style, **options)
 
     def test_signature_placement_opacity_and_slots(self):
         for style, code in (('A', None), ('B', None), ('E', '2-1-2'), ('G', None)):

@@ -14,3 +14,10 @@ An explicit "G default" runs directly with 2-1-1, without a preview or questions
 No text, capture details or logo is added by default. If a caption is requested,
 use the exact wording with `--caption` (bundled Inter; `--font` only on request),
 and keep it on the paper.
+
+Alternatively use `--title` and optional `--subtitle` for the centered gallery
+label, in the same Inter faces and inks as H. The lower paper margin grows as
+needed while the photograph keeps its size and position. Reserve clearance
+above the torn edge; reject text wider than the photo instead of shrinking it.
+The label cannot be combined with `--caption` or `--signature`, preserving a
+balanced layout. The complete result must fit the shared 24 MP output cap.

@@ -14,7 +14,7 @@ from .color import convert_profile
 from .constants import MAX_INPUT_PIXELS, SRGB
 
 
-def load_photo(path, crop=None):
+def load_photo(path, crop=None, settings=None):
     notes = []
     # Pillow decodes some 16-bit PNG color types into 8-bit RGB/RGBA.
     # Inspect the encoded depth before decoding; mode alone cannot detect it.
@@ -32,6 +32,19 @@ def load_photo(path, crop=None):
                 raise ValueError('Animated images are not supported.')
             if source.width * source.height > MAX_INPUT_PIXELS:
                 raise ValueError('Input exceeds 30 megapixels; provide a smaller copy.')
+            if settings is not None:
+                # JPEG orientation is in the header. PNG may need to read later
+                # EXIF chunks; either way reject before allocating the canvas.
+                from .renderer import plan_render
+                size = source.size
+                if source.getexif().get(274) in (5, 6, 7, 8):
+                    size = size[::-1]
+                if crop:
+                    x0, y0, x1, y1 = crop
+                    if not (0 <= x0 < x1 <= size[0] and 0 <= y0 < y1 <= size[1]):
+                        raise ValueError('Crop must fit within the oriented image.')
+                    size = (x1-x0, y1-y0)
+                plan_render(size, settings)
             source.load()  # Never accept truncated files.
             profile = source.info.get('icc_profile')
             photo = ImageOps.exif_transpose(source).copy()
