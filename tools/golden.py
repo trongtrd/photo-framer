@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Golden lock: prove that a refactor leaves every rendered byte unchanged.
 
-The one exception: ICC creation timestamps (bytes 24-35 of an embedded
-profile) are zeroed before hashing, because the renderer builds its sRGB
-profile at import time and LittleCMS stamps the current second into it.
+Since v0.11.1 the renderer embeds a committed sRGB profile (assets/profiles/),
+so outputs are byte-reproducible and every byte is compared. Revisions older
+than that built the profile at run time and LittleCMS stamped the current second
+into it; to compare against one of them, pass --ignore-icc-dates, which zeroes
+the ICC creation date (bytes 24-35 of an embedded profile) before hashing.
 
 The renderer's exact output bytes depend on the installed Pillow, zlib and
 LittleCMS builds, so a committed list of hashes would break across the CI
@@ -269,13 +271,16 @@ def _undated(profile):
     return profile[:24] + bytes(12) + profile[36:] if len(profile) >= 128 else profile
 
 
-def normalized(data):
-    """File bytes with only ICC creation timestamps zeroed; everything else exact.
+def normalized(data, ignore_icc_dates=False):
+    """File bytes as written; with ignore_icc_dates, only ICC creation dates are zeroed.
 
-    The renderer builds its sRGB profile at import time, so outputs embedding it
-    differ by the second they were made. PNG iCCP payloads are decompressed
-    (zlib output would change with the date); JPEG APP2 segments are patched.
+    Revisions before v0.11.1 built their sRGB profile at run time, so outputs
+    embedding it differed by the second they were made. PNG iCCP payloads are
+    decompressed (zlib output would change with the date); JPEG APP2 segments
+    are patched.
     """
+    if not ignore_icc_dates:
+        return data
     import zlib
     if data[:8] == b'\x89PNG\r\n\x1a\n':
         out, pos = bytearray(data[:8]), 8
@@ -312,7 +317,7 @@ def load_renderer(skill_dir):
     return module
 
 
-def record(skill_dir, manifest_path, extra_flags=()):
+def record(skill_dir, manifest_path, extra_flags=(), ignore_icc_dates=False):
     skill_dir = Path(skill_dir).resolve()
     renderer = load_renderer(skill_dir)
     font = str(skill_dir / 'assets' / 'fonts' / 'Inter-Regular.ttf')
@@ -336,7 +341,7 @@ def record(skill_dir, manifest_path, extra_flags=()):
             for path, label in ((out_dir, '<out>'), (temp / 'in', '<in>'), (skill_dir, '<skill>')):
                 text = text.replace(json.dumps(str(path))[1:-1], label)
             entry['stdout'] = text
-            entry['files'] = {str(p.relative_to(out_dir)): hashlib.sha256(normalized(p.read_bytes())).hexdigest()
+            entry['files'] = {str(p.relative_to(out_dir)): hashlib.sha256(normalized(p.read_bytes(), ignore_icc_dates)).hexdigest()
                               for p in sorted(out_dir.rglob('*')) if p.is_file()} if out_dir.exists() else {}
             manifest[name] = entry
     import PIL
@@ -346,15 +351,17 @@ def record(skill_dir, manifest_path, extra_flags=()):
     print(f'Recorded {len(manifest)} cases, {files} output files -> {manifest_path}')
 
 
-def _record_subprocess(skill_dir, manifest_path, extra_flags=()):
+def _record_subprocess(skill_dir, manifest_path, extra_flags=(), ignore_icc_dates=False):
     command = [sys.executable, __file__, 'record', str(skill_dir), str(manifest_path)]
     if extra_flags:
         command.append('--extra-flags=' + ' '.join(extra_flags))
+    if ignore_icc_dates:
+        command.append('--ignore-icc-dates')
     subprocess.run(command, check=True)
     return json.loads(Path(manifest_path).read_text(encoding='utf-8'))
 
 
-def compare(base, keep=None, new_flags=()):
+def compare(base, keep=None, new_flags=(), ignore_icc_dates=False):
     with tempfile.TemporaryDirectory(prefix='golden-base-') as temp:
         temp = Path(temp)
         archive = subprocess.run(['git', '-C', str(ROOT), 'archive', base, 'skills/photo-framer'],
@@ -362,8 +369,9 @@ def compare(base, keep=None, new_flags=()):
         with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
             safe = {'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}
             tar.extractall(temp / 'base', **safe)
-        old = _record_subprocess(temp / 'base' / 'skills' / 'photo-framer', temp / 'base.json')
-        new = _record_subprocess(SKILL, temp / 'new.json', new_flags)
+        old = _record_subprocess(temp / 'base' / 'skills' / 'photo-framer', temp / 'base.json',
+                                 ignore_icc_dates=ignore_icc_dates)
+        new = _record_subprocess(SKILL, temp / 'new.json', new_flags, ignore_icc_dates)
         if keep:
             Path(keep).mkdir(parents=True, exist_ok=True)
             for name in ('base.json', 'new.json'):
@@ -398,17 +406,22 @@ def main(argv=None):
     rec.add_argument('skill_dir', type=Path)
     rec.add_argument('manifest', type=Path)
     rec.add_argument('--extra-flags', default='', help='flags appended to every case')
+    rec.add_argument('--ignore-icc-dates', action='store_true',
+                     help='zero ICC creation dates before hashing (revisions before v0.11.1)')
     cmp_ = sub.add_parser('compare', help='compare the working tree against a git revision')
     cmp_.add_argument('--base', default='HEAD', help='git revision of the reference skill (default HEAD)')
     cmp_.add_argument('--keep', type=Path, help='directory to keep both manifests for inspection')
     cmp_.add_argument('--new-flags', default='',
                       help='flags appended to every case on the working-tree side only, e.g. '
                            '"--metadata strip" to compare a new opt-out with old behaviour')
+    cmp_.add_argument('--ignore-icc-dates', action='store_true',
+                      help='zero ICC creation dates before hashing; needed when --base is older than '
+                           'v0.11.1, which built its sRGB profile at run time')
     args = parser.parse_args(argv)
     if args.command == 'record':
-        record(args.skill_dir, args.manifest, args.extra_flags.split())
+        record(args.skill_dir, args.manifest, args.extra_flags.split(), args.ignore_icc_dates)
         return 0
-    return compare(args.base, args.keep, args.new_flags.split())
+    return compare(args.base, args.keep, args.new_flags.split(), args.ignore_icc_dates)
 
 
 if __name__ == '__main__':
