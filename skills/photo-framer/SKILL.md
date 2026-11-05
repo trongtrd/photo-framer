@@ -11,7 +11,7 @@ Use the bundled Python script. Do not regenerate or retouch photographs with AI.
 
 1. Resolve only user-requested images using the host's supported file tools. Inspect images visually for border/crop handling and delivery. For E batches, inspect representative inputs/outputs instead of opening every image for color selection; Python handles each file's color and pixel checks.
 2. Accept JPEG and 8-bit PNG; at most 30 megapixels per input and 60 megapixels per output. Request a smaller copy or explicit resizing authorization if necessary; never quietly downsize final images.
-3. Locate `scripts/frame_photo.py` relative to this skill. Use Python 3.10+ and install dependencies from `scripts/requirements.txt`: Pillow 10.1–12.x and defusedxml for XMP reading. If missing, use the host's approved dependency installation procedure. No API key or network is needed by the renderer.
+3. Locate `scripts/frame_photo.py` relative to this skill; it needs the `scripts/photoframer/` package beside it. Use Python 3.10+ and install dependencies from `scripts/requirements.txt`: Pillow 10.1–12.x and defusedxml for XMP reading. If missing, use the host's approved dependency installation procedure. No API key or network is needed by the renderer.
 4. If code execution or image file access is unavailable, explain the missing capability. Do not claim support for every ChatGPT session or that a GitHub URL alone installs the skill.
 
 ## Existing borders
@@ -46,121 +46,16 @@ Otherwise:
 4. If the choice UI returns no answer, apply the stated defaults instead of repeating questions. If the user explicitly wants to approve an appearance change, wait.
 5. Apply choices across the batch, splitting runs for per-image exceptions.
 
-For D, ask for the exact right-side text if it has not already been supplied:
-"Bạn muốn điền chữ gì ở góc dưới bên phải?" / "What exact text would you like
-at the bottom right?" It may be a location, photographer name, date, or a
-combination. Preserve the user's wording, punctuation and Vietnamese accents.
-Do not infer it from GPS, capture dates, filenames or context. An empty answer
-does not authorize invented text; wait for the wording or a different style.
-If D, its defaults and text are already explicit, run directly without asking again.
+## Style rules: read the style file before asking or running
 
-## Style E: efficient Color Echo batches
+Per-style behaviour lives in `references/styles/`. Open the file for the chosen style before asking its questions or running it; the one-line rules below are the minimum and always apply.
 
-E adds a flat border with one color per photo, plus an optional contrasting
-inner edge. By default, use auto color: the renderer analyzes a sample no
-larger than 96×96 in sRGB, weights edge colors, favors midtones, and softens
-the chosen color. Near-neutral, black/white or unusable samples fall back to
-warm neutral `#e8e4dc`. The photograph itself is never recolored or resized.
-
-For an explicit E request, run the whole batch with defaults unless different
-settings were supplied. Do not generate three color options, call AI vision
-for each color, or ask per-image color questions. Previews are optional and
-only generated when requested. Capture the CLI JSON, check every result, and
-summarize counts and errors rather than repeating every file's color notes.
-
-For one shared color, pass `--frame-color "#ad896c"` (or a supported English
-color name) once for the entire batch. This bypasses auto analysis and uses
-that exact sRGB color, independent of the auto-tone setting. If the user asks
-for a shared color without specifying one, ask once for the color or a
-reference photo; resolve the reference color locally, then reuse its hex.
-Do not choose a new shared color for each input. Split runs for explicit
-per-image overrides. JSON notes include the selected sRGB hex for reuse.
-
-## Style F: Film Edge with two custom text fields
-
-F adds a flat dark border, rounded sprocket marks along the left and right
-edges, and two independent text fields in the lower band. All decoration
-stays outside the photo. No film brand, frame number, logo, metadata, grain,
-scratches or color grading is added automatically.
-
-If a corner's wording or blank choice is missing, ask once for the missing
-fields together: "Bạn muốn ghi gì ở góc dưới trái và góc dưới phải? Có thể để
-trống từng bên." / "What would you like at the bottom left and bottom right?
-Either corner may be left blank." Keep already supplied fields. No reply
-does not mean an intentional blank. Do not infer either field from metadata,
-filenames or the example's text. Preserve spelling, case and punctuation.
-
-Use `--left-text` and `--right-text`. Both flags are required for final F,
-including blanks: use `--left-text=` or `--right-text=` for an intentionally
-blank corner. The two fields share bundled Inter SemiBold, font size and
-warm-white color; `--font` overrides both. Each is one line, at most 200
-characters. If they cannot fit together, ask for shorter wording; do not
-shrink, truncate, wrap or overlap the texts. Do not use `--caption` for F.
-
-If the pair and settings are already supplied, run directly. Reuse an agreed
-pair across a batch without repeated questions; split runs for requested
-per-image differences. Never automatically fill a corner with `01`, `BERLIN`
-or another string from a mockup.
-
-## Style G: Deckled Paper
-
-G presents the photograph on cotton-style paper with a subtly textured margin,
-irregular torn outer edges and a soft contact shadow on a light-gray background.
-Texture and edge effects stay outside the intact rectangular photo. Never apply
-paper grain, fading, torn corners, blur or color effects to the photograph itself.
-
-Use the deterministic Python renderer for single images and batches. The fixed
-procedural pattern needs no AI generation, downloaded paper texture or per-image
-analysis. Offer margin width, paper tone and edge roughness once for the batch.
-An explicit "G default" runs directly with 2-1-1, without a preview or questions.
-No text, capture details or logo is added by default. If a caption is requested,
-use the exact wording with `--caption` and `--font`, and keep it on the paper.
-
-## Style H: Minimal Mat (fixed canvas or thin border)
-
-H places the intact photograph on a plain mat. Row 1 chooses the canvas:
-1 = fixed **4:5 portrait** (the tallest ratio Instagram/Facebook feeds show
-uncropped, best on phone screens), 2 = fixed **1:1 square**, 3 = a thin even
-border that follows the photo's own ratio. With 4:5 and 1:1, landscape and
-portrait photos share the same canvas: the photo is fitted (letterboxed, never
-cropped or scaled) and centered both ways, keeping a minimum margin of 3.6%
-(4:5) or 2.4% (1:1) of the canvas width on the binding side. Ratio 3 uses a
-uniform border of 1.5% of the photo's short edge.
-
-Row 2 is the mat: white, warm light gray (`#EBE5E5`) or ivory. Row 3 is the
-black keyline drawn just outside the photo edge: thin (default), none or thick.
-No text is added by default. Run a batch with one setting; previews are not
-required for an explicit "H default".
-
-Because final PNGs keep every photo pixel, the canvas grows with the photo; a
-very large landscape on 4:5 can exceed the 60-megapixel output limit and is
-reported as an error. With `--share`, 4:5 and 1:1 export exactly 1080×1350 and
-1080×1080 sRGB JPEGs; ratio 3 uses the usual 2048 px limit.
-
-## Styles C/D: capture details, brand marks and custom text
-
-C and D build the left-side details from the photo itself: EXIF first, then the XMP that
-Lightroom writes into exports. Line 1 is `Model | LensModel`; line 2
-(`ISO … f/… …s …mm`) appears only when every value exists. Never invent,
-retype or estimate values. When a file carries no metadata, say so and offer
-user-supplied `--caption` text or a text-free band (`C` with caption choice 3).
-For D without metadata, keep the supplied right-side text and explain that
-the left-side capture details are unavailable.
-
-The brand mark is matched from Make/Model against `assets/logos/` (sources and
-license terms in that folder's README) and pasted unmodified — no recoloring,
-no distortion. Brands without a bundled logo (e.g. SIGMA, DJI) get a bold text
-wordmark instead. The mark follows the camera body; a third-party lens does
-not change it. Marks are stored next to this skill and need no network.
-
-D never draws a brand mark or wordmark. Pass the exact wording with
-`--right-text`. It uses the same font face, size, weight and color as the
-camera/lens line on the left (bundled Inter SemiBold by default); a `--font`
-override applies to both. D's third choice controls only the left-side details;
-the right-side custom text remains visible in every mode. Keep it to one line,
-up to 200 characters. If the text cannot fit alongside the details, ask for
-shorter wording or fewer left-side details. Never shrink, truncate, rewrite
-or wrap the supplied text to make it fit.
+- C/D: [c-d-spec-cards.md](references/styles/c-d-spec-cards.md). Capture details come only from EXIF/XMP, never invented; the brand mark is pasted unmodified. D needs the user's exact `--right-text`: ask "Bạn muốn điền chữ gì ở góc dưới bên phải?" / "What exact text would you like at the bottom right?" and never infer it.
+- E: [e-color-echo.md](references/styles/e-color-echo.md). One automatic color per photo for the whole batch, no per-image questions or color variants; `--frame-color` once for a shared color.
+- F: [f-film-edge.md](references/styles/f-film-edge.md). Both `--left-text` and `--right-text` are required, an empty value only when the user chose a blank corner; ask for missing fields together.
+- G: [g-deckled-paper.md](references/styles/g-deckled-paper.md). Texture and torn edges stay outside the intact photo; no text by default.
+- H: [h-minimal-mat.md](references/styles/h-minimal-mat.md). Fixed 4:5 / 1:1 canvas or thin border; the photo is fitted and centered, never cropped or scaled.
+- Named flags and the styles that accept them: the matrix at the end of [menus.md](references/menus.md#named-options--tùy-chọn-có-tên). Choice codes never change meaning.
 
 Do not silently substitute presets for explicit out-of-range pixel requests. Explain supported choices or make a scoped user-authorized renderer change.
 
@@ -215,4 +110,4 @@ Save outputs through the host's authorized artifact mechanism when available. Pr
 
 The skill has no remote image service, analytics, or automatic public upload. See [presets.md](references/presets.md) for constants and the approved default shadow.
 
-When changing image loading or color handling, run `python3 scripts/test_frame_photo.py` from this skill directory after installing `scripts/requirements.txt`. The CLI regression tests generate their own images and grayscale ICC profile; they use Pillow and defusedxml and do not use personal photos.
+When changing the renderer (`scripts/photoframer/`: one module per style under `styles/`, shared drawing in `components/`), run `python3 scripts/test_frame_photo.py` from this skill directory after installing `scripts/requirements.txt`. The CLI regression tests generate their own images and grayscale ICC profile; they use Pillow and defusedxml and do not use personal photos.
