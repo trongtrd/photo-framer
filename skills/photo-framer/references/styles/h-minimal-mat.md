@@ -43,9 +43,8 @@ canvas grows. The label switches to light ink over a dark blurred background.
 A title wider than the canvas margins is an error: ask for shorter wording.
 The label replaces `--caption` for H; the two cannot be combined.
 
-With `--signature`, the signature sits on the label's row, aligned to the
-photo's right or left edge; `bottom-center` collides with a centered label
-and is rejected.
+H takes no `--signature`: a corner mark beside the centered label looks
+unbalanced. Offer A, B, E or G when the user wants a signature or logo.
 
 ## Size limits and sharing
 

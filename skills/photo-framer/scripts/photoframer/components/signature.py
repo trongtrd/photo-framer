@@ -41,8 +41,7 @@ def load_signature(path):
     return image
 
 
-def draw_signature(canvas, slot, settings, profile, band=None):
-    """band: optional (y0, y1) row to center on, e.g. H's gallery label."""
+def draw_signature(canvas, slot, settings, profile):
     if not settings.signature:
         return None
     mark = load_signature(settings.signature)
@@ -63,11 +62,7 @@ def draw_signature(canvas, slot, settings, profile, band=None):
     position = settings.signature_position or DEFAULT_POSITION
     x = {'bottom-left': left, 'bottom-right': right-width,
          'bottom-center': (left+right-width)//2}[position]
-    if band:
-        y = max(slot.box[1]+clearance, min(slot.box[3]-clearance-height,
-                                            (band[0]+band[1]-height)//2))
-    else:
-        y = slot.box[1]+(slot.height-height)//2
+    y = slot.box[1]+(slot.height-height)//2
     slot.claim((x, y, x+width, y+height), 'Signature')
     canvas.paste(rgb, (x, y), alpha)
     return x, y, x+width, y+height

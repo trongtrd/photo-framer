@@ -266,9 +266,9 @@ verbatim; the photo moves up to make room.
 
 ## Named options / Tùy chọn có tên
 
-Choice codes never change meaning; additional features use named flags. Your own PNG signature or logo (`--signature`) goes in the margin below the photo for A, B, E, G and H. ✓ accepted, `required` must be supplied (F accepts an explicit empty string for a blank corner), — rejected with an error.
+Choice codes never change meaning; additional features use named flags. Your own PNG signature or logo (`--signature`) goes in the margin below the photo for A, B, E and G. ✓ accepted, `required` must be supplied (F accepts an explicit empty string for a blank corner), — rejected with an error.
 
-Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có tên. Chữ ký/logo PNG của bạn (`--signature`) đặt ở lề dưới ảnh với A, B, E, G, H. ✓ dùng được, `required` bắt buộc (F chấp nhận chuỗi rỗng để chủ động để trống một góc), — báo lỗi.
+Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có tên. Chữ ký/logo PNG của bạn (`--signature`) đặt ở lề dưới ảnh với A, B, E, G. ✓ dùng được, `required` bắt buộc (F chấp nhận chuỗi rỗng để chủ động để trống một góc), — báo lỗi.
 
 <!-- generated:option-matrix -->
 | Flag | A | B | C | D | E | F | G | H |
@@ -290,10 +290,10 @@ Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có 
 | `--blur-tone` | — | — | — | — | — | — | — | ✓ |
 | `--title` | — | — | — | — | — | — | — | ✓ |
 | `--subtitle` | — | — | — | — | — | — | — | ✓ |
-| `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
-| `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
-| `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
-| `--signature-opacity` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
+| `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-opacity` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |

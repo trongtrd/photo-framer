@@ -11,9 +11,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageOps, ImageStat
 from ..color import colors_in_profile
 from ..components.caption import draw_caption
 from ..components.keyline import draw_keyline
-from ..components.signature import draw_signature
 from ..components.slots import Slot
-from ..settings import SIGNATURE_OPTIONS
 from ..text import is_single_line, title_fonts
 from .base import COMMON, Row, Style
 
@@ -172,7 +170,6 @@ def draw_label(canvas, plan, photo_size, settings, profile, slot):
     for text, font, ink, y, box in boxes:
         d.text((center, y), text, font=font, fill=ink, anchor='ma')
         slot.claim(box, 'Gallery label', check=False)
-    return boxes[0][4][1], boxes[-1][4][3]
 
 
 def blurred_background(photo, size, tone):
@@ -212,9 +209,8 @@ def paint(photo, plan, settings, ctx):
     if settings.caption:
         slot.claim(draw_caption(canvas, settings.caption, settings.font_path, min(w, h), pos,
                                 photo.size, plan.size[1]-below, below=below), 'Caption', check=False)
-    band = draw_label(canvas, plan, photo.size, settings, ctx.profile, slot) if plan.label else None
-    # With a label, the signature shares its row, beside the centered text.
-    draw_signature(canvas, slot, settings, ctx.profile, band=band)
+    if plan.label:
+        draw_label(canvas, plan, photo.size, settings, ctx.profile, slot)
     return canvas, pos
 
 
@@ -256,6 +252,7 @@ STYLE = Style(
           Row(('Black keyline', 'Viền đen sát ảnh (keyline)'), (('Thin', 'Mảnh'), ('None', 'Không có'),
                                                                 ('Thick', 'Dày')))),
     choices_hint='ratio-background-keyline',
-    accepts=COMMON | SIGNATURE_OPTIONS | {'ratio', 'background', 'blur_tone', 'title', 'subtitle'},
+    # No --signature: a corner mark beside the centered label looks unbalanced (owner decision).
+    accepts=COMMON | {'ratio', 'background', 'blur_tone', 'title', 'subtitle'},
     layout=layout, paint=paint, validate=validate, share_size=share_size, notes=notes,
     max_output_pixels=MAX_OUTPUT_PIXELS)
