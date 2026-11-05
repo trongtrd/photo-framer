@@ -42,7 +42,9 @@ JSON notes list which flags the user supplied.
 
 Known EXIF codes are shown by product name from `assets/cameras.json`
 (`ILCE-7C` → `α7C` in C, next to the SONY mark; `Sony α7C` in D). Unlisted
-models keep their EXIF text. Use `--raw-model` when the user prefers the code.
+models keep their EXIF text, except that C drops a leading brand word the
+mark already shows (`Canon EOS R5` → `EOS R5`, `NIKON D850` → `D850`); D keeps
+the full name. Use `--raw-model` when the user prefers the code.
 JSON notes record each rename. Add names to the file only when confirmed
 against the manufacturer's own naming.
 

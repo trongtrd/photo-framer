@@ -13,7 +13,7 @@ from .constants import LOGO_DIR, SHARE_MAX_EDGE, SRGB, VERSION
 from .io import load_photo, save_verified
 from .metadata import (brand_slug, brand_wordmark, exif_for_output, gear_name,
                        read_capture_metadata, read_source_exif)
-from .preview import H_OPTIONS as H_PREVIEW_OPTIONS, preview, preview_styles
+from .preview import H_OPTIONS as H_PREVIEW_OPTIONS, OVERLAY_OPTIONS, preview, preview_styles
 from .registry import DEFAULT_STYLE, STYLES
 from .renderer import render
 from .settings import SPEC_OPTIONS, Settings
@@ -179,7 +179,9 @@ def process(path, args, settings):
         h_options = {field: getattr(settings, field) for field in H_PREVIEW_OPTIONS
                      if getattr(settings, field) is not None}
         image = preview(photo, profile, meta, args.right_text, args.frame_color, args.left_text,
-                        specs, h_options)
+                        specs, h_options,
+                        {field: getattr(settings, field) for field in OVERLAY_OPTIONS
+                         if getattr(settings, field) is not None})
         shown = preview_styles(args.right_text, args.left_text)
         outputs = [save_verified(image, args.out_dir/f'{stem}_{shown}_preview.jpg', SRGB)]
     else:

@@ -20,10 +20,15 @@ def preview_styles(right_text=None, left_text=None):
     return ''.join(code for code in STYLES if code != 'D' or include_d)
 
 
-H_OPTIONS = ('ratio', 'background', 'blur_tone')
+H_OPTIONS = ('ratio', 'background', 'blur_tone', 'title', 'subtitle')
+OVERLAY_OPTIONS = ('signature', 'signature_position', 'signature_width', 'signature_opacity')
 
 
-def _preview_settings(code, right_text, left_text, specs, h_options):
+def _preview_settings(code, right_text, left_text, specs, h_options, overlays):
+    if overlays and 'signature' in STYLES[code].accepts:
+        if code == 'H':
+            return Settings('H', **h_options, **overlays)
+        return Settings(code, **overlays)
     if code == 'H':
         return Settings('H', **h_options)
     if code == 'C':
@@ -38,9 +43,11 @@ def _preview_settings(code, right_text, left_text, specs, h_options):
 
 
 def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_text=None,
-            specs=None, h_options=None):
-    """specs: user-typed capture details for C and D; h_options: H ratio/background."""
+            specs=None, h_options=None, overlays=None):
+    """specs: typed capture details (C, D); h_options: H ratio, background and label;
+    overlays: signature options for every style that accepts a signature."""
     h_options = h_options or {}
+    overlays = overlays or {}
     # Convert only the small preview to sRGB; final RGB PNG retains source pixels/profile.
     # Resolve E once from the original prepared photo, so its preview matches the final.
     styles = preview_styles(right_text, left_text)
@@ -53,7 +60,19 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
         context = {'meta': meta} if STYLES[code].uses_metadata else {}
         if code == 'E':
             context = {'echo_colors': echo_colors}
-        results.append(render(photo, _preview_settings(code, right_text, left_text, specs or {}, h_options), **context)[0])
+        settings = _preview_settings(code, right_text, left_text, specs or {}, h_options, overlays)
+        note = ''
+        try:
+            image = render(photo, settings, **context)[0]
+        except ValueError:
+            if settings.signature is None:
+                raise
+            # One style's margin may be too small for the signature; keep the
+            # comparison and say so on that panel instead of failing the sheet.
+            image = render(photo, _preview_settings(code, right_text, left_text, specs or {},
+                                                    h_options, {}), **context)[0]
+            note = ' (signature does not fit)'
+        results.append(image)
         label = STYLES[code].preview_label
         if code == 'F' and left_text is None:
             label += ' (text after choosing)'
@@ -62,7 +81,9 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
             label = 'H / Minimal Mat ' + ('thin border' if ratio == 'original' else ratio)
         if code == 'H' and h_options.get('background') == 'blur':
             label += ' · blur'
-        labels.append(label)
+        if code == 'H' and h_options.get('title') is not None:
+            label += ' · label'
+        labels.append(label + note)
     for image in results:
         image.thumbnail((760, 980), Image.Resampling.LANCZOS)
     height = max(i.height for i in results)+90
