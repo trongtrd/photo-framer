@@ -128,6 +128,15 @@ class FramerRegression(unittest.TestCase):
         with Image.open(row['outputs'][0]) as saved:
             saved.load()
             s = min(size)
+            if style == 'H':
+                # Default 1-1-1: exact 4:5 canvas, 3.6% minimum margin, thin keyline.
+                k = max(1, round(s*.0055))
+                bw, bh = size[0]+2*k, size[1]+2*k
+                self.assertEqual(saved.width*5, saved.height*4)
+                self.assertGreaterEqual(min(saved.width-bw, saved.height-bh),
+                                        2*int(saved.width*.036))
+                x, y = (saved.width-bw)//2+k, (saved.height-bh)//2+k
+                return saved.crop((x, y, x+size[0], y+size[1]))
             if style == 'F':
                 side = max(12, round(s*.075))
                 top = max(8, round(s*.04))
@@ -342,7 +351,7 @@ class FramerRegression(unittest.TestCase):
         process, rows = self.cli([small, large], '--style', 'D', '--right-text', text)
         self.assertEqual(process.returncode, 1)
         self.assertEqual([row['status'] for row in rows], ['error', 'ok'])
-        for right_text, expected in ((None, '_ABCEFG_preview.jpg'), (text, '_ABCDEFG_preview.jpg')):
+        for right_text, expected in ((None, '_ABCEFGH_preview.jpg'), (text, '_ABCDEFGH_preview.jpg')):
             flags = ('--right-text', right_text) if right_text is not None else ()
             process, rows = self.cli([large], '--preview', *flags)
             self.assertEqual(process.returncode, 0, process.stderr)
@@ -507,7 +516,7 @@ class FramerRegression(unittest.TestCase):
     def test_style_f_preview_explicit_fields_and_blanks(self):
         path = self.root/'film preview.png'
         Image.new('RGB', (900, 600), 'red').save(path)
-        for right, styles in (('October 2022', 'ABCDEFG'), ('', 'ABCEFG')):
+        for right, styles in (('October 2022', 'ABCDEFGH'), ('', 'ABCEFGH')):
             process, rows = self.cli([path], '--preview', '--left-text', 'Berlin', '--right-text', right)
             self.assertEqual(process.returncode, 0, process.stderr)
             self.assertIn(f'_{styles}_preview', rows[0]['outputs'][0])
@@ -588,6 +597,75 @@ class FramerRegression(unittest.TestCase):
             im, _ = frame_photo.render(photo, 'G', meta={'make': 'SONY', 'model': 'ILCE-7C'})
         self.assertEqual(im.tobytes(), plain.tobytes())
 
+    def test_style_h_fixed_ratios_center_photo_with_keyline(self):
+        for size in ((1200, 800), (800, 1200), (1000, 1000), (37, 16)):
+            photo = Image.new('RGB', size, (200, 50, 80))
+            s = min(size)
+            for ratio, keyline, background in ((1, 1, 1), (2, 2, 2), (1, 3, 3), (2, 1, 1)):
+                with self.subTest(size=size, code=f'{ratio}-{background}-{keyline}'):
+                    im, (x, y) = frame_photo.render(photo, 'H', f'{ratio}-{background}-{keyline}')
+                    self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(), photo.tobytes())
+                    num, den = (4, 5) if ratio == 1 else (1, 1)
+                    self.assertEqual(im.width*den, im.height*num)
+                    k = {1: max(1, round(s*.0055)), 2: 0, 3: max(1, round(s*.011))}[keyline]
+                    left, top = x-k, y-k
+                    right, bottom = im.width-(x+size[0]+k), im.height-(y+size[1]+k)
+                    # Centered both ways; the binding side keeps the minimum margin.
+                    self.assertLessEqual(abs(left-right), 1)
+                    self.assertLessEqual(abs(top-bottom), 1)
+                    fraction = .036 if ratio == 1 else .024
+                    self.assertGreaterEqual(min(left, right, top, bottom), int(im.width*fraction))
+                    self.assertLessEqual(min(left, top), round(im.width*fraction)+num)
+                    bg = frame_photo.H_BACKGROUNDS[background]
+                    self.assertEqual(im.getpixel((0, 0)), bg)
+                    if k:
+                        self.assertEqual(im.getpixel((x-1, y+size[1]//2)), (10, 10, 10))
+                        self.assertEqual(im.getpixel((x-k, y-k)), (10, 10, 10))
+                        self.assertEqual(im.getpixel((x-k-1, y+size[1]//2)), bg)
+                    else:
+                        self.assertEqual(im.getpixel((x-1, y+size[1]//2)), bg)
+
+    def test_style_h_thin_border_follows_photo_ratio(self):
+        for size in ((1200, 800), (900, 1200)):
+            photo = Image.new('RGB', size, 'red')
+            im, (x, y) = frame_photo.render(photo, 'H', '3-1-2')
+            margin = max(4, round(min(size)*.015))
+            self.assertEqual((x, y), (margin, margin))
+            self.assertEqual(im.size, (size[0]+2*margin, size[1]+2*margin))
+            self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(), photo.tobytes())
+
+    def test_style_h_share_sizes_batch_and_notes(self):
+        bad, wide, tall = self.root/'16bit mat.png', self.root/'wide mat.png', self.root/'tall mat.jpg'
+        png16(bad, 2)
+        Image.new('RGB', (1500, 1000), 'red').save(wide, icc_profile=self.srgb)
+        Image.new('RGB', (600, 900), 'blue').save(tall, quality=95)
+        for code, share in (('1-1-1', (1080, 1350)), ('2-2-2', (1080, 1080)), ('3-3-1', None)):
+            with self.subTest(code=code):
+                process, rows = self.cli([bad, wide, tall], '--style', 'H', '--choices', code, '--share')
+                self.assertEqual(process.returncode, 1)
+                self.assertEqual([row['status'] for row in rows], ['error', 'ok', 'ok'])
+                for row, size in ((rows[1], (1500, 1000)), (rows[2], (600, 900))):
+                    self.assertTrue(any('Minimal Mat' in note for note in row['notes']))
+                    with Image.open(row['outputs'][0]) as final, Image.open(row['outputs'][1]) as shared:
+                        shared.load()
+                        self.assertFalse(shared.getexif())
+                        if share:
+                            self.assertEqual(shared.size, share)
+                        else:
+                            self.assertEqual(shared.size, final.size)
+                            self.assertLessEqual(max(shared.size), 2048)
+        with self.assertRaisesRegex(ValueError, '60 megapixels'):
+            frame_photo.render(Image.new('RGB', (6600, 4400)), 'H')
+        font = RENDERER.parent.parent/'assets/fonts/Inter-Regular.ttf'
+        photo = Image.new('RGB', (1200, 800), 'red')
+        plain, (x, y) = frame_photo.render(photo, 'H')
+        captioned, _ = frame_photo.render(photo, 'H', caption='Hà Nội — mùa thu.', font_path=str(font))
+        self.assertEqual(captioned.crop((x, y, x+1200, y+800)).tobytes(), photo.tobytes())
+        self.assertNotEqual(plain.tobytes(), captioned.tobytes())
+        for flag in ({'right_text': 'x'}, {'left_text': 'x'}, {'frame_color': 'red'}):
+            with self.assertRaises(ValueError):
+                frame_photo.render(photo, 'H', **flag)
+
     def test_spec_formatting_and_brand_mapping(self):
         line1, line2 = frame_photo.format_specs(
             {'model': 'E-M10MarkIV', 'lens': 'OM 12-45mm F4.0',
@@ -652,7 +730,7 @@ class FramerRegression(unittest.TestCase):
     def test_profiled_grayscale_alpha_and_color_key(self):
         values = [0, 1, 64, 127, 128, 192, 254, 255]
         for mode in ('LA', 'L'):
-            for style in ('A', 'B', 'C', 'D', 'E', 'F', 'G'):
+            for style in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
                 with self.subTest(mode=mode, style=style):
                     photo = Image.new(mode, (40, 32))
                     if mode == 'LA':
@@ -710,7 +788,7 @@ class FramerRegression(unittest.TestCase):
         path = self.root / 'ảnh có dấu.png'
         photo.save(path, icc_profile=self.srgb, exif=exif)
         expected = photo.transpose(Image.Transpose.ROTATE_270)
-        for style in ('A', 'B', 'C', 'D', 'E', 'F', 'G'):
+        for style in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
             with self.subTest(style=style):
                 flags = (('--right-text', 'D') if style == 'D' else
                          ('--left-text', '', '--right-text', '') if style == 'F' else ())
