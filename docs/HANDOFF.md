@@ -1,6 +1,6 @@
 # Handoff: Photo Framer
 
-Last updated: 2026-11-06 (v0.12 merged; v0.13 landscape H and README gallery prepared).
+Last updated: 2026-11-06 (v0.12 merged; v0.13 PR #11 approved for integration).
 Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography and post-processing terms. Ask with `AskUserQuestion` and give a recommended option when a decision is really the owner's. Otherwise proceed.
 
 ## Where to read first (do not duplicate here)
@@ -26,7 +26,7 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 
 The latest verified `main` is `5f49b92`: PR #10 merged v0.12.0 (24 MP complete output cap, capture sidecars, A/B/G labels). All 75 tests and all five main CI jobs passed after merging (run 60). The existing GitHub Release is still v0.11.1 at `2f64ad0`; v0.12.0 has no separate release. Earlier stacked PRs (#1–#7) and maintenance PRs (#8–#9) are also merged.
 
-This change prepares unreleased v0.13.0 on `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. No PR or merge has been requested for this branch yet. The earlier approval to merge applied only to PR #10.
+This change prepares unreleased v0.13.0 on `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. On 2026-11-06 the owner explicitly requested opening and merging this change after checks pass. The resulting PR is #11: https://github.com/trongtrd/photo-framer/pull/11. This authorization applies to PR #11 only; it does not authorize another PR, a release or branch deletion. Verify its actual merge status and the latest `main` checks on GitHub.
 
 The owner also requested a black or colored gallery background to distinguish white frames. Thumbnails now use exact-black 432×432 PNG presentation squares, with the intact reduced frame centered inside at least 16 px of padding. Only this thumbnail surround is black; linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged.
 
@@ -36,7 +36,7 @@ The owner approved publishing v0.11.1 and deleting the final merged branch. The 
 
 The owner approved capture sidecars and gallery labels on A/B/G, then explicitly approved a 24 MP total output cap with no silent resizing. This work was developed on `codex/capture-sidecars-gallery-labels` as unreleased v0.12.0. On 2026-11-06 the owner explicitly requested opening and merging the PR for this branch once checks pass. That authorization applies only to this change, not future PRs, a v0.12.0 GitHub Release, or publication of the private signature files. Verify the resulting PR's merge status and the latest `main` checks on GitHub.
 
-Local v0.13 validation: 76 tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 81 seconds). Generated docs and all 91 gallery recipes/assets pass their checks. Golden against `5f49b92` passed 303 cases / 1,047 output files byte for byte, including previously supported square blur. New 16:9 behavior has separate geometry, pixel, share-size, preview and limit tests. Read the latest development-branch CI before claiming cross-platform status.
+Local v0.13 validation: 76 tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (about 81 seconds initially, 75 seconds after the thumbnail update). Generated docs and all 91 gallery recipes/assets pass their checks. Golden against `5f49b92` passed 303 cases / 1,047 output files byte for byte, including previously supported square blur. New 16:9 behavior has separate geometry, pixel, share-size, preview and limit tests. All five branch CI jobs passed at `eeef0b9` (run 65). Native GitHub rendering was verified: all 93 black-surround thumbnails load at the intended size and wide rows scroll horizontally; the 91 larger previews remain unchanged. Check the final PR head and post-merge `main` CI before reporting integration complete.
 
 Working rules for the next session:
 
@@ -84,6 +84,6 @@ Working rules for the next session:
 
 1. Signature selection and publication are resolved: **sample 3**, width **0.12**, bottom-right, opacity 1.0. The owner approved public README use on 2026-11-06. The original three sources and comparison files remain in their Dropbox; only the selected transparent PNG is used by the documentation gallery. Background extraction/cropping used explicitly approved Python/Pillow processing; white recompositing exactly reproduces the cropped source pixels.
 2. Camera names: the owner uses Sony α7C, already supported correctly; no expansion is needed for their current body. Other names remain subject to manufacturer verification before addition.
-3. Capture sidecars, A/B/G labels and the 24 MP cap are complete on `main` through PR #10. The current v0.13 branch is ready for review after its CI and GitHub rendering are verified; ask for a PR request before opening one, and obtain merge approval for that PR separately.
+3. Capture sidecars, A/B/G labels and the 24 MP cap are complete on `main` through PR #10. The owner authorized opening and merging the v0.13 landscape/gallery change in PR #11 after checks pass. Future PRs still require their own request and specific merge approval.
 
 No other new feature or release is authorized. Commits, PR text and repository docs stay in English; conversation stays in Vietnamese.
