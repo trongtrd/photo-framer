@@ -2,6 +2,15 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
+## v0.11.0 (2026-11-05): labels and signatures
+
+- **Slots**: each style that can take overlays (A, B, E, G, H) exposes the margin below the photo as a slot. Text and images claim exact boxes there; anything that would leave the slot or overlap another item is rejected with a clear error. Nothing is ever drawn over the photo.
+- **Gallery label for H**: `--title` in Inter SemiBold near-black and `--subtitle` in Inter Regular gray, the same faces and inks as D's camera line and exposure line, so one typeface runs through every style; centered below the photo. On fixed canvases the photo and label are centered together, so the photo moves up (as in the owner's 1:1 reference); on the thin border the canvas grows. The ink turns light on dark blurred backgrounds.
+- **`--signature`** for A, B, E and G: the user's own PNG signature or logo, transparency kept, placed bottom-right (default), bottom-center or bottom-left in the margin below the photo, with `--signature-width` and `--signature-opacity`. H takes no signature (owner decision: a corner mark beside the centered label looks unbalanced).
+- `--caption` is unchanged and kept separate (owner decision); it cannot be combined with the H gallery label.
+- New README example: the Prague portrait on 1:1 with a gallery label.
+- Without the new flags, every output is byte-identical to v0.10.
+
 ## v0.10.0 (2026-11-05): style H extensions
 
 - `--ratio 4:5|1:1|3:4|9:16|original` for H. 3:4 and 9:16 are new (minimum margins 4.0% and 5.0% of the canvas width, share copies exactly 1080×1440 and 1080×1920); the menu codes keep their meaning.

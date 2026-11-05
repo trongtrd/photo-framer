@@ -4,11 +4,15 @@ from __future__ import annotations
 from fractions import Fraction
 from typing import NamedTuple
 
-from PIL import Image, ImageFilter, ImageOps
+import math
+
+from PIL import Image, ImageDraw, ImageFilter, ImageOps, ImageStat
 
 from ..color import colors_in_profile
 from ..components.caption import draw_caption
 from ..components.keyline import draw_keyline
+from ..components.slots import Slot
+from ..text import is_single_line, title_fonts
 from .base import COMMON, Row, Style
 
 # Canvas ratio (width/height); None follows the photo with a thin even border.
@@ -36,27 +40,47 @@ BLUR_WORK_EDGE = 384     # Blur runs on a copy whose longer edge is at most this
 BLUR_RADIUS = .04        # Gaussian radius as a fraction of the working copy's short edge.
 
 
+# Gallery label below the photo, in the spec cards' typeface and inks: Inter
+# SemiBold near-black title (as D's gear line), Inter Regular gray subtitle.
+TITLE_SIZE = .05       # x photo short edge
+SUBTITLE_SIZE = .026
+LABEL_GAP = .05        # photo edge to title, x photo short edge
+LINE_SPACING = .35     # x title size
+LABEL_INKS = {'dark': ((30, 30, 30), (115, 115, 115)), 'light': ((246, 244, 238), (214, 212, 206))}
+
+
+class Label(NamedTuple):
+    height: int
+    gap: int
+    spacing: int
+    title_px: int
+    subtitle_px: int
+
+
 class Layout(NamedTuple):
     size: tuple
     pos: tuple
     keyline: int
+    label: Label | None = None
 
 
 def ratio_name(settings):
     return settings.ratio or ROW_RATIOS[settings.choices[0]]
 
 
-def minimal_mat_geometry(photo_size, ratio, keyline_choice):
+def minimal_mat_geometry(photo_size, ratio, keyline_choice, label_height=0):
     """Style H layout: (canvas size, photo position, keyline width).
 
     ratio is a RATIOS key. Fixed ratios fit the full-resolution photo plus
-    keyline inside an exact canvas with a minimum margin, centered both ways;
-    the photo is never scaled or cropped. 'original' adds a thin even border.
+    keyline (and the gallery label below it, if any) inside an exact canvas
+    with a minimum margin, centered both ways as one block, so a label moves
+    the photo up; the photo is never scaled or cropped. 'original' adds a thin
+    even border.
     """
     w, h = photo_size
     s = min(w, h)
     keyline = max(1, round(s*KEYLINES[keyline_choice])) if KEYLINES[keyline_choice] else 0
-    box_w, box_h = w+2*keyline, h+2*keyline
+    box_w, box_h = w+2*keyline, h+2*keyline+label_height
     fraction_ratio = RATIOS[ratio]
     if fraction_ratio is None:
         margin = max(4, round(s*THIN_MARGIN))
@@ -77,6 +101,13 @@ def validate(settings):
         raise ValueError('--ratio must be one of ' + ', '.join(RATIOS) + '.')
     if settings.background is not None and settings.background not in BACKGROUND_MODES:
         raise ValueError('--background must be blur.')
+    for value, flag in ((settings.title, '--title'), (settings.subtitle, '--subtitle')):
+        if value is not None and (not value.strip() or not is_single_line(value)):
+            raise ValueError(f'Use a single-line {flag} up to 200 characters.')
+    if settings.subtitle is not None and settings.title is None:
+        raise ValueError('--subtitle requires --title.')
+    if settings.title is not None and settings.caption:
+        raise ValueError('Use either the gallery label (--title/--subtitle) or --caption, not both.')
     if settings.blur_tone is not None:
         if settings.background != 'blur':
             raise ValueError('--blur-tone requires --background blur.')
@@ -84,8 +115,61 @@ def validate(settings):
             raise ValueError('--blur-tone must be dark, neutral or light.')
 
 
+def label_metrics(photo_size, settings):
+    if settings.title is None:
+        return None
+    s = min(photo_size)
+    title_px, subtitle_px = max(12, round(s*TITLE_SIZE)), max(9, round(s*SUBTITLE_SIZE))
+    title_font, subtitle_font = title_fonts(title_px, subtitle_px, settings.font_path)
+    gap, spacing = round(s*LABEL_GAP), round(title_px*LINE_SPACING)
+    height = gap + sum(title_font.getmetrics())
+    if settings.subtitle is not None:
+        height += spacing + sum(subtitle_font.getmetrics())
+    return Label(height, gap, spacing, title_px, subtitle_px)
+
+
 def layout(photo_size, settings):
-    return Layout(*minimal_mat_geometry(photo_size, ratio_name(settings), settings.choices[2]))
+    label = label_metrics(photo_size, settings)
+    size, pos, keyline = minimal_mat_geometry(photo_size, ratio_name(settings), settings.choices[2],
+                                              label.height if label else 0)
+    return Layout(size, pos, keyline, label)
+
+
+def text_limits(plan, photo_size, ratio):
+    """Horizontal room for label text: the canvas inside its minimum margins."""
+    width = plan.size[0]
+    if RATIOS[ratio] is None:
+        inset = plan.pos[0]-plan.keyline
+    else:
+        inset = math.ceil(width*MARGINS[ratio])
+    return inset, width-inset
+
+
+def draw_label(canvas, plan, photo_size, settings, profile, slot):
+    """Centered title (and subtitle) in the band reserved below the photo."""
+    w, h = photo_size
+    label = plan.label
+    title_font, subtitle_font = title_fonts(label.title_px, label.subtitle_px, settings.font_path)
+    top = plan.pos[1]+h+plan.keyline
+    left, right = text_limits(plan, photo_size, ratio_name(settings))
+    band = canvas.crop((left, top, right, top+label.height)).convert('L')
+    tone = 'light' if ImageStat.Stat(band).mean[0] < 128 else 'dark'
+    title_ink, subtitle_ink = colors_in_profile(LABEL_INKS[tone], profile)
+    d = ImageDraw.Draw(canvas)
+    center = plan.pos[0]+w//2
+    lines = [(settings.title, title_font, title_ink, top+label.gap, '--title')]
+    if settings.subtitle is not None:
+        lines.append((settings.subtitle, subtitle_font, subtitle_ink,
+                      top+label.gap+sum(title_font.getmetrics())+label.spacing, '--subtitle'))
+    boxes = []
+    for text, font, ink, y, flag in lines:
+        box = d.textbbox((center, y), text, font=font, anchor='ma')
+        if box[0] < left or box[2] > right:
+            raise ValueError(f'{flag} is too wide for the canvas; shorten it.')
+        boxes.append((text, font, ink, y, box))
+    for text, font, ink, y, box in boxes:
+        d.text((center, y), text, font=font, fill=ink, anchor='ma')
+        slot.claim(box, 'Gallery label', check=False)
 
 
 def blurred_background(photo, size, tone):
@@ -119,10 +203,14 @@ def paint(photo, plan, settings, ctx):
     pos, keyline = plan.pos, plan.keyline
     draw_keyline(canvas, pos, photo.size, keyline, keyline_color)
     canvas.paste(photo, pos)
+    below = pos[1]+h+keyline
+    left, right = text_limits(plan, photo.size, ratio_name(settings))
+    slot = Slot((left, below, right, plan.size[1]), align=(pos[0], pos[0]+w))
     if settings.caption:
-        below = pos[1]+h+keyline
-        draw_caption(canvas, settings.caption, settings.font_path, min(w, h), pos, photo.size,
-                     plan.size[1]-below, below=below)
+        slot.claim(draw_caption(canvas, settings.caption, settings.font_path, min(w, h), pos,
+                                photo.size, plan.size[1]-below, below=below), 'Caption', check=False)
+    if plan.label:
+        draw_label(canvas, plan, photo.size, settings, ctx.profile, slot)
     return canvas, pos
 
 
@@ -137,6 +225,11 @@ def notes(settings, *, share, **context):
             + '; full-resolution photo centered, never scaled or cropped.'
             + (f' Share copy is exactly {exact[0]}x{exact[1]}.' if exact else ''))
     result = [text]
+    if settings.title is not None:
+        result.append('Gallery label: ' + ('title and subtitle' if settings.subtitle is not None
+                                            else 'title') + ' as supplied, centered below the photo; '
+                      + ('the canvas grows to make room.' if RATIOS[ratio] is None
+                         else 'the photo sits higher to make room.'))
     if settings.background == 'blur':
         result.append(f'Blurred background ({settings.blur_tone or DEFAULT_BLUR_TONE} tone) made from '
                       'the photo itself, outside the photo only; the mat color choice is not used.')
@@ -159,6 +252,7 @@ STYLE = Style(
           Row(('Black keyline', 'Viền đen sát ảnh (keyline)'), (('Thin', 'Mảnh'), ('None', 'Không có'),
                                                                 ('Thick', 'Dày')))),
     choices_hint='ratio-background-keyline',
-    accepts=COMMON | {'ratio', 'background', 'blur_tone'},
+    # No --signature: a corner mark beside the centered label looks unbalanced (owner decision).
+    accepts=COMMON | {'ratio', 'background', 'blur_tone', 'title', 'subtitle'},
     layout=layout, paint=paint, validate=validate, share_size=share_size, notes=notes,
     max_output_pixels=MAX_OUTPUT_PIXELS)

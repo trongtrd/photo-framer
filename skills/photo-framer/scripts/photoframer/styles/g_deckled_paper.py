@@ -8,6 +8,9 @@ from PIL import Image
 from ..color import colors_in_profile
 from ..components.caption import CAPTION_INK, draw_caption
 from ..components.paper import deckle_amplitude, draw_deckled_paper
+from ..components.signature import draw_signature
+from ..components.slots import Slot
+from ..settings import SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .055, 2: .085, 3: .12}
@@ -38,11 +41,14 @@ def paint(photo, plan, settings, ctx):
     draw_deckled_paper(canvas, photo.size, plan.margin, plan.pad, PAPERS[two], three, ctx.profile)
     pos = (plan.pad+plan.margin, plan.pad+plan.margin)
     canvas.paste(photo, pos)
+    # Paper below the photo, clear of the torn edge (which reaches 2x amplitude inward).
+    space = max(0, plan.margin-2*deckle_amplitude(s, three)-4)
+    w, h = photo.size
+    slot = Slot((pos[0], pos[1]+h, pos[0]+w, pos[1]+h+space))
     if settings.caption:
-        # Keep clear of the torn edge, which reaches 2x amplitude inward.
-        space = max(0, plan.margin-2*deckle_amplitude(s, three)-4)
-        draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size, space,
-                     ink=caption_ink)
+        slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
+                                space, ink=caption_ink), 'Caption', check=False)
+    draw_signature(canvas, slot, settings, ctx.profile)
     return canvas, pos
 
 
@@ -61,5 +67,5 @@ STYLE = Style(
           Row(('Paper tone', 'Màu giấy'), (('Warm white', 'Trắng ấm'), ('Bright white', 'Trắng sáng'),
                                            ('Ivory', 'Ngà'))),
           Row(('Torn edges', 'Mép xé'), (('Subtle', 'Nhẹ'), ('Medium', 'Vừa'), ('Rough', 'Rõ')))),
-    choices_hint='margin-paper-deckle', accepts=COMMON,
+    choices_hint='margin-paper-deckle', accepts=COMMON | SIGNATURE_OPTIONS,
     layout=layout, paint=paint, notes=notes)

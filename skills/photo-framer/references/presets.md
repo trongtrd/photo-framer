@@ -1,4 +1,4 @@
-# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata) / v0.10 (H ratios, blur)
+# Rendering specification v0.1 (A, B) / v0.2 (C) / v0.3 (D) / v0.4 (E) / v0.5 (F) / v0.6 (G) / v0.7 (H) / v0.9 (metadata) / v0.10 (H ratios, blur) / v0.11 (labels, signatures)
 
 All geometry scales with the shorter oriented photo edge `s`.
 
@@ -173,7 +173,29 @@ Flat presentation: no shadow, frame or keyline.
   default), neutral, or light (channels + 12% toward white), then enlarged
   with BICUBIC to the canvas. No color conversion; keyline and photo are
   drawn on top. Row 2 (mat) is unused.
+- v0.11 gallery label (H): title Inter SemiBold max(12, 0.05s), subtitle Inter
+  Regular max(9, 0.026s) — the spec-card faces, one typeface across styles; gap photo→title 0.05s, line spacing 0.35 × title size,
+  heights from font ascent+descent. The label height joins the photo box before
+  fitting, so the block is centered and the photo moves up (thin border: canvas
+  grows). Text must fit inside the canvas minimum margins. Ink sRGB (30,30,30) /
+  (115,115,115), or (246,244,238) / (214,212,206) when the label band's mean
+  luminance is below 128 (dark blur).
 - H output limit 100 MP (other styles 60 MP). Verification re-opens the
   output with Pillow's pixel limit raised to exactly the encoded size.
+
+## Slots and signatures (v0.11)
+- Slot = the margin below the photo, aligned to the photo edges: A margin; B
+  white mat; E border below the inner edge; G paper above the torn-edge
+  clearance (margin − 2 × amplitude − 4); H from the keyline to the canvas
+  bottom inside the minimum margins. Items claim exact ink boxes; leaving the
+  slot or overlapping is an error. Existing `--caption` placement is unchanged
+  and recorded as a claim.
+- `--signature`: PNG ≤ 4096 px, single frame, ICC converted to sRGB, then to
+  the output profile. Width `--signature-width` × canvas width (default 0.15,
+  0.02–0.5), aspect kept, premultiplied LANCZOS. Opacity 0.05–1 (default 1).
+  Positions bottom-right (default), bottom-center, bottom-left. Vertical
+  clearance max(2, 0.12 × slot height) from the photo and canvas edges;
+  centered in the slot. Not available for H (owner decision: unbalanced beside
+  the centered label).
 
 Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. Output EXIF (v0.9): `--metadata keep` (default) copies IFD0, the Exif sub-IFD and GPS into the final PNG (eXIf) and share JPEG (APP1), sets Orientation 1 when present, updates ImageWidth/ImageLength and PixelX/YDimension to each output, and drops IFD1 thumbnails, MakerNote, XMLPacket, InterColorProfile and the interoperability pointer; JPEG EXIF over 65,000 bytes is an error. `--metadata strip` writes none. Previews never carry metadata. Cropping/resizing requires explicit authorization; reduced previews are not final files.

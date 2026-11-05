@@ -17,6 +17,7 @@ from .preview import H_OPTIONS as H_PREVIEW_OPTIONS, preview, preview_styles
 from .registry import DEFAULT_STYLE, STYLES
 from .renderer import render
 from .settings import SPEC_OPTIONS, Settings
+from .components.signature import POSITIONS as SIGNATURE_POSITIONS
 from .styles.e_color_echo import resolve_colors
 from .styles.h_minimal_mat import (BACKGROUND_MODES as H_BACKGROUND_MODES, BLUR_TONES as H_BLUR_TONES,
                                    DEFAULT_BLUR_TONE as H_DEFAULT_BLUR_TONE, RATIOS as H_RATIOS)
@@ -52,6 +53,18 @@ def _number(flag, prefix='', suffix='', fraction=False):
     return parse
 
 
+def _fraction(flag, low, high):
+    def parse(value):
+        try:
+            number = float(value)
+        except ValueError:
+            number = None
+        if number is None or not low <= number <= high:
+            raise argparse.ArgumentTypeError(f'{flag} must be a number from {low:g} to {high:g}')
+        return number
+    return parse
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description=DESCRIPTION)
     parser.add_argument('inputs', type=Path, nargs='+')
@@ -83,6 +96,19 @@ def build_parser():
                      help='blur: fill the canvas with a blurred copy of the photo instead of the mat color')
     mat.add_argument('--blur-tone', choices=list(H_BLUR_TONES),
                      help=f'with --background blur: {H_DEFAULT_BLUR_TONE} (default), neutral or light')
+    mat.add_argument('--title', type=_text_value('--title'),
+                     help='gallery label: exact title in Inter SemiBold (as style D), centered below the photo')
+    mat.add_argument('--subtitle', type=_text_value('--subtitle'),
+                     help='gallery label: exact second line in smaller gray Inter Regular (needs --title)')
+    overlay = parser.add_argument_group('signature or logo (A, B, E, G)',
+                                        'A PNG placed in the margin below the photo, never over it.')
+    overlay.add_argument('--signature', type=Path, help='transparent PNG signature or logo')
+    overlay.add_argument('--signature-position', choices=SIGNATURE_POSITIONS,
+                         help='default bottom-right; aligned to the photo edges')
+    overlay.add_argument('--signature-width', type=_fraction('--signature-width', .02, .5),
+                         help='width as a fraction of the canvas width, default 0.15')
+    overlay.add_argument('--signature-opacity', type=_fraction('--signature-opacity', .05, 1),
+                         help='0.05-1, default 1')
     specs = parser.add_argument_group('capture details for C/D', 'Typed values win over EXIF/XMP, '
                                       'field by field; nothing is filled in that was not supplied.')
     specs.add_argument('--camera', type=_text_value('--camera'), help='exact camera text, shown verbatim')
@@ -176,6 +202,10 @@ def process(path, args, settings):
             outputs.append(save_verified(image, args.out_dir/f'{stem}_{settings.style}_share.jpg', SRGB,
                                          exif=output_exif(exif, image, args)))
         notes += style.notes(settings, share=args.share, origins=origins, echo_colors=echo_colors)
+        if settings.signature is not None:
+            opacity = settings.signature_opacity if settings.signature_opacity is not None else 1
+            notes.append(f'Signature PNG placed {settings.signature_position or "bottom-right"} '
+                         f'below the photo at {round(opacity*100)}% opacity; the photo is untouched.')
         if final_exif:
             notes.append('Source EXIF copied into the outputs; orientation reset to 1, '
                          'embedded thumbnail and maker notes removed.')
@@ -192,7 +222,11 @@ def main(argv=None):
                         frame_color=args.frame_color, camera=args.camera, lens=args.lens,
                         iso=args.iso, aperture=args.aperture, shutter=args.shutter, focal=args.focal,
                         raw_model=True if args.raw_model else None, ratio=args.ratio,
-                        background=args.background, blur_tone=args.blur_tone)
+                        background=args.background, blur_tone=args.blur_tone, title=args.title,
+                        subtitle=args.subtitle, signature=args.signature,
+                        signature_position=args.signature_position,
+                        signature_width=args.signature_width,
+                        signature_opacity=args.signature_opacity)
     if args.crop and len(args.inputs) != 1:
         parser.error('--crop accepts exactly one input to avoid unintended batch cropping.')
     results = []
