@@ -13,7 +13,7 @@ The README displays the header at full width and links it to the examples sectio
 The README also uses [`images/photo-framer-workflow.svg`](images/photo-framer-workflow.svg)
 and a [vertical mobile version](images/photo-framer-workflow-mobile.svg). These
 editable SVGs share the header's paper, navy and coral colors. They show the user
-journey: install the skill, attach photos, choose A–G, save the framed PNG.
+journey: install the skill, attach photos, choose A–H, save the framed PNG.
 The `<picture>` element selects the vertical diagram at viewport widths up to
 600 px. No JavaScript, remote font or external image service is needed.
 

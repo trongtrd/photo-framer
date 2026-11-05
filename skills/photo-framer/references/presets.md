@@ -141,4 +141,21 @@ Flat presentation: no shadow, frame or keyline.
   Keep it inside the lower paper strip, reserving clearance for the torn edge;
   reject overflow instead of touching the photo or clipping to the outer edge.
 
-Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G convert their sRGB colors into it. Preview/share versions convert to sRGB. EXIF/GPS are excluded. Cropping/resizing requires explicit authorization; reduced previews are not final files.
+## H: Minimal Mat (added in v0.7)
+- Plain mat around the intact photo; no shadow, texture, text or logo by default.
+- Canvas ratio: 1 = exact 4:5, 2 = exact 1:1, 3 = follow the photo.
+- Keyline (black, sRGB (10,10,10)) drawn outside the photo edge:
+  thin max(1, 0.0055s), none, thick max(1, 0.011s), where s is the photo's short edge.
+- Fixed ratios: the photo plus keyline is fitted, never scaled or cropped, and
+  centered both ways. Minimum margin is 0.036 × canvas width for 4:5 and
+  0.024 × canvas width for 1:1 on the binding side. Canvas width is rounded up
+  to a multiple of the ratio numerator so the ratio is exact.
+- Ratio 3: uniform border max(4, 0.015s) outside the keyline.
+- Mats (sRGB): white (255,255,255), warm light gray (235,229,229), ivory (250,248,243).
+  Convert mat and keyline into the source RGB ICC profile; photo pixels and ICC
+  bytes remain intact.
+- Share copies: 4:5 → exactly 1080×1350, 1:1 → exactly 1080×1080 sRGB JPEG;
+  ratio 3 uses the standard 2048 px limit.
+- Choices: ratio–mat–keyline, default 1-1-1. The 60 MP output limit still applies.
+
+Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. EXIF/GPS are excluded. Cropping/resizing requires explicit authorization; reduced previews are not final files.

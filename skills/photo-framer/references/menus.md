@@ -1,10 +1,10 @@
 # Menus / Lựa chọn
 
-Use the user's language. Preserve codes: A floating photo, B gallery frame, C print/spec card, D spec card with custom right-side text, E Color Echo, F Film Edge, G Deckled Paper. Default style A; default settings **A, 2-2-1**, **B, 1-2-1**, **C/D/E/F/G, 2-1-1**.
+Use the user's language. Preserve codes: A floating photo, B gallery frame, C print/spec card, D spec card with custom right-side text, E Color Echo, F Film Edge, G Deckled Paper, H Minimal Mat. Default style A; default settings **A, 2-2-1**, **B, 1-2-1**, **C/D/E/F/G, 2-1-1**, **H, 1-1-1**.
 
 ## Tiếng Việt
 
-**Chọn phong cách:** A — Ảnh nổi (mặc định); B — Khung gallery; C — Thẻ thông số; D — Thẻ thông số có chữ riêng; E — Color Echo / Viền đồng sắc; F — Film Edge / Viền phim; G — Deckled Paper / Giấy mỹ thuật mép xé.
+**Chọn phong cách:** A — Ảnh nổi (mặc định); B — Khung gallery; C — Thẻ thông số; D — Thẻ thông số có chữ riêng; E — Color Echo / Viền đồng sắc; F — Film Edge / Viền phim; G — Deckled Paper / Giấy mỹ thuật mép xé; H — Minimal Mat / Khung tối giản.
 
 ### A — Ảnh nổi
 | Tùy chỉnh | 1 | 2 | 3 |
@@ -96,9 +96,23 @@ ngoài của tờ giấy; ảnh không bị xé, đổi màu hay thêm hạt. M�
 Python, không gọi AI cho từng ảnh. Chạy cùng thiết lập cho cả lô; mặc định
 không có chữ hoặc logo. Có thể yêu cầu thêm chữ riêng trên khoảng giấy.
 
+### H — Minimal Mat / Khung tối giản
+| Tùy chỉnh | 1 | 2 | 3 |
+|---|---|---|---|
+| Tỷ lệ khung | **4:5 dọc — mặc định** | 1:1 vuông | Theo ảnh gốc, viền mỏng |
+| Nền | **Trắng — mặc định** | Xám ấm nhạt | Trắng ngà |
+| Viền đen sát ảnh (keyline) | **Mảnh — mặc định** | Không có | Dày |
+
+Trả lời theo thứ tự **tỷ lệ–nền–viền đen**, mặc định `1-1-1`.
+Với 4:5 và 1:1, ảnh ngang hay dọc đều dùng chung một khung cố định: ảnh được
+đặt vừa vào khung, căn giữa, không cắt và không thu nhỏ. 4:5 là khổ dọc lớn nhất
+hiển thị trọn trong feed Instagram/Facebook, hợp màn hình điện thoại. Lựa chọn 3
+chỉ thêm viền mỏng đều quanh ảnh theo đúng tỷ lệ ảnh. Mặc định không có chữ.
+Bản chia sẻ JPEG của 4:5 và 1:1 có đúng kích thước 1080×1350 và 1080×1080.
+
 ## English
 
-**Choose style:** A — Floating photo (default); B — Gallery frame; C — Print / spec card; D — Custom spec card; E — Color Echo; F — Film Edge; G — Deckled Paper.
+**Choose style:** A — Floating photo (default); B — Gallery frame; C — Print / spec card; D — Custom spec card; E — Color Echo; F — Film Edge; G — Deckled Paper; H — Minimal Mat.
 
 ### A — Floating photo
 | Setting | 1 | 2 | 3 |
@@ -190,3 +204,17 @@ silhouette belongs to the paper's outer edge; the photo is never torn, recolored
 or grained. Python creates the pattern without per-photo AI calls. Reuse the
 settings across a batch. No text or logo is added by default; a caption on the
 paper may be requested separately.
+
+### H — Minimal Mat
+| Setting | 1 | 2 | 3 |
+|---|---|---|---|
+| Canvas ratio | **4:5 portrait — default** | 1:1 square | Follow photo, thin border |
+| Mat | **White — default** | Warm light gray | Ivory |
+| Black keyline | **Thin — default** | None | Thick |
+
+Reply in **ratio–mat–keyline** order, default `1-1-1`.
+With 4:5 and 1:1, landscape and portrait photos share one fixed canvas: the
+photo is fitted, centered, never cropped or scaled. 4:5 is the tallest ratio
+shown uncropped in Instagram/Facebook feeds, best on phone screens. Option 3
+adds only a thin even border in the photo's own ratio. No text by default.
+Share JPEGs for 4:5 and 1:1 are exactly 1080×1350 and 1080×1080.
