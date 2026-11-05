@@ -42,9 +42,10 @@ class Style:
     default: str                     # default three-digit choice code
     rows: tuple[Row, Row, Row]
     choices_hint: str                # reply order for --choices help
-    accepts: frozenset
+    accepts: frozenset               # named options (Settings fields) this style takes
     layout: Callable                 # (photo_size, choices) -> layout with .size
     paint: Callable                  # (photo, layout, settings, ctx) -> (canvas, pos)
+    requires: frozenset = frozenset()  # accepted options that must be supplied
     validate: Callable = _no_validation
     uses_metadata: bool = False
     share_size: Callable = _no_share_size  # exact share JPEG size or None

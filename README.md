@@ -73,6 +73,7 @@ Dùng JPEG hoặc PNG 8-bit. Khung được thêm bên ngoài ảnh; bản xem t
 
 Click a style to see its full-size example below. / Bấm vào phong cách để xem ảnh minh họa lớn bên dưới.
 
+<!-- generated:styles -->
 | Style / Phong cách | Look / Hình thức | Default / Mặc định |
 | --- | --- | :---: |
 | [**A · Floating / Ảnh nổi**](#style-a) | Soft shadow on a light background<br>Bóng mềm trên nền sáng | `2-2-1` |
@@ -83,6 +84,7 @@ Click a style to see its full-size example below. / Bấm vào phong cách để
 | [**F · Film Edge / Viền phim**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng | `2-1-1` |
 | [**G · Deckled Paper / Giấy mép xé**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé | `2-1-1` |
 | [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5 or 1:1 canvas for any photo, or a thin border; optional black keyline<br>Khung cố định 4:5 hoặc 1:1 cho mọi ảnh, hoặc viền mỏng; tùy chọn viền đen | `1-1-1` |
+<!-- /generated:styles -->
 
 Say **“A default”** or **“A mặc định”**; you do not need to remember the codes. If you only say “use defaults,” A is used unless another style is already chosen. For other settings, use your own words or the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
 
@@ -241,6 +243,20 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style B --captio
 Text supplied with `--caption` must fit on one line, contain at most 200 characters, and stay outside the photo. It requires an explicit `--font` path; check Vietnamese glyphs when needed. C/D's automatic spec band can contain two lines and uses the bundled Inter Regular and SemiBold fonts. D requires `--right-text`, also one line of at most 200 characters, and uses the gear line's SemiBold face and size without requiring `--font`. A font override applies to both sides. If the text and capture details cannot fit together, the renderer reports an error.
 
 F requires both `--left-text` and `--right-text`, including explicit empty values for blank corners. Each accepts one line of at most 200 characters. Both use bundled Inter SemiBold in warm white; `--font` overrides both. The renderer rejects texts that overlap or do not fit; it does not shrink, wrap, uppercase or truncate them. F uses these two fields instead of `--caption`.
+
+Which named flags each style accepts (✓), requires, or rejects (—). Choice codes never change meaning; new features arrive as named flags. / Cờ có tên mà từng phong cách nhận (✓), bắt buộc (required) hoặc báo lỗi (—). Mã 3 số không đổi nghĩa; tính năng mới dùng cờ có tên.
+
+<!-- generated:option-matrix -->
+| Flag | A | B | C | D | E | F | G | H |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| `--left-text` | — | — | — | — | — | required | — | — |
+| `--frame-color` | — | — | — | — | ✓ | — | — | — |
+| `--right-text` | — | — | — | required | — | required | — | — |
+| `--caption` | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
+| `--font` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+<!-- /generated:option-matrix -->
 
 For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` và `--font` như ví dụ; thêm `--share` để xuất bản chia sẻ.
 

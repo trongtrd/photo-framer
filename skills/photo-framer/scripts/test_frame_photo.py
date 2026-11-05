@@ -861,6 +861,17 @@ class RegistryAndSettings(unittest.TestCase):
                         with self.assertRaises(ValueError):
                             render(photo, code, **options)
 
+    def test_required_options_are_enforced(self):
+        photo = Image.new('RGB', (900, 600), 'red')
+        full = {'left_text': 'Berlin', 'right_text': 'October'}
+        for code, style in STYLES.items():
+            self.assertLessEqual(style.requires, style.accepts)
+            for field in style.requires:
+                with self.subTest(style=code, missing=field):
+                    options = {key: full[key] for key in style.requires if key != field}
+                    with self.assertRaisesRegex(ValueError, 'requires'):
+                        render(photo, code, **options)
+
     def test_cli_version(self):
         process = subprocess.run([sys.executable, str(RENDERER), '--version'],
                                  capture_output=True, text=True)
