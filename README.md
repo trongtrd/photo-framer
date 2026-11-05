@@ -191,6 +191,22 @@ A second real photograph, a 1000 × 1500 (2:3) portrait, shows how H fits portra
 | :---: | :---: |
 | ![The full landscape colonnade photo centered on a 9:16 canvas filled with a dark, softly blurred copy of itself, thin black keyline](docs/images/demo-after-h-9x16-blur.jpg) | ![The full Prague portrait photo centered on a 9:16 canvas filled with a softly blurred copy of itself, thin black keyline](docs/images/demo-portrait-h-9x16-blur.jpg) |
 
+### Gallery label and signature / Nhãn gallery và chữ ký
+
+H can add a gallery label below the photo: `--title` in a bold serif (bundled Noto Serif, full Vietnamese support) and an optional `--subtitle` in a smaller gray sans. The photo moves up to make room on fixed canvases; on the thin border the canvas grows. The wording is always yours, used verbatim. A, B, E, G and H can also place your own transparent PNG signature or logo with `--signature`, in the margin below the photo (bottom-right by default, or bottom-center/bottom-left), sized by `--signature-width` and faded with `--signature-opacity`. Nothing is ever drawn over the photo: if text or a signature does not fit, or two items would overlap, the renderer asks for shorter wording, a smaller signature or another position.
+
+H có thể thêm nhãn gallery dưới ảnh: `--title` dùng font serif đậm (Noto Serif đi kèm, đủ dấu tiếng Việt) và `--subtitle` tùy chọn, chữ sans xám nhỏ hơn. Với khung cố định, ảnh dịch lên để chừa chỗ; với viền mỏng, khung cao thêm. Nội dung chữ luôn do bạn cung cấp, giữ nguyên văn. A, B, E, G và H còn có thể đặt chữ ký hoặc logo PNG nền trong suốt của bạn bằng `--signature`, ở lề dưới ảnh (mặc định góc phải, hoặc giữa/trái), chỉnh cỡ bằng `--signature-width` và độ mờ bằng `--signature-opacity`. Không bao giờ vẽ đè lên ảnh: nếu chữ hoặc chữ ký không vừa, hay hai thành phần chồng nhau, renderer sẽ đề nghị rút gọn chữ, thu nhỏ chữ ký hoặc đổi vị trí.
+
+> Use Photo Framer, H 2-1-1, with the title “Praha” and the subtitle “Prague · Czech Republic”.
+>
+> Dùng Photo Framer, H 2-1-1, tiêu đề “Praha”, phụ đề “Prague · Czech Republic”.
+
+| H `2-1-1` · `--title` · `--subtitle` |
+| :---: |
+| ![The full Prague portrait photo on a white 1:1 canvas, moved up, with the centered bold serif title Praha and the gray subtitle Prague · Czech Republic below it](docs/images/demo-portrait-h-1x1-label.jpg) |
+
+The example's wording was written for this README; it names the place in the photo.
+
 [↑ Choose another style / Chọn phong cách khác](#choose-a-style)
 
 ## Python and maintenance
@@ -251,6 +267,9 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style H --ratio 
 # Film scan without EXIF: type the capture details (C/D); typed values are shown as given
 python skills/photo-framer/scripts/frame_photo.py "scan.jpg" --style C --camera "Pentax 67" --lens "SMC Takumar 105mm F2.4" --iso 400 --aperture 2.4 --shutter 1/125 --focal 105 --out-dir "output"
 
+# Gallery label below the photo (H) and your own PNG signature at the bottom right
+python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style H --choices 2-1-1 --title "Hồ Hoàn Kiếm" --subtitle "Hà Nội · Tháng 10, 2022" --signature "my-signature.png" --signature-width 0.1 --out-dir "output"
+
 # Remove all EXIF, including GPS location, from the outputs
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style A --metadata strip --out-dir "output"
 ```
@@ -287,6 +306,12 @@ Which named flags each style accepts (✓), requires, or rejects (—). Choice c
 | `--ratio` | — | — | — | — | — | — | — | ✓ |
 | `--background` | — | — | — | — | — | — | — | ✓ |
 | `--blur-tone` | — | — | — | — | — | — | — | ✓ |
+| `--title` | — | — | — | — | — | — | — | ✓ |
+| `--subtitle` | — | — | — | — | — | — | — | ✓ |
+| `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
+| `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
+| `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
+| `--signature-opacity` | ✓ | ✓ | — | — | ✓ | — | ✓ | ✓ |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -330,6 +355,7 @@ python tools/golden.py compare --base main
 - **Output metadata:** by default the final PNG and the share JPEG keep the source EXIF, including GPS location. Orientation is reset to 1 because the pixels are already rotated, pixel dimensions are updated, and the embedded thumbnail, maker notes and XMP (including edit history) are dropped. `--metadata strip` writes no EXIF. Previews never carry metadata. / Mặc định PNG cuối và JPEG chia sẻ giữ EXIF của ảnh gốc, kể cả vị trí GPS; hướng xoay đặt lại 1, cập nhật kích thước, bỏ ảnh thu nhỏ, maker notes và XMP. Dùng `--metadata strip` để không ghi EXIF.
 - **Style E:** one deterministic sRGB color is selected from a sample no larger than 96×96, favoring colors near the edges and midtones. Near-neutral or unusable samples fall back to warm neutral #e8e4dc. Default tone is muted; natural and light variants are optional settings. `--frame-color` bypasses this selection and applies one exact color across the batch. E converts only its decorative colors into the source RGB ICC profile; photo pixels and ICC bytes stay unchanged. No per-image AI color analysis or candidate variants are needed.
 - **Style F:** sprockets and both corner texts stay outside the rectangular photo region. Charcoal, black and dark-brown backgrounds are available, with standard, sparse or dense sprockets. Both custom fields preserve the supplied wording; no metadata, counter, film brand or photo effect is generated. F converts its decorative sRGB colors into the source RGB profile while retaining photo pixels and ICC bytes.
+- **Gallery label and signature (v0.11):** `--title` (Noto Serif Bold, 5% of the photo's short edge) and `--subtitle` (Inter Regular, 2.6%) are centered below the photo in H; dark ink on light mats and light ink on dark blurred backgrounds. `--signature` takes a PNG up to 4096 px, keeps its transparency, converts its colors like other decorations and places it in the margin below the photo of A, B, E, G or H, aligned to the photo edges. Each item claims its own box; leaving the margin or overlapping another item is an error. `--caption` keeps its previous behavior and cannot be combined with the gallery label.
 - **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. `--ratio` also offers 3:4 and 9:16 (minimum margin 4.0% and 5.0% of the canvas width) and overrides the first menu row. `--background blur` replaces the mat with a blurred copy of the photo scaled to cover the canvas (blurred on a copy of at most 384 px, then enlarged; `--blur-tone` dark by default, neutral or light), drawn only outside the photo. Because the full-resolution photo is kept, the canvas grows with it; H accepts outputs up to 100 megapixels, enough for a 29 MP landscape on 9:16. Share copies are exactly 1080×1350 (4:5), 1080×1080 (1:1), 1080×1440 (3:4) or 1080×1920 (9:16).
 - **Style G:** paper grain, torn edges and a soft shadow stay outside the rectangular photo. Choose narrow/medium/wide margins, warm-white/bright-white/ivory paper and subtle/medium/rough edges. A fixed procedural pattern and a reusable 256×256 texture tile support batches without AI calls or external texture files. Decorative colors convert into the source RGB profile; photo pixels and ICC bytes remain unchanged. No caption or logo is added by default.
 
@@ -371,7 +397,7 @@ python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-sour
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style H --ratio 9:16 --background blur --share --out-dir output/demo-h-9x16-blur
 ```
 
-The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`. The two blurred 9:16 examples come from `output/demo-portrait/9x16-blur/` and `output/demo-h-9x16-blur/` (`demo-source-final_H_share.jpg` → `docs/images/demo-after-h-9x16-blur.jpg`).
+The portrait source is a real photograph supplied by the project owner, at 1000 × 1500 pixels, without EXIF/XMP/GPS metadata. Copy each `output/demo-portrait/<name>/demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-<name>.jpg`. The gallery-label example comes from `python skills/photo-framer/scripts/frame_photo.py docs/images/demo-portrait-source.jpg --style H --choices 2-1-1 --title "Praha" --subtitle "Prague · Czech Republic" --share --out-dir output/demo-portrait/label` (copy `demo-portrait-source_H_share.jpg` to `docs/images/demo-portrait-h-1x1-label.jpg`). The two blurred 9:16 examples come from `output/demo-portrait/9x16-blur/` and `output/demo-h-9x16-blur/` (`demo-source-final_H_share.jpg` → `docs/images/demo-after-h-9x16-blur.jpg`).
 
 The source is a real photograph supplied by the project owner, at 2048 × 1365 pixels. It retains EXIF/XMP (no GPS) for reproduction; since v0.9 re-rendered examples carry that EXIF by default (C and D were re-rendered for v0.9). EXIF supplies `ILCE-7C | FE 85mm F1.8` and `ISO 100  f/8  1/200s  85mm`, shown as `α7C` in C and `Sony α7C` in D; the camera make selects the SONY logo. EXIF takes priority over XMP. No capture values were added or invented.
 
