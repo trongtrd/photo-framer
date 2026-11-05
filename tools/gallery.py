@@ -159,8 +159,14 @@ def gallery_block():
             pictures = [f'<a href="docs/images/gallery/{item.key}.jpg">'
                         f'<img src="docs/images/gallery/thumbs/{item.key}.jpg" width="240" '
                         f'alt="{html.escape(code + ": " + item.label, quote=True)}"></a>' for item in row]
-            lines += ['| ' + ' | '.join(labels) + ' |', '| ' + ' | '.join(':---:' for _ in row) + ' |',
-                       '| ' + ' | '.join(pictures) + ' |', '']
+            # Cell widths establish a real minimum for the table's columns;
+            # image widths alone are shrunk by GitHub's max-width:100% rule.
+            # GitHub keeps these HTML attributes and scrolls the wide table.
+            lines += ['<table>', '<thead><tr>',
+                       *[f'<th width="240" align="center">{label}</th>' for label in labels],
+                       '</tr></thead>', '<tbody><tr>',
+                       *[f'<td width="240" align="center">{picture}</td>' for picture in pictures],
+                       '</tr></tbody>', '</table>', '']
     lines += ['[All settings and choice codes](skills/photo-framer/references/menus.md) · '
                '[Reproduce the gallery](docs/gallery.md)', '']
     return '\n'.join(lines).rstrip()

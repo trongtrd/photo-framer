@@ -156,15 +156,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-2-1</code> | Margin: Narrow<br><code>1-2-1</code> | Margin: Wide<br><code>3-2-1</code> | Shadow: Light<br><code>2-1-1</code> | Shadow: Strong<br><code>2-3-1</code> | Background: Ivory<br><code>2-2-2</code> | Background: Light gray<br><code>2-2-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/a-default.jpg"><img src="docs/images/gallery/thumbs/a-default.jpg" width="240" alt="A: Default"></a> | <a href="docs/images/gallery/a-row1-1.jpg"><img src="docs/images/gallery/thumbs/a-row1-1.jpg" width="240" alt="A: Margin: Narrow"></a> | <a href="docs/images/gallery/a-row1-3.jpg"><img src="docs/images/gallery/thumbs/a-row1-3.jpg" width="240" alt="A: Margin: Wide"></a> | <a href="docs/images/gallery/a-row2-1.jpg"><img src="docs/images/gallery/thumbs/a-row2-1.jpg" width="240" alt="A: Shadow: Light"></a> | <a href="docs/images/gallery/a-row2-3.jpg"><img src="docs/images/gallery/thumbs/a-row2-3.jpg" width="240" alt="A: Shadow: Strong"></a> | <a href="docs/images/gallery/a-row3-2.jpg"><img src="docs/images/gallery/thumbs/a-row3-2.jpg" width="240" alt="A: Background: Ivory"></a> | <a href="docs/images/gallery/a-row3-3.jpg"><img src="docs/images/gallery/thumbs/a-row3-3.jpg" width="240" alt="A: Background: Light gray"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-2-1</code></th>
+<th width="240" align="center">Margin: Narrow<br><code>1-2-1</code></th>
+<th width="240" align="center">Margin: Wide<br><code>3-2-1</code></th>
+<th width="240" align="center">Shadow: Light<br><code>2-1-1</code></th>
+<th width="240" align="center">Shadow: Strong<br><code>2-3-1</code></th>
+<th width="240" align="center">Background: Ivory<br><code>2-2-2</code></th>
+<th width="240" align="center">Background: Light gray<br><code>2-2-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/a-default.jpg"><img src="docs/images/gallery/thumbs/a-default.jpg" width="240" alt="A: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row1-1.jpg"><img src="docs/images/gallery/thumbs/a-row1-1.jpg" width="240" alt="A: Margin: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row1-3.jpg"><img src="docs/images/gallery/thumbs/a-row1-3.jpg" width="240" alt="A: Margin: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row2-1.jpg"><img src="docs/images/gallery/thumbs/a-row2-1.jpg" width="240" alt="A: Shadow: Light"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row2-3.jpg"><img src="docs/images/gallery/thumbs/a-row2-3.jpg" width="240" alt="A: Shadow: Strong"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row3-2.jpg"><img src="docs/images/gallery/thumbs/a-row3-2.jpg" width="240" alt="A: Background: Ivory"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row3-3.jpg"><img src="docs/images/gallery/thumbs/a-row3-3.jpg" width="240" alt="A: Background: Light gray"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| Caption<br><code>--caption</code> | Gallery label<br><code>--title / --subtitle</code> | Your PNG signature<br><code>--signature</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/a-caption.jpg"><img src="docs/images/gallery/thumbs/a-caption.jpg" width="240" alt="A: Caption"></a> | <a href="docs/images/gallery/a-label.jpg"><img src="docs/images/gallery/thumbs/a-label.jpg" width="240" alt="A: Gallery label"></a> | <a href="docs/images/gallery/a-signature.jpg"><img src="docs/images/gallery/thumbs/a-signature.jpg" width="240" alt="A: Your PNG signature"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
+<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/a-caption.jpg"><img src="docs/images/gallery/thumbs/a-caption.jpg" width="240" alt="A: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-label.jpg"><img src="docs/images/gallery/thumbs/a-label.jpg" width="240" alt="A: Gallery label"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-signature.jpg"><img src="docs/images/gallery/thumbs/a-signature.jpg" width="240" alt="A: Your PNG signature"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-b"></a>
 
@@ -172,15 +198,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>1-2-1</code> | Frame color: White<br><code>2-2-1</code> | Frame color: Charcoal<br><code>3-2-1</code> | White mat: Narrow<br><code>1-1-1</code> | White mat: Wide<br><code>1-3-1</code> | Outer background: White<br><code>1-2-2</code> | Outer background: Ivory<br><code>1-2-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/b-default.jpg"><img src="docs/images/gallery/thumbs/b-default.jpg" width="240" alt="B: Default"></a> | <a href="docs/images/gallery/b-row1-2.jpg"><img src="docs/images/gallery/thumbs/b-row1-2.jpg" width="240" alt="B: Frame color: White"></a> | <a href="docs/images/gallery/b-row1-3.jpg"><img src="docs/images/gallery/thumbs/b-row1-3.jpg" width="240" alt="B: Frame color: Charcoal"></a> | <a href="docs/images/gallery/b-row2-1.jpg"><img src="docs/images/gallery/thumbs/b-row2-1.jpg" width="240" alt="B: White mat: Narrow"></a> | <a href="docs/images/gallery/b-row2-3.jpg"><img src="docs/images/gallery/thumbs/b-row2-3.jpg" width="240" alt="B: White mat: Wide"></a> | <a href="docs/images/gallery/b-row3-2.jpg"><img src="docs/images/gallery/thumbs/b-row3-2.jpg" width="240" alt="B: Outer background: White"></a> | <a href="docs/images/gallery/b-row3-3.jpg"><img src="docs/images/gallery/thumbs/b-row3-3.jpg" width="240" alt="B: Outer background: Ivory"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>1-2-1</code></th>
+<th width="240" align="center">Frame color: White<br><code>2-2-1</code></th>
+<th width="240" align="center">Frame color: Charcoal<br><code>3-2-1</code></th>
+<th width="240" align="center">White mat: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">White mat: Wide<br><code>1-3-1</code></th>
+<th width="240" align="center">Outer background: White<br><code>1-2-2</code></th>
+<th width="240" align="center">Outer background: Ivory<br><code>1-2-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/b-default.jpg"><img src="docs/images/gallery/thumbs/b-default.jpg" width="240" alt="B: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row1-2.jpg"><img src="docs/images/gallery/thumbs/b-row1-2.jpg" width="240" alt="B: Frame color: White"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row1-3.jpg"><img src="docs/images/gallery/thumbs/b-row1-3.jpg" width="240" alt="B: Frame color: Charcoal"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row2-1.jpg"><img src="docs/images/gallery/thumbs/b-row2-1.jpg" width="240" alt="B: White mat: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row2-3.jpg"><img src="docs/images/gallery/thumbs/b-row2-3.jpg" width="240" alt="B: White mat: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row3-2.jpg"><img src="docs/images/gallery/thumbs/b-row3-2.jpg" width="240" alt="B: Outer background: White"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row3-3.jpg"><img src="docs/images/gallery/thumbs/b-row3-3.jpg" width="240" alt="B: Outer background: Ivory"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| Caption<br><code>--caption</code> | Gallery label<br><code>--title / --subtitle</code> | Your PNG signature<br><code>--signature</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/b-caption.jpg"><img src="docs/images/gallery/thumbs/b-caption.jpg" width="240" alt="B: Caption"></a> | <a href="docs/images/gallery/b-label.jpg"><img src="docs/images/gallery/thumbs/b-label.jpg" width="240" alt="B: Gallery label"></a> | <a href="docs/images/gallery/b-signature.jpg"><img src="docs/images/gallery/thumbs/b-signature.jpg" width="240" alt="B: Your PNG signature"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
+<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/b-caption.jpg"><img src="docs/images/gallery/thumbs/b-caption.jpg" width="240" alt="B: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-label.jpg"><img src="docs/images/gallery/thumbs/b-label.jpg" width="240" alt="B: Gallery label"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-signature.jpg"><img src="docs/images/gallery/thumbs/b-signature.jpg" width="240" alt="B: Your PNG signature"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-c"></a>
 
@@ -188,15 +240,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-1-1</code> | Margin: Narrow<br><code>1-1-1</code> | Margin: Wide<br><code>3-1-1</code> | Background: Ivory<br><code>2-2-1</code> | Background: Light gray<br><code>2-3-1</code> | Caption: Camera + lens only<br><code>2-1-2</code> | Caption: No text<br><code>2-1-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/c-default.jpg"><img src="docs/images/gallery/thumbs/c-default.jpg" width="240" alt="C: Default"></a> | <a href="docs/images/gallery/c-row1-1.jpg"><img src="docs/images/gallery/thumbs/c-row1-1.jpg" width="240" alt="C: Margin: Narrow"></a> | <a href="docs/images/gallery/c-row1-3.jpg"><img src="docs/images/gallery/thumbs/c-row1-3.jpg" width="240" alt="C: Margin: Wide"></a> | <a href="docs/images/gallery/c-row2-2.jpg"><img src="docs/images/gallery/thumbs/c-row2-2.jpg" width="240" alt="C: Background: Ivory"></a> | <a href="docs/images/gallery/c-row2-3.jpg"><img src="docs/images/gallery/thumbs/c-row2-3.jpg" width="240" alt="C: Background: Light gray"></a> | <a href="docs/images/gallery/c-row3-2.jpg"><img src="docs/images/gallery/thumbs/c-row3-2.jpg" width="240" alt="C: Caption: Camera + lens only"></a> | <a href="docs/images/gallery/c-row3-3.jpg"><img src="docs/images/gallery/thumbs/c-row3-3.jpg" width="240" alt="C: Caption: No text"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-1-1</code></th>
+<th width="240" align="center">Margin: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">Margin: Wide<br><code>3-1-1</code></th>
+<th width="240" align="center">Background: Ivory<br><code>2-2-1</code></th>
+<th width="240" align="center">Background: Light gray<br><code>2-3-1</code></th>
+<th width="240" align="center">Caption: Camera + lens only<br><code>2-1-2</code></th>
+<th width="240" align="center">Caption: No text<br><code>2-1-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/c-default.jpg"><img src="docs/images/gallery/thumbs/c-default.jpg" width="240" alt="C: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row1-1.jpg"><img src="docs/images/gallery/thumbs/c-row1-1.jpg" width="240" alt="C: Margin: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row1-3.jpg"><img src="docs/images/gallery/thumbs/c-row1-3.jpg" width="240" alt="C: Margin: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row2-2.jpg"><img src="docs/images/gallery/thumbs/c-row2-2.jpg" width="240" alt="C: Background: Ivory"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row2-3.jpg"><img src="docs/images/gallery/thumbs/c-row2-3.jpg" width="240" alt="C: Background: Light gray"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row3-2.jpg"><img src="docs/images/gallery/thumbs/c-row3-2.jpg" width="240" alt="C: Caption: Camera + lens only"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row3-3.jpg"><img src="docs/images/gallery/thumbs/c-row3-3.jpg" width="240" alt="C: Caption: No text"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| Caption<br><code>--caption</code> | Raw camera code<br><code>--raw-model</code> | Typed details · synthetic chart<br><code>--capture-sidecar</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/c-caption.jpg"><img src="docs/images/gallery/thumbs/c-caption.jpg" width="240" alt="C: Caption"></a> | <a href="docs/images/gallery/c-raw-model.jpg"><img src="docs/images/gallery/thumbs/c-raw-model.jpg" width="240" alt="C: Raw camera code"></a> | <a href="docs/images/gallery/c-sidecar.jpg"><img src="docs/images/gallery/thumbs/c-sidecar.jpg" width="240" alt="C: Typed details · synthetic chart"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Raw camera code<br><code>--raw-model</code></th>
+<th width="240" align="center">Typed details · synthetic chart<br><code>--capture-sidecar</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/c-caption.jpg"><img src="docs/images/gallery/thumbs/c-caption.jpg" width="240" alt="C: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-raw-model.jpg"><img src="docs/images/gallery/thumbs/c-raw-model.jpg" width="240" alt="C: Raw camera code"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-sidecar.jpg"><img src="docs/images/gallery/thumbs/c-sidecar.jpg" width="240" alt="C: Typed details · synthetic chart"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-d"></a>
 
@@ -204,15 +282,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-1-1</code> | Margin: Narrow<br><code>1-1-1</code> | Margin: Wide<br><code>3-1-1</code> | Background: Ivory<br><code>2-2-1</code> | Background: Light gray<br><code>2-3-1</code> | Left-side details: Camera + lens only<br><code>2-1-2</code> | Left-side details: No details<br><code>2-1-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/d-default.jpg"><img src="docs/images/gallery/thumbs/d-default.jpg" width="240" alt="D: Default"></a> | <a href="docs/images/gallery/d-row1-1.jpg"><img src="docs/images/gallery/thumbs/d-row1-1.jpg" width="240" alt="D: Margin: Narrow"></a> | <a href="docs/images/gallery/d-row1-3.jpg"><img src="docs/images/gallery/thumbs/d-row1-3.jpg" width="240" alt="D: Margin: Wide"></a> | <a href="docs/images/gallery/d-row2-2.jpg"><img src="docs/images/gallery/thumbs/d-row2-2.jpg" width="240" alt="D: Background: Ivory"></a> | <a href="docs/images/gallery/d-row2-3.jpg"><img src="docs/images/gallery/thumbs/d-row2-3.jpg" width="240" alt="D: Background: Light gray"></a> | <a href="docs/images/gallery/d-row3-2.jpg"><img src="docs/images/gallery/thumbs/d-row3-2.jpg" width="240" alt="D: Left-side details: Camera + lens only"></a> | <a href="docs/images/gallery/d-row3-3.jpg"><img src="docs/images/gallery/thumbs/d-row3-3.jpg" width="240" alt="D: Left-side details: No details"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-1-1</code></th>
+<th width="240" align="center">Margin: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">Margin: Wide<br><code>3-1-1</code></th>
+<th width="240" align="center">Background: Ivory<br><code>2-2-1</code></th>
+<th width="240" align="center">Background: Light gray<br><code>2-3-1</code></th>
+<th width="240" align="center">Left-side details: Camera + lens only<br><code>2-1-2</code></th>
+<th width="240" align="center">Left-side details: No details<br><code>2-1-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/d-default.jpg"><img src="docs/images/gallery/thumbs/d-default.jpg" width="240" alt="D: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row1-1.jpg"><img src="docs/images/gallery/thumbs/d-row1-1.jpg" width="240" alt="D: Margin: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row1-3.jpg"><img src="docs/images/gallery/thumbs/d-row1-3.jpg" width="240" alt="D: Margin: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row2-2.jpg"><img src="docs/images/gallery/thumbs/d-row2-2.jpg" width="240" alt="D: Background: Ivory"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row2-3.jpg"><img src="docs/images/gallery/thumbs/d-row2-3.jpg" width="240" alt="D: Background: Light gray"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row3-2.jpg"><img src="docs/images/gallery/thumbs/d-row3-2.jpg" width="240" alt="D: Left-side details: Camera + lens only"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row3-3.jpg"><img src="docs/images/gallery/thumbs/d-row3-3.jpg" width="240" alt="D: Left-side details: No details"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| Caption<br><code>--caption</code> | Raw camera code<br><code>--raw-model</code> | Typed details · synthetic chart<br><code>--capture-sidecar</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/d-caption.jpg"><img src="docs/images/gallery/thumbs/d-caption.jpg" width="240" alt="D: Caption"></a> | <a href="docs/images/gallery/d-raw-model.jpg"><img src="docs/images/gallery/thumbs/d-raw-model.jpg" width="240" alt="D: Raw camera code"></a> | <a href="docs/images/gallery/d-sidecar.jpg"><img src="docs/images/gallery/thumbs/d-sidecar.jpg" width="240" alt="D: Typed details · synthetic chart"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Raw camera code<br><code>--raw-model</code></th>
+<th width="240" align="center">Typed details · synthetic chart<br><code>--capture-sidecar</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/d-caption.jpg"><img src="docs/images/gallery/thumbs/d-caption.jpg" width="240" alt="D: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-raw-model.jpg"><img src="docs/images/gallery/thumbs/d-raw-model.jpg" width="240" alt="D: Raw camera code"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-sidecar.jpg"><img src="docs/images/gallery/thumbs/d-sidecar.jpg" width="240" alt="D: Typed details · synthetic chart"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-e"></a>
 
@@ -220,15 +324,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-1-1</code> | Border width: Narrow<br><code>1-1-1</code> | Border width: Wide<br><code>3-1-1</code> | Auto color tone: Natural<br><code>2-2-1</code> | Auto color tone: Light<br><code>2-3-1</code> | Inner edge: None<br><code>2-1-2</code> | Inner edge: Medium<br><code>2-1-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/e-default.jpg"><img src="docs/images/gallery/thumbs/e-default.jpg" width="240" alt="E: Default"></a> | <a href="docs/images/gallery/e-row1-1.jpg"><img src="docs/images/gallery/thumbs/e-row1-1.jpg" width="240" alt="E: Border width: Narrow"></a> | <a href="docs/images/gallery/e-row1-3.jpg"><img src="docs/images/gallery/thumbs/e-row1-3.jpg" width="240" alt="E: Border width: Wide"></a> | <a href="docs/images/gallery/e-row2-2.jpg"><img src="docs/images/gallery/thumbs/e-row2-2.jpg" width="240" alt="E: Auto color tone: Natural"></a> | <a href="docs/images/gallery/e-row2-3.jpg"><img src="docs/images/gallery/thumbs/e-row2-3.jpg" width="240" alt="E: Auto color tone: Light"></a> | <a href="docs/images/gallery/e-row3-2.jpg"><img src="docs/images/gallery/thumbs/e-row3-2.jpg" width="240" alt="E: Inner edge: None"></a> | <a href="docs/images/gallery/e-row3-3.jpg"><img src="docs/images/gallery/thumbs/e-row3-3.jpg" width="240" alt="E: Inner edge: Medium"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-1-1</code></th>
+<th width="240" align="center">Border width: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">Border width: Wide<br><code>3-1-1</code></th>
+<th width="240" align="center">Auto color tone: Natural<br><code>2-2-1</code></th>
+<th width="240" align="center">Auto color tone: Light<br><code>2-3-1</code></th>
+<th width="240" align="center">Inner edge: None<br><code>2-1-2</code></th>
+<th width="240" align="center">Inner edge: Medium<br><code>2-1-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/e-default.jpg"><img src="docs/images/gallery/thumbs/e-default.jpg" width="240" alt="E: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row1-1.jpg"><img src="docs/images/gallery/thumbs/e-row1-1.jpg" width="240" alt="E: Border width: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row1-3.jpg"><img src="docs/images/gallery/thumbs/e-row1-3.jpg" width="240" alt="E: Border width: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row2-2.jpg"><img src="docs/images/gallery/thumbs/e-row2-2.jpg" width="240" alt="E: Auto color tone: Natural"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row2-3.jpg"><img src="docs/images/gallery/thumbs/e-row2-3.jpg" width="240" alt="E: Auto color tone: Light"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row3-2.jpg"><img src="docs/images/gallery/thumbs/e-row3-2.jpg" width="240" alt="E: Inner edge: None"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row3-3.jpg"><img src="docs/images/gallery/thumbs/e-row3-3.jpg" width="240" alt="E: Inner edge: Medium"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| One shared color<br><code>--frame-color</code> | Caption<br><code>--caption</code> | Your PNG signature<br><code>--signature</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/e-fixed-color.jpg"><img src="docs/images/gallery/thumbs/e-fixed-color.jpg" width="240" alt="E: One shared color"></a> | <a href="docs/images/gallery/e-caption.jpg"><img src="docs/images/gallery/thumbs/e-caption.jpg" width="240" alt="E: Caption"></a> | <a href="docs/images/gallery/e-signature.jpg"><img src="docs/images/gallery/thumbs/e-signature.jpg" width="240" alt="E: Your PNG signature"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">One shared color<br><code>--frame-color</code></th>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/e-fixed-color.jpg"><img src="docs/images/gallery/thumbs/e-fixed-color.jpg" width="240" alt="E: One shared color"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-caption.jpg"><img src="docs/images/gallery/thumbs/e-caption.jpg" width="240" alt="E: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-signature.jpg"><img src="docs/images/gallery/thumbs/e-signature.jpg" width="240" alt="E: Your PNG signature"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-f"></a>
 
@@ -236,15 +366,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-1-1</code> | Border width: Narrow<br><code>1-1-1</code> | Border width: Wide<br><code>3-1-1</code> | Border background: Black<br><code>2-2-1</code> | Border background: Dark brown<br><code>2-3-1</code> | Side sprockets: Sparse<br><code>2-1-2</code> | Side sprockets: Dense<br><code>2-1-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/f-default.jpg"><img src="docs/images/gallery/thumbs/f-default.jpg" width="240" alt="F: Default"></a> | <a href="docs/images/gallery/f-row1-1.jpg"><img src="docs/images/gallery/thumbs/f-row1-1.jpg" width="240" alt="F: Border width: Narrow"></a> | <a href="docs/images/gallery/f-row1-3.jpg"><img src="docs/images/gallery/thumbs/f-row1-3.jpg" width="240" alt="F: Border width: Wide"></a> | <a href="docs/images/gallery/f-row2-2.jpg"><img src="docs/images/gallery/thumbs/f-row2-2.jpg" width="240" alt="F: Border background: Black"></a> | <a href="docs/images/gallery/f-row2-3.jpg"><img src="docs/images/gallery/thumbs/f-row2-3.jpg" width="240" alt="F: Border background: Dark brown"></a> | <a href="docs/images/gallery/f-row3-2.jpg"><img src="docs/images/gallery/thumbs/f-row3-2.jpg" width="240" alt="F: Side sprockets: Sparse"></a> | <a href="docs/images/gallery/f-row3-3.jpg"><img src="docs/images/gallery/thumbs/f-row3-3.jpg" width="240" alt="F: Side sprockets: Dense"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-1-1</code></th>
+<th width="240" align="center">Border width: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">Border width: Wide<br><code>3-1-1</code></th>
+<th width="240" align="center">Border background: Black<br><code>2-2-1</code></th>
+<th width="240" align="center">Border background: Dark brown<br><code>2-3-1</code></th>
+<th width="240" align="center">Side sprockets: Sparse<br><code>2-1-2</code></th>
+<th width="240" align="center">Side sprockets: Dense<br><code>2-1-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/f-default.jpg"><img src="docs/images/gallery/thumbs/f-default.jpg" width="240" alt="F: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row1-1.jpg"><img src="docs/images/gallery/thumbs/f-row1-1.jpg" width="240" alt="F: Border width: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row1-3.jpg"><img src="docs/images/gallery/thumbs/f-row1-3.jpg" width="240" alt="F: Border width: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row2-2.jpg"><img src="docs/images/gallery/thumbs/f-row2-2.jpg" width="240" alt="F: Border background: Black"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row2-3.jpg"><img src="docs/images/gallery/thumbs/f-row2-3.jpg" width="240" alt="F: Border background: Dark brown"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row3-2.jpg"><img src="docs/images/gallery/thumbs/f-row3-2.jpg" width="240" alt="F: Side sprockets: Sparse"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row3-3.jpg"><img src="docs/images/gallery/thumbs/f-row3-3.jpg" width="240" alt="F: Side sprockets: Dense"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| No corner text<br><code>--left-text / --right-text</code> | Left text only<br><code>--left-text / --right-text</code> | Right text only<br><code>--left-text / --right-text</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/f-text-blank.jpg"><img src="docs/images/gallery/thumbs/f-text-blank.jpg" width="240" alt="F: No corner text"></a> | <a href="docs/images/gallery/f-text-left.jpg"><img src="docs/images/gallery/thumbs/f-text-left.jpg" width="240" alt="F: Left text only"></a> | <a href="docs/images/gallery/f-text-right.jpg"><img src="docs/images/gallery/thumbs/f-text-right.jpg" width="240" alt="F: Right text only"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">No corner text<br><code>--left-text / --right-text</code></th>
+<th width="240" align="center">Left text only<br><code>--left-text / --right-text</code></th>
+<th width="240" align="center">Right text only<br><code>--left-text / --right-text</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-blank.jpg"><img src="docs/images/gallery/thumbs/f-text-blank.jpg" width="240" alt="F: No corner text"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-left.jpg"><img src="docs/images/gallery/thumbs/f-text-left.jpg" width="240" alt="F: Left text only"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-right.jpg"><img src="docs/images/gallery/thumbs/f-text-right.jpg" width="240" alt="F: Right text only"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-g"></a>
 
@@ -252,15 +408,41 @@ These are reduced JPEG previews, not full-resolution PNGs. The originals stay un
 
 **Preset settings**
 
-| Default<br><code>2-1-1</code> | Paper margin: Narrow<br><code>1-1-1</code> | Paper margin: Wide<br><code>3-1-1</code> | Paper tone: Bright white<br><code>2-2-1</code> | Paper tone: Ivory<br><code>2-3-1</code> | Torn edges: Medium<br><code>2-1-2</code> | Torn edges: Rough<br><code>2-1-3</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/g-default.jpg"><img src="docs/images/gallery/thumbs/g-default.jpg" width="240" alt="G: Default"></a> | <a href="docs/images/gallery/g-row1-1.jpg"><img src="docs/images/gallery/thumbs/g-row1-1.jpg" width="240" alt="G: Paper margin: Narrow"></a> | <a href="docs/images/gallery/g-row1-3.jpg"><img src="docs/images/gallery/thumbs/g-row1-3.jpg" width="240" alt="G: Paper margin: Wide"></a> | <a href="docs/images/gallery/g-row2-2.jpg"><img src="docs/images/gallery/thumbs/g-row2-2.jpg" width="240" alt="G: Paper tone: Bright white"></a> | <a href="docs/images/gallery/g-row2-3.jpg"><img src="docs/images/gallery/thumbs/g-row2-3.jpg" width="240" alt="G: Paper tone: Ivory"></a> | <a href="docs/images/gallery/g-row3-2.jpg"><img src="docs/images/gallery/thumbs/g-row3-2.jpg" width="240" alt="G: Torn edges: Medium"></a> | <a href="docs/images/gallery/g-row3-3.jpg"><img src="docs/images/gallery/thumbs/g-row3-3.jpg" width="240" alt="G: Torn edges: Rough"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Default<br><code>2-1-1</code></th>
+<th width="240" align="center">Paper margin: Narrow<br><code>1-1-1</code></th>
+<th width="240" align="center">Paper margin: Wide<br><code>3-1-1</code></th>
+<th width="240" align="center">Paper tone: Bright white<br><code>2-2-1</code></th>
+<th width="240" align="center">Paper tone: Ivory<br><code>2-3-1</code></th>
+<th width="240" align="center">Torn edges: Medium<br><code>2-1-2</code></th>
+<th width="240" align="center">Torn edges: Rough<br><code>2-1-3</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/g-default.jpg"><img src="docs/images/gallery/thumbs/g-default.jpg" width="240" alt="G: Default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row1-1.jpg"><img src="docs/images/gallery/thumbs/g-row1-1.jpg" width="240" alt="G: Paper margin: Narrow"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row1-3.jpg"><img src="docs/images/gallery/thumbs/g-row1-3.jpg" width="240" alt="G: Paper margin: Wide"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row2-2.jpg"><img src="docs/images/gallery/thumbs/g-row2-2.jpg" width="240" alt="G: Paper tone: Bright white"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row2-3.jpg"><img src="docs/images/gallery/thumbs/g-row2-3.jpg" width="240" alt="G: Paper tone: Ivory"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row3-2.jpg"><img src="docs/images/gallery/thumbs/g-row3-2.jpg" width="240" alt="G: Torn edges: Medium"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row3-3.jpg"><img src="docs/images/gallery/thumbs/g-row3-3.jpg" width="240" alt="G: Torn edges: Rough"></a></td>
+</tr></tbody>
+</table>
 
 **Text and input options**
 
-| Caption<br><code>--caption</code> | Gallery label<br><code>--title / --subtitle</code> | Your PNG signature<br><code>--signature</code> |
-| :---: | :---: | :---: |
-| <a href="docs/images/gallery/g-caption.jpg"><img src="docs/images/gallery/thumbs/g-caption.jpg" width="240" alt="G: Caption"></a> | <a href="docs/images/gallery/g-label.jpg"><img src="docs/images/gallery/thumbs/g-label.jpg" width="240" alt="G: Gallery label"></a> | <a href="docs/images/gallery/g-signature.jpg"><img src="docs/images/gallery/thumbs/g-signature.jpg" width="240" alt="G: Your PNG signature"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
+<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/g-caption.jpg"><img src="docs/images/gallery/thumbs/g-caption.jpg" width="240" alt="G: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-label.jpg"><img src="docs/images/gallery/thumbs/g-label.jpg" width="240" alt="G: Gallery label"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-signature.jpg"><img src="docs/images/gallery/thumbs/g-signature.jpg" width="240" alt="G: Your PNG signature"></a></td>
+</tr></tbody>
+</table>
 
 <a id="style-h"></a>
 
@@ -270,21 +452,72 @@ Plain or blurred backgrounds work with every ratio. `16:9` is the landscape canv
 
 **Canvas ratios · plain background**
 
-| 4:5 · default<br><code>1-1-1</code> | 1:1<br><code>--ratio 1:1</code> | Thin border<br><code>--ratio original</code> | 3:4<br><code>--ratio 3:4</code> | 9:16<br><code>--ratio 9:16</code> | 16:9<br><code>--ratio 16:9</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/h-default.jpg"><img src="docs/images/gallery/thumbs/h-default.jpg" width="240" alt="H: 4:5 · default"></a> | <a href="docs/images/gallery/h-ratio-1x1.jpg"><img src="docs/images/gallery/thumbs/h-ratio-1x1.jpg" width="240" alt="H: 1:1"></a> | <a href="docs/images/gallery/h-ratio-original.jpg"><img src="docs/images/gallery/thumbs/h-ratio-original.jpg" width="240" alt="H: Thin border"></a> | <a href="docs/images/gallery/h-ratio-3x4.jpg"><img src="docs/images/gallery/thumbs/h-ratio-3x4.jpg" width="240" alt="H: 3:4"></a> | <a href="docs/images/gallery/h-ratio-9x16.jpg"><img src="docs/images/gallery/thumbs/h-ratio-9x16.jpg" width="240" alt="H: 9:16"></a> | <a href="docs/images/gallery/h-ratio-16x9.jpg"><img src="docs/images/gallery/thumbs/h-ratio-16x9.jpg" width="240" alt="H: 16:9"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">4:5 · default<br><code>1-1-1</code></th>
+<th width="240" align="center">1:1<br><code>--ratio 1:1</code></th>
+<th width="240" align="center">Thin border<br><code>--ratio original</code></th>
+<th width="240" align="center">3:4<br><code>--ratio 3:4</code></th>
+<th width="240" align="center">9:16<br><code>--ratio 9:16</code></th>
+<th width="240" align="center">16:9<br><code>--ratio 16:9</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/h-default.jpg"><img src="docs/images/gallery/thumbs/h-default.jpg" width="240" alt="H: 4:5 · default"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-1x1.jpg"><img src="docs/images/gallery/thumbs/h-ratio-1x1.jpg" width="240" alt="H: 1:1"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-original.jpg"><img src="docs/images/gallery/thumbs/h-ratio-original.jpg" width="240" alt="H: Thin border"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-3x4.jpg"><img src="docs/images/gallery/thumbs/h-ratio-3x4.jpg" width="240" alt="H: 3:4"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-9x16.jpg"><img src="docs/images/gallery/thumbs/h-ratio-9x16.jpg" width="240" alt="H: 9:16"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-16x9.jpg"><img src="docs/images/gallery/thumbs/h-ratio-16x9.jpg" width="240" alt="H: 16:9"></a></td>
+</tr></tbody>
+</table>
 
 **Blurred backgrounds · dark by default**
 
-| 16:9 · blur<br><code>--ratio 16:9</code> | 1:1 · blur<br><code>--ratio 1:1</code> | 9:16 · blur<br><code>--ratio 9:16</code> | 4:5 · blur<br><code>--ratio 4:5</code> | 3:4 · blur<br><code>--ratio 3:4</code> | Thin border · blur<br><code>--ratio original</code> | 16:9 · neutral blur<br><code>--blur-tone neutral</code> | 16:9 · light blur<br><code>--blur-tone light</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/h-blur-16x9.jpg"><img src="docs/images/gallery/thumbs/h-blur-16x9.jpg" width="240" alt="H: 16:9 · blur"></a> | <a href="docs/images/gallery/h-blur-1x1.jpg"><img src="docs/images/gallery/thumbs/h-blur-1x1.jpg" width="240" alt="H: 1:1 · blur"></a> | <a href="docs/images/gallery/h-blur-9x16.jpg"><img src="docs/images/gallery/thumbs/h-blur-9x16.jpg" width="240" alt="H: 9:16 · blur"></a> | <a href="docs/images/gallery/h-blur-4x5.jpg"><img src="docs/images/gallery/thumbs/h-blur-4x5.jpg" width="240" alt="H: 4:5 · blur"></a> | <a href="docs/images/gallery/h-blur-3x4.jpg"><img src="docs/images/gallery/thumbs/h-blur-3x4.jpg" width="240" alt="H: 3:4 · blur"></a> | <a href="docs/images/gallery/h-blur-original.jpg"><img src="docs/images/gallery/thumbs/h-blur-original.jpg" width="240" alt="H: Thin border · blur"></a> | <a href="docs/images/gallery/h-blur-tone-neutral.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-neutral.jpg" width="240" alt="H: 16:9 · neutral blur"></a> | <a href="docs/images/gallery/h-blur-tone-light.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-light.jpg" width="240" alt="H: 16:9 · light blur"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">16:9 · blur<br><code>--ratio 16:9</code></th>
+<th width="240" align="center">1:1 · blur<br><code>--ratio 1:1</code></th>
+<th width="240" align="center">9:16 · blur<br><code>--ratio 9:16</code></th>
+<th width="240" align="center">4:5 · blur<br><code>--ratio 4:5</code></th>
+<th width="240" align="center">3:4 · blur<br><code>--ratio 3:4</code></th>
+<th width="240" align="center">Thin border · blur<br><code>--ratio original</code></th>
+<th width="240" align="center">16:9 · neutral blur<br><code>--blur-tone neutral</code></th>
+<th width="240" align="center">16:9 · light blur<br><code>--blur-tone light</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-16x9.jpg"><img src="docs/images/gallery/thumbs/h-blur-16x9.jpg" width="240" alt="H: 16:9 · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-1x1.jpg"><img src="docs/images/gallery/thumbs/h-blur-1x1.jpg" width="240" alt="H: 1:1 · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-9x16.jpg"><img src="docs/images/gallery/thumbs/h-blur-9x16.jpg" width="240" alt="H: 9:16 · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-4x5.jpg"><img src="docs/images/gallery/thumbs/h-blur-4x5.jpg" width="240" alt="H: 4:5 · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-3x4.jpg"><img src="docs/images/gallery/thumbs/h-blur-3x4.jpg" width="240" alt="H: 3:4 · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-original.jpg"><img src="docs/images/gallery/thumbs/h-blur-original.jpg" width="240" alt="H: Thin border · blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-neutral.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-neutral.jpg" width="240" alt="H: 16:9 · neutral blur"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-light.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-light.jpg" width="240" alt="H: 16:9 · light blur"></a></td>
+</tr></tbody>
+</table>
 
 **Mats, keylines and text**
 
-| Warm gray mat<br><code>1-2-1</code> | Ivory mat<br><code>1-3-1</code> | No keyline<br><code>1-1-2</code> | Thick keyline<br><code>1-1-3</code> | Caption<br><code>--caption</code> | Portrait photo · 4:5<br><code>1-1-1</code> | Gallery label · 1:1<br><code>--title / --subtitle</code> |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| <a href="docs/images/gallery/h-gray.jpg"><img src="docs/images/gallery/thumbs/h-gray.jpg" width="240" alt="H: Warm gray mat"></a> | <a href="docs/images/gallery/h-ivory.jpg"><img src="docs/images/gallery/thumbs/h-ivory.jpg" width="240" alt="H: Ivory mat"></a> | <a href="docs/images/gallery/h-no-keyline.jpg"><img src="docs/images/gallery/thumbs/h-no-keyline.jpg" width="240" alt="H: No keyline"></a> | <a href="docs/images/gallery/h-thick-keyline.jpg"><img src="docs/images/gallery/thumbs/h-thick-keyline.jpg" width="240" alt="H: Thick keyline"></a> | <a href="docs/images/gallery/h-caption.jpg"><img src="docs/images/gallery/thumbs/h-caption.jpg" width="240" alt="H: Caption"></a> | <a href="docs/images/gallery/h-portrait.jpg"><img src="docs/images/gallery/thumbs/h-portrait.jpg" width="240" alt="H: Portrait photo · 4:5"></a> | <a href="docs/images/gallery/h-label.jpg"><img src="docs/images/gallery/thumbs/h-label.jpg" width="240" alt="H: Gallery label · 1:1"></a> |
+<table>
+<thead><tr>
+<th width="240" align="center">Warm gray mat<br><code>1-2-1</code></th>
+<th width="240" align="center">Ivory mat<br><code>1-3-1</code></th>
+<th width="240" align="center">No keyline<br><code>1-1-2</code></th>
+<th width="240" align="center">Thick keyline<br><code>1-1-3</code></th>
+<th width="240" align="center">Caption<br><code>--caption</code></th>
+<th width="240" align="center">Portrait photo · 4:5<br><code>1-1-1</code></th>
+<th width="240" align="center">Gallery label · 1:1<br><code>--title / --subtitle</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/h-gray.jpg"><img src="docs/images/gallery/thumbs/h-gray.jpg" width="240" alt="H: Warm gray mat"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ivory.jpg"><img src="docs/images/gallery/thumbs/h-ivory.jpg" width="240" alt="H: Ivory mat"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-no-keyline.jpg"><img src="docs/images/gallery/thumbs/h-no-keyline.jpg" width="240" alt="H: No keyline"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-thick-keyline.jpg"><img src="docs/images/gallery/thumbs/h-thick-keyline.jpg" width="240" alt="H: Thick keyline"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-caption.jpg"><img src="docs/images/gallery/thumbs/h-caption.jpg" width="240" alt="H: Caption"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-portrait.jpg"><img src="docs/images/gallery/thumbs/h-portrait.jpg" width="240" alt="H: Portrait photo · 4:5"></a></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-label.jpg"><img src="docs/images/gallery/thumbs/h-label.jpg" width="240" alt="H: Gallery label · 1:1"></a></td>
+</tr></tbody>
+</table>
 
 [All settings and choice codes](skills/photo-framer/references/menus.md) · [Reproduce the gallery](docs/gallery.md)
 <!-- /generated:gallery -->
