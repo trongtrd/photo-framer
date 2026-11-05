@@ -1016,6 +1016,27 @@ class LabelsAndOverlays(unittest.TestCase):
         self.assertEqual(sorted(p.name for p in text.FONTS_DIR.glob('*.ttf')),
                          ['Inter-Regular.ttf', 'Inter-SemiBold.ttf'])
 
+    def test_caption_defaults_to_bundled_inter_regular(self):
+        """Without --font, captions use the bundled Inter, exactly as if it were passed.
+
+        C's caption replaces the gear line, so it takes that line's SemiBold face.
+        """
+        for style in 'ABCEGH':
+            with self.subTest(style=style):
+                face = text.FONTS_DIR / ('Inter-SemiBold.ttf' if style == 'C' else 'Inter-Regular.ttf')
+                default, pos = render(self.photo, style, caption='Hà Nội — mùa thu.')
+                explicit, _ = render(self.photo, style, caption='Hà Nội — mùa thu.', font_path=str(face))
+                self.assertEqual(default.tobytes(), explicit.tobytes())
+                x, y = pos
+                self.assertEqual(default.crop((x, y, x+900, y+600)).tobytes(), self.photo.tobytes())
+        # Caption gray is the exposure line's and the H subtitle's gray (E keeps its contrast edge color).
+        from photoframer.components import caption
+        self.assertEqual(caption.CAPTION_INK, spec_band.EXPOSURE_INK)
+        self.assertEqual(caption.CAPTION_INK, h_minimal_mat.LABEL_INKS['dark'][1])
+        im, (x, y) = render(Image.new('RGB', (900, 600), 'white'), 'A', caption='Hà Nội')
+        darkest = min(im.crop((0, y+600, im.width, im.height)).getdata())
+        self.assertEqual(darkest, (115, 115, 115))
+
     def test_label_contrast_on_blur_and_validation(self):
         dark_photo = Image.new('RGB', (900, 600), (20, 20, 25))
         im, (x, y) = render(dark_photo, 'H', ratio='9:16', background='blur', title='Đêm')

@@ -7,8 +7,8 @@ from .. import text
 from ..constants import LOGO_DIR
 from ..metadata import brand_slug, brand_wordmark, format_specs
 
-GEAR_INK = (30, 30, 30)
-EXPOSURE_INK = (115, 115, 115)
+GEAR_INK = text.PRIMARY_INK
+EXPOSURE_INK = text.SECONDARY_INK
 WORDMARK_INK = (40, 40, 40)
 
 

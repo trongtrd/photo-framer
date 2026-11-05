@@ -1,13 +1,14 @@
 """Reduced comparison sheet of every style on the first photo."""
 from __future__ import annotations
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 from .color import color_echo_colors, convert_profile
 from .constants import SRGB
 from .registry import STYLES
 from .renderer import render
 from .settings import Settings
+from .text import specs_fonts
 
 
 def preview_styles(right_text=None, left_text=None):
@@ -69,7 +70,7 @@ def preview(photo, profile, meta=None, right_text=None, frame_color=None, left_t
     rows = (len(results)+columns-1)//columns
     board = Image.new('RGB', (columns*800, rows*height), (238, 238, 238))
     d = ImageDraw.Draw(board)
-    font = ImageFont.load_default(size=24)
+    _, font, _ = specs_fonts(24)  # Inter SemiBold, like the spec cards
     for i, (label, image) in enumerate(zip(labels, results)):
         left, top = (i % columns)*800, (i // columns)*height
         d.text((left+20, top+18), label, font=font, fill=(30, 30, 30))
