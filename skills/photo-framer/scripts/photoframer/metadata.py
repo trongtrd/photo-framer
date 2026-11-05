@@ -185,7 +185,25 @@ def gear_name(meta, with_brand=True, raw_model=False):
     if not model or meta.get('model_verbatim'):
         return model
     named = None if raw_model or not meta.get('model') else camera_display_name(meta, with_brand)
-    return named or display_model(model)
+    if named:
+        return named
+    shown = display_model(model)
+    return shown if with_brand or raw_model else without_brand_prefix(shown, meta)
+
+
+def without_brand_prefix(name, meta):
+    """'Canon EOS R5' -> 'EOS R5' where the brand mark already names the make.
+
+    Used beside a logo or wordmark (style C) only; the brand word must open
+    the name and be followed by more text, so 'SIGMA fp L'-style names lose
+    just the duplicate brand and nothing else is rewritten.
+    """
+    wordmark = brand_wordmark(meta)
+    if not wordmark or not name:
+        return name
+    brand = wordmark.split()[0]
+    head, _, rest = name.partition(' ')
+    return rest if head.upper() == brand and rest.strip() else name
 
 
 def format_specs(meta, with_brand=True, raw_model=False):

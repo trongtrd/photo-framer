@@ -43,7 +43,8 @@ Flat presentation: no shadow, frame or keyline.
 - Display names (v0.9): EXIF codes listed in `assets/cameras.json` print as
   `short` in C (beside the brand mark) and `name` in D (`ILCE-7C` → `α7C` /
   `Sony α7C`). `--raw-model` keeps the EXIF code. Mark spacing still applies
-  to unlisted models.
+  to unlisted models; in C a leading word equal to the brand wordmark's first
+  word is dropped when more text follows (`Canon EOS R5` → `EOS R5`).
 - Brand mark from `assets/logos/<slug>.png`, pasted unmodified (no recolor):
   height ≤ 2.8 × caption font and ≤ 66% of the band, width ≤ 34% of the photo.
   Brands without a bundled logo get a bold text wordmark. Marks persist when

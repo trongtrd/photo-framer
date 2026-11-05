@@ -1,9 +1,10 @@
 interface:
   display_name: Photo Framer
-  short_description: Frame photos with shadows, specs, color, film, paper or 4:5/1:1/9:16 mats
+  short_description: Frame photos with shadows, specs, color, film, paper, 4:5/9:16 mats and labels
   default_prompt: Use $photo-framer to help me choose styles A through H for my photos.
     Ask for missing D text or F corner choices, including intentional blanks.
     For E, use automatic colors for the batch without per-image questions.
+    Use only wording and signature files I supply for labels, captions and signatures.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:
