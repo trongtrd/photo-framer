@@ -7,6 +7,9 @@ from PIL import Image
 
 from ..components.caption import draw_caption
 from ..components.shadow import shadow
+from ..components.signature import draw_signature
+from ..components.slots import Slot
+from ..settings import SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .10, 2: .165, 3: .23}
@@ -38,8 +41,11 @@ def paint(photo, plan, settings, ctx):
     shadow(canvas, box, s*.006, (-s*.006, s*.006), round(41*strength))
     pos = (margin, margin)
     canvas.paste(photo, pos)
+    slot = Slot((margin, margin+h, margin+w, plan.size[1]))
     if settings.caption:
-        draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size, margin)
+        slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
+                                margin), 'Caption', check=False)
+    draw_signature(canvas, slot, settings, ctx.profile)
     return canvas, pos
 
 
@@ -52,5 +58,5 @@ STYLE = Style(
           Row(('Shadow', 'Bóng đổ'), (('Light', 'Nhẹ'), ('Soft medium', 'Mềm vừa'), ('Strong', 'Rõ'))),
           Row(('Background', 'Nền'), (('White', 'Trắng'), ('Ivory', 'Trắng ngà'),
                                        ('Light gray', 'Xám rất nhạt')))),
-    choices_hint='margin-shadow-background', accepts=COMMON,
+    choices_hint='margin-shadow-background', accepts=COMMON | SIGNATURE_OPTIONS,
     layout=layout, paint=paint)

@@ -8,7 +8,10 @@ CAPTION_INK = (100, 100, 100)
 
 def draw_caption(canvas, caption, font_path, short, photo_pos, photo_size, space,
                  ink=CAPTION_INK, below=None):
-    """space: free height under the photo; below: y where that space starts."""
+    """space: free height under the photo; below: y where that space starts.
+
+    Returns the caption's ink box so later overlays can avoid it.
+    """
     w, h = photo_size
     font = ImageFont.truetype(str(font_path), max(9, round(short*.018)))
     d = ImageDraw.Draw(canvas)
@@ -20,3 +23,4 @@ def draw_caption(canvas, caption, font_path, short, photo_pos, photo_size, space
     below = photo_pos[1]+h if below is None else below
     top = below+(space-th)//2-bounds[1]
     d.text((left, top), caption, font=font, fill=ink)
+    return (left+bounds[0], top+bounds[1], left+bounds[2], top+bounds[3])

@@ -8,6 +8,9 @@ from PIL import Image
 from ..color import color_echo_colors, colors_in_profile, hex_color
 from ..components.caption import draw_caption
 from ..components.keyline import draw_keyline
+from ..components.signature import draw_signature
+from ..components.slots import Slot
+from ..settings import SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MARGINS = {1: .045, 2: .08, 3: .12}
@@ -47,9 +50,13 @@ def paint(photo, plan, settings, ctx):
     pos = (padding, padding)
     draw_keyline(canvas, pos, photo.size, plan.inset, inset_color)
     canvas.paste(photo, pos)
+    w, h = photo.size
+    # The colored border below the photo and its inner edge.
+    slot = Slot((pos[0], pos[1]+h+plan.inset, pos[0]+w, plan.size[1]))
     if settings.caption:
-        draw_caption(canvas, settings.caption, settings.font_path, min(photo.size), pos,
-                     photo.size, plan.margin, ink=inset_color)
+        slot.claim(draw_caption(canvas, settings.caption, settings.font_path, min(photo.size), pos,
+                                photo.size, plan.margin, ink=inset_color), 'Caption', check=False)
+    draw_signature(canvas, slot, settings, ctx.profile)
     return canvas, pos
 
 
@@ -71,5 +78,5 @@ STYLE = Style(
                                                            ('Light', 'Sáng'))),
           Row(('Inner edge', 'Đường viền trong'), (('Thin', 'Mảnh'), ('None', 'Không có'),
                                                    ('Medium', 'Vừa')))),
-    choices_hint='margin-auto-tone-inset', accepts=COMMON | {'frame_color'},
+    choices_hint='margin-auto-tone-inset', accepts=COMMON | SIGNATURE_OPTIONS | {'frame_color'},
     layout=layout, paint=paint, notes=notes)
