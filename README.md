@@ -6,15 +6,15 @@
 
 # Photo Framer
 
-**Your photo, seven ways to frame it.** Ask your AI assistant to add a frame, then save the finished PNG. The original file stays untouched.
+**Your photo, eight ways to frame it.** Ask your AI assistant to add a frame, then save the finished PNG. The original file stays untouched.
 
-**Một bức ảnh, bảy phong cách khung.** Yêu cầu trợ lý AI thêm khung rồi tải PNG thành phẩm. File gốc được giữ nguyên.
+**Một bức ảnh, tám phong cách khung.** Yêu cầu trợ lý AI thêm khung rồi tải PNG thành phẩm. File gốc được giữ nguyên.
 
-[English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Choose A–G / Chọn phong cách](#choose-a-style) · [Before & after / Trước & sau](#examples) · [Python](#python-and-maintenance)
+[English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Choose A–H / Chọn phong cách](#choose-a-style) · [Before & after / Trước & sau](#examples) · [Python](#python-and-maintenance)
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/images/photo-framer-workflow-mobile.svg">
-  <img src="docs/images/photo-framer-workflow.svg" alt="Install the skill → attach photos → choose A–G → save the framed PNG. Cài skill → đính kèm ảnh → chọn A–G → tải PNG có khung." width="100%">
+  <img src="docs/images/photo-framer-workflow.svg" alt="Install the skill → attach photos → choose A–H → save the framed PNG. Cài skill → đính kèm ảnh → chọn A–H → tải PNG có khung." width="100%">
 </picture>
 
 ## Use in an AI app
@@ -27,7 +27,7 @@ Your AI app needs support for **installed skills, image file access and Python e
 2. Open a chat where Photo Framer is available and attach your JPEG or PNG photos.
 3. Ask for help choosing a style:
 
-> Use Photo Framer to frame these photos. Help me choose a style from A to G.
+> Use Photo Framer to frame these photos. Help me choose a style from A to H.
 
 You will see a comparison using the first photo. Pick a style in your own words; the assistant asks for any settings or text it needs. Already know your style? Say **“Use Photo Framer, G default, for all photos.”** to run directly.
 
@@ -52,7 +52,7 @@ Use JPEG or 8-bit PNG. Frames are added outside the photo; previews and sharing 
 2. Mở cuộc trò chuyện có thể dùng Photo Framer, rồi đính kèm ảnh JPEG hoặc PNG.
 3. Gửi yêu cầu để được hỗ trợ chọn phong cách:
 
-> Dùng Photo Framer thêm khung cho các ảnh này. Giúp tôi chọn phong cách từ A đến G.
+> Dùng Photo Framer thêm khung cho các ảnh này. Giúp tôi chọn phong cách từ A đến H.
 
 Trợ lý dùng ảnh đầu tiên để tạo bản so sánh. Bạn chọn bằng lời; trợ lý sẽ hỏi thêm tùy chỉnh hoặc nội dung chữ khi cần. Nếu đã biết phong cách muốn dùng, yêu cầu thẳng: **“Dùng Photo Framer, G mặc định, cho toàn bộ ảnh.”**
 
@@ -82,12 +82,13 @@ Click a style to see its full-size example below. / Bấm vào phong cách để
 | [**E · Color Echo / Viền đồng sắc**](#style-e) | A border color drawn from each photo<br>Màu viền được chọn từ từng ảnh | `2-1-1` |
 | [**F · Film Edge / Viền phim**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng | `2-1-1` |
 | [**G · Deckled Paper / Giấy mép xé**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé | `2-1-1` |
+| [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5 or 1:1 canvas for any photo, or a thin border; optional black keyline<br>Khung cố định 4:5 hoặc 1:1 cho mọi ảnh, hoặc viền mỏng; tùy chọn viền đen | `1-1-1` |
 
 Say **“A default”** or **“A mặc định”**; you do not need to remember the codes. If you only say “use defaults,” A is used unless another style is already chosen. For other settings, use your own words or the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
 
 Chỉ cần nói **“A mặc định”**, không cần nhớ mã số. Nếu chỉ nói “dùng mặc định”, skill dùng A, trừ khi đã chọn phong cách khác. Muốn tùy chỉnh thêm, hãy mô tả bằng lời hoặc dùng [menu tiếng Việt](skills/photo-framer/references/menus.md#tiếng-việt).
 
-The first comparison shows A/B/C/E/F/G; D joins once you supply its text. F's preview corners stay blank until you choose their wording. / Bản so sánh đầu gồm A/B/C/E/F/G; D được thêm khi có nội dung chữ. Hai góc của F để trống trong bản xem trước cho đến khi bạn chọn chữ.
+The first comparison shows A/B/C/E/F/G/H; D joins once you supply its text. F's preview corners stay blank until you choose their wording. / Bản so sánh đầu gồm A/B/C/E/F/G/H; D được thêm khi có nội dung chữ. Hai góc của F để trống trong bản xem trước cho đến khi bạn chọn chữ.
 
 <details>
 <summary>Custom text: D, F and captions / Chữ riêng: D, F và chú thích</summary>
@@ -110,7 +111,7 @@ The assistant asks for missing corner choices together. Either or both may be in
 
 D/F preserve your case, accents and punctuation. Text is never inferred from dates, GPS, filenames or the demo. Long text is flagged for shorter wording, never shrunk or truncated. / D/F giữ nguyên cách viết, dấu và dấu câu. Không suy đoán chữ từ thời gian, GPS, tên file hay ảnh mẫu. Chữ quá dài sẽ được đề nghị rút gọn, không tự thu nhỏ hoặc cắt bớt.
 
-For a separate caption on A–E or G, supply exact wording and a font with the required characters. D/F fields use bundled fonts with Vietnamese support. / Với chú thích riêng trên A–E hoặc G, cung cấp nguyên văn và font có đủ ký tự. Các ô D/F dùng font đi kèm, hỗ trợ dấu tiếng Việt.
+For a separate caption on A–E, G or H, supply exact wording and a font with the required characters. D/F fields use bundled fonts with Vietnamese support. / Với chú thích riêng trên A–E, G hoặc H, cung cấp nguyên văn và font có đủ ký tự. Các ô D/F dùng font đi kèm, hỗ trợ dấu tiếng Việt.
 
 </details>
 
@@ -121,6 +122,8 @@ For a separate caption on A–E or G, supply exact wording and a font with the r
 | --- | --- |
 | Auto border colors / Tự chọn màu viền | “Use Photo Framer, E default, for all photos. No previews needed.”<br>“Dùng Photo Framer, E mặc định, cho toàn bộ ảnh. Không cần xem trước.” |
 | One shared color / Một màu chung | “Use Photo Framer, E, with border color #ad896c for the whole batch.”<br>“Dùng Photo Framer, E, với màu viền #ad896c cho cả bộ.” |
+| Phone-ready 4:5 / Khung dọc 4:5 cho điện thoại | “Use Photo Framer, H default, for all photos, with share copies.”<br>“Dùng Photo Framer, H mặc định, cho toàn bộ ảnh, thêm bản chia sẻ.” |
+| Square grid / Khung vuông | “Use Photo Framer, H, 2-2-2.” (1:1, warm gray, no keyline)<br>“Dùng Photo Framer, H, 2-2-2.” (1:1, nền xám ấm, không viền đen) |
 | Paper borders / Viền giấy | “Use Photo Framer, G default, for all photos.”<br>“Dùng Photo Framer, G mặc định, cho toàn bộ ảnh.” |
 | Different styles / Chọn riêng từng ảnh | “Use Photo Framer, A for the first photo and B for the second.”<br>“Dùng Photo Framer, A cho ảnh thứ nhất, B cho ảnh thứ hai.” |
 | Settings and a share copy / Tùy chỉnh và bản chia sẻ | “Use Photo Framer, B, 1-3-1, with lightweight JPEG copies.”<br>“Dùng Photo Framer, B, 1-3-1, thêm bản JPEG nhẹ.” |
@@ -136,9 +139,9 @@ For a separate caption on A–E or G, supply exact wording and a font with the r
 
 ## Before & after / Trước & sau
 
-One real photograph, seven styles at their default settings. D/F use supplied wording; E selects its border color automatically. Click an image to enlarge it.
+One real photograph, eight styles at their default settings. D/F use supplied wording; E selects its border color automatically. Click an image to enlarge it.
 
-Cùng một ảnh thật, bảy phong cách ở chế độ mặc định. D/F dùng nội dung được cung cấp cho ví dụ; E tự chọn màu viền. Bấm vào ảnh để xem lớn hơn.
+Cùng một ảnh thật, tám phong cách ở chế độ mặc định. D/F dùng nội dung được cung cấp cho ví dụ; E tự chọn màu viền. Bấm vào ảnh để xem lớn hơn.
 
 | Before & after / Trước & sau |
 | :---: |
@@ -150,6 +153,7 @@ Cùng một ảnh thật, bảy phong cách ở chế độ mặc định. D/F d
 | <a id="style-e"></a>**AFTER E — Color Echo / Viền đồng sắc** · Default / Mặc định `2-1-1`<br>![After E: the same photograph with an automatically selected muted brown border and a thin dark inner edge](docs/images/demo-after-e-final.jpg) |
 | <a id="style-f"></a>**AFTER F — Film Edge / Viền phim** · Default / Mặc định `2-1-1`<br>![After F: the same photograph with a charcoal film border, side sprockets, Berlin Germany at the bottom left and October 2022 at the bottom right](docs/images/demo-after-f-final.jpg) |
 | <a id="style-g"></a>**AFTER G — Deckled Paper / Giấy mỹ thuật mép xé** · Default / Mặc định `2-1-1`<br>![After G: the same rectangular photograph on warm-white textured paper with subtly torn outer edges and a soft shadow](docs/images/demo-after-g-final.jpg) |
+| <a id="style-h"></a>**AFTER H — Minimal Mat / Khung tối giản** · Default / Mặc định `1-1-1`<br>![After H: the same landscape photograph centered on a fixed 4:5 white portrait canvas with a thin black keyline](docs/images/demo-after-h-final.jpg) |
 
 C reads the camera details from this photo and selects the SONY logo. D keeps those details and replaces the logo with the supplied text: `Berlin, Germany | October 2022`.
 
@@ -182,7 +186,7 @@ This installs Pillow for image processing and `defusedxml` for reading XMP captu
 Use `python3` or `py` instead of `python` if that is how your environment exposes Python. Then run:
 
 ```sh
-# Reduced A/B/C/E/F/G comparison using the first photo
+# Reduced A/B/C/E/F/G/H comparison using the first photo
 python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --preview --out-dir "output"
 
 # Full-resolution PNGs, with frames added outside the photos
@@ -211,6 +215,9 @@ python skills/photo-framer/scripts/frame_photo.py "photo.jpg" --style F --left-t
 
 # Deckled Paper: warm-white paper, subtle torn edges and a soft shadow
 python skills/photo-framer/scripts/frame_photo.py "photo-1.jpg" "photo-2.jpg" --style G --out-dir "output"
+
+# Minimal Mat: landscape and portrait share one 4:5 canvas; share copies are exactly 1080x1350
+python skills/photo-framer/scripts/frame_photo.py "landscape.jpg" "portrait.jpg" --style H --choices 1-1-1 --share --out-dir "output"
 ```
 
 To include D in the comparison, add `--right-text "your exact text"` to `--preview`. F's preview corners stay blank until both text fields are supplied; these preview blanks are not a choice of blank final corners. Add both `--left-text` and `--right-text` to preview F with your wording. An empty F right field omits D, which requires nonempty text. E's `--frame-color` accepts an opaque sRGB hex code or a supported English color name; it overrides the auto-tone choice. Selected colors are recorded as sRGB hex in the JSON notes.
@@ -248,6 +255,7 @@ Filesystems must support hard links for the renderer's atomic, no-overwrite fina
 - **Output metadata:** presentation files omit EXIF/XMP/GPS. C/D display selected capture details as visible text in the image; D's custom wording is supplied by the user.
 - **Style E:** one deterministic sRGB color is selected from a sample no larger than 96×96, favoring colors near the edges and midtones. Near-neutral or unusable samples fall back to warm neutral #e8e4dc. Default tone is muted; natural and light variants are optional settings. `--frame-color` bypasses this selection and applies one exact color across the batch. E converts only its decorative colors into the source RGB ICC profile; photo pixels and ICC bytes stay unchanged. No per-image AI color analysis or candidate variants are needed.
 - **Style F:** sprockets and both corner texts stay outside the rectangular photo region. Charcoal, black and dark-brown backgrounds are available, with standard, sparse or dense sprockets. Both custom fields preserve the supplied wording; no metadata, counter, film brand or photo effect is generated. F converts its decorative sRGB colors into the source RGB profile while retaining photo pixels and ICC bytes.
+- **Style H:** 4:5 and 1:1 canvases have exact ratios; any photo is fitted and centered, never scaled or cropped, with a minimum margin of 3.6% (4:5) or 2.4% (1:1) of the canvas width. Option 3 adds a thin even border (1.5% of the photo's short edge) in the photo's own ratio. Mats are white, warm light gray or ivory; the black keyline is thin, absent or thick and sits outside the photo. Because the full-resolution photo is kept, the canvas grows with it: a very large landscape on 4:5 can exceed the 60-megapixel limit and is rejected. Share copies are exactly 1080×1350 (4:5) or 1080×1080 (1:1).
 - **Style G:** paper grain, torn edges and a soft shadow stay outside the rectangular photo. Choose narrow/medium/wide margins, warm-white/bright-white/ivory paper and subtle/medium/rough edges. A fixed procedural pattern and a reusable 256×256 texture tile support batches without AI calls or external texture files. Decorative colors convert into the source RGB profile; photo pixels and ICC bytes remain unchanged. No caption or logo is added by default.
 
 Ở PNG cuối, vùng ảnh đã được chuẩn bị giữ nguyên kích thước và pixel RGB sau giải mã/chuẩn hóa hướng xoay EXIF. Khung được thêm bên ngoài nên kích thước toàn bộ ảnh đầu ra tăng lên. Các trường hợp chuyển màu, ghép nội dung trong suốt lên trắng, cắt ảnh đã được duyệt và JPEG chia sẻ có giới hạn riêng như mô tả trên.
@@ -273,6 +281,7 @@ python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style E --choices 2-1-1 --share --out-dir output/demo
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style F --choices 2-1-1 --left-text "Berlin, Germany" --right-text "October 2022" --share --out-dir output/demo
 python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style G --choices 2-1-1 --share --out-dir output/demo
+python skills/photo-framer/scripts/frame_photo.py docs/images/demo-source-final.jpg --style H --choices 1-1-1 --share --out-dir output/demo
 ```
 
 Each command creates `demo-source-final_<STYLE>.png` and `demo-source-final_<STYLE>_share.jpg` in `output/demo`.
@@ -293,7 +302,7 @@ import shutil
 
 rendered = Path("output/demo")
 images = Path("docs/images")
-for style in "ABCDEFG":
+for style in "ABCDEFGH":
     shutil.copyfile(
         rendered / f"demo-source-final_{style}_share.jpg",
         images / f"demo-after-{style.lower()}-final.jpg",
@@ -315,7 +324,7 @@ python skills/photo-framer/scripts/test_frame_photo.py
 
 The tests generate synthetic images and an original grayscale ICC profile. They use Python and the dependencies in `requirements.txt` (Pillow and defusedxml); no personal photographs, downloaded profiles, NumPy, or machine-specific font paths are needed. GitHub Actions installs that same requirements file while testing each Pillow version in its matrix.
 
-The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C covers EXIF/XMP captions, blank bands, caption modes, logo pasting and wordmark fallback. D covers custom-text validation, matching gear-line typography, Vietnamese text, missing metadata, left-side modes, overflow errors, mixed batches and comparisons with supplied wording. E covers deterministic selection, edge weighting, bounded sampling, neutral fallback, fixed-color batches, invalid colors, border options and pixel preservation. F adds explicit corner choices, blank fields, Vietnamese text, mirrored sprockets, layout variants, overflow rejection, mixed batches and previews. G adds repeatable paper texture and torn edges, shadows, all 27 preset combinations on landscape/portrait/tiny photos, optional Vietnamese captions and mixed batches. JSON escapes preserve the exact Unicode paths when parsed.
+The suite covers all four 16-bit PNG color types, disguised extensions, preview rejection, mixed batches, profiled grayscale alpha and transparency keys with every style, ordinary alpha modes, RGB/ICC preservation, EXIF orientation, no-overwrite behavior and Vietnamese filenames with legacy Windows output encodings. Style C covers EXIF/XMP captions, blank bands, caption modes, logo pasting and wordmark fallback. D covers custom-text validation, matching gear-line typography, Vietnamese text, missing metadata, left-side modes, overflow errors, mixed batches and comparisons with supplied wording. E covers deterministic selection, edge weighting, bounded sampling, neutral fallback, fixed-color batches, invalid colors, border options and pixel preservation. F adds explicit corner choices, blank fields, Vietnamese text, mirrored sprockets, layout variants, overflow rejection, mixed batches and previews. G adds repeatable paper texture and torn edges, shadows, all 27 preset combinations on landscape/portrait/tiny photos, optional Vietnamese captions and mixed batches. H covers exact 4:5/1:1 ratios, centering and minimum margins for landscape/portrait/square/tiny photos, keylines and mats, thin-border mode, exact share sizes, the output limit and mixed batches. JSON escapes preserve the exact Unicode paths when parsed.
 
 Recorded local validation used Linux, Python 3.12.14 and Pillow 12.3.0 for v0.1, and Windows, Python 3.12 and Pillow 12.3.0 for v0.2. The historical GitHub Actions [v0.1 regression run 37142845990](https://github.com/trongtrd/photo-framer/actions/runs/37142845990) passed four matrix jobs: macOS/Python 3.12/Pillow 12.x, Windows/Python 3.12/Pillow 12.x, Ubuntu/Python 3.10/Pillow 10.1.0, and Ubuntu/Python 3.12/Pillow 12.x.
 
