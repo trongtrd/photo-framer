@@ -23,7 +23,8 @@ def inset_width(short, choice):
     return {1: max(1, round(short*.004)), 2: 0, 3: max(2, round(short*.008))}[choice]
 
 
-def layout(photo_size, choices):
+def layout(photo_size, settings):
+    choices = settings.choices
     w, h = photo_size
     s = min(w, h)
     margin = max(6, round(s*MARGINS[choices[0]]))

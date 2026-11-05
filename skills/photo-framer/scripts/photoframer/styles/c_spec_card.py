@@ -24,8 +24,9 @@ class Layout(NamedTuple):
     font_px: int
 
 
-def layout(photo_size, choices):
+def layout(photo_size, settings):
     """Shared by C and D: even margins and a taller caption band below."""
+    choices = settings.choices
     w, h = photo_size
     s = min(w, h)
     side = max(6, round(s * MARGINS[choices[0]]))
