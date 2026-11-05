@@ -29,7 +29,7 @@ class OutputLimits(FramerCase):
             options = [required.get(code, {})]
             if code == 'H':
                 options = [{'ratio': ratio, 'title': 'Praha', 'subtitle': 'Prague'}
-                           for ratio in ('4:5', '1:1', '3:4', '9:16', 'original')]
+                           for ratio in ('4:5', '1:1', '3:4', '9:16', '16:9', 'original')]
             elif code in 'ABG':
                 options += [{'title': 'Praha', 'subtitle': 'Prague'}]
             for values in options:

@@ -1,0 +1,1947 @@
+{
+  "renderer_version": "0.13.0",
+  "pillow": "12.3.0",
+  "renderer_sha256": "30c4d739c1dc992032796934bdaf714408fa0cc1cb476d5e4a46ef8e0c2150e8",
+  "recipe": {
+    "version": 1,
+    "preview_edge": 1280,
+    "thumb_edge": 400,
+    "quality": 88
+  },
+  "sources": {
+    "landscape": {
+      "recipe": {
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "sha256": "dac391331be8be4b1d4486da3046e7d7d1bac0a3c3ecf194e4a2856ea19bc68a"
+    },
+    "portrait": {
+      "recipe": {
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "sha256": "f075a50715334b39dfd562ed0ea6e9ea2683edd4a89c0a02d0a22d4289e21e2c"
+    }
+  },
+  "examples": {
+    "a-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-default.jpg": "bdee709c4076726adfe928896a9d11f0b40d2da0e55b3405ed350f34b55ed4d4",
+        "docs/images/gallery/thumbs/a-default.jpg": "f3117b37ce43d6f25c5817a49223753fcef1b0b61c1c8890269e08dc033b0146"
+      }
+    },
+    "a-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row1-1.jpg": "3b54a4115097ef45c767cb25368bf8045b461a3e86c75a065f31a661ff865915",
+        "docs/images/gallery/thumbs/a-row1-1.jpg": "9491e1eae0e54126057b6e821c8e4dc80a4349ee0228128180c2c1fae039a2e7"
+      }
+    },
+    "a-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "3-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row1-3.jpg": "3c5a4ef53d158ced40f0d3f92e78d5a9eaa5f6cbe0ec4f4e17089bc4b7623113",
+        "docs/images/gallery/thumbs/a-row1-3.jpg": "eb5456d5e29f9103550c39c99c6e84aa23424117cc11bd3ef7eec4d9551cbb19"
+      }
+    },
+    "a-row2-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row2-1.jpg": "8383b060a0b18abd3d2b34bf60d497f8918878e6eca4b23a388649152aaebbe8",
+        "docs/images/gallery/thumbs/a-row2-1.jpg": "5701351397933874c79fcfe3fee0fcd2ac01912f6d4acd77ccac412ec59b2abe"
+      }
+    },
+    "a-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row2-3.jpg": "4c2e4cce38da966ba87c1fd5827b186f0601703a2e66252fe3a9b75de650f44b",
+        "docs/images/gallery/thumbs/a-row2-3.jpg": "92fd585b52e03b3c7f0e01fec18981d3139e9784f31e86a0726488e9ca15480d"
+      }
+    },
+    "a-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row3-2.jpg": "83f283606ca852fe762cc9fbd34fc95970f157aca0dfe94e3ffdcedd969beccd",
+        "docs/images/gallery/thumbs/a-row3-2.jpg": "256284346bcb86865566fac5542eac44171539b5e5bf1c6bf412d1d0e36aa906"
+      }
+    },
+    "a-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-row3-3.jpg": "88492ef0b4a7155867164f5ab7049657be32f06e4604b23097312af1da89cedd",
+        "docs/images/gallery/thumbs/a-row3-3.jpg": "009ae93b7f6ddcd3d33d30344c3458cd51cab648db01e96c547ff4af1e90c459"
+      }
+    },
+    "a-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-caption.jpg": "53963ad4d5fbc2299d59f38d8aa37863919511b189d34add819873be788c4728",
+        "docs/images/gallery/thumbs/a-caption.jpg": "9b3c5e7d5046929dafd7b0e356a5c1270336de0357e8cfd7b34e473fefc3deb5"
+      }
+    },
+    "a-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/a-label.jpg": "65a2ec62e550406d4411fc349d55ccc90fcd506dc63bb8ac899cd6f43ece165f",
+        "docs/images/gallery/thumbs/a-label.jpg": "11a9023166a73490dca081e8d27cdca7ac0328a3971f3f8e4d264615dab9d9b6"
+      }
+    },
+    "a-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "A",
+          "choices": "2-2-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/a-signature.jpg": "50cccdd3b920dde474083bf8bcb7891f61f50d57cf202a6c9be4ede9fc4cf73e",
+        "docs/images/gallery/thumbs/a-signature.jpg": "c50ec8973f5804274e3978768570f7995a99bf9a8bd1d2e1b67a2b949fa91a22"
+      }
+    },
+    "b-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-default.jpg": "53b086c90bd767748d9b97bb647af5d81e68a3d552925544e2807f70700e6534",
+        "docs/images/gallery/thumbs/b-default.jpg": "cf9be01ff6a533888ddf106d7d30a6037ac0f0a808379e98f7aaf5e10b811113"
+      }
+    },
+    "b-row1-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row1-2.jpg": "8ebff8f8715b11006db17c5860d18c864b39f28566f6a6e8af9c125f00bee028",
+        "docs/images/gallery/thumbs/b-row1-2.jpg": "ff5d713759aa8f0bb4ae712fba3c29cadca486ed29d099ffbf990c4344246049"
+      }
+    },
+    "b-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "3-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row1-3.jpg": "e1db032c1c141c4a568f88164f8f1a92b4f910e3ab8b87c11dd60f84a5f3455f",
+        "docs/images/gallery/thumbs/b-row1-3.jpg": "127a42b9d3294ef8ab939e26047e35d4c26d10006eb3e9d5249be016c4319d2b"
+      }
+    },
+    "b-row2-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row2-1.jpg": "ee6b584340b16dfccb520f65cf88685cc958b7b1dcad0748aa5e7b9485da810b",
+        "docs/images/gallery/thumbs/b-row2-1.jpg": "4167534a30c08f87c7a36503dd3993658833faa9111155d9cf99d167d42d8474"
+      }
+    },
+    "b-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row2-3.jpg": "56594c35fdf2701a22378245d59ed84bed2c1efbceeba594e22ffff2ce1e3640",
+        "docs/images/gallery/thumbs/b-row2-3.jpg": "c8a395616840a4db221c4808a91290300c81affb8b21d7ef316c5f64d371fe9c"
+      }
+    },
+    "b-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row3-2.jpg": "376884ea2be0e7c77fc14a7eda12208cedb4ce7da7ecb56d4cd669d2d45415a3",
+        "docs/images/gallery/thumbs/b-row3-2.jpg": "15de98520b17447f76c9a868c84300b568d31c6b56c26e5950f8a63b32a0910a"
+      }
+    },
+    "b-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-row3-3.jpg": "204818be091f2a6b11bfd892d515a011c19d8342cd838d16163de624b2744be4",
+        "docs/images/gallery/thumbs/b-row3-3.jpg": "08d63c9629102e8b6716536dac44d8abe5a2bbc65d1eed0c7dadca5372e470b9"
+      }
+    },
+    "b-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-caption.jpg": "9ca4c104b581a14fdaad81fc2d1e6112886911601ad1234a2537d175ad6e7b43",
+        "docs/images/gallery/thumbs/b-caption.jpg": "dddb8958a37e54385d2c60c8a37bc3ad6f9367aff32798ce16083e63538098e4"
+      }
+    },
+    "b-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/b-label.jpg": "78cb3e65cd5b308e1610c8ecbeb2c77d4734c627c65affbdd26d442128f052bc",
+        "docs/images/gallery/thumbs/b-label.jpg": "a2801d3c3be40a82dba40e025ce24ed0bbd40a79747d3e6ca03d32316b1f75fd"
+      }
+    },
+    "b-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "B",
+          "choices": "1-2-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/b-signature.jpg": "2a8b7c579fbb79db277025bfff6f9c258ff9ab4d889bb901ab72f13030d63bad",
+        "docs/images/gallery/thumbs/b-signature.jpg": "925c95b6a66c7b2b834f1d9889cb8d43a322e0917e64ef4aa23a684c21a3cf0b"
+      }
+    },
+    "c-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-default.jpg": "bdb959dd744b36539bace99c9cb24dad57e6f7592ba6ddcb15dab562e2f890f4",
+        "docs/images/gallery/thumbs/c-default.jpg": "f5f4d841baf72ed2aa0ed30ffeb022e455044862338de8afcbdd20bb6f21724e"
+      }
+    },
+    "c-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row1-1.jpg": "9ada85c234c194ce95f05e59c585e1624257649d1cb9f66a8fb1024d2bb8f252",
+        "docs/images/gallery/thumbs/c-row1-1.jpg": "a398edee9994f2b4fa7825fafe133ef2ea91fd8651d9a44c4112c8a162e6efb3"
+      }
+    },
+    "c-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row1-3.jpg": "da81d29d2e17f5cc743bcada48da3c838cdfc7bcbfe9ad5e5692b1b2fd1d3f96",
+        "docs/images/gallery/thumbs/c-row1-3.jpg": "7c6badcd1a307d57d6e0aac8190e3a1205c3c588762e98b563d25ad7e38a086a"
+      }
+    },
+    "c-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row2-2.jpg": "f5f222b08da1785424acdf2eb5384e6a2539a300dc0c658dd1bda2a6a641d171",
+        "docs/images/gallery/thumbs/c-row2-2.jpg": "c363c7f385698d3b824ef6c92d40b7da136c65fa109b97a8b0ed66acab28c1a4"
+      }
+    },
+    "c-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row2-3.jpg": "f688d78939ceb606eac64cc961f591110d9c53d84c74086cad2675a642b5216e",
+        "docs/images/gallery/thumbs/c-row2-3.jpg": "fb9e18f52ea18c3b5b2017b0adee4ed0db0583067a85f5858dff54af69733471"
+      }
+    },
+    "c-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row3-2.jpg": "a219e1093322140cdc2ca7c95858d67ced0d948fc3e52ce49fb907c7728b800c",
+        "docs/images/gallery/thumbs/c-row3-2.jpg": "6b72efa5e90b4c48bf9c2672884db05465ef22d7ef8c5795fe42fea3eb9c8d9c"
+      }
+    },
+    "c-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-row3-3.jpg": "21350b7719011dfe117ac474b1456b8f079d840c363bd66cd0d17c24fcb474ce",
+        "docs/images/gallery/thumbs/c-row3-3.jpg": "4f6eed7d42c8894945b0f7b8d8da20248e7f29c17d1b55536d8a28d97aef7ec9"
+      }
+    },
+    "c-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-caption.jpg": "4cbc182d9a5b1cfd338f1623ce01d08058487a870bcaec428d4b3f7f531d4e6d",
+        "docs/images/gallery/thumbs/c-caption.jpg": "433c0fbca81d2283169219d2a96b436ce7f8b753e9c5703acce055141e412dba"
+      }
+    },
+    "c-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-raw-model.jpg": "6eec01d053ee43b3847c28eae63df67c799f31d92f81738e64235211affb205e",
+        "docs/images/gallery/thumbs/c-raw-model.jpg": "43c6404576cccc3eb662ef3e113b6f461161ab2581db8795a43f39564f8b5e20"
+      }
+    },
+    "c-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/c-sidecar.jpg": "10e2e64fd43ed0ab6af250f1f9e4393f846e45fec74f4fb53b9a5601d471975e",
+        "docs/images/gallery/thumbs/c-sidecar.jpg": "02f43187d7a23a5178ee5722f121312a0d74445a075acd2d2c1b7f93d7a9885e"
+      }
+    },
+    "d-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-default.jpg": "55143a61b71e3cb0eb00af01350b607774ff3a39df3ea41378e5bfc202229cc1",
+        "docs/images/gallery/thumbs/d-default.jpg": "4b4c25facfb615488172d7ad104ce311ab296340373cf6b7932f41d4775110f1"
+      }
+    },
+    "d-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "1-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row1-1.jpg": "cf2e188fad67375caca34e537e94d1588c4b007b0b2de8189a89f992d7b3c8ec",
+        "docs/images/gallery/thumbs/d-row1-1.jpg": "10ef37debf599d8cbd76996de953107c330aa04a4cdc74f49461074cffc9fa83"
+      }
+    },
+    "d-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "3-1-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row1-3.jpg": "482fc496ea6c37654c10d9f026711d1ff62b01f3621c8d6a90baefd3bea60897",
+        "docs/images/gallery/thumbs/d-row1-3.jpg": "86921c2836841ca10631154d7046232ba21c31c3b9a0efd622196dc38cc39dd6"
+      }
+    },
+    "d-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-2-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row2-2.jpg": "495c9a05ccc58a63a763734ed218c2ab414dfc0c174cd3b360f0403220626ee6",
+        "docs/images/gallery/thumbs/d-row2-2.jpg": "d21276b0b65a5e6b0604b58a6210711f31e90a695bde4520742988bd94194a0a"
+      }
+    },
+    "d-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-3-1",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row2-3.jpg": "3d5cd6d746d85096c4f3fdd2963f63a6b2f097e2199defa7ed3589e130cd9d90",
+        "docs/images/gallery/thumbs/d-row2-3.jpg": "8fd1b2a3726a53e025ef122c27a5cd06aceff37e3bab8e3065a55021d063a5a8"
+      }
+    },
+    "d-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-2",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row3-2.jpg": "17da90492c3630a98edeaaf2672fb7884f5d697498e7b912448bdc1c79a1a19d",
+        "docs/images/gallery/thumbs/d-row3-2.jpg": "8bf55fd5113b6f534a9eb4b908a6c6580a55da7bd5bd84a6d824465cda8ba5a0"
+      }
+    },
+    "d-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-3",
+          "right_text": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-row3-3.jpg": "15f47941ce2916448a70b2efa6e3c2e9d0f162ab4a4963b8b869b034d630f114",
+        "docs/images/gallery/thumbs/d-row3-3.jpg": "294fc0f5197aa5114875491f83a8483994ba331650da16858ec85948b5fc55f1"
+      }
+    },
+    "d-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-caption.jpg": "d23eaf696c0ed9311d223e6219b57d076117b13783eaa16decb2d628bccf553e",
+        "docs/images/gallery/thumbs/d-caption.jpg": "9db4d5e3ac19300d6c42321ed2ebafdd08bbf73b23ce0177a99f67904bcc33f5"
+      }
+    },
+    "d-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-raw-model.jpg": "c9fbf0a5b49973e3236ec450ac71e0c4695494101846846d03eba00a7e7e72fe",
+        "docs/images/gallery/thumbs/d-raw-model.jpg": "5d9207c457e43effd1f3583aeb1c002a53f0dcecb3c94509e7ee16e94d63b899"
+      }
+    },
+    "d-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/d-sidecar.jpg": "63a2d7fd9c32d86db8cd3839d3f0bbc3c4a528bb2ef2293e9d3a066b6713c290",
+        "docs/images/gallery/thumbs/d-sidecar.jpg": "829b52f10a65435700d2c923f49e0026579e8f1399e53be8ce5331a6ab330b75"
+      }
+    },
+    "e-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-default.jpg": "51a99024a7ec07ea677d1e393b3b6a4784846a0d7b90691b5b131f68aa949ab2",
+        "docs/images/gallery/thumbs/e-default.jpg": "a5a13527b460cb705c9c5f449b11b9be6b222a5e91e7992830a1c7e014fe86dd"
+      }
+    },
+    "e-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row1-1.jpg": "f722c6359597301f2ca7595b3a1b1627a45afe546d04da0a61f7ba1dd8a39cc1",
+        "docs/images/gallery/thumbs/e-row1-1.jpg": "539ea9229ccfe573d7638e5df6896d2204bca11bb750d91434cd3c863c9a46e0"
+      }
+    },
+    "e-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row1-3.jpg": "aeb4c4a1c72fcbf2244923f706f4133e033b85c44e43b1b75f7b6e8cc0c7b349",
+        "docs/images/gallery/thumbs/e-row1-3.jpg": "ec21f32b8252a0bd590d9db5de29f5103ad07dcccf0de9eee061811dbc6e2bfc"
+      }
+    },
+    "e-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row2-2.jpg": "0366c4f7fe555df90f0860e893e11bcde0d02a579cb2a675acce229a1b34d565",
+        "docs/images/gallery/thumbs/e-row2-2.jpg": "1a40b851ee8733d46a3fda1cdc2be734f0b1200716d7ffade34eec9be4e9dda5"
+      }
+    },
+    "e-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row2-3.jpg": "a87a189c485dcd8770af762ecf7eb5f138654035d20a875c6b46a24288973d5a",
+        "docs/images/gallery/thumbs/e-row2-3.jpg": "f00020a778b7aad48ec7bc08eeedeb6df91f336578e966a2a80e643bbc3ab9bf"
+      }
+    },
+    "e-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row3-2.jpg": "9789c53204a773907d1fb052df9f0aac78ef4538fb4418c800e94d5cd0ee4264",
+        "docs/images/gallery/thumbs/e-row3-2.jpg": "e5d34af3c15322d4b3da8516342f489ecc5a4ce2018c82a27ed40822979ff39c"
+      }
+    },
+    "e-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-row3-3.jpg": "f0bb403aeed57d780690e742d0b1189e0086c522d434fdd170a553d08a4fc5ad",
+        "docs/images/gallery/thumbs/e-row3-3.jpg": "599e4980f5729dd5ae1e3c19f38b83e5ff42797085ddb28951732657e63361d4"
+      }
+    },
+    "e-fixed-color": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "frame_color": "#ad896c"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-fixed-color.jpg": "9f7312315bbd813f8ca838d7d719a66ad2fd7c62dc0202b0982f42a2ef24823e",
+        "docs/images/gallery/thumbs/e-fixed-color.jpg": "c7dfe45757c0641289e63c28f9f11191fd97941dfa6e6bf230a876e54beb3c52"
+      }
+    },
+    "e-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/e-caption.jpg": "474a0914ff385ee56f0a1129eb1ccd413cbb1a613204db10a092816c7439f468",
+        "docs/images/gallery/thumbs/e-caption.jpg": "cd186a11d70e8ed007fd3dd7debe632422dbdbbc5a2cfbc136395ea8be9d2e15"
+      }
+    },
+    "e-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "E",
+          "choices": "2-1-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/e-signature.jpg": "7697c5ac823dac8111faca54150b02441e328ce3e0e973084971c4d5603c12c0",
+        "docs/images/gallery/thumbs/e-signature.jpg": "c19dc1f9ff0536ba646b11074b7c1a7b7c75c5dfd8f5cf744884e9da37032de4"
+      }
+    },
+    "f-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-default.jpg": "36029188fa18d97f322b92dbb648379f4058a5cad2f4a842fea0c963846733ba",
+        "docs/images/gallery/thumbs/f-default.jpg": "2b3f92c7995397f98caf6ec6f00dbc17fb447c022c2d67315afc18d8958bd7bc"
+      }
+    },
+    "f-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "1-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row1-1.jpg": "3014136b58bf7e0e91e0d4b97fbb8d6eb97ed9ff1b2fd79abc84d88febc82f9c",
+        "docs/images/gallery/thumbs/f-row1-1.jpg": "fd205803fc899c9bccfd4f159f25b683dbe3918391de793904cde7322d6a5ac2"
+      }
+    },
+    "f-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "3-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row1-3.jpg": "3f63d140ebd729b9431fe33b9f058830fea15418dc1791306d2158b8be9c1c27",
+        "docs/images/gallery/thumbs/f-row1-3.jpg": "6cf4d46df2b28f81d8e1d05b4ef612713850f8c6554f4a7c7edcceed403ef301"
+      }
+    },
+    "f-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-2-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row2-2.jpg": "2402ad6ab77ff2b211845699ab13c9660fc1394a95bd2cb481948569aced0b3e",
+        "docs/images/gallery/thumbs/f-row2-2.jpg": "3b0562bb4561ef38c333a6759033e87e240a2044f54de05fd7362c45e50d808d"
+      }
+    },
+    "f-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-3-1",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row2-3.jpg": "8f45fa0cc41e50a133be51c65ceb68c4d049f825b324ceadfd6ade74d4bdc152",
+        "docs/images/gallery/thumbs/f-row2-3.jpg": "46b62836257b051dab984aabea4990cd54fc69a193b1a4768f969f5f217e0b5e"
+      }
+    },
+    "f-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-2",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row3-2.jpg": "6eebf6fcc79b10529a9042f67165aadea23e5074b7d28f9f6d48f6df325fb6cd",
+        "docs/images/gallery/thumbs/f-row3-2.jpg": "608f64f0ba0e2fd1045b7a01d53e16ca38716aab240a422b8f986f20114ee751"
+      }
+    },
+    "f-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-3",
+          "left_text": "Berlin, Germany",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-row3-3.jpg": "e0f35647af6bd642f88a605d64ab65901a6fe23e7b6d28ffecf1ac22de0998ae",
+        "docs/images/gallery/thumbs/f-row3-3.jpg": "4bd50073f58411ceda6f6c16c4a3d9a2f19bf6306857ca6f304b8be45a43fdb6"
+      }
+    },
+    "f-text-blank": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "",
+          "right_text": ""
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-blank.jpg": "a28bac640f8345d38485e452305eb2c8ee05040cf15edc163d2d5c4645cbd809",
+        "docs/images/gallery/thumbs/f-text-blank.jpg": "10cf33962ad102ff2fb489b06e0c7e9cbe00f8305dd9740cefd2cb3c56d71ead"
+      }
+    },
+    "f-text-left": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "Berlin, Germany",
+          "right_text": ""
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-left.jpg": "5111e7caebb2bf4d9dd50c515577a3c8b4b835ec200a1d76bbc7783e209fd787",
+        "docs/images/gallery/thumbs/f-text-left.jpg": "65dab2c6ea14434ddd38b70329317b54d9ed24e039a34c4e47bade7c69a89415"
+      }
+    },
+    "f-text-right": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "F",
+          "choices": "2-1-1",
+          "left_text": "",
+          "right_text": "October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/f-text-right.jpg": "039745efdb62f9851934fd41691847ec2c830ec8c1425f2d867927efd78b2bfc",
+        "docs/images/gallery/thumbs/f-text-right.jpg": "0a9bbbfb2ab75eba04c401dbb7ca2837d6875dfee0feb43ddbb7de536daadb2c"
+      }
+    },
+    "g-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-default.jpg": "acabb277865c462a6fe1c9ff97eb3d0ee9b8d90b82243a4cfca7477a38e331c2",
+        "docs/images/gallery/thumbs/g-default.jpg": "f6a634bbbc85e873ad011acf2e2c9cf30884468041e8c2192e7a81a349741daf"
+      }
+    },
+    "g-row1-1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row1-1.jpg": "84efd425eb0bd0f70ad38b6eeea09c58946bf27c63bc8dcb0256cfe5aa045693",
+        "docs/images/gallery/thumbs/g-row1-1.jpg": "eee0aadb9286428bba10329077ce51e1b3bf5baaa5ebc0613059baf5d49675e6"
+      }
+    },
+    "g-row1-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "3-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row1-3.jpg": "425731ca267ab580a440587770f5389116681e0008fe4c679423cea9d620f606",
+        "docs/images/gallery/thumbs/g-row1-3.jpg": "1dcd205315426bf9189cf638907f5386777d166b39c2532adc842e90b172acac"
+      }
+    },
+    "g-row2-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row2-2.jpg": "a890353be7160dc6b6b70d6fcfc371d9671ae3fc2fe1b042460d7ceceaa7d5de",
+        "docs/images/gallery/thumbs/g-row2-2.jpg": "612716308017519cfedd224aee366cc126c9e21951d39fc8de09a6f4b4cb17b4"
+      }
+    },
+    "g-row2-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row2-3.jpg": "17db427d9e5441713c4231baccef1d650ea073a9c91dbe01553d9e9e57e4f9c2",
+        "docs/images/gallery/thumbs/g-row2-3.jpg": "41a1c96fa9aa10b515df3ffae68f89a04d80e98e07bf32323577552278b0ac3d"
+      }
+    },
+    "g-row3-2": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row3-2.jpg": "f55cee4c870a90eff3a1cc113af4ea8b852b1237e2b562a5a3a3ce4d75f6a039",
+        "docs/images/gallery/thumbs/g-row3-2.jpg": "928fdd781ed8f1985264700705a914c2012c813a6720b56f4c2ba520f954720a"
+      }
+    },
+    "g-row3-3": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-row3-3.jpg": "77f32c68587a465f4a3e2e1793872b9d6578686098cdc487b1c90149b7942652",
+        "docs/images/gallery/thumbs/g-row3-3.jpg": "36c0b747455f62fa38ccf975da6174f8eccf309b5cce9a41c0f7c5c01ee71a6c"
+      }
+    },
+    "g-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-caption.jpg": "44a7e30e18e3016723e3403b5ceb111b1b8a4fc52143af7ec2e00fafbc127e9b",
+        "docs/images/gallery/thumbs/g-caption.jpg": "1121426b7ba0c7a17e4d77621e79983217e64c91c7e62e42691e63bbd88ddbf2"
+      }
+    },
+    "g-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/g-label.jpg": "707940d94570347ea05527cba33479127037ea0ce4de58fa429b13fa3ba4cb09",
+        "docs/images/gallery/thumbs/g-label.jpg": "c51f25b15fb9993323276d9c3d6d763f8ebc2584c9474797535186fec988599c"
+      }
+    },
+    "g-signature": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "G",
+          "choices": "2-1-1",
+          "signature": "docs/images/gallery/signature.png",
+          "signature_width": 0.12
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "signature_sha256": "d2bf085186ed9ab74ba7d9478bdedd9d779ceeb35a957d956f5658f1bc0c5d0f"
+      },
+      "files": {
+        "docs/images/gallery/g-signature.jpg": "6820fe9691bef41a8659dd4061f75f33939fe23856a6a4c4172463821c9b6db5",
+        "docs/images/gallery/thumbs/g-signature.jpg": "47ecaf4ba10b43ce61baaf5ea19be46599c2ac124cd2322fe85cb24b412ffd20"
+      }
+    },
+    "h-default": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-default.jpg": "0bcc0b56415d7f711bd8047d0cea19076f4609269e12019cc9abc29049609a46",
+        "docs/images/gallery/thumbs/h-default.jpg": "9b66291802aab5bf87f2e2b939dfc5724a178febb55800e9d31b76757d34567b"
+      }
+    },
+    "h-ratio-1x1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-1x1.jpg": "3fbb9d602265c54aaa0b26b22a5fd78b5095cf75193adc1642ab542a64db6e19",
+        "docs/images/gallery/thumbs/h-ratio-1x1.jpg": "efae9bf51807051cf57e6fd3ae3664c17d24ae7218a93d4b7922752e4c7ab1fa"
+      }
+    },
+    "h-ratio-original": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "original"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-original.jpg": "03872069f602c26548266ffcf982c1ea6114d8184ff7336be391845974725979",
+        "docs/images/gallery/thumbs/h-ratio-original.jpg": "0b2e78c4807da990b2878097c6b5c5779b0ac8ca79e2dd00de405817b5e36913"
+      }
+    },
+    "h-ratio-3x4": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "3:4"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-3x4.jpg": "82d3aed8da962bc5ecc88734c7aed40dd76a088a1e19ebda5c4fa55f0f6e7bf2",
+        "docs/images/gallery/thumbs/h-ratio-3x4.jpg": "b5ce1c13b79da8be016b1025512337a44368ad67c4405c7b75c95e58b7556103"
+      }
+    },
+    "h-ratio-9x16": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "9:16"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-9x16.jpg": "54bc2c582d1ff3fa0955269f47b145b215567d75efa781f327948d3f2a26cf61",
+        "docs/images/gallery/thumbs/h-ratio-9x16.jpg": "ba6ffea57333521998149f97e5f95e1df0bdbc6ee9a19eab4b42dd07e24ec46a"
+      }
+    },
+    "h-ratio-16x9": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ratio-16x9.jpg": "767899ddc162e87808846af6e8269855cde2b95d4effa879ef19304b07e3ceb7",
+        "docs/images/gallery/thumbs/h-ratio-16x9.jpg": "dcd1485d615fcc29336b67e04b9f3c6c96693494f818655b795ac217792ff423"
+      }
+    },
+    "h-blur-16x9": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-16x9.jpg": "cb202f7a4270d8e7d51e1b112599f8cd9e642e2aa91c910261f076b9579b51b1",
+        "docs/images/gallery/thumbs/h-blur-16x9.jpg": "0e5e9f4f14c46349adee8e536bf08981206d38d63349335e0276a0d52eebd55e"
+      }
+    },
+    "h-blur-1x1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-1x1.jpg": "a87aeb9bb726f464996fc9f7a010c90811c0c37dbc22a87e4e0a58d6da9a076f",
+        "docs/images/gallery/thumbs/h-blur-1x1.jpg": "c34064a6bf7ac578b17a8d36d9a1f5ab7260a71bec12136933ab7e3c0c4811f2"
+      }
+    },
+    "h-blur-9x16": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "9:16",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-9x16.jpg": "6402a64a52aed3a99847cdc542f197d3aea1f9a2eee77d1e1b0822cd7ffc3710",
+        "docs/images/gallery/thumbs/h-blur-9x16.jpg": "b4ea5f763e3b4618427410e3f998ba6fb7a5fff28d7a13a860e38435fb993c86"
+      }
+    },
+    "h-blur-4x5": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "4:5",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-4x5.jpg": "51fb9521162be01f99cbf096d2097cebb6eb075eb14014bc57d073a8e452e515",
+        "docs/images/gallery/thumbs/h-blur-4x5.jpg": "2d2429cae0a7e79af21433a154f98a18bf820e09697a9137064bc319a2722f0a"
+      }
+    },
+    "h-blur-3x4": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "3:4",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-3x4.jpg": "49396c6f7c7fbe6f8a18812bd19613a44b3aacd0b47ef2f911e321b5555c06a5",
+        "docs/images/gallery/thumbs/h-blur-3x4.jpg": "b7eb3e3e800b296ad9da50c168009be713b37cd6141c09304606c3db030281e1"
+      }
+    },
+    "h-blur-original": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "original",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-original.jpg": "f35a091627bb79c78c6cb2ab71c4105c1991ebe5367053ad1fa244ae7588939f",
+        "docs/images/gallery/thumbs/h-blur-original.jpg": "50ae68efeed03e350481d907d5577c0a13c4281bb54420f60149adba9ea9d7dc"
+      }
+    },
+    "h-blur-tone-neutral": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur",
+          "blur_tone": "neutral"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-tone-neutral.jpg": "c30f8ec251233f0ee9b6cc226d7b6c97e6e89d24af78b047a4484aa44811f0ab",
+        "docs/images/gallery/thumbs/h-blur-tone-neutral.jpg": "6af9c591a2553ddfce276b76eea465e1e8957b4f19a9438cdf2e4244fb66a24e"
+      }
+    },
+    "h-blur-tone-light": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur",
+          "blur_tone": "light"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-tone-light.jpg": "fcc6d278a8365c37463129aa5584499cbe04502e636ca637c3b7221b19228028",
+        "docs/images/gallery/thumbs/h-blur-tone-light.jpg": "6c493af7520c07bc203800582750844f0183316305193b2f5522894f11e58287"
+      }
+    },
+    "h-gray": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-2-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-gray.jpg": "2e09e5387dbe388245e2ffda24f668c00e577df7d69b5b913cf2521e22af108f",
+        "docs/images/gallery/thumbs/h-gray.jpg": "e4a31347655e265e628b5e6f274134bb74b9dcf74a2d9e36a97eef032b412967"
+      }
+    },
+    "h-ivory": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-3-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-ivory.jpg": "8bd2fcb797b6ef381ee7e50d72a964b6c485fcd0f7c8de9083f566685fe837d4",
+        "docs/images/gallery/thumbs/h-ivory.jpg": "31fedcc916db73d93e40dea141070445dc37a4fc4aa718c386206d19111b77f0"
+      }
+    },
+    "h-no-keyline": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-2"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-no-keyline.jpg": "e74d5d6da75b5e36ca2cd7529ac77e9edb9b08609f13130d698c10ee05c05960",
+        "docs/images/gallery/thumbs/h-no-keyline.jpg": "c1e1aaf2e6debf3c8a379fffea13842f614341075612eb0e8f16cbd1e4a15d21"
+      }
+    },
+    "h-thick-keyline": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-3"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-thick-keyline.jpg": "0bfc62ec6ab16c394144d0f598edb7819af1b69260377718c32a014929f75612",
+        "docs/images/gallery/thumbs/h-thick-keyline.jpg": "73fcb29b566d433072ac45bdbe2fe35fd70b39e3f82399ee220ec97880cb5323"
+      }
+    },
+    "h-caption": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "caption": "Berlin, Germany | October 2022"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-caption.jpg": "5cd6c45c93720bb9fa3b6c0fc5700827394b8184c25ebafa69b2d4c2e087ff06",
+        "docs/images/gallery/thumbs/h-caption.jpg": "b525ea4e1833b43f9e760e216112d44f90404be5d47c8d280de4007b3f85144d"
+      }
+    },
+    "h-portrait": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-portrait.jpg": "8c23e1e8c7aee9757b06f3d944af24220c7acc32d0f31104a5a4e50133671d85",
+        "docs/images/gallery/thumbs/h-portrait.jpg": "27d6196ff2009774ae591432a6c7815f143dd91106068a5ec5c17b4a0ed13c43"
+      }
+    },
+    "h-label": {
+      "recipe": {
+        "source": "docs/images/demo-portrait-source.jpg",
+        "source_sha256": "a7f7f64c20b5b20eb37427837331b70e24423bc42a12e55e1d41dc426a7c16d9",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1",
+          "title": "Praha",
+          "subtitle": "Prague · Czech Republic"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-label.jpg": "5d8cafcf7d5be0a6cf8790a59c6114368efe6fa009624e13f3fbaf0e5f11a84a",
+        "docs/images/gallery/thumbs/h-label.jpg": "37122f57414910f6e97f413f2ba817ed99a0fd06172cff99417e6ad0ce62b996"
+      }
+    }
+  }
+}

@@ -102,7 +102,8 @@ class MinimalMatExtensions(unittest.TestCase):
         return photo
 
     def test_new_ratios_are_exact_centered_and_keep_margins(self):
-        for ratio, (num, den), fraction in (('3:4', (3, 4), .040), ('9:16', (9, 16), .050)):
+        for ratio, (num, den), fraction in (('3:4', (3, 4), .040), ('9:16', (9, 16), .050),
+                                            ('16:9', (16, 9), .028125)):
             for size in ((1200, 800), (800, 1200), (1000, 1000), (37, 16)):
                 for keyline in (1, 2, 3):
                     with self.subTest(ratio=ratio, size=size, keyline=keyline):
@@ -125,7 +126,7 @@ class MinimalMatExtensions(unittest.TestCase):
                 by_code, _ = render(photo, 'H', code)
                 by_flag, _ = render(photo, 'H', '1-2-3' if code != '1-2-3' else '2-2-3', ratio=ratio)
                 self.assertEqual(by_code.tobytes(), by_flag.tobytes())
-        for bad in ('2:3', '16:9', ''):
+        for bad in ('2:3', '21:9', ''):
             with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, '--ratio'):
                 render(photo, 'H', ratio=bad)
 
@@ -172,13 +173,30 @@ class MinimalMatExtensions(unittest.TestCase):
             with self.assertRaises(Image.DecompressionBombError):
                 Image.open(saved)
 
+    def test_square_and_landscape_blur_preserve_photo_and_label_layout(self):
+        for ratio, (num, den) in (('1:1', (1, 1)), ('16:9', (16, 9))):
+            for size in ((900, 600), (600, 900), (600, 600)):
+                photo = self.two_tone(size)
+                for label in ({}, {'title': 'Praha', 'subtitle': 'Prague'}):
+                    with self.subTest(ratio=ratio, size=size, label=label):
+                        plain, _ = render(photo, 'H', ratio=ratio, **label)
+                        blurred, (x, y) = render(photo, 'H', ratio=ratio, background='blur', **label)
+                        again, _ = render(photo, 'H', ratio=ratio, background='blur', **label)
+                        self.assertEqual(blurred.width*den, blurred.height*num)
+                        self.assertEqual(blurred.size, plain.size)
+                        self.assertEqual(blurred.tobytes(), again.tobytes())
+                        self.assertEqual(blurred.crop((x, y, x+size[0], y+size[1])).tobytes(),
+                                         photo.tobytes())
+                        self.assertNotEqual(plain.getpixel((0, 0)), blurred.getpixel((0, 0)))
+
     def test_cli_share_sizes_notes_and_preview(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             wide, tall = root / 'wide.png', root / 'tall.jpg'
             self.two_tone((1500, 1000)).save(wide)
             self.two_tone((600, 900)).save(tall, quality=95)
-            for ratio, share in (('3:4', (1080, 1440)), ('9:16', (1080, 1920))):
+            for ratio, share in (('3:4', (1080, 1440)), ('9:16', (1080, 1920)),
+                                  ('1:1', (1080, 1080)), ('16:9', (1920, 1080))):
                 with self.subTest(ratio=ratio):
                     process = subprocess.run(
                         [sys.executable, str(RENDERER), str(wide), str(tall), '--style', 'H', '--ratio', ratio,
@@ -191,11 +209,13 @@ class MinimalMatExtensions(unittest.TestCase):
                         self.assertTrue(any('Blurred background (dark tone)' in n for n in row['notes']))
                         with Image.open(row['outputs'][1]) as shared:
                             self.assertEqual(shared.size, share)
-            process = subprocess.run(
-                [sys.executable, str(RENDERER), str(wide), '--preview', '--ratio', '9:16', '--background', 'blur',
-                 '--out-dir', str(root / 'preview')], capture_output=True, text=True, encoding='utf-8')
-            self.assertEqual(process.returncode, 0, process.stderr)
-            self.assertEqual(json.loads(process.stdout)['results'][0]['status'], 'ok')
+            for ratio in ('9:16', '16:9', '1:1'):
+                process = subprocess.run(
+                    [sys.executable, str(RENDERER), str(wide), '--preview', '--ratio', ratio,
+                     '--background', 'blur', '--out-dir', str(root / 'preview')],
+                    capture_output=True, text=True, encoding='utf-8')
+                self.assertEqual(process.returncode, 0, process.stderr)
+                self.assertEqual(json.loads(process.stdout)['results'][0]['status'], 'ok')
             for flags in (('--ratio', '2:3'), ('--background', 'stars'), ('--blur-tone', 'sepia')):
                 with self.subTest(flags=flags):
                     process = subprocess.run([sys.executable, str(RENDERER), str(wide), '--style', 'H', *flags,

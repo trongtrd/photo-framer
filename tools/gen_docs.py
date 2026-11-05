@@ -23,6 +23,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 from photoframer.registry import STYLES  # noqa: E402
 from photoframer.settings import GLOBAL_FLAGS, OPTIONS  # noqa: E402
+from gallery import gallery_block  # noqa: E402
 
 README = ROOT / 'README.md'
 MENUS = ROOT / 'skills' / 'photo-framer' / 'references' / 'menus.md'
@@ -70,7 +71,7 @@ def option_matrix():
 
 
 def blocks():
-    generated = {'styles': readme_styles(), 'option-matrix': option_matrix()}
+    generated = {'styles': readme_styles(), 'option-matrix': option_matrix(), 'gallery': gallery_block()}
     for code, style in STYLES.items():
         for language in LANGUAGES:
             generated[f'menu-{language}-{code}'] = menu_table(style, language)
