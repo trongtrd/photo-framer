@@ -40,6 +40,17 @@ def wordmark_font(font_px, font_path=None):
         return ImageFont.load_default(size=size), max(1, round(font_px * .028))
 
 
+def title_fonts(title_px, subtitle_px, font_path=None):
+    """Gallery label faces, matching the spec cards for one typeface across styles.
+
+    Title: Inter SemiBold, like D's gear line and right-side text. Subtitle:
+    Inter Regular, like the exposure line. --font replaces both.
+    """
+    _, title, _ = specs_fonts(title_px, font_path)
+    subtitle, _, _ = specs_fonts(subtitle_px, font_path)
+    return title, subtitle
+
+
 def is_single_line(text, forbidden='\r\n\t'):
     """User wording: one line, at most MAX_TEXT_LENGTH characters."""
     return len(text) <= MAX_TEXT_LENGTH and not any(char in text for char in forbidden)

@@ -129,6 +129,8 @@ chỉ thêm viền mỏng đều quanh ảnh theo đúng tỷ lệ ảnh. Mặc 
 Bản chia sẻ JPEG của 4:5 và 1:1 có đúng kích thước 1080×1350 và 1080×1080.
 Ngoài menu: `--ratio 3:4` hoặc `--ratio 9:16` (story, reels; bản chia sẻ 1080×1440,
 1080×1920) và `--background blur` để dùng chính ảnh làm nền mờ, tối nhẹ, thay màu nền.
+Nhãn gallery: `--title` (Inter SemiBold như D) và `--subtitle` (chữ xám nhỏ) căn giữa dưới ảnh,
+dùng nguyên văn chữ bạn cung cấp; ảnh dịch lên để chừa chỗ.
 
 ## English
 
@@ -258,13 +260,15 @@ adds only a thin even border in the photo's own ratio. No text by default.
 Share JPEGs for 4:5 and 1:1 are exactly 1080×1350 and 1080×1080.
 Beyond the menu: `--ratio 3:4` or `--ratio 9:16` (stories, reels; share copies
 1080×1440, 1080×1920) and `--background blur` for a softly blurred, slightly
-darkened copy of the photo instead of the mat color.
+darkened copy of the photo instead of the mat color. Gallery label: `--title`
+(Inter SemiBold, as in D) and `--subtitle` (small gray Inter), centered below the photo,
+verbatim; the photo moves up to make room.
 
 ## Named options / Tùy chọn có tên
 
-Choice codes never change meaning; additional features use named flags. ✓ accepted, `required` must be supplied (F accepts an explicit empty string for a blank corner), — rejected with an error.
+Choice codes never change meaning; additional features use named flags. Your own PNG signature or logo (`--signature`) goes in the margin below the photo for A, B, E and G. ✓ accepted, `required` must be supplied (F accepts an explicit empty string for a blank corner), — rejected with an error.
 
-Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có tên. ✓ dùng được, `required` bắt buộc (F chấp nhận chuỗi rỗng để chủ động để trống một góc), — báo lỗi.
+Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có tên. Chữ ký/logo PNG của bạn (`--signature`) đặt ở lề dưới ảnh với A, B, E, G. ✓ dùng được, `required` bắt buộc (F chấp nhận chuỗi rỗng để chủ động để trống một góc), — báo lỗi.
 
 <!-- generated:option-matrix -->
 | Flag | A | B | C | D | E | F | G | H |
@@ -284,6 +288,12 @@ Mã 3 số không bao giờ đổi nghĩa; tính năng bổ sung dùng cờ có 
 | `--ratio` | — | — | — | — | — | — | — | ✓ |
 | `--background` | — | — | — | — | — | — | — | ✓ |
 | `--blur-tone` | — | — | — | — | — | — | — | ✓ |
+| `--title` | — | — | — | — | — | — | — | ✓ |
+| `--subtitle` | — | — | — | — | — | — | — | ✓ |
+| `--signature` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-position` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-width` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
+| `--signature-opacity` | ✓ | ✓ | — | — | ✓ | — | ✓ | — |
 | `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | `--metadata` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |

@@ -38,7 +38,16 @@ OPTIONS = (
     Option('ratio', '--ratio'),
     Option('background', '--background'),
     Option('blur_tone', '--blur-tone'),
+    # Gallery label (H) and a PNG signature/logo in the margin below the photo.
+    Option('title', '--title'),
+    Option('subtitle', '--subtitle'),
+    Option('signature', '--signature'),
+    Option('signature_position', '--signature-position'),
+    Option('signature_width', '--signature-width'),
+    Option('signature_opacity', '--signature-opacity'),
 )
+SIGNATURE_OPTIONS = frozenset({'signature', 'signature_position', 'signature_width',
+                               'signature_opacity'})
 SPEC_OPTIONS = frozenset({'camera', 'lens', 'iso', 'aperture', 'shutter', 'focal', 'raw_model'})
 # Flags handled by the CLI for every style; listed in the generated matrix.
 GLOBAL_FLAGS = ('--share', '--crop', '--metadata')
@@ -77,6 +86,12 @@ class Settings:
     ratio: str | None = None          # H canvas ratio, overrides menu row 1
     background: str | None = None     # H: 'blur' replaces the plain mat
     blur_tone: str | None = None      # H blur: 'dark' (default), 'neutral', 'light'
+    title: str | None = None          # H gallery label, Inter SemiBold line below the photo
+    subtitle: str | None = None       # H gallery label, second line (needs a title)
+    signature: str | Path | None = None   # PNG placed in the margin below the photo
+    signature_position: str | None = None  # bottom-right (default), bottom-center, bottom-left
+    signature_width: float | None = None   # fraction of canvas width, default 0.15
+    signature_opacity: float | None = None  # 0.05-1, default 1
     choices: tuple[int, int, int] = field(init=False)
 
     def __post_init__(self):
@@ -90,6 +105,6 @@ def check_options(settings, style):
         if not option.generic or option.field in style.accepts:
             continue
         if getattr(settings, option.field) is not None:
-            allowed = ' or '.join(code for code, other in STYLES.items()
-                                  if option.field in other.accepts)
+            codes = [code for code, other in STYLES.items() if option.field in other.accepts]
+            allowed = codes[0] if len(codes) == 1 else ', '.join(codes[:-1]) + ' or ' + codes[-1]
             raise ValueError(f'{option.flag} is supported only with style {allowed} (or --preview).')

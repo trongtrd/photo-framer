@@ -7,6 +7,9 @@ from PIL import Image, ImageDraw, ImageFilter
 
 from ..components.caption import draw_caption
 from ..components.shadow import shadow
+from ..components.signature import draw_signature
+from ..components.slots import Slot
+from ..settings import SIGNATURE_OPTIONS
 from .base import COMMON, Row, Style
 
 MATS = {1: .10, 2: .16, 3: .23}
@@ -57,8 +60,12 @@ def paint(photo, plan, settings, ctx):
     canvas.paste(board, (ix, iy))
     pos = (ix+mat, iy+mat)
     canvas.paste(photo, pos)
+    # The white mat below the photo, inside the frame.
+    slot = Slot((pos[0], pos[1]+h, pos[0]+w, pos[1]+h+mat))
     if settings.caption:
-        draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size, mat)
+        slot.claim(draw_caption(canvas, settings.caption, settings.font_path, s, pos, photo.size,
+                                mat), 'Caption', check=False)
+    draw_signature(canvas, slot, settings, ctx.profile)
     return canvas, pos
 
 
@@ -72,5 +79,5 @@ STYLE = Style(
           Row(('White mat', 'Bo giấy trắng'), (('Narrow', 'Hẹp'), ('Medium', 'Vừa'), ('Wide', 'Rộng'))),
           Row(('Outer background', 'Nền ngoài khung'), (('Gray', 'Xám'), ('White', 'Trắng'),
                                                          ('Ivory', 'Trắng ngà')))),
-    choices_hint='frame-mat-background', accepts=COMMON,
+    choices_hint='frame-mat-background', accepts=COMMON | SIGNATURE_OPTIONS,
     layout=layout, paint=paint)

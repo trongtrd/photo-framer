@@ -31,6 +31,21 @@ last, unchanged, and the keyline still applies. Offer it when the user asks
 for a blurred, "frosted" or photo-colored background; do not switch it on
 unasked.
 
+## Gallery label
+
+`--title` adds a centered line below the photo in Inter SemiBold, the face and
+near-black ink of D's camera line; `--subtitle` adds a second, smaller line in
+gray Inter Regular, like the exposure line (it needs a title). Ask for the exact
+wording, for example a place and a date, and use it verbatim; never take it
+from GPS, capture dates or filenames. On fixed canvases the photo and label
+are centered as one block, so the photo moves up; on the thin border the
+canvas grows. The label switches to light ink over a dark blurred background.
+A title wider than the canvas margins is an error: ask for shorter wording.
+The label replaces `--caption` for H; the two cannot be combined.
+
+H takes no `--signature`: a corner mark beside the centered label looks
+unbalanced. Offer A, B, E or G when the user wants a signature or logo.
+
 ## Size limits and sharing
 
 Because final PNGs keep every photo pixel, the canvas grows with the photo. H
