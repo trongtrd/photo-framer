@@ -73,6 +73,7 @@ Dùng JPEG hoặc PNG 8-bit. Khung được thêm bên ngoài ảnh; bản xem t
 
 Click a style to see its full-size example below. / Bấm vào phong cách để xem ảnh minh họa lớn bên dưới.
 
+<!-- generated:styles -->
 | Style / Phong cách | Look / Hình thức | Default / Mặc định |
 | --- | --- | :---: |
 | [**A · Floating / Ảnh nổi**](#style-a) | Soft shadow on a light background<br>Bóng mềm trên nền sáng | `2-2-1` |
@@ -83,6 +84,7 @@ Click a style to see its full-size example below. / Bấm vào phong cách để
 | [**F · Film Edge / Viền phim**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng | `2-1-1` |
 | [**G · Deckled Paper / Giấy mép xé**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé | `2-1-1` |
 | [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5 or 1:1 canvas for any photo, or a thin border; optional black keyline<br>Khung cố định 4:5 hoặc 1:1 cho mọi ảnh, hoặc viền mỏng; tùy chọn viền đen | `1-1-1` |
+<!-- /generated:styles -->
 
 Say **“A default”** or **“A mặc định”**; you do not need to remember the codes. If you only say “use defaults,” A is used unless another style is already chosen. For other settings, use your own words or the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
 
@@ -242,9 +244,38 @@ Text supplied with `--caption` must fit on one line, contain at most 200 charact
 
 F requires both `--left-text` and `--right-text`, including explicit empty values for blank corners. Each accepts one line of at most 200 characters. Both use bundled Inter SemiBold in warm white; `--font` overrides both. The renderer rejects texts that overlap or do not fit; it does not shrink, wrap, uppercase or truncate them. F uses these two fields instead of `--caption`.
 
+Which named flags each style accepts (✓), requires, or rejects (—). Choice codes never change meaning; new features arrive as named flags. / Cờ có tên mà từng phong cách nhận (✓), bắt buộc (required) hoặc báo lỗi (—). Mã 3 số không đổi nghĩa; tính năng mới dùng cờ có tên.
+
+<!-- generated:option-matrix -->
+| Flag | A | B | C | D | E | F | G | H |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| `--left-text` | — | — | — | — | — | required | — | — |
+| `--frame-color` | — | — | — | — | ✓ | — | — | — |
+| `--right-text` | — | — | — | required | — | required | — | — |
+| `--caption` | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
+| `--font` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--share` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--crop` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+<!-- /generated:option-matrix -->
+
 For Vietnamese captions, pass `--caption` and `--font` as above; add `--share` for a sharing copy. / Để thêm chữ tiếng Việt, dùng `--caption` và `--font` như ví dụ; thêm `--share` để xuất bản chia sẻ.
 
 Filesystems must support hard links for the renderer's atomic, no-overwrite final save. Existing output filenames receive numeric suffixes. The CLI returns JSON per input; inspect every item and report successes and errors separately.
+
+#### Maintaining the renderer / Bảo trì
+
+The renderer is the `skills/photo-framer/scripts/photoframer/` package (one module per style in `styles/`, shared drawing in `components/`); `frame_photo.py` is its CLI entry point. Release notes are in [CHANGELOG.md](CHANGELOG.md). / Renderer nằm trong package `photoframer/`, mỗi phong cách một module; lịch sử phiên bản ở [CHANGELOG.md](CHANGELOG.md).
+
+```sh
+# Regression tests
+python skills/photo-framer/scripts/test_frame_photo.py
+
+# Regenerate the style, menu and flag tables from the style registry (CI runs --check)
+python tools/gen_docs.py
+
+# Prove a refactor leaves every output byte unchanged against a git revision
+python tools/golden.py compare --base main
+```
 
 <a id="technical-notes"></a>
 
