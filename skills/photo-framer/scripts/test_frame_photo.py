@@ -667,8 +667,15 @@ class FramerRegression(unittest.TestCase):
                         else:
                             self.assertEqual(shared.size, final.size)
                             self.assertLessEqual(max(shared.size), 2048)
+        # H allows 100 MP (fixed canvases keep every pixel); other styles keep 60 MP.
+        # Mode '1' stand-ins: the limit is checked before any canvas is allocated.
+        with self.assertRaisesRegex(ValueError, '100 megapixels'):
+            render(Image.new('1', (9486, 3162)), 'H', ratio='9:16')
         with self.assertRaisesRegex(ValueError, '60 megapixels'):
-            render(Image.new('RGB', (6600, 4400)), 'H')
+            render(Image.new('1', (6000, 5000)), 'B', '1-3-1')
+        # A 29 MP landscape on 9:16 needs ~96 MP, which H now allows.
+        width, height = h_minimal_mat.layout((6600, 4400), Settings('H', ratio='9:16')).size
+        self.assertTrue(60_000_000 < width*height <= 100_000_000)
         font = RENDERER.parent.parent/'assets/fonts/Inter-Regular.ttf'
         photo = Image.new('RGB', (1200, 800), 'red')
         plain, (x, y) = render(photo, 'H')
@@ -831,6 +838,117 @@ def sony_exif(orientation=6):
                     36867: '2024:05:01 10:00:00'}
     exif[0x8825] = {1: 'N', 2: (R(21, 1), R(1, 1), R(30, 1)), 3: 'E', 4: (R(105, 1), R(51, 1), R(0, 1))}
     return exif
+
+
+class MinimalMatExtensions(unittest.TestCase):
+    """v0.10: --ratio 3:4/9:16, the 100 MP limit for H and --background blur."""
+
+    @staticmethod
+    def two_tone(size):
+        photo = Image.new('RGB', size, (200, 40, 40))
+        photo.paste((40, 60, 200), (size[0]//2, 0, size[0], size[1]))
+        return photo
+
+    def test_new_ratios_are_exact_centered_and_keep_margins(self):
+        for ratio, (num, den), fraction in (('3:4', (3, 4), .040), ('9:16', (9, 16), .050)):
+            for size in ((1200, 800), (800, 1200), (1000, 1000), (37, 16)):
+                for keyline in (1, 2, 3):
+                    with self.subTest(ratio=ratio, size=size, keyline=keyline):
+                        photo = self.two_tone(size)
+                        im, (x, y) = render(photo, 'H', f'1-1-{keyline}', ratio=ratio)
+                        self.assertEqual(im.crop((x, y, x+size[0], y+size[1])).tobytes(), photo.tobytes())
+                        self.assertEqual(im.width*den, im.height*num)
+                        k = {1: max(1, round(min(size)*.0055)), 2: 0, 3: max(1, round(min(size)*.011))}[keyline]
+                        left, top = x-k, y-k
+                        right, bottom = im.width-(x+size[0]+k), im.height-(y+size[1]+k)
+                        self.assertLessEqual(abs(left-right), 1)
+                        self.assertLessEqual(abs(top-bottom), 1)
+                        self.assertGreaterEqual(min(left, right, top, bottom), int(im.width*fraction))
+                        self.assertLessEqual(min(left, top), round(im.width*fraction)+num)
+
+    def test_ratio_flag_overrides_menu_row_without_changing_codes(self):
+        photo = self.two_tone((900, 600))
+        for code, ratio in (('1-2-3', '4:5'), ('2-2-3', '1:1'), ('3-2-3', 'original')):
+            with self.subTest(ratio=ratio):
+                by_code, _ = render(photo, 'H', code)
+                by_flag, _ = render(photo, 'H', '1-2-3' if code != '1-2-3' else '2-2-3', ratio=ratio)
+                self.assertEqual(by_code.tobytes(), by_flag.tobytes())
+        for bad in ('2:3', '16:9', ''):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, '--ratio'):
+                render(photo, 'H', ratio=bad)
+
+    def test_blur_background_stays_outside_the_photo(self):
+        photo = self.two_tone((600, 400))
+        plain, _ = render(photo, 'H', ratio='9:16')
+        blurred, (x, y) = render(photo, 'H', ratio='9:16', background='blur')
+        again, _ = render(photo, 'H', ratio='9:16', background='blur')
+        self.assertEqual(blurred.tobytes(), again.tobytes())
+        self.assertEqual(plain.size, blurred.size)
+        self.assertEqual(blurred.crop((x, y, x+600, y+400)).tobytes(), photo.tobytes())
+        # The keyline is still drawn just outside the photo.
+        self.assertEqual(blurred.getpixel((x-1, y+200)), (10, 10, 10))
+        # Background follows the photo: reddish on the left, bluish on the right, no white mat.
+        left, right = blurred.getpixel((5, 5)), blurred.getpixel((blurred.width-6, 5))
+        self.assertGreater(left[0], left[2])
+        self.assertGreater(right[2], right[0])
+        self.assertNotIn((255, 255, 255), (left, right))
+        tones = {}
+        for tone in ('dark', 'neutral', 'light'):
+            image, _ = render(photo, 'H', ratio='9:16', background='blur', blur_tone=tone)
+            tones[tone] = sum(image.crop((0, 0, 40, 40)).convert('L').getdata())
+            self.assertEqual(image.crop((x, y, x+600, y+400)).tobytes(), photo.tobytes())
+        self.assertLess(tones['dark'], tones['neutral'])
+        self.assertLess(tones['neutral'], tones['light'])
+        default, _ = render(photo, 'H', ratio='9:16', background='blur', blur_tone='dark')
+        self.assertEqual(default.tobytes(), blurred.tobytes())
+        with self.assertRaisesRegex(ValueError, 'requires --background blur'):
+            render(photo, 'H', blur_tone='dark')
+        with self.assertRaisesRegex(ValueError, '--background must be blur'):
+            render(photo, 'H', background='stars')
+        with self.assertRaisesRegex(ValueError, 'only with style H'):
+            render(photo, 'A', background='blur')
+
+    def test_verification_reopens_outputs_beyond_the_input_limit(self):
+        """Outputs may exceed Pillow's bomb limit (2x the 30 MP input cap) up to 100 MP."""
+        from photoframer import io as photo_io
+        image = Image.new('RGB', (60, 50), 'red')
+        with tempfile.TemporaryDirectory() as temp, \
+                unittest.mock.patch.object(Image, 'MAX_IMAGE_PIXELS', 1000):
+            saved = photo_io.save_verified(image, Path(temp) / 'big.png', None, image, (0, 0))
+            self.assertTrue(saved.is_file())
+            self.assertEqual(Image.MAX_IMAGE_PIXELS, 1000)
+            with self.assertRaises(Image.DecompressionBombError):
+                Image.open(saved)
+
+    def test_cli_share_sizes_notes_and_preview(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            wide, tall = root / 'wide.png', root / 'tall.jpg'
+            self.two_tone((1500, 1000)).save(wide)
+            self.two_tone((600, 900)).save(tall, quality=95)
+            for ratio, share in (('3:4', (1080, 1440)), ('9:16', (1080, 1920))):
+                with self.subTest(ratio=ratio):
+                    process = subprocess.run(
+                        [sys.executable, str(RENDERER), str(wide), str(tall), '--style', 'H', '--ratio', ratio,
+                         '--background', 'blur', '--share', '--out-dir', str(root / ratio.replace(':', 'x'))],
+                        capture_output=True, text=True, encoding='utf-8')
+                    self.assertEqual(process.returncode, 0, process.stderr)
+                    for row in json.loads(process.stdout)['results']:
+                        self.assertIn(f'fixed {ratio} canvas', row['notes'][0])
+                        self.assertIn(f'exactly {share[0]}x{share[1]}', row['notes'][0])
+                        self.assertTrue(any('Blurred background (dark tone)' in n for n in row['notes']))
+                        with Image.open(row['outputs'][1]) as shared:
+                            self.assertEqual(shared.size, share)
+            process = subprocess.run(
+                [sys.executable, str(RENDERER), str(wide), '--preview', '--ratio', '9:16', '--background', 'blur',
+                 '--out-dir', str(root / 'preview')], capture_output=True, text=True, encoding='utf-8')
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(json.loads(process.stdout)['results'][0]['status'], 'ok')
+            for flags in (('--ratio', '2:3'), ('--background', 'stars'), ('--blur-tone', 'sepia')):
+                with self.subTest(flags=flags):
+                    process = subprocess.run([sys.executable, str(RENDERER), str(wide), '--style', 'H', *flags,
+                                              '--out-dir', str(root / 'bad')], capture_output=True, text=True)
+                    self.assertEqual(process.returncode, 2)
 
 
 class MetadataLayer(unittest.TestCase):
@@ -1022,7 +1140,7 @@ class RegistryAndSettings(unittest.TestCase):
         values = {'left_text': 'x', 'right_text': 'x', 'frame_color': '#ad896c',
                   'caption': 'x', 'font_path': font, 'camera': 'Pentax 67', 'lens': '105mm',
                   'iso': 400.0, 'aperture': 2.4, 'shutter': 1/125, 'focal': 105.0,
-                  'raw_model': True}
+                  'raw_model': True, 'ratio': '9:16', 'background': 'blur', 'blur_tone': 'light'}
         required = {'D': {'right_text': 'Berlin'}, 'F': {'left_text': '', 'right_text': ''}}
         for code, style in STYLES.items():
             for option in OPTIONS:
@@ -1031,6 +1149,8 @@ class RegistryAndSettings(unittest.TestCase):
                     options[option.field] = values[option.field]
                     if option.field == 'caption':
                         options['font_path'] = font
+                    if option.field == 'blur_tone':
+                        options['background'] = 'blur'
                     if option.field in style.accepts:
                         render(photo, code, **options)
                     else:

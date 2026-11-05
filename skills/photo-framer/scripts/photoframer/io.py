@@ -1,6 +1,7 @@
 """Loading inputs safely and publishing verified outputs without overwriting."""
 from __future__ import annotations
 
+from contextlib import contextmanager
 import io
 import os
 from pathlib import Path
@@ -75,6 +76,23 @@ def load_photo(path, crop=None):
     return photo, profile, notes
 
 
+@contextmanager
+def _allow_pixels(count):
+    """Re-open our own just-written output, which may exceed the input limit.
+
+    Image.MAX_IMAGE_PIXELS guards untrusted inputs (Pillow refuses twice that
+    many pixels). Raise it only to the exact size just encoded, then restore it.
+    """
+    previous = Image.MAX_IMAGE_PIXELS
+    Image.MAX_IMAGE_PIXELS = max(previous or 0, count)
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', Image.DecompressionBombWarning)
+            yield
+    finally:
+        Image.MAX_IMAGE_PIXELS = previous
+
+
 def save_verified(image, destination, profile, original=None, photo_pos=None, exif=None):
     """Validate complete encoded file before publishing; never overwrite an existing file."""
     destination = Path(destination)
@@ -89,9 +107,9 @@ def save_verified(image, destination, profile, original=None, photo_pos=None, ex
             image.save(stream, format=fmt, icc_profile=profile, **options)
             stream.flush()
             os.fsync(stream.fileno())
-        with Image.open(temporary) as check:
+        with _allow_pixels(image.width*image.height), Image.open(temporary) as check:
             check.verify()
-        with Image.open(temporary) as check:
+        with _allow_pixels(image.width*image.height), Image.open(temporary) as check:
             check.load()
             if check.size != image.size:
                 raise ValueError('Output dimensions failed verification.')

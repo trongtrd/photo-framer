@@ -24,7 +24,7 @@ def _no_validation(settings):
     return None
 
 
-def _no_share_size(choices):
+def _no_share_size(settings):
     return None
 
 
@@ -43,7 +43,7 @@ class Style:
     rows: tuple[Row, Row, Row]
     choices_hint: str                # reply order for --choices help
     accepts: frozenset               # named options (Settings fields) this style takes
-    layout: Callable                 # (photo_size, choices) -> layout with .size
+    layout: Callable                 # (photo_size, settings) -> layout with .size
     paint: Callable                  # (photo, layout, settings, ctx) -> (canvas, pos)
     requires: frozenset = frozenset()  # accepted options that must be supplied
     validate: Callable = _no_validation

@@ -35,6 +35,9 @@ OPTIONS = (
     Option('shutter', '--shutter'),
     Option('focal', '--focal'),
     Option('raw_model', '--raw-model'),
+    Option('ratio', '--ratio'),
+    Option('background', '--background'),
+    Option('blur_tone', '--blur-tone'),
 )
 SPEC_OPTIONS = frozenset({'camera', 'lens', 'iso', 'aperture', 'shutter', 'focal', 'raw_model'})
 # Flags handled by the CLI for every style; listed in the generated matrix.
@@ -71,6 +74,9 @@ class Settings:
     shutter: float | None = None      # seconds
     focal: float | None = None        # millimetres
     raw_model: bool | None = None     # True: EXIF model code instead of the display name
+    ratio: str | None = None          # H canvas ratio, overrides menu row 1
+    background: str | None = None     # H: 'blur' replaces the plain mat
+    blur_tone: str | None = None      # H blur: 'dark' (default), 'neutral', 'light'
     choices: tuple[int, int, int] = field(init=False)
 
     def __post_init__(self):
