@@ -40,6 +40,25 @@ def wordmark_font(font_px, font_path=None):
         return ImageFont.load_default(size=size), max(1, round(font_px * .028))
 
 
+TITLE_FONT_FILE = 'NotoSerif-Bold.ttf'
+
+
+def title_fonts(title_px, subtitle_px, font_path=None):
+    """Gallery label: bold serif title, regular sans subtitle; --font replaces both."""
+    if font_path:
+        return (ImageFont.truetype(str(font_path), title_px),
+                ImageFont.truetype(str(font_path), subtitle_px))
+    try:
+        title = ImageFont.truetype(str(FONTS_DIR / TITLE_FONT_FILE), title_px)
+    except OSError:
+        title = ImageFont.load_default(size=title_px)
+    try:
+        subtitle = ImageFont.truetype(str(FONTS_DIR / SPECS_FONT_FILES[0]), subtitle_px)
+    except OSError:
+        subtitle = ImageFont.load_default(size=subtitle_px)
+    return title, subtitle
+
+
 def is_single_line(text, forbidden='\r\n\t'):
     """User wording: one line, at most MAX_TEXT_LENGTH characters."""
     return len(text) <= MAX_TEXT_LENGTH and not any(char in text for char in forbidden)
