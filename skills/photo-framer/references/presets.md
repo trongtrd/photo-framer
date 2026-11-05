@@ -198,6 +198,7 @@ Flat presentation: no shadow, frame or keyline.
   0.02–0.5), aspect kept, premultiplied LANCZOS. Opacity 0.05–1 (default 1).
   Positions bottom-right (default), bottom-center, bottom-left. Vertical
   clearance max(2, 0.12 × slot height) from the photo and canvas edges;
-  centered in the slot, or on H's label row when a label exists.
+  centered in the slot. Not available for H (owner decision: unbalanced beside
+  the centered label).
 
 Square photo corners. Shadows never cover photo pixels. RGB final files retain source ICC; A–D decorative numeric colors are interpreted in that profile, while E/F/G/H convert their sRGB colors into it. Preview/share versions convert to sRGB. Output EXIF (v0.9): `--metadata keep` (default) copies IFD0, the Exif sub-IFD and GPS into the final PNG (eXIf) and share JPEG (APP1), sets Orientation 1 when present, updates ImageWidth/ImageLength and PixelX/YDimension to each output, and drops IFD1 thumbnails, MakerNote, XMLPacket, InterColorProfile and the interoperability pointer; JPEG EXIF over 65,000 bytes is an error. `--metadata strip` writes none. Previews never carry metadata. Cropping/resizing requires explicit authorization; reduced previews are not final files.

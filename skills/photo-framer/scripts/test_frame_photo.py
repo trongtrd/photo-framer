@@ -1053,7 +1053,7 @@ class LabelsAndOverlays(unittest.TestCase):
             render(self.photo, 'A', title='x')
 
     def test_signature_placement_opacity_and_slots(self):
-        for style, code in (('A', None), ('B', None), ('E', '2-1-2'), ('G', None), ('H', None)):
+        for style, code in (('A', None), ('B', None), ('E', '2-1-2'), ('G', None)):
             for position in ('bottom-left', 'bottom-center', 'bottom-right'):
                 with self.subTest(style=style, position=position):
                     plain, pos = render(self.photo, style, code)
@@ -1100,29 +1100,32 @@ class LabelsAndOverlays(unittest.TestCase):
         # A caption at the right leaves room for a signature on the left.
         im, _ = render(self.photo, 'A', caption='Hà Nội', font_path=font, signature=self.signature,
                        signature_position='bottom-left', signature_width=.1)
-        # A short centered title leaves the corners free in H.
-        im, _ = render(self.photo, 'H', title='Praha', signature=self.signature,
-                       signature_position='bottom-right', signature_width=.08)
-        with self.assertRaisesRegex(ValueError, 'overlap the gallery label'):
-            render(self.photo, 'H', title='Praha', signature=self.signature,
-                   signature_position='bottom-center', signature_width=.08)
+        # H takes no signature (unbalanced beside its centered label), with or without one.
+        for options in ({}, {'title': 'Praha'}):
+            with self.subTest(options=options), self.assertRaisesRegex(ValueError, 'only with style A, B, E or G'):
+                render(self.photo, 'H', signature=self.signature, **options)
 
     def test_cli_label_signature_notes_and_flag_errors(self):
         path = self.root / 'photo.png'
         self.photo.save(path)
         process = subprocess.run(
             [sys.executable, str(RENDERER), str(path), '--style', 'H', '--choices', '2-1-1',
-             '--title', 'Hồ Hoàn Kiếm', '--subtitle', 'Hà Nội', '--signature', str(self.signature),
-             '--signature-position', 'bottom-left', '--signature-width', '0.08',
+             '--title', 'Hồ Hoàn Kiếm', '--subtitle', 'Hà Nội',
              '--out-dir', str(self.root / 'out')], capture_output=True, text=True, encoding='utf-8')
         self.assertEqual(process.returncode, 0, process.stderr)
         notes = json.loads(process.stdout)['results'][0]['notes']
         self.assertTrue(any('Gallery label: title and subtitle' in n for n in notes), notes)
+        process = subprocess.run(
+            [sys.executable, str(RENDERER), str(path), '--style', 'G', '--signature', str(self.signature),
+             '--signature-position', 'bottom-left', '--signature-width', '0.08',
+             '--out-dir', str(self.root / 'out')], capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(process.returncode, 0, process.stderr)
+        notes = json.loads(process.stdout)['results'][0]['notes']
         self.assertTrue(any('Signature PNG placed bottom-left' in n for n in notes), notes)
         for flags in (('--signature-width', '0.9'), ('--signature-opacity', '0'),
                       ('--signature-position', 'top-left'), ('--title', '')):
             with self.subTest(flags=flags):
-                process = subprocess.run([sys.executable, str(RENDERER), str(path), '--style', 'H',
+                process = subprocess.run([sys.executable, str(RENDERER), str(path), '--style', 'G',
                                           '--signature', str(self.signature), *flags,
                                           '--out-dir', str(self.root / 'bad')], capture_output=True)
                 self.assertEqual(process.returncode, 2)
