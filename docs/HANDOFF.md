@@ -1,17 +1,22 @@
 # Handoff: Photo Framer upgrade roadmap
 
-Last updated: 2026-11-05. Working branch: `claude/happy-ptolemy-vpmy5z` (pushed, **no PR opened yet**).
+Last updated: 2026-11-05.
 Owner: project owner (writes in Vietnamese; reply in Vietnamese, use photography/post-processing terms).
+
+## Status
+
+- **Phase 0**: branch `claude/happy-ptolemy-vpmy5z` (style H, portrait demo, this handoff) is open as PR trongtrd/photo-framer#1 into `main` (awaiting owner review).
+- **Phase 1 implemented** on branch `claude/tender-lovelace-j9q91m`, stacked on `claude/happy-ptolemy-vpmy5z` (rebase onto `main` once #1 merges). Output verified byte-identical with `tools/golden.py compare --base 97c89fc`. Next: phase 2.
 
 ## Where to read first (do not duplicate here)
 
 | Topic | Source |
 |---|---|
 | What the project is, user-facing styles A–H, CLI usage, technical limits, demo reproduction | `README.md` |
-| Agent behaviour rules (no invented text, crop only with approval, verification, delivery) | `skills/photo-framer/SKILL.md` |
+| Agent behaviour rules (no invented text, crop only with approval, verification, delivery) | `skills/photo-framer/SKILL.md`; per-style rules in `references/styles/` |
 | Per-style menus (VI/EN) and geometry constants | `skills/photo-framer/references/menus.md`, `references/presets.md` |
-| Renderer (single file, ~930 lines) | `skills/photo-framer/scripts/frame_photo.py` |
-| Regression tests (33 tests, unittest, synthetic images) | `skills/photo-framer/scripts/test_frame_photo.py` — run `python skills/photo-framer/scripts/test_frame_photo.py` |
+| Renderer | package `skills/photo-framer/scripts/photoframer/` (styles in `styles/`, registry in `registry.py`, `Settings` + flag matrix in `settings.py`); CLI entry `scripts/frame_photo.py` |
+| Regression tests (38 tests, unittest, synthetic images) | `skills/photo-framer/scripts/test_frame_photo.py` — run `python skills/photo-framer/scripts/test_frame_photo.py` |
 | CI matrix (Ubuntu/Windows/macOS, Python 3.10/3.12, Pillow 10.1–12.x) | `.github/workflows/test.yml` |
 | Commit history of this session | `git log 6408659..HEAD` (`bf39038` style H, `3cc621f` portrait examples) |
 
@@ -83,6 +88,9 @@ b. **Gallery label**: `--title` / `--subtitle` (exact wording, one line each, �
 c. **PNG signature/logo**: `--signature path.png` with placement options within slots (e.g. bottom-right/bottom-center), size relative to canvas, opacity; keep transparency; error if it would touch the photo.
 
 ## Practical notes for the next agent
+- Adding a named flag: add a `Settings` field and an `Option` in `photoframer/settings.py`, list it in each accepting style's `accepts` (and `requires` if mandatory), add the CLI argument in `photoframer/cli.py`, then run `python tools/gen_docs.py`. The matrix test fails if enforcement and declarations disagree.
+- Refactors: run `python tools/golden.py compare --base <rev>` before committing; it takes ~1.5 min. Hashes are machine-specific, so it compares two code versions on the same machine instead of storing hashes.
+- Known pre-existing quirk (not changed in phase 1, since output must stay identical): outputs that embed the renderer's generated sRGB profile (unprofiled inputs, previews, share JPEGs) carry the LittleCMS creation timestamp, so re-running at a different second changes those bytes. A fixed, committed sRGB profile would make outputs reproducible; ask the owner before changing it.
 - Environment: Python 3, Pillow, defusedxml (`pip install -r skills/photo-framer/scripts/requirements.txt`). Tests take ~15 s.
 - Put scratch outputs in the session scratchpad, not in the repo; `output/` is git-ignored but clean it up.
 - When showing results to the owner, send contact sheets and state exactly what the input was.
