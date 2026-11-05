@@ -12,4 +12,5 @@ procedural pattern needs no AI generation, downloaded paper texture or per-image
 analysis. Offer margin width, paper tone and edge roughness once for the batch.
 An explicit "G default" runs directly with 2-1-1, without a preview or questions.
 No text, capture details or logo is added by default. If a caption is requested,
-use the exact wording with `--caption` and `--font`, and keep it on the paper.
+use the exact wording with `--caption` (bundled Inter; `--font` only on request),
+and keep it on the paper.

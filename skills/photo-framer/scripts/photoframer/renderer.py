@@ -37,8 +37,6 @@ def render(photo, settings, *, profile=None, meta=None, echo_colors=None):
         raise ValueError(f'The shorter image edge must be at least {MIN_SHORT_EDGE} pixels.')
     caption = settings.caption
     if caption:
-        if not settings.font_path:
-            raise ValueError('A Unicode-capable --font file is required for captions.')
         if '\n' in caption or len(caption) > MAX_TEXT_LENGTH:
             raise ValueError(f'Use a single-line caption up to {MAX_TEXT_LENGTH} characters.')
     plan = style.layout((w, h), settings)

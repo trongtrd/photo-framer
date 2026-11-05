@@ -12,7 +12,7 @@ from ..color import colors_in_profile
 from ..components.caption import draw_caption
 from ..components.keyline import draw_keyline
 from ..components.slots import Slot
-from ..text import is_single_line, title_fonts
+from ..text import PRIMARY_INK, SECONDARY_INK, is_single_line, title_fonts
 from .base import COMMON, Row, Style
 
 # Canvas ratio (width/height); None follows the photo with a thin even border.
@@ -46,7 +46,7 @@ TITLE_SIZE = .05       # x photo short edge
 SUBTITLE_SIZE = .026
 LABEL_GAP = .05        # photo edge to title, x photo short edge
 LINE_SPACING = .35     # x title size
-LABEL_INKS = {'dark': ((30, 30, 30), (115, 115, 115)), 'light': ((246, 244, 238), (214, 212, 206))}
+LABEL_INKS = {'dark': (PRIMARY_INK, SECONDARY_INK), 'light': ((246, 244, 238), (214, 212, 206))}
 
 
 class Label(NamedTuple):

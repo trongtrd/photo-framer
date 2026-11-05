@@ -144,7 +144,10 @@ Flat presentation: no shadow, frame or keyline.
   generators preserve global random state and give repeatable output.
 - Choices: margin–paper tone–torn edges, default 2-1-1. One set of choices
   can process the entire batch without per-image questions or AI calls.
-- Optional `--caption` requires the exact wording and a supplied `--font`.
+- Optional `--caption` requires the exact wording; it uses bundled Inter Regular
+  unless `--font` is supplied (v0.11, all caption styles). Caption ink is the
+  shared secondary gray sRGB (115,115,115) on A, B, G and H; E uses its inner-edge
+  color; C's caption takes the camera-line ink (30,30,30).
   Keep it inside the lower paper strip, reserving clearance for the torn edge;
   reject overflow instead of touching the photo or clipping to the outer edge.
 
