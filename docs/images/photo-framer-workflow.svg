@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="218" viewBox="0 0 1200 218" role="img" aria-labelledby="title desc">
   <title id="title">Photo Framer: four steps / Bốn bước</title>
-  <desc id="desc">Install the skill, attach photos, choose a style from A to G, then save the framed PNG. Cài skill, đính kèm ảnh, chọn phong cách A đến G, rồi tải PNG có khung.</desc>
+  <desc id="desc">Install the skill, attach photos, choose a style, then save the framed PNG. Cài skill, đính kèm ảnh, chọn phong cách, rồi tải PNG có khung.</desc>
   <rect width="1200" height="218" rx="16" fill="#faf7f0"/>
   <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif">
     <g fill="#112447" font-size="23" font-weight="600" text-anchor="middle">
@@ -16,7 +16,7 @@
     <g fill="#112447" font-size="30" font-weight="600">
       <text x="38" y="116">Install the skill</text>
       <text x="338" y="116">Attach photos</text>
-      <text x="638" y="116">Choose A–H</text>
+      <text x="638" y="116">Choose a style</text>
       <text x="938" y="116">Save your PNG</text>
     </g>
     <g fill="#526073" font-size="24">

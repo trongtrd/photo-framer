@@ -1,10 +1,19 @@
 # README gallery
 
-The README has one group for each style A–H. A–G use two horizontal rows:
-seven preset examples, then representative text/input options. Each preset
-example changes only one menu setting from the default, so every value in
-the three-row menu is visible without listing all 27 combinations. H uses
-three rows: canvas ratios, blurred backgrounds, and mats/keylines/text.
+The README leads with eight short display names: Shadow (A), Gallery (B),
+Specs (C), Specs + Text (D), Color (E), Film (F), Paper (G), and Canvas (H).
+Their agreed naming hierarchy is in `docs/proposals/readme-names.md`.
+The main gallery has 87 examples. A–G use appearance and text rows; E's shared
+color belongs with appearance. Each preset example changes one setting from
+the default, so every menu value is visible without listing all combinations.
+H uses three rows: ratios, blur and details, with the same ratio order in its
+first two rows. C/D's four metadata/input examples are in the technical section.
+All 91 examples remain generated and verified.
+
+Names and descriptive variants lead the gallery. Letters remain secondary in
+the group headings; CLI flags, legacy names and default three-number codes
+are in the technical reference. This changes documentation and skill vocabulary,
+not the renderer's codes, names or output bytes.
 
 The number of columns is independent for every row. Wide tables can scroll
 horizontally on GitHub; each thumbnail links to a larger JPEG. The README
@@ -14,7 +23,7 @@ nonbreaking spacer supplies an intrinsic minimum width in each image cell.
 This keeps the previews readable and activates native horizontal table scrolling.
 
 Thumbnails are centered on opaque presentation squares: white (`#ffffff`)
-for Film Edge (F), black (`#000000`) for the other styles and the original
+for Film (F), black (`#000000`) for the other styles and the original
 photos. White keeps F's dark film borders visible; black separates the light
 mats from GitHub's page. These surrounds are not part of the rendered frame:
 clicking a thumbnail opens the larger image without the presentation surround.

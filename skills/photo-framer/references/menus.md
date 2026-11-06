@@ -1,5 +1,11 @@
 # Menus / Lựa chọn
 
+The short display names map to the same existing codes: Shadow / Ảnh nổi (A),
+Gallery / Khung gallery (B), Specs / Thông số (C), Specs + Text / Thông số + chữ riêng (D),
+Color / Viền màu (E), Film / Viền phim (F), Paper / Giấy xé (G), Canvas / Khung tỷ lệ (H).
+Use names and appearance descriptions when helping someone choose. The detailed
+menus below retain their previous names and frozen choice codes for compatibility.
+
 Use the user's language. Preserve codes: A floating photo, B gallery frame, C print/spec card, D spec card with custom right-side text, E Color Echo, F Film Edge, G Deckled Paper, H Minimal Mat. Default style A; default settings **A, 2-2-1**, **B, 1-2-1**, **C/D/E/F/G, 2-1-1**, **H, 1-1-1**.
 
 ## Tiếng Việt

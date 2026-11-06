@@ -1,6 +1,6 @@
 # Handoff: Photo Framer
 
-Last updated: 2026-11-06 (PR #11 merged; Film Edge presentation correction and naming review).
+Last updated: 2026-11-06 (owner-only main history published; approved README naming implemented).
 Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography and post-processing terms. Ask with `AskUserQuestion` and give a recommended option when a decision is really the owner's. Otherwise proceed.
 
 ## Where to read first (do not duplicate here)
@@ -15,7 +15,7 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 | Renderer | `skills/photo-framer/scripts/photoframer/`: `styles/` (one module per style), `components/`, `registry.py`, `settings.py` (`Settings` and the `OPTIONS` matrix), `cli.py`. Entry point: `scripts/frame_photo.py` |
 | Tests | `skills/photo-framer/scripts/test_frame_photo.py` runs every module in `scripts/tests/`. Areas include input/color, C/D, E/F/G, H, labels/signatures, metadata, registry, capture sidecars and output preflight. Shared helpers and the `FramerCase` base class are in `tests/support.py`. One module: `python -m unittest tests.test_metadata` from `scripts/`; filter by name with `-k` |
 | Docs generator | `tools/gen_docs.py`; CI runs `--check` |
-| README gallery | `tools/gallery.py` defines and renders 91 representative examples; `docs/gallery.md` documents sources/recipes, `docs/images/gallery/manifest.json` records hashes. CI runs `python tools/gallery.py --check` |
+| README gallery | `tools/gallery.py` defines and renders 91 representative examples (87 in the style gallery, four technical examples); `docs/gallery.md` documents sources/recipes, `docs/images/gallery/manifest.json` records hashes. CI runs `python tools/gallery.py --check` |
 | Byte-identity check | `tools/golden.py compare --base <rev> [--new-flags "..."]` (~1.5 min, compares two code versions on one machine; every byte is compared, add `--ignore-icc-dates` only for a `--base` older than v0.11.1) |
 | CI | `.github/workflows/test.yml` (Ubuntu Python 3.10 with Pillow 10.1, plus Python 3.12 on Ubuntu, Windows and macOS, and Python 3.13 on Ubuntu) |
 | Fonts and licences | `skills/photo-framer/assets/fonts/README.md` (Inter only) |
@@ -24,13 +24,13 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 
 ## Current state
 
-The latest verified `main` is `08a191c`: PR #11 merged the v0.13 landscape H and README gallery changes. All 76 tests, generated-doc/gallery checks and all five main CI jobs passed after merging (run 69, ID 42114834799). PR #10 previously merged v0.12.0 (24 MP complete output cap, capture sidecars, A/B/G labels). The existing GitHub Release is still v0.11.1 at `2f64ad0`; v0.12/v0.13 have no separate releases. Earlier PRs #1–#9 are also merged.
+The latest verified `main` is `43c8281`, the owner-approved metadata-only rewrite of `08a191c` (PR #11's merge). All 57 commit trees and their parent graph are preserved; 45 commit IDs changed, 26 Claude author/committer identities were replaced, 33 Claude co-author trailers were removed and 37 old signature headers were removed from rewritten objects. A verified all-ref backup and commit map are retained locally in `output/contributors-review-2026-11-06/`. GitHub's contributor API now reports only `trongtrd` with 57 commits. CI on the rewritten main passed (run ID 42143980539). The v0.11.1 tag remains exactly `2f64ad02db53c5aa5a1b3380cea051c6cd19b3b0`; its existing release and original history were not moved. Historical SHA references below describe the original PRs and checks. v0.12/v0.13 have no separate releases.
 
 PR #11 merged unreleased v0.13.0 from `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. Their explicit opening/merge authorization applied to PR #11 only: https://github.com/trongtrd/photo-framer/pull/11. It does not authorize another PR, a release or branch deletion.
 
-The owner requested contrasting gallery backgrounds: black for the light-framed styles and, after review, white for Film Edge (F), whose dark borders blend into black. The current branch `codex/readme-clarity-film-background` implements that F-only correction with per-example thumbnail presentation recipes. Squares remain 432×432 PNGs, with at least 16 px of padding around the intact reduced frame. Linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged. No PR or merge has been requested for this new branch.
+The current branch `codex/readme-clarity-film-background` was rebased onto the rewritten main without changing its tree, then implements the approved naming/grouping plan and white presentation surround for Film (F). The other styles keep black surrounds. Squares remain 432×432 PNGs, with at least 16 px of padding around the intact reduced frame; linked larger previews keep the actual frame background. All 91 generated examples remain unchanged apart from F's previously approved thumbnail surrounds. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged. No PR or merge has been requested for this branch.
 
-The owner requested a review of grouping and naming, not immediate renaming. `docs/proposals/readme-names.md` contains a concrete proposal pending approval; A–H and the three-digit codes remain frozen. They also requested removing Claude from GitHub Contributors. An audit found 26 Claude-authored commits and 33 Claude co-author trailers (35 distinct commits affected by one or both). Do not rewrite published history, move release tags or force-update `main` without explicit approval of the reviewed history plan; the push restriction to the designated development branch still applies.
+The owner explicitly approved all proposals on 2026-11-06, including the separately reviewed non-fast-forward update of main. `docs/proposals/readme-names.md` records the accepted display vocabulary: Shadow, Gallery, Specs, Specs + Text, Color, Film, Paper and Canvas. README headings put letters second, descriptive variants lead, and CLI flags/three-number codes remain in the technical reference. Four C/D metadata/input examples move there, E's shared color moves to appearance, and H uses the same ratio order in its plain/blur rows. The skill maps new and previous display names to the unchanged A–H codes. The history-update exception is complete; it does not authorize unrelated future force-pushes, changes to release tags or merges of new PRs.
 
 Takeover verified `main` at `2f64ad0`, all nine PRs merged, 64 tests passing and CI run 55 successful in all five jobs. The local checkout was stale at `6408659` and was fast-forwarded without edits. The current workstation is Windows, Python 3.14.8/Pillow 12.3.0, rather than the previous session's Linux environment.
 
@@ -43,6 +43,7 @@ Local v0.13 validation: 76 tests passed on Windows/Python 3.14.8/Pillow 12.3.0 (
 Working rules for the next session:
 
 - Use the branch the session names; push only there, and ask before pushing anywhere else. Do not open a PR unless the owner asks.
+- Use the owner's configured Git identity and do not add AI co-author trailers; the owner requested that only their identity appear in Contributors.
 - Before reporting a state, check it: run the tests and `python tools/gen_docs.py --check`, and read GitHub's check runs (the legacy status endpoint reports `pending` with no entries because CI uses check runs).
 - Keep the CHANGELOG, docs and demo images in the same PR as the code change.
 
@@ -86,6 +87,6 @@ Working rules for the next session:
 
 1. Signature selection and publication are resolved: **sample 3**, width **0.12**, bottom-right, opacity 1.0. The owner approved public README use on 2026-11-06. The original three sources and comparison files remain in their Dropbox; only the selected transparent PNG is used by the documentation gallery. Background extraction/cropping used explicitly approved Python/Pillow processing; white recompositing exactly reproduces the cropped source pixels.
 2. Camera names: the owner uses Sony α7C, already supported correctly; no expansion is needed for their current body. Other names remain subject to manufacturer verification before addition.
-3. Capture sidecars, A/B/G labels and the 24 MP cap are complete through PR #10; landscape H and the gallery are complete through PR #11. The F white-surround correction is on `codex/readme-clarity-film-background`, pending a future PR request. The naming/grouping proposal and the contributor-history publication plan need separate owner decisions. Future PRs still require their own request and specific merge approval.
+3. Capture sidecars, A/B/G labels and the 24 MP cap are complete through PR #10; landscape H and the gallery are complete through PR #11. Owner-only main attribution is published and verified. F's white surround and the approved naming/grouping changes are on `codex/readme-clarity-film-background`, pending a future PR request. Future PRs still require their own request and specific merge approval.
 
 No other new feature or release is authorized. Commits, PR text and repository docs stay in English; conversation stays in Vietnamese.

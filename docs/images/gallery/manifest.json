@@ -794,61 +794,6 @@
         "background": "#000000"
       }
     },
-    "c-raw-model": {
-      "recipe": {
-        "source": "docs/images/demo-source-final.jpg",
-        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
-        "settings": {
-          "style": "C",
-          "choices": "2-1-1",
-          "raw_model": true
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        }
-      },
-      "files": {
-        "docs/images/gallery/c-raw-model.jpg": "6eec01d053ee43b3847c28eae63df67c799f31d92f81738e64235211affb205e",
-        "docs/images/gallery/thumbs/c-raw-model.png": "df7421b0bc92f3a0d5ae5e640fc811a5b9bb40f71227d0fd419dec3d02e79a84"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
-    "c-sidecar": {
-      "recipe": {
-        "source": "docs/examples/scan.png",
-        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
-        "settings": {
-          "style": "C",
-          "choices": "2-1-1",
-          "capture_sidecar": true
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        },
-        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
-      },
-      "files": {
-        "docs/images/gallery/c-sidecar.jpg": "10e2e64fd43ed0ab6af250f1f9e4393f846e45fec74f4fb53b9a5601d471975e",
-        "docs/images/gallery/thumbs/c-sidecar.png": "dc30c3750bb96a07e341f0733f0dde49969c1d1804c23eb9cd49a5e1ad6920bd"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
     "d-default": {
       "recipe": {
         "source": "docs/images/demo-source-final.jpg",
@@ -1058,63 +1003,6 @@
       "files": {
         "docs/images/gallery/d-caption.jpg": "d23eaf696c0ed9311d223e6219b57d076117b13783eaa16decb2d628bccf553e",
         "docs/images/gallery/thumbs/d-caption.png": "bf81a9ed46337e05932e82a5c496c268dcf07e3b2f3de69cec969921e348b6df"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
-    "d-raw-model": {
-      "recipe": {
-        "source": "docs/images/demo-source-final.jpg",
-        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
-        "settings": {
-          "style": "D",
-          "choices": "2-1-1",
-          "right_text": "Berlin, Germany | October 2022",
-          "raw_model": true
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        }
-      },
-      "files": {
-        "docs/images/gallery/d-raw-model.jpg": "c9fbf0a5b49973e3236ec450ac71e0c4695494101846846d03eba00a7e7e72fe",
-        "docs/images/gallery/thumbs/d-raw-model.png": "50f5a42f74a1ba392a096c772025c07885d197d1e61325c1e6959f4dbc38111d"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
-    "d-sidecar": {
-      "recipe": {
-        "source": "docs/examples/scan.png",
-        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
-        "settings": {
-          "style": "D",
-          "choices": "2-1-1",
-          "right_text": "Berlin, Germany | October 2022",
-          "capture_sidecar": true
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        },
-        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
-      },
-      "files": {
-        "docs/images/gallery/d-sidecar.jpg": "63a2d7fd9c32d86db8cd3839d3f0bbc3c4a528bb2ef2293e9d3a066b6713c290",
-        "docs/images/gallery/thumbs/d-sidecar.png": "fcfcf818a441fc5a011bb8ce0b54d4e75715bce4629976a4ec30569f138b310f"
       },
       "thumbnail_recipe": {
         "version": 1,
@@ -1987,33 +1875,6 @@
         "background": "#000000"
       }
     },
-    "h-ratio-original": {
-      "recipe": {
-        "source": "docs/images/demo-source-final.jpg",
-        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
-        "settings": {
-          "style": "H",
-          "choices": "1-1-1",
-          "ratio": "original"
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        }
-      },
-      "files": {
-        "docs/images/gallery/h-ratio-original.jpg": "03872069f602c26548266ffcf982c1ea6114d8184ff7336be391845974725979",
-        "docs/images/gallery/thumbs/h-ratio-original.png": "b0760a2f7e73cb1fd3ee12e98b08ecadb9499008e95620f7861ba40b183764c6"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
     "h-ratio-3x4": {
       "recipe": {
         "source": "docs/images/demo-source-final.jpg",
@@ -2095,15 +1956,14 @@
         "background": "#000000"
       }
     },
-    "h-blur-16x9": {
+    "h-ratio-original": {
       "recipe": {
         "source": "docs/images/demo-source-final.jpg",
         "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
         "settings": {
           "style": "H",
           "choices": "1-1-1",
-          "ratio": "16:9",
-          "background": "blur"
+          "ratio": "original"
         },
         "recipe": {
           "version": 1,
@@ -2113,64 +1973,8 @@
         }
       },
       "files": {
-        "docs/images/gallery/h-blur-16x9.jpg": "cb202f7a4270d8e7d51e1b112599f8cd9e642e2aa91c910261f076b9579b51b1",
-        "docs/images/gallery/thumbs/h-blur-16x9.png": "b553681ccad1c79fd6b0dfb610c4f03c370979a65e189729cf10d312ad158385"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
-    "h-blur-1x1": {
-      "recipe": {
-        "source": "docs/images/demo-source-final.jpg",
-        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
-        "settings": {
-          "style": "H",
-          "choices": "1-1-1",
-          "ratio": "1:1",
-          "background": "blur"
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        }
-      },
-      "files": {
-        "docs/images/gallery/h-blur-1x1.jpg": "a87aeb9bb726f464996fc9f7a010c90811c0c37dbc22a87e4e0a58d6da9a076f",
-        "docs/images/gallery/thumbs/h-blur-1x1.png": "8b4d20c9448d38db7d87fdeb182146a3d55966c40e0b8e3995eeb6b3e2bd750c"
-      },
-      "thumbnail_recipe": {
-        "version": 1,
-        "edge": 432,
-        "image_edge": 400,
-        "background": "#000000"
-      }
-    },
-    "h-blur-9x16": {
-      "recipe": {
-        "source": "docs/images/demo-source-final.jpg",
-        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
-        "settings": {
-          "style": "H",
-          "choices": "1-1-1",
-          "ratio": "9:16",
-          "background": "blur"
-        },
-        "recipe": {
-          "version": 1,
-          "preview_edge": 1280,
-          "thumb_edge": 400,
-          "quality": 88
-        }
-      },
-      "files": {
-        "docs/images/gallery/h-blur-9x16.jpg": "6402a64a52aed3a99847cdc542f197d3aea1f9a2eee77d1e1b0822cd7ffc3710",
-        "docs/images/gallery/thumbs/h-blur-9x16.png": "cc47417f2b4d1e44eee3823c9ae56003a891e15e196d592a753dc27504294fee"
+        "docs/images/gallery/h-ratio-original.jpg": "03872069f602c26548266ffcf982c1ea6114d8184ff7336be391845974725979",
+        "docs/images/gallery/thumbs/h-ratio-original.png": "b0760a2f7e73cb1fd3ee12e98b08ecadb9499008e95620f7861ba40b183764c6"
       },
       "thumbnail_recipe": {
         "version": 1,
@@ -2207,6 +2011,34 @@
         "background": "#000000"
       }
     },
+    "h-blur-1x1": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "1:1",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-1x1.jpg": "a87aeb9bb726f464996fc9f7a010c90811c0c37dbc22a87e4e0a58d6da9a076f",
+        "docs/images/gallery/thumbs/h-blur-1x1.png": "8b4d20c9448d38db7d87fdeb182146a3d55966c40e0b8e3995eeb6b3e2bd750c"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
     "h-blur-3x4": {
       "recipe": {
         "source": "docs/images/demo-source-final.jpg",
@@ -2227,6 +2059,62 @@
       "files": {
         "docs/images/gallery/h-blur-3x4.jpg": "49396c6f7c7fbe6f8a18812bd19613a44b3aacd0b47ef2f911e321b5555c06a5",
         "docs/images/gallery/thumbs/h-blur-3x4.png": "7031692706b422a602d47e9ee536aaea6374bf2d2b769c47a4be3a58b3bc25fd"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "h-blur-9x16": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "9:16",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-9x16.jpg": "6402a64a52aed3a99847cdc542f197d3aea1f9a2eee77d1e1b0822cd7ffc3710",
+        "docs/images/gallery/thumbs/h-blur-9x16.png": "cc47417f2b4d1e44eee3823c9ae56003a891e15e196d592a753dc27504294fee"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "h-blur-16x9": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "H",
+          "choices": "1-1-1",
+          "ratio": "16:9",
+          "background": "blur"
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/h-blur-16x9.jpg": "cb202f7a4270d8e7d51e1b112599f8cd9e642e2aa91c910261f076b9579b51b1",
+        "docs/images/gallery/thumbs/h-blur-16x9.png": "b553681ccad1c79fd6b0dfb610c4f03c370979a65e189729cf10d312ad158385"
       },
       "thumbnail_recipe": {
         "version": 1,
@@ -2499,6 +2387,118 @@
       "files": {
         "docs/images/gallery/h-label.jpg": "5d8cafcf7d5be0a6cf8790a59c6114368efe6fa009624e13f3fbaf0e5f11a84a",
         "docs/images/gallery/thumbs/h-label.png": "342b8256eea2ad486aed57719c449e58e5952cfc3c983103cbbd670cb7204e75"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "c-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/c-raw-model.jpg": "6eec01d053ee43b3847c28eae63df67c799f31d92f81738e64235211affb205e",
+        "docs/images/gallery/thumbs/c-raw-model.png": "df7421b0bc92f3a0d5ae5e640fc811a5b9bb40f71227d0fd419dec3d02e79a84"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "c-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "C",
+          "choices": "2-1-1",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/c-sidecar.jpg": "10e2e64fd43ed0ab6af250f1f9e4393f846e45fec74f4fb53b9a5601d471975e",
+        "docs/images/gallery/thumbs/c-sidecar.png": "dc30c3750bb96a07e341f0733f0dde49969c1d1804c23eb9cd49a5e1ad6920bd"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "d-raw-model": {
+      "recipe": {
+        "source": "docs/images/demo-source-final.jpg",
+        "source_sha256": "021bdc0c6a1807b942e1b8c2aa1ca561eba0929fec7d9140733baa5d00d644d4",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "raw_model": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        }
+      },
+      "files": {
+        "docs/images/gallery/d-raw-model.jpg": "c9fbf0a5b49973e3236ec450ac71e0c4695494101846846d03eba00a7e7e72fe",
+        "docs/images/gallery/thumbs/d-raw-model.png": "50f5a42f74a1ba392a096c772025c07885d197d1e61325c1e6959f4dbc38111d"
+      },
+      "thumbnail_recipe": {
+        "version": 1,
+        "edge": 432,
+        "image_edge": 400,
+        "background": "#000000"
+      }
+    },
+    "d-sidecar": {
+      "recipe": {
+        "source": "docs/examples/scan.png",
+        "source_sha256": "b8aac0cef5f10319c7f737f75d8d41f7ffad5949874853f0b9ae78e539f0e931",
+        "settings": {
+          "style": "D",
+          "choices": "2-1-1",
+          "right_text": "Berlin, Germany | October 2022",
+          "capture_sidecar": true
+        },
+        "recipe": {
+          "version": 1,
+          "preview_edge": 1280,
+          "thumb_edge": 400,
+          "quality": 88
+        },
+        "sidecar_sha256": "1ba02c42c96a99c4f8338f20419234d3a272651aae8a9cd0b6d9637ad383f1f7"
+      },
+      "files": {
+        "docs/images/gallery/d-sidecar.jpg": "63a2d7fd9c32d86db8cd3839d3f0bbc3c4a528bb2ef2293e9d3a066b6713c290",
+        "docs/images/gallery/thumbs/d-sidecar.png": "fcfcf818a441fc5a011bb8ce0b54d4e75715bce4629976a4ec30569f138b310f"
       },
       "thumbnail_recipe": {
         "version": 1,

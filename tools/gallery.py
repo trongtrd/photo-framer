@@ -36,6 +36,28 @@ RIGHT_TEXT = 'Berlin, Germany | October 2022'
 RECIPE = {'version': 1, 'preview_edge': 1280, 'thumb_edge': 400, 'quality': 88}
 THUMBNAIL = {'version': 1, 'edge': 432, 'image_edge': RECIPE['thumb_edge'],
              'background': '#000000'}
+DISPLAY_NAMES = {'A': ('Shadow', 'Ảnh nổi'), 'B': ('Gallery', 'Khung gallery'),
+                 'C': ('Specs', 'Thông số'), 'D': ('Specs + Text', 'Thông số + chữ riêng'),
+                 'E': ('Color', 'Viền màu'), 'F': ('Film', 'Viền phim'),
+                 'G': ('Paper', 'Giấy xé'), 'H': ('Canvas', 'Khung tỷ lệ')}
+RATIO_LABELS = {'4:5': 'Portrait · 4:5', '1:1': 'Square · 1:1', '3:4': 'Portrait · 3:4',
+                '9:16': 'Story · 9:16', '16:9': 'Landscape · 16:9', 'original': 'Thin border'}
+
+
+def display_title(code):
+    return f'{DISPLAY_NAMES[code][0]} / {DISPLAY_NAMES[code][1]} ({code})'
+
+
+def preset_label(code, index, option):
+    if code in 'CD' and index == 2:
+        return 'Camera + lens' if option.startswith('Camera') else option
+    if code == 'E' and index == 2 and option == 'None':
+        return 'No inner edge'
+    nouns = {'A': ('margin', 'shadow', 'background'), 'B': ('frame', 'mat', 'surround'),
+             'C': ('margin', 'background', ''), 'D': ('margin', 'background', ''),
+             'E': ('border', 'color', 'inner edge'), 'F': ('border', 'film', 'sprockets'),
+             'G': ('margin', 'paper', 'torn edges')}
+    return f'{option} {nouns[code][index]}'
 
 
 @dataclass
@@ -66,7 +88,7 @@ def preset_examples(code):
             choices = list(style.default_choices)
             choices[index] = number
             examples.append(Example(f'{code.lower()}-row{index+1}-{number}', code,
-                                     f'{row.label[0]}: {option[0]}', '-'.join(map(str, choices))))
+                                     preset_label(code, index, option[0]), '-'.join(map(str, choices))))
     return examples
 
 
@@ -74,47 +96,43 @@ def gallery_rows():
     """Eight style groups; large groups have two or three independent rows."""
     result = {}
     for code in 'ABCDEFG':
+        appearance = preset_examples(code)
         extra = []
         if code in 'ABCDEG':
             extra.append(Example(f'{code.lower()}-caption', code, 'Caption',
                                   options={'caption': RIGHT_TEXT}, hint='--caption'))
         if code in 'ABG':
-            extra.append(Example(f'{code.lower()}-label', code, 'Gallery label', source='portrait',
+            extra.append(Example(f'{code.lower()}-label', code, 'Label', source='portrait',
                                   options={'title': 'Praha', 'subtitle': 'Prague · Czech Republic'},
                                   hint='--title / --subtitle'))
         if code in 'ABEG':
-            extra.append(Example(f'{code.lower()}-signature', code, 'Your PNG signature',
+            extra.append(Example(f'{code.lower()}-signature', code, 'Signature',
                                   options={'signature': SIGNATURE, 'signature_width': .12},
                                   hint='--signature'))
-        if code in 'CD':
-            extra += [Example(f'{code.lower()}-raw-model', code, 'Raw camera code',
-                               options={'raw_model': True}, hint='--raw-model'),
-                      Example(f'{code.lower()}-sidecar', code, 'Typed details · synthetic chart',
-                               source='scan', options={'capture_sidecar': True}, hint='--capture-sidecar')]
         if code == 'E':
-            extra.insert(0, Example('e-fixed-color', code, 'One shared color',
-                                    options={'frame_color': '#ad896c'}, hint='--frame-color'))
+            appearance.append(Example('e-fixed-color', code, 'Shared color',
+                                      options={'frame_color': '#ad896c'}, hint='--frame-color'))
         if code == 'F':
             for name, left, right in (('blank', '', ''), ('left', 'Berlin, Germany', ''),
                                        ('right', '', 'October 2022')):
                 extra.append(Example(f'f-text-{name}', code,
-                                      {'blank': 'No corner text', 'left': 'Left text only',
+                                      {'blank': 'No text', 'left': 'Left text only',
                                        'right': 'Right text only'}[name],
                                       options={'left_text': left, 'right_text': right},
                                       hint='--left-text / --right-text'))
-        result[code] = [('Preset settings', preset_examples(code)), ('Text and input options', extra)]
+        result[code] = [('Appearance / Hình thức', appearance), ('Text / Chữ', extra)]
 
-    canvas = [Example('h-default', 'H', '4:5 · default')]
-    for ratio in ('1:1', 'original', '3:4', '9:16', '16:9'):
+    canvas = [Example('h-default', 'H', 'Portrait · 4:5 · Default')]
+    for ratio in ('1:1', '3:4', '9:16', '16:9', 'original'):
         canvas.append(Example(f'h-ratio-{ratio.replace(":", "x")}', 'H',
-                               'Thin border' if ratio == 'original' else ratio,
+                               RATIO_LABELS[ratio],
                                options={'ratio': ratio}, hint=f'--ratio {ratio}'))
     blur = [Example(f'h-blur-{ratio.replace(":", "x")}', 'H',
-                     ('Thin border' if ratio == 'original' else ratio) + ' · blur',
+                     RATIO_LABELS[ratio],
                      options={'ratio': ratio, 'background': 'blur'}, hint=f'--ratio {ratio}')
-            for ratio in ('16:9', '1:1', '9:16', '4:5', '3:4', 'original')]
+            for ratio in ('4:5', '1:1', '3:4', '9:16', '16:9', 'original')]
     for tone in ('neutral', 'light'):
-        blur.append(Example(f'h-blur-tone-{tone}', 'H', f'16:9 · {tone} blur',
+        blur.append(Example(f'h-blur-tone-{tone}', 'H', f'Landscape · {tone.title()}',
                              options={'ratio': '16:9', 'background': 'blur', 'blur_tone': tone},
                              hint=f'--blur-tone {tone}'))
     details = [Example('h-gray', 'H', 'Warm gray mat', '1-2-1'),
@@ -123,25 +141,63 @@ def gallery_rows():
                Example('h-thick-keyline', 'H', 'Thick keyline', '1-1-3'),
                Example('h-caption', 'H', 'Caption', options={'caption': RIGHT_TEXT}, hint='--caption'),
                Example('h-portrait', 'H', 'Portrait photo · 4:5', source='portrait'),
-               Example('h-label', 'H', 'Gallery label · 1:1', source='portrait',
+               Example('h-label', 'H', 'Label · Square', source='portrait',
                        options={'ratio': '1:1', 'title': 'Praha', 'subtitle': 'Prague · Czech Republic'},
                        hint='--title / --subtitle')]
-    result['H'] = [('Canvas ratios · plain background', canvas),
-                   ('Blurred backgrounds · dark by default', blur),
-                   ('Mats, keylines and text', details)]
+    result['H'] = [('Ratios / Tỷ lệ', canvas), ('Blur / Nền mờ', blur),
+                   ('Details / Chi tiết', details)]
     return result
 
 
+def technical_examples():
+    return [item for code in 'CD' for item in (
+        Example(f'{code.lower()}-raw-model', code, 'Raw camera code',
+                options={'raw_model': True}, hint='--raw-model'),
+        Example(f'{code.lower()}-sidecar', code, 'Supplied capture details', source='scan',
+                options={'capture_sidecar': True}, hint='--capture-sidecar'))]
+
+
 def examples():
-    return [item for rows in gallery_rows().values() for _, row in rows for item in row]
+    return [item for rows in gallery_rows().values() for _, row in rows for item in row] + technical_examples()
+
+
+def example_table(row, *, context='', technical=False):
+    labels, pictures = [], []
+    for item in row:
+        name = DISPLAY_NAMES[item.style][0]
+        label = f'{name} · {item.label}' if technical else item.label
+        if technical:
+            label = (html.escape(label) + '<br><code>'
+                     + html.escape(item.hint or item.code or STYLES[item.style].default) + '</code>')
+        else:
+            label = html.escape(label)
+        labels.append(label)
+        alt = ' · '.join(part for part in (name, context, item.label) if part)
+        pictures.append(f'<a href="docs/images/gallery/{item.key}.jpg">'
+                        f'<img src="docs/images/gallery/thumbs/{item.key}.png" width="240" '
+                        f'alt="{html.escape(alt, quote=True)}"></a>')
+    # GitHub shrinks explicit widths; this hidden intrinsic minimum keeps
+    # thumbnails readable in its native horizontally scrolling tables.
+    spacer = '<span aria-hidden="true">' + '&#160;'*60 + '</span>'
+    return '\n'.join(['<table>', '<thead><tr>',
+                      *[f'<th width="240" align="center">{label}</th>' for label in labels],
+                      '</tr></thead>', '<tbody><tr>',
+                      *[f'<td width="240" align="center">{picture}<br>{spacer}</td>' for picture in pictures],
+                      '</tr></tbody>', '</table>'])
+
+
+def technical_block():
+    return ('These examples explain input and metadata handling for Specs (C) and Specs + Text (D). '
+            'The supplied-details chart is synthetic test artwork, not a camera photograph.\n\n'
+            + example_table(technical_examples(), technical=True))
 
 
 def gallery_block():
-    lines = ['Each style has its own gallery. Preset examples change one setting from the default; '
-             'text, signatures and other named options have a separate row. H has three rows. '
+    lines = ['Choose a style by name, then compare its appearance and text options. '
+             'Canvas has three rows: ratios, blur and details. '
              'Scroll a wide row horizontally and click any preview to enlarge it.', '',
              'These are reduced previews, not full-resolution outputs. The originals stay untouched. '
-             'The display surrounds are white for Film Edge and black for the other styles; '
+             'The display surrounds are white for Film and black for the other styles; '
              'they belong only to the thumbnail display, not to the frame. '
              'Click through to see the framed image without that surround. '
              'The sample text is supplied wording, never inferred metadata.', '',
@@ -151,29 +207,16 @@ def gallery_block():
              for source in ('landscape', 'portrait')]
     lines += ['| ' + ' | '.join(cells) + ' |', '']
     for code, rows in gallery_rows().items():
-        lines += [f'<a id="style-{code.lower()}"></a>', '', f'### {STYLES[code].readme_title}', '']
+        lines += [f'<a id="style-{code.lower()}"></a>', '', f'### {display_title(code)}', '']
         if code == 'H':
             lines += ['Plain or blurred backgrounds work with every ratio. '
                        '`16:9` is the landscape canvas; `1:1` is square. '
-                       'Neither crops or scales the photo. H takes no signature.', '']
+                       'Neither crops or scales the photo. Blur uses the dark tone unless labeled '
+                       'Neutral or Light. Canvas takes no signature.', '']
         for heading, row in rows:
             lines += [f'**{heading}**', '']
-            labels = [f'{html.escape(item.label)}<br><code>'
-                      f'{html.escape(item.hint or item.code or STYLES[code].default)}</code>'
-                      for item in row]
-            pictures = [f'<a href="docs/images/gallery/{item.key}.jpg">'
-                        f'<img src="docs/images/gallery/thumbs/{item.key}.png" width="240" '
-                        f'alt="{html.escape(code + ": " + item.label, quote=True)}"></a>' for item in row]
-            # GitHub shrinks even explicit image/cell widths. An aria-hidden
-            # nonbreaking spacer supplies an intrinsic minimum without CSS.
-            # Wide rows then use GitHub's native horizontal table scrolling.
-            spacer = '<span aria-hidden="true">' + '&#160;'*60 + '</span>'
-            lines += ['<table>', '<thead><tr>',
-                       *[f'<th width="240" align="center">{label}</th>' for label in labels],
-                       '</tr></thead>', '<tbody><tr>',
-                       *[f'<td width="240" align="center">{picture}<br>{spacer}</td>'
-                         for picture in pictures],
-                       '</tr></tbody>', '</table>', '']
+            context = 'Blur' if code == 'H' and heading.startswith('Blur') else ''
+            lines += [example_table(row, context=context), '']
     lines += ['[All settings and choice codes](skills/photo-framer/references/menus.md) · '
                '[Reproduce the gallery](docs/gallery.md)', '']
     return '\n'.join(lines).rstrip()

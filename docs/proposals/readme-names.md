@@ -1,8 +1,8 @@
-# README names and gallery organization (proposal)
+# README names and gallery organization (accepted)
 
-Status: proposed for owner review on 2026-11-06. These names and layout changes
-are not implemented. The only approved visual change in this branch is the
-white presentation surround for Film Edge (F).
+Status: approved by the owner on 2026-11-06 and implemented on
+`codex/readme-clarity-film-background`, together with Film's white presentation
+surround. This document records the agreed display vocabulary and hierarchy.
 
 ## One naming hierarchy
 
@@ -58,13 +58,12 @@ The result keeps the style set and the renderer contract intact, while giving
 new visitors one vocabulary for choosing an appearance. Documentation recipes
 remain available to users who want exact command-line settings.
 
-## Decisions requested
+## Owner approval
 
-1. Approve the proposed display names and the `Style · Variant` pattern.
-2. Approve moving the four metadata/input examples to the technical section,
-   moving E's fixed-color example into its appearance row, and aligning H's
-   ratio order. No change takes effect until the owner approves it.
+The owner approved these display names, the `Style · Variant` pattern,
+moving the four metadata/input examples to the technical section, moving E's
+fixed-color example into its appearance row, and aligning H's ratio order.
 
-Contributor attribution is a separate repository-history task, not a naming
-or gallery setting. It requires its own approval before rewriting published
-history or updating a branch outside the branch designated for this change.
+The same approval explicitly covered the separately reviewed contributor
+history update. That task preserves all 57 commit trees and the v0.11.1 tag;
+it does not alter the renderer or implement new CLI name aliases.
