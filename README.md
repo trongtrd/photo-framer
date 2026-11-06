@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#examples">
-    <img src="docs/images/photo-framer-header.png" alt="Photo Framer: frame your photos and keep the original. A — Floating, B — Gallery, C — Spec card. Thêm khung ảnh, giữ nguyên file gốc." width="100%">
+    <img src="docs/images/photo-framer-header-names.png" alt="Photo Framer: frame your photos and keep the original. Shadow, Gallery and Specs examples. Thêm khung ảnh, giữ nguyên file gốc." width="100%">
   </a>
 </p>
 
@@ -10,11 +10,11 @@
 
 **Một bức ảnh, tám phong cách khung.** Yêu cầu trợ lý AI thêm khung rồi tải PNG thành phẩm. File gốc được giữ nguyên.
 
-[English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Choose A–H / Chọn phong cách](#choose-a-style) · [Before & after / Trước & sau](#examples) · [Python](#python-and-maintenance)
+[English: get started](#use-in-an-ai-app) · [Tiếng Việt: bắt đầu](#tiếng-việt) · [Choose a style / Chọn phong cách](#choose-a-style) · [Before & after / Trước & sau](#examples) · [Python](#python-and-maintenance)
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/images/photo-framer-workflow-mobile.svg">
-  <img src="docs/images/photo-framer-workflow.svg" alt="Install the skill → attach photos → choose A–H → save the framed PNG. Cài skill → đính kèm ảnh → chọn A–H → tải PNG có khung." width="100%">
+  <img src="docs/images/photo-framer-workflow.svg" alt="Install the skill → attach photos → choose a style → save the framed PNG. Cài skill → đính kèm ảnh → chọn phong cách → tải PNG có khung." width="100%">
 </picture>
 
 ## Use in an AI app
@@ -27,9 +27,9 @@ Your AI app needs support for **installed skills, image file access and Python e
 2. Open a chat where Photo Framer is available and attach your JPEG or PNG photos.
 3. Ask for help choosing a style:
 
-> Use Photo Framer to frame these photos. Help me choose a style from A to H.
+> Use Photo Framer to frame these photos. Help me choose a style.
 
-You will see a comparison using the first photo. Pick a style in your own words; the assistant asks for any settings or text it needs. Already know your style? Say **“Use Photo Framer, G default, for all photos.”** to run directly.
+You will see a comparison using the first photo. Pick a style in your own words; the assistant asks for any settings or text it needs. Already know your style? Say **“Use Photo Framer, Paper default, for all photos.”** to run directly.
 
 You receive a full-resolution PNG. Ask for a **lightweight JPEG** if you also want a sharing copy. [See the styles](#choose-a-style) or [jump to the photos](#examples).
 
@@ -52,9 +52,9 @@ Use JPEG or 8-bit PNG. Frames are added outside the photo; previews and sharing 
 2. Mở cuộc trò chuyện có thể dùng Photo Framer, rồi đính kèm ảnh JPEG hoặc PNG.
 3. Gửi yêu cầu để được hỗ trợ chọn phong cách:
 
-> Dùng Photo Framer thêm khung cho các ảnh này. Giúp tôi chọn phong cách từ A đến H.
+> Dùng Photo Framer thêm khung cho các ảnh này. Giúp tôi chọn phong cách.
 
-Trợ lý dùng ảnh đầu tiên để tạo bản so sánh. Bạn chọn bằng lời; trợ lý sẽ hỏi thêm tùy chỉnh hoặc nội dung chữ khi cần. Nếu đã biết phong cách muốn dùng, yêu cầu thẳng: **“Dùng Photo Framer, G mặc định, cho toàn bộ ảnh.”**
+Trợ lý dùng ảnh đầu tiên để tạo bản so sánh. Bạn chọn bằng lời; trợ lý sẽ hỏi thêm tùy chỉnh hoặc nội dung chữ khi cần. Nếu đã biết phong cách muốn dùng, yêu cầu thẳng: **“Dùng Photo Framer, Giấy xé mặc định, cho toàn bộ ảnh.”**
 
 Bạn nhận được PNG đầy đủ độ phân giải. Nếu cần bản chia sẻ, hãy yêu cầu thêm **JPEG nhẹ**. [Chọn phong cách](#choose-a-style) hoặc [xem ảnh trước và sau](#examples).
 
@@ -74,23 +74,23 @@ Dùng JPEG hoặc PNG 8-bit. Khung được thêm bên ngoài ảnh; bản xem t
 Click a style to explore its gallery. / Bấm vào phong cách để xem các biến thể bên dưới.
 
 <!-- generated:styles -->
-| Style / Phong cách | Look / Hình thức | Default / Mặc định |
-| --- | --- | :---: |
-| [**A · Floating / Ảnh nổi**](#style-a) | Soft shadow on a light background<br>Bóng mềm trên nền sáng | `2-2-1` |
-| [**B · Gallery**](#style-b) | Black frame and white mat<br>Khung đen, bo giấy trắng | `1-2-1` |
-| [**C · Spec card / Thẻ thông số**](#style-c) | Camera details and brand logo<br>Thông số chụp và logo hãng | `2-1-1` |
-| [**D · Custom spec card / Thẻ có chữ riêng**](#style-d) | Camera details + your text at bottom right<br>Thông số chụp + chữ của bạn bên phải | `2-1-1` |
-| [**E · Color Echo / Viền đồng sắc**](#style-e) | A border color drawn from each photo<br>Màu viền được chọn từ từng ảnh | `2-1-1` |
-| [**F · Film Edge / Viền phim**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng | `2-1-1` |
-| [**G · Deckled Paper / Giấy mép xé**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé | `2-1-1` |
-| [**H · Minimal Mat / Khung tối giản**](#style-h) | Fixed 4:5, 1:1, 3:4, 9:16 or 16:9 canvas for any photo, or a thin border; black keyline; plain or blurred background<br>Khung cố định 4:5, 1:1, 3:4, 9:16 hoặc 16:9 cho mọi ảnh, hoặc viền mỏng; viền đen; nền trơn hoặc nền mờ từ ảnh | `1-1-1` |
+| Style / Phong cách | Look / Hình thức |
+| --- | --- |
+| [**Shadow / Ảnh nổi (A)**](#style-a) | Soft shadow on a light background<br>Bóng mềm trên nền sáng |
+| [**Gallery / Khung gallery (B)**](#style-b) | Black frame and white mat<br>Khung đen, bo giấy trắng |
+| [**Specs / Thông số (C)**](#style-c) | Camera details and brand logo<br>Thông số chụp và logo hãng |
+| [**Specs + Text / Thông số + chữ riêng (D)**](#style-d) | Camera details + your text at bottom right<br>Thông số chụp + chữ của bạn bên phải |
+| [**Color / Viền màu (E)**](#style-e) | A border color drawn from each photo<br>Màu viền được chọn từ từng ảnh |
+| [**Film / Viền phim (F)**](#style-f) | Side sprockets + two custom text fields<br>Lỗ phim hai bên + hai cụm chữ riêng |
+| [**Paper / Giấy xé (G)**](#style-g) | Textured warm-white paper with torn edges<br>Giấy trắng ấm, vân nhẹ và mép xé |
+| [**Canvas / Khung tỷ lệ (H)**](#style-h) | Fixed 4:5, 1:1, 3:4, 9:16 or 16:9 canvas for any photo, or a thin border; black keyline; plain or blurred background<br>Khung cố định 4:5, 1:1, 3:4, 9:16 hoặc 16:9 cho mọi ảnh, hoặc viền mỏng; viền đen; nền trơn hoặc nền mờ từ ảnh |
 <!-- /generated:styles -->
 
-Say **“A default”** or **“A mặc định”**; you do not need to remember the codes. If you only say “use defaults,” A is used unless another style is already chosen. For other settings, use your own words or the [English–Vietnamese menus](skills/photo-framer/references/menus.md).
+Choose by name: **“Shadow default”**, **“Film, no text”**, or **“Canvas, square, blurred background.”** The assistant maps the name to the renderer; you do not need to remember codes. A request for no Film text explicitly chooses both blank corners. If you only say “use defaults,” Shadow is used unless another style is already chosen.
 
-Chỉ cần nói **“A mặc định”**, không cần nhớ mã số. Nếu chỉ nói “dùng mặc định”, skill dùng A, trừ khi đã chọn phong cách khác. Muốn tùy chỉnh thêm, hãy mô tả bằng lời hoặc dùng [menu tiếng Việt](skills/photo-framer/references/menus.md#tiếng-việt).
+Chọn bằng tên: **“Ảnh nổi mặc định”**, **“Viền phim, không chữ”**, hoặc **“Khung tỷ lệ, vuông, nền mờ.”** Trợ lý chuyển tên sang mã phù hợp. “Viền phim, không chữ” nghĩa là bạn chọn để trống cả hai góc. Nếu chỉ nói “dùng mặc định”, skill dùng Ảnh nổi, trừ khi đã chọn phong cách khác. Các tên cũ, chữ cái và mã số vẫn dùng được trong [menu tiếng Việt](skills/photo-framer/references/menus.md).
 
-The first comparison shows A/B/C/E/F/G/H; D joins once you supply its text. F's preview corners stay blank until you choose their wording. / Bản so sánh đầu gồm A/B/C/E/F/G/H; D được thêm khi có nội dung chữ. Hai góc của F để trống trong bản xem trước cho đến khi bạn chọn chữ.
+The first comparison shows every style except Specs + Text, which needs your wording first. Film's preview corners stay blank until you choose their wording. / Bản so sánh đầu gồm các phong cách trừ Thông số + chữ riêng, được thêm khi bạn cung cấp nội dung chữ. Hai góc của Viền phim để trống trong bản xem trước cho đến khi bạn chọn chữ.
 
 <details>
 <summary>Custom text: D, F and captions / Chữ riêng: D, F và chú thích</summary>
@@ -142,9 +142,9 @@ For a separate caption on A–E, G or H, supply exact wording; bundled Inter alr
 ## Before & after / Trước & sau
 
 <!-- generated:gallery -->
-Each style has its own gallery. Preset examples change one setting from the default; text, signatures and other named options have a separate row. H has three rows. Scroll a wide row horizontally and click any preview to enlarge it.
+Choose a style by name, then compare its appearance and text options. Canvas has three rows: ratios, blur and details. Scroll a wide row horizontally and click any preview to enlarge it.
 
-These are reduced previews, not full-resolution outputs. The originals stay untouched. The black surrounds belong only to the thumbnail display, not to the frame. Click through to see the framed image without that surround. The sample text is supplied wording, never inferred metadata.
+These are reduced previews, not full-resolution outputs. The originals stay untouched. The display surrounds are white for Film and black for the other styles; they belong only to the thumbnail display, not to the frame. Click through to see the framed image without that surround. The sample text is supplied wording, never inferred metadata.
 
 | Original landscape | Original portrait |
 | :---: | :---: |
@@ -152,370 +152,362 @@ These are reduced previews, not full-resolution outputs. The originals stay unto
 
 <a id="style-a"></a>
 
-### A · Floating / Ảnh nổi
+### Shadow / Ảnh nổi (A)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-2-1</code></th>
-<th width="240" align="center">Margin: Narrow<br><code>1-2-1</code></th>
-<th width="240" align="center">Margin: Wide<br><code>3-2-1</code></th>
-<th width="240" align="center">Shadow: Light<br><code>2-1-1</code></th>
-<th width="240" align="center">Shadow: Strong<br><code>2-3-1</code></th>
-<th width="240" align="center">Background: Ivory<br><code>2-2-2</code></th>
-<th width="240" align="center">Background: Light gray<br><code>2-2-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow margin</th>
+<th width="240" align="center">Wide margin</th>
+<th width="240" align="center">Light shadow</th>
+<th width="240" align="center">Strong shadow</th>
+<th width="240" align="center">Ivory background</th>
+<th width="240" align="center">Light gray background</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/a-default.jpg"><img src="docs/images/gallery/thumbs/a-default.png" width="240" alt="A: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row1-1.jpg"><img src="docs/images/gallery/thumbs/a-row1-1.png" width="240" alt="A: Margin: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row1-3.jpg"><img src="docs/images/gallery/thumbs/a-row1-3.png" width="240" alt="A: Margin: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row2-1.jpg"><img src="docs/images/gallery/thumbs/a-row2-1.png" width="240" alt="A: Shadow: Light"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row2-3.jpg"><img src="docs/images/gallery/thumbs/a-row2-3.png" width="240" alt="A: Shadow: Strong"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row3-2.jpg"><img src="docs/images/gallery/thumbs/a-row3-2.png" width="240" alt="A: Background: Ivory"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-row3-3.jpg"><img src="docs/images/gallery/thumbs/a-row3-3.png" width="240" alt="A: Background: Light gray"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-default.jpg"><img src="docs/images/gallery/thumbs/a-default.png" width="240" alt="Shadow · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row1-1.jpg"><img src="docs/images/gallery/thumbs/a-row1-1.png" width="240" alt="Shadow · Narrow margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row1-3.jpg"><img src="docs/images/gallery/thumbs/a-row1-3.png" width="240" alt="Shadow · Wide margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row2-1.jpg"><img src="docs/images/gallery/thumbs/a-row2-1.png" width="240" alt="Shadow · Light shadow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row2-3.jpg"><img src="docs/images/gallery/thumbs/a-row2-3.png" width="240" alt="Shadow · Strong shadow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row3-2.jpg"><img src="docs/images/gallery/thumbs/a-row3-2.png" width="240" alt="Shadow · Ivory background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-row3-3.jpg"><img src="docs/images/gallery/thumbs/a-row3-3.png" width="240" alt="Shadow · Light gray background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
-<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+<th width="240" align="center">Caption</th>
+<th width="240" align="center">Label</th>
+<th width="240" align="center">Signature</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/a-caption.jpg"><img src="docs/images/gallery/thumbs/a-caption.png" width="240" alt="A: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-label.jpg"><img src="docs/images/gallery/thumbs/a-label.png" width="240" alt="A: Gallery label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/a-signature.jpg"><img src="docs/images/gallery/thumbs/a-signature.png" width="240" alt="A: Your PNG signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-caption.jpg"><img src="docs/images/gallery/thumbs/a-caption.png" width="240" alt="Shadow · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-label.jpg"><img src="docs/images/gallery/thumbs/a-label.png" width="240" alt="Shadow · Label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/a-signature.jpg"><img src="docs/images/gallery/thumbs/a-signature.png" width="240" alt="Shadow · Signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-b"></a>
 
-### B · Gallery
+### Gallery / Khung gallery (B)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>1-2-1</code></th>
-<th width="240" align="center">Frame color: White<br><code>2-2-1</code></th>
-<th width="240" align="center">Frame color: Charcoal<br><code>3-2-1</code></th>
-<th width="240" align="center">White mat: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">White mat: Wide<br><code>1-3-1</code></th>
-<th width="240" align="center">Outer background: White<br><code>1-2-2</code></th>
-<th width="240" align="center">Outer background: Ivory<br><code>1-2-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">White frame</th>
+<th width="240" align="center">Charcoal frame</th>
+<th width="240" align="center">Narrow mat</th>
+<th width="240" align="center">Wide mat</th>
+<th width="240" align="center">White surround</th>
+<th width="240" align="center">Ivory surround</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/b-default.jpg"><img src="docs/images/gallery/thumbs/b-default.png" width="240" alt="B: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row1-2.jpg"><img src="docs/images/gallery/thumbs/b-row1-2.png" width="240" alt="B: Frame color: White"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row1-3.jpg"><img src="docs/images/gallery/thumbs/b-row1-3.png" width="240" alt="B: Frame color: Charcoal"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row2-1.jpg"><img src="docs/images/gallery/thumbs/b-row2-1.png" width="240" alt="B: White mat: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row2-3.jpg"><img src="docs/images/gallery/thumbs/b-row2-3.png" width="240" alt="B: White mat: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row3-2.jpg"><img src="docs/images/gallery/thumbs/b-row3-2.png" width="240" alt="B: Outer background: White"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-row3-3.jpg"><img src="docs/images/gallery/thumbs/b-row3-3.png" width="240" alt="B: Outer background: Ivory"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-default.jpg"><img src="docs/images/gallery/thumbs/b-default.png" width="240" alt="Gallery · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row1-2.jpg"><img src="docs/images/gallery/thumbs/b-row1-2.png" width="240" alt="Gallery · White frame"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row1-3.jpg"><img src="docs/images/gallery/thumbs/b-row1-3.png" width="240" alt="Gallery · Charcoal frame"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row2-1.jpg"><img src="docs/images/gallery/thumbs/b-row2-1.png" width="240" alt="Gallery · Narrow mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row2-3.jpg"><img src="docs/images/gallery/thumbs/b-row2-3.png" width="240" alt="Gallery · Wide mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row3-2.jpg"><img src="docs/images/gallery/thumbs/b-row3-2.png" width="240" alt="Gallery · White surround"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-row3-3.jpg"><img src="docs/images/gallery/thumbs/b-row3-3.png" width="240" alt="Gallery · Ivory surround"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
-<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+<th width="240" align="center">Caption</th>
+<th width="240" align="center">Label</th>
+<th width="240" align="center">Signature</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/b-caption.jpg"><img src="docs/images/gallery/thumbs/b-caption.png" width="240" alt="B: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-label.jpg"><img src="docs/images/gallery/thumbs/b-label.png" width="240" alt="B: Gallery label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/b-signature.jpg"><img src="docs/images/gallery/thumbs/b-signature.png" width="240" alt="B: Your PNG signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-caption.jpg"><img src="docs/images/gallery/thumbs/b-caption.png" width="240" alt="Gallery · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-label.jpg"><img src="docs/images/gallery/thumbs/b-label.png" width="240" alt="Gallery · Label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/b-signature.jpg"><img src="docs/images/gallery/thumbs/b-signature.png" width="240" alt="Gallery · Signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-c"></a>
 
-### C · Spec card / Thẻ thông số
+### Specs / Thông số (C)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-1-1</code></th>
-<th width="240" align="center">Margin: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">Margin: Wide<br><code>3-1-1</code></th>
-<th width="240" align="center">Background: Ivory<br><code>2-2-1</code></th>
-<th width="240" align="center">Background: Light gray<br><code>2-3-1</code></th>
-<th width="240" align="center">Caption: Camera + lens only<br><code>2-1-2</code></th>
-<th width="240" align="center">Caption: No text<br><code>2-1-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow margin</th>
+<th width="240" align="center">Wide margin</th>
+<th width="240" align="center">Ivory background</th>
+<th width="240" align="center">Light gray background</th>
+<th width="240" align="center">Camera + lens</th>
+<th width="240" align="center">No text</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/c-default.jpg"><img src="docs/images/gallery/thumbs/c-default.png" width="240" alt="C: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row1-1.jpg"><img src="docs/images/gallery/thumbs/c-row1-1.png" width="240" alt="C: Margin: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row1-3.jpg"><img src="docs/images/gallery/thumbs/c-row1-3.png" width="240" alt="C: Margin: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row2-2.jpg"><img src="docs/images/gallery/thumbs/c-row2-2.png" width="240" alt="C: Background: Ivory"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row2-3.jpg"><img src="docs/images/gallery/thumbs/c-row2-3.png" width="240" alt="C: Background: Light gray"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row3-2.jpg"><img src="docs/images/gallery/thumbs/c-row3-2.png" width="240" alt="C: Caption: Camera + lens only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-row3-3.jpg"><img src="docs/images/gallery/thumbs/c-row3-3.png" width="240" alt="C: Caption: No text"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-default.jpg"><img src="docs/images/gallery/thumbs/c-default.png" width="240" alt="Specs · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row1-1.jpg"><img src="docs/images/gallery/thumbs/c-row1-1.png" width="240" alt="Specs · Narrow margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row1-3.jpg"><img src="docs/images/gallery/thumbs/c-row1-3.png" width="240" alt="Specs · Wide margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row2-2.jpg"><img src="docs/images/gallery/thumbs/c-row2-2.png" width="240" alt="Specs · Ivory background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row2-3.jpg"><img src="docs/images/gallery/thumbs/c-row2-3.png" width="240" alt="Specs · Light gray background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row3-2.jpg"><img src="docs/images/gallery/thumbs/c-row3-2.png" width="240" alt="Specs · Camera + lens"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-row3-3.jpg"><img src="docs/images/gallery/thumbs/c-row3-3.png" width="240" alt="Specs · No text"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Raw camera code<br><code>--raw-model</code></th>
-<th width="240" align="center">Typed details · synthetic chart<br><code>--capture-sidecar</code></th>
+<th width="240" align="center">Caption</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/c-caption.jpg"><img src="docs/images/gallery/thumbs/c-caption.png" width="240" alt="C: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-raw-model.jpg"><img src="docs/images/gallery/thumbs/c-raw-model.png" width="240" alt="C: Raw camera code"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/c-sidecar.jpg"><img src="docs/images/gallery/thumbs/c-sidecar.png" width="240" alt="C: Typed details · synthetic chart"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-caption.jpg"><img src="docs/images/gallery/thumbs/c-caption.png" width="240" alt="Specs · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-d"></a>
 
-### D · Custom spec card / Thẻ có chữ riêng
+### Specs + Text / Thông số + chữ riêng (D)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-1-1</code></th>
-<th width="240" align="center">Margin: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">Margin: Wide<br><code>3-1-1</code></th>
-<th width="240" align="center">Background: Ivory<br><code>2-2-1</code></th>
-<th width="240" align="center">Background: Light gray<br><code>2-3-1</code></th>
-<th width="240" align="center">Left-side details: Camera + lens only<br><code>2-1-2</code></th>
-<th width="240" align="center">Left-side details: No details<br><code>2-1-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow margin</th>
+<th width="240" align="center">Wide margin</th>
+<th width="240" align="center">Ivory background</th>
+<th width="240" align="center">Light gray background</th>
+<th width="240" align="center">Camera + lens</th>
+<th width="240" align="center">No details</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/d-default.jpg"><img src="docs/images/gallery/thumbs/d-default.png" width="240" alt="D: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row1-1.jpg"><img src="docs/images/gallery/thumbs/d-row1-1.png" width="240" alt="D: Margin: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row1-3.jpg"><img src="docs/images/gallery/thumbs/d-row1-3.png" width="240" alt="D: Margin: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row2-2.jpg"><img src="docs/images/gallery/thumbs/d-row2-2.png" width="240" alt="D: Background: Ivory"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row2-3.jpg"><img src="docs/images/gallery/thumbs/d-row2-3.png" width="240" alt="D: Background: Light gray"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row3-2.jpg"><img src="docs/images/gallery/thumbs/d-row3-2.png" width="240" alt="D: Left-side details: Camera + lens only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-row3-3.jpg"><img src="docs/images/gallery/thumbs/d-row3-3.png" width="240" alt="D: Left-side details: No details"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-default.jpg"><img src="docs/images/gallery/thumbs/d-default.png" width="240" alt="Specs + Text · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row1-1.jpg"><img src="docs/images/gallery/thumbs/d-row1-1.png" width="240" alt="Specs + Text · Narrow margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row1-3.jpg"><img src="docs/images/gallery/thumbs/d-row1-3.png" width="240" alt="Specs + Text · Wide margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row2-2.jpg"><img src="docs/images/gallery/thumbs/d-row2-2.png" width="240" alt="Specs + Text · Ivory background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row2-3.jpg"><img src="docs/images/gallery/thumbs/d-row2-3.png" width="240" alt="Specs + Text · Light gray background"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row3-2.jpg"><img src="docs/images/gallery/thumbs/d-row3-2.png" width="240" alt="Specs + Text · Camera + lens"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-row3-3.jpg"><img src="docs/images/gallery/thumbs/d-row3-3.png" width="240" alt="Specs + Text · No details"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Raw camera code<br><code>--raw-model</code></th>
-<th width="240" align="center">Typed details · synthetic chart<br><code>--capture-sidecar</code></th>
+<th width="240" align="center">Caption</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/d-caption.jpg"><img src="docs/images/gallery/thumbs/d-caption.png" width="240" alt="D: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-raw-model.jpg"><img src="docs/images/gallery/thumbs/d-raw-model.png" width="240" alt="D: Raw camera code"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/d-sidecar.jpg"><img src="docs/images/gallery/thumbs/d-sidecar.png" width="240" alt="D: Typed details · synthetic chart"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-caption.jpg"><img src="docs/images/gallery/thumbs/d-caption.png" width="240" alt="Specs + Text · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-e"></a>
 
-### E · Color Echo / Viền đồng sắc
+### Color / Viền màu (E)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-1-1</code></th>
-<th width="240" align="center">Border width: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">Border width: Wide<br><code>3-1-1</code></th>
-<th width="240" align="center">Auto color tone: Natural<br><code>2-2-1</code></th>
-<th width="240" align="center">Auto color tone: Light<br><code>2-3-1</code></th>
-<th width="240" align="center">Inner edge: None<br><code>2-1-2</code></th>
-<th width="240" align="center">Inner edge: Medium<br><code>2-1-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow border</th>
+<th width="240" align="center">Wide border</th>
+<th width="240" align="center">Natural color</th>
+<th width="240" align="center">Light color</th>
+<th width="240" align="center">No inner edge</th>
+<th width="240" align="center">Medium inner edge</th>
+<th width="240" align="center">Shared color</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/e-default.jpg"><img src="docs/images/gallery/thumbs/e-default.png" width="240" alt="E: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row1-1.jpg"><img src="docs/images/gallery/thumbs/e-row1-1.png" width="240" alt="E: Border width: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row1-3.jpg"><img src="docs/images/gallery/thumbs/e-row1-3.png" width="240" alt="E: Border width: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row2-2.jpg"><img src="docs/images/gallery/thumbs/e-row2-2.png" width="240" alt="E: Auto color tone: Natural"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row2-3.jpg"><img src="docs/images/gallery/thumbs/e-row2-3.png" width="240" alt="E: Auto color tone: Light"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row3-2.jpg"><img src="docs/images/gallery/thumbs/e-row3-2.png" width="240" alt="E: Inner edge: None"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-row3-3.jpg"><img src="docs/images/gallery/thumbs/e-row3-3.png" width="240" alt="E: Inner edge: Medium"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-default.jpg"><img src="docs/images/gallery/thumbs/e-default.png" width="240" alt="Color · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row1-1.jpg"><img src="docs/images/gallery/thumbs/e-row1-1.png" width="240" alt="Color · Narrow border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row1-3.jpg"><img src="docs/images/gallery/thumbs/e-row1-3.png" width="240" alt="Color · Wide border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row2-2.jpg"><img src="docs/images/gallery/thumbs/e-row2-2.png" width="240" alt="Color · Natural color"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row2-3.jpg"><img src="docs/images/gallery/thumbs/e-row2-3.png" width="240" alt="Color · Light color"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row3-2.jpg"><img src="docs/images/gallery/thumbs/e-row3-2.png" width="240" alt="Color · No inner edge"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-row3-3.jpg"><img src="docs/images/gallery/thumbs/e-row3-3.png" width="240" alt="Color · Medium inner edge"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-fixed-color.jpg"><img src="docs/images/gallery/thumbs/e-fixed-color.png" width="240" alt="Color · Shared color"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">One shared color<br><code>--frame-color</code></th>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+<th width="240" align="center">Caption</th>
+<th width="240" align="center">Signature</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/e-fixed-color.jpg"><img src="docs/images/gallery/thumbs/e-fixed-color.png" width="240" alt="E: One shared color"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-caption.jpg"><img src="docs/images/gallery/thumbs/e-caption.png" width="240" alt="E: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/e-signature.jpg"><img src="docs/images/gallery/thumbs/e-signature.png" width="240" alt="E: Your PNG signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-caption.jpg"><img src="docs/images/gallery/thumbs/e-caption.png" width="240" alt="Color · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/e-signature.jpg"><img src="docs/images/gallery/thumbs/e-signature.png" width="240" alt="Color · Signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-f"></a>
 
-### F · Film Edge / Viền phim
+### Film / Viền phim (F)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-1-1</code></th>
-<th width="240" align="center">Border width: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">Border width: Wide<br><code>3-1-1</code></th>
-<th width="240" align="center">Border background: Black<br><code>2-2-1</code></th>
-<th width="240" align="center">Border background: Dark brown<br><code>2-3-1</code></th>
-<th width="240" align="center">Side sprockets: Sparse<br><code>2-1-2</code></th>
-<th width="240" align="center">Side sprockets: Dense<br><code>2-1-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow border</th>
+<th width="240" align="center">Wide border</th>
+<th width="240" align="center">Black film</th>
+<th width="240" align="center">Dark brown film</th>
+<th width="240" align="center">Sparse sprockets</th>
+<th width="240" align="center">Dense sprockets</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/f-default.jpg"><img src="docs/images/gallery/thumbs/f-default.png" width="240" alt="F: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row1-1.jpg"><img src="docs/images/gallery/thumbs/f-row1-1.png" width="240" alt="F: Border width: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row1-3.jpg"><img src="docs/images/gallery/thumbs/f-row1-3.png" width="240" alt="F: Border width: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row2-2.jpg"><img src="docs/images/gallery/thumbs/f-row2-2.png" width="240" alt="F: Border background: Black"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row2-3.jpg"><img src="docs/images/gallery/thumbs/f-row2-3.png" width="240" alt="F: Border background: Dark brown"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row3-2.jpg"><img src="docs/images/gallery/thumbs/f-row3-2.png" width="240" alt="F: Side sprockets: Sparse"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-row3-3.jpg"><img src="docs/images/gallery/thumbs/f-row3-3.png" width="240" alt="F: Side sprockets: Dense"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-default.jpg"><img src="docs/images/gallery/thumbs/f-default.png" width="240" alt="Film · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row1-1.jpg"><img src="docs/images/gallery/thumbs/f-row1-1.png" width="240" alt="Film · Narrow border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row1-3.jpg"><img src="docs/images/gallery/thumbs/f-row1-3.png" width="240" alt="Film · Wide border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row2-2.jpg"><img src="docs/images/gallery/thumbs/f-row2-2.png" width="240" alt="Film · Black film"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row2-3.jpg"><img src="docs/images/gallery/thumbs/f-row2-3.png" width="240" alt="Film · Dark brown film"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row3-2.jpg"><img src="docs/images/gallery/thumbs/f-row3-2.png" width="240" alt="Film · Sparse sprockets"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-row3-3.jpg"><img src="docs/images/gallery/thumbs/f-row3-3.png" width="240" alt="Film · Dense sprockets"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">No corner text<br><code>--left-text / --right-text</code></th>
-<th width="240" align="center">Left text only<br><code>--left-text / --right-text</code></th>
-<th width="240" align="center">Right text only<br><code>--left-text / --right-text</code></th>
+<th width="240" align="center">No text</th>
+<th width="240" align="center">Left text only</th>
+<th width="240" align="center">Right text only</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/f-text-blank.jpg"><img src="docs/images/gallery/thumbs/f-text-blank.png" width="240" alt="F: No corner text"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-text-left.jpg"><img src="docs/images/gallery/thumbs/f-text-left.png" width="240" alt="F: Left text only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/f-text-right.jpg"><img src="docs/images/gallery/thumbs/f-text-right.png" width="240" alt="F: Right text only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-blank.jpg"><img src="docs/images/gallery/thumbs/f-text-blank.png" width="240" alt="Film · No text"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-left.jpg"><img src="docs/images/gallery/thumbs/f-text-left.png" width="240" alt="Film · Left text only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/f-text-right.jpg"><img src="docs/images/gallery/thumbs/f-text-right.png" width="240" alt="Film · Right text only"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-g"></a>
 
-### G · Deckled Paper / Giấy mép xé
+### Paper / Giấy xé (G)
 
-**Preset settings**
+**Appearance / Hình thức**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Default<br><code>2-1-1</code></th>
-<th width="240" align="center">Paper margin: Narrow<br><code>1-1-1</code></th>
-<th width="240" align="center">Paper margin: Wide<br><code>3-1-1</code></th>
-<th width="240" align="center">Paper tone: Bright white<br><code>2-2-1</code></th>
-<th width="240" align="center">Paper tone: Ivory<br><code>2-3-1</code></th>
-<th width="240" align="center">Torn edges: Medium<br><code>2-1-2</code></th>
-<th width="240" align="center">Torn edges: Rough<br><code>2-1-3</code></th>
+<th width="240" align="center">Default</th>
+<th width="240" align="center">Narrow margin</th>
+<th width="240" align="center">Wide margin</th>
+<th width="240" align="center">Bright white paper</th>
+<th width="240" align="center">Ivory paper</th>
+<th width="240" align="center">Medium torn edges</th>
+<th width="240" align="center">Rough torn edges</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/g-default.jpg"><img src="docs/images/gallery/thumbs/g-default.png" width="240" alt="G: Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row1-1.jpg"><img src="docs/images/gallery/thumbs/g-row1-1.png" width="240" alt="G: Paper margin: Narrow"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row1-3.jpg"><img src="docs/images/gallery/thumbs/g-row1-3.png" width="240" alt="G: Paper margin: Wide"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row2-2.jpg"><img src="docs/images/gallery/thumbs/g-row2-2.png" width="240" alt="G: Paper tone: Bright white"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row2-3.jpg"><img src="docs/images/gallery/thumbs/g-row2-3.png" width="240" alt="G: Paper tone: Ivory"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row3-2.jpg"><img src="docs/images/gallery/thumbs/g-row3-2.png" width="240" alt="G: Torn edges: Medium"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-row3-3.jpg"><img src="docs/images/gallery/thumbs/g-row3-3.png" width="240" alt="G: Torn edges: Rough"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-default.jpg"><img src="docs/images/gallery/thumbs/g-default.png" width="240" alt="Paper · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row1-1.jpg"><img src="docs/images/gallery/thumbs/g-row1-1.png" width="240" alt="Paper · Narrow margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row1-3.jpg"><img src="docs/images/gallery/thumbs/g-row1-3.png" width="240" alt="Paper · Wide margin"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row2-2.jpg"><img src="docs/images/gallery/thumbs/g-row2-2.png" width="240" alt="Paper · Bright white paper"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row2-3.jpg"><img src="docs/images/gallery/thumbs/g-row2-3.png" width="240" alt="Paper · Ivory paper"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row3-2.jpg"><img src="docs/images/gallery/thumbs/g-row3-2.png" width="240" alt="Paper · Medium torn edges"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-row3-3.jpg"><img src="docs/images/gallery/thumbs/g-row3-3.png" width="240" alt="Paper · Rough torn edges"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Text and input options**
+**Text / Chữ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Gallery label<br><code>--title / --subtitle</code></th>
-<th width="240" align="center">Your PNG signature<br><code>--signature</code></th>
+<th width="240" align="center">Caption</th>
+<th width="240" align="center">Label</th>
+<th width="240" align="center">Signature</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/g-caption.jpg"><img src="docs/images/gallery/thumbs/g-caption.png" width="240" alt="G: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-label.jpg"><img src="docs/images/gallery/thumbs/g-label.png" width="240" alt="G: Gallery label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/g-signature.jpg"><img src="docs/images/gallery/thumbs/g-signature.png" width="240" alt="G: Your PNG signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-caption.jpg"><img src="docs/images/gallery/thumbs/g-caption.png" width="240" alt="Paper · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-label.jpg"><img src="docs/images/gallery/thumbs/g-label.png" width="240" alt="Paper · Label"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/g-signature.jpg"><img src="docs/images/gallery/thumbs/g-signature.png" width="240" alt="Paper · Signature"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
 <a id="style-h"></a>
 
-### H · Minimal Mat / Khung tối giản
+### Canvas / Khung tỷ lệ (H)
 
-Plain or blurred backgrounds work with every ratio. `16:9` is the landscape canvas; `1:1` is square. Neither crops or scales the photo. H takes no signature.
+Plain or blurred backgrounds work with every ratio. `16:9` is the landscape canvas; `1:1` is square. Neither crops or scales the photo. Blur uses the dark tone unless labeled Neutral or Light. Canvas takes no signature.
 
-**Canvas ratios · plain background**
+**Ratios / Tỷ lệ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">4:5 · default<br><code>1-1-1</code></th>
-<th width="240" align="center">1:1<br><code>--ratio 1:1</code></th>
-<th width="240" align="center">Thin border<br><code>--ratio original</code></th>
-<th width="240" align="center">3:4<br><code>--ratio 3:4</code></th>
-<th width="240" align="center">9:16<br><code>--ratio 9:16</code></th>
-<th width="240" align="center">16:9<br><code>--ratio 16:9</code></th>
+<th width="240" align="center">Portrait · 4:5 · Default</th>
+<th width="240" align="center">Square · 1:1</th>
+<th width="240" align="center">Portrait · 3:4</th>
+<th width="240" align="center">Story · 9:16</th>
+<th width="240" align="center">Landscape · 16:9</th>
+<th width="240" align="center">Thin border</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/h-default.jpg"><img src="docs/images/gallery/thumbs/h-default.png" width="240" alt="H: 4:5 · default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ratio-1x1.jpg"><img src="docs/images/gallery/thumbs/h-ratio-1x1.png" width="240" alt="H: 1:1"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ratio-original.jpg"><img src="docs/images/gallery/thumbs/h-ratio-original.png" width="240" alt="H: Thin border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ratio-3x4.jpg"><img src="docs/images/gallery/thumbs/h-ratio-3x4.png" width="240" alt="H: 3:4"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ratio-9x16.jpg"><img src="docs/images/gallery/thumbs/h-ratio-9x16.png" width="240" alt="H: 9:16"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ratio-16x9.jpg"><img src="docs/images/gallery/thumbs/h-ratio-16x9.png" width="240" alt="H: 16:9"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-default.jpg"><img src="docs/images/gallery/thumbs/h-default.png" width="240" alt="Canvas · Portrait · 4:5 · Default"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-1x1.jpg"><img src="docs/images/gallery/thumbs/h-ratio-1x1.png" width="240" alt="Canvas · Square · 1:1"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-3x4.jpg"><img src="docs/images/gallery/thumbs/h-ratio-3x4.png" width="240" alt="Canvas · Portrait · 3:4"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-9x16.jpg"><img src="docs/images/gallery/thumbs/h-ratio-9x16.png" width="240" alt="Canvas · Story · 9:16"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-16x9.jpg"><img src="docs/images/gallery/thumbs/h-ratio-16x9.png" width="240" alt="Canvas · Landscape · 16:9"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ratio-original.jpg"><img src="docs/images/gallery/thumbs/h-ratio-original.png" width="240" alt="Canvas · Thin border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Blurred backgrounds · dark by default**
+**Blur / Nền mờ**
 
 <table>
 <thead><tr>
-<th width="240" align="center">16:9 · blur<br><code>--ratio 16:9</code></th>
-<th width="240" align="center">1:1 · blur<br><code>--ratio 1:1</code></th>
-<th width="240" align="center">9:16 · blur<br><code>--ratio 9:16</code></th>
-<th width="240" align="center">4:5 · blur<br><code>--ratio 4:5</code></th>
-<th width="240" align="center">3:4 · blur<br><code>--ratio 3:4</code></th>
-<th width="240" align="center">Thin border · blur<br><code>--ratio original</code></th>
-<th width="240" align="center">16:9 · neutral blur<br><code>--blur-tone neutral</code></th>
-<th width="240" align="center">16:9 · light blur<br><code>--blur-tone light</code></th>
+<th width="240" align="center">Portrait · 4:5</th>
+<th width="240" align="center">Square · 1:1</th>
+<th width="240" align="center">Portrait · 3:4</th>
+<th width="240" align="center">Story · 9:16</th>
+<th width="240" align="center">Landscape · 16:9</th>
+<th width="240" align="center">Thin border</th>
+<th width="240" align="center">Landscape · Neutral</th>
+<th width="240" align="center">Landscape · Light</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-16x9.jpg"><img src="docs/images/gallery/thumbs/h-blur-16x9.png" width="240" alt="H: 16:9 · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-1x1.jpg"><img src="docs/images/gallery/thumbs/h-blur-1x1.png" width="240" alt="H: 1:1 · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-9x16.jpg"><img src="docs/images/gallery/thumbs/h-blur-9x16.png" width="240" alt="H: 9:16 · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-4x5.jpg"><img src="docs/images/gallery/thumbs/h-blur-4x5.png" width="240" alt="H: 4:5 · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-3x4.jpg"><img src="docs/images/gallery/thumbs/h-blur-3x4.png" width="240" alt="H: 3:4 · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-original.jpg"><img src="docs/images/gallery/thumbs/h-blur-original.png" width="240" alt="H: Thin border · blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-neutral.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-neutral.png" width="240" alt="H: 16:9 · neutral blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-light.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-light.png" width="240" alt="H: 16:9 · light blur"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-4x5.jpg"><img src="docs/images/gallery/thumbs/h-blur-4x5.png" width="240" alt="Canvas · Blur · Portrait · 4:5"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-1x1.jpg"><img src="docs/images/gallery/thumbs/h-blur-1x1.png" width="240" alt="Canvas · Blur · Square · 1:1"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-3x4.jpg"><img src="docs/images/gallery/thumbs/h-blur-3x4.png" width="240" alt="Canvas · Blur · Portrait · 3:4"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-9x16.jpg"><img src="docs/images/gallery/thumbs/h-blur-9x16.png" width="240" alt="Canvas · Blur · Story · 9:16"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-16x9.jpg"><img src="docs/images/gallery/thumbs/h-blur-16x9.png" width="240" alt="Canvas · Blur · Landscape · 16:9"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-original.jpg"><img src="docs/images/gallery/thumbs/h-blur-original.png" width="240" alt="Canvas · Blur · Thin border"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-neutral.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-neutral.png" width="240" alt="Canvas · Blur · Landscape · Neutral"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-blur-tone-light.jpg"><img src="docs/images/gallery/thumbs/h-blur-tone-light.png" width="240" alt="Canvas · Blur · Landscape · Light"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
-**Mats, keylines and text**
+**Details / Chi tiết**
 
 <table>
 <thead><tr>
-<th width="240" align="center">Warm gray mat<br><code>1-2-1</code></th>
-<th width="240" align="center">Ivory mat<br><code>1-3-1</code></th>
-<th width="240" align="center">No keyline<br><code>1-1-2</code></th>
-<th width="240" align="center">Thick keyline<br><code>1-1-3</code></th>
-<th width="240" align="center">Caption<br><code>--caption</code></th>
-<th width="240" align="center">Portrait photo · 4:5<br><code>1-1-1</code></th>
-<th width="240" align="center">Gallery label · 1:1<br><code>--title / --subtitle</code></th>
+<th width="240" align="center">Warm gray mat</th>
+<th width="240" align="center">Ivory mat</th>
+<th width="240" align="center">No keyline</th>
+<th width="240" align="center">Thick keyline</th>
+<th width="240" align="center">Caption</th>
+<th width="240" align="center">Portrait photo · 4:5</th>
+<th width="240" align="center">Label · Square</th>
 </tr></thead>
 <tbody><tr>
-<td width="240" align="center"><a href="docs/images/gallery/h-gray.jpg"><img src="docs/images/gallery/thumbs/h-gray.png" width="240" alt="H: Warm gray mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-ivory.jpg"><img src="docs/images/gallery/thumbs/h-ivory.png" width="240" alt="H: Ivory mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-no-keyline.jpg"><img src="docs/images/gallery/thumbs/h-no-keyline.png" width="240" alt="H: No keyline"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-thick-keyline.jpg"><img src="docs/images/gallery/thumbs/h-thick-keyline.png" width="240" alt="H: Thick keyline"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-caption.jpg"><img src="docs/images/gallery/thumbs/h-caption.png" width="240" alt="H: Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-portrait.jpg"><img src="docs/images/gallery/thumbs/h-portrait.png" width="240" alt="H: Portrait photo · 4:5"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
-<td width="240" align="center"><a href="docs/images/gallery/h-label.jpg"><img src="docs/images/gallery/thumbs/h-label.png" width="240" alt="H: Gallery label · 1:1"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-gray.jpg"><img src="docs/images/gallery/thumbs/h-gray.png" width="240" alt="Canvas · Warm gray mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-ivory.jpg"><img src="docs/images/gallery/thumbs/h-ivory.png" width="240" alt="Canvas · Ivory mat"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-no-keyline.jpg"><img src="docs/images/gallery/thumbs/h-no-keyline.png" width="240" alt="Canvas · No keyline"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-thick-keyline.jpg"><img src="docs/images/gallery/thumbs/h-thick-keyline.png" width="240" alt="Canvas · Thick keyline"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-caption.jpg"><img src="docs/images/gallery/thumbs/h-caption.png" width="240" alt="Canvas · Caption"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-portrait.jpg"><img src="docs/images/gallery/thumbs/h-portrait.png" width="240" alt="Canvas · Portrait photo · 4:5"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/h-label.jpg"><img src="docs/images/gallery/thumbs/h-label.png" width="240" alt="Canvas · Label · Square"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
 </tr></tbody>
 </table>
 
@@ -668,7 +660,46 @@ Try the synthetic example without a personal photograph:
 python skills/photo-framer/scripts/frame_photo.py docs/examples/scan.png --style C --capture-sidecar --share --out-dir output/sidecar-example
 ```
 
-![Synthetic scan with the capture details from its JSON sibling](docs/images/demo-sidecar-c.jpg)
+<!-- generated:technical-examples -->
+These examples explain input and metadata handling for Specs (C) and Specs + Text (D). The supplied-details chart is synthetic test artwork, not a camera photograph.
+
+<table>
+<thead><tr>
+<th width="240" align="center">Specs · Raw camera code<br><code>--raw-model</code></th>
+<th width="240" align="center">Specs · Supplied capture details<br><code>--capture-sidecar</code></th>
+<th width="240" align="center">Specs + Text · Raw camera code<br><code>--raw-model</code></th>
+<th width="240" align="center">Specs + Text · Supplied capture details<br><code>--capture-sidecar</code></th>
+</tr></thead>
+<tbody><tr>
+<td width="240" align="center"><a href="docs/images/gallery/c-raw-model.jpg"><img src="docs/images/gallery/thumbs/c-raw-model.png" width="240" alt="Specs · Raw camera code"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/c-sidecar.jpg"><img src="docs/images/gallery/thumbs/c-sidecar.png" width="240" alt="Specs · Supplied capture details"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-raw-model.jpg"><img src="docs/images/gallery/thumbs/d-raw-model.png" width="240" alt="Specs + Text · Raw camera code"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+<td width="240" align="center"><a href="docs/images/gallery/d-sidecar.jpg"><img src="docs/images/gallery/thumbs/d-sidecar.png" width="240" alt="Specs + Text · Supplied capture details"></a><br><span aria-hidden="true">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></td>
+</tr></tbody>
+</table>
+<!-- /generated:technical-examples -->
+
+<details>
+<summary>Compatibility names and choice codes / Tên cũ và mã tùy chỉnh</summary>
+
+Use `--style` with the letter and `--choices` with the frozen three-number code.
+The short display names are vocabulary for the AI skill, not new CLI aliases.
+Previous names and natural-language requests remain supported.
+
+<!-- generated:style-codes -->
+| Display name | Style code | Previous name | Default choices |
+| --- | :---: | --- | :---: |
+| Shadow / Ảnh nổi (A) | `A` | Floating photo | `2-2-1` |
+| Gallery / Khung gallery (B) | `B` | Gallery frame | `1-2-1` |
+| Specs / Thông số (C) | `C` | Print / spec card | `2-1-1` |
+| Specs + Text / Thông số + chữ riêng (D) | `D` | Custom spec card | `2-1-1` |
+| Color / Viền màu (E) | `E` | Color Echo | `2-1-1` |
+| Film / Viền phim (F) | `F` | Film Edge | `2-1-1` |
+| Paper / Giấy xé (G) | `G` | Deckled Paper | `2-1-1` |
+| Canvas / Khung tỷ lệ (H) | `H` | Minimal Mat | `1-1-1` |
+<!-- /generated:style-codes -->
+
+</details>
 
 #### Maintaining the renderer / Bảo trì
 

@@ -27,6 +27,16 @@ Never infer cropping authorization from a framing request. White areas may belon
 
 Use the user's language and [menus.md](references/menus.md). Preserve codes across languages.
 
+Lead with the short display names when offering styles: Shadow / Ảnh nổi (A),
+Gallery / Khung gallery (B), Specs / Thông số (C), Specs + Text / Thông số + chữ riêng (D),
+Color / Viền màu (E), Film / Viền phim (F), Paper / Giấy xé (G), Canvas / Khung tỷ lệ (H).
+Map these names, the previous names and letters to the same existing style codes;
+pass letters to the CLI, which has no new name aliases. Use `Style · Variant`
+for a named example, and show only the distinguishing appearance or text option
+inside a style group. Keep the three-number codes available in the detailed menu.
+Honor a request such as "Film, no text" as an explicit choice to leave both
+corner fields blank; it does not authorize blank corners for other requests.
+
 - A: floating photo, default **2-2-1**.
 - B: gallery frame, default **1-2-1**.
 - C: print/spec card, default **2-1-1** (medium margin, white, full caption).

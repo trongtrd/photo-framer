@@ -23,7 +23,7 @@ sys.path.insert(0, str(SCRIPTS))
 
 from photoframer.registry import STYLES  # noqa: E402
 from photoframer.settings import GLOBAL_FLAGS, OPTIONS  # noqa: E402
-from gallery import gallery_block  # noqa: E402
+from gallery import display_title, gallery_block, technical_block  # noqa: E402
 
 README = ROOT / 'README.md'
 MENUS = ROOT / 'skills' / 'photo-framer' / 'references' / 'menus.md'
@@ -43,11 +43,18 @@ def menu_table(style, language):
 
 
 def readme_styles():
-    lines = ['| Style / Phong cách | Look / Hình thức | Default / Mặc định |',
-             '| --- | --- | :---: |']
+    lines = ['| Style / Phong cách | Look / Hình thức |', '| --- | --- |']
     for code, style in STYLES.items():
-        lines.append(f'| [**{style.readme_title}**](#style-{code.lower()}) | '
-                     f'{style.look[0]}<br>{style.look[1]} | `{style.default}` |')
+        lines.append(f'| [**{display_title(code)}**](#style-{code.lower()}) | '
+                     f'{style.look[0]}<br>{style.look[1]} |')
+    return '\n'.join(lines)
+
+
+def compatibility_names():
+    lines = ['| Display name | Style code | Previous name | Default choices |',
+             '| --- | :---: | --- | :---: |']
+    for code, style in STYLES.items():
+        lines.append(f'| {display_title(code)} | `{code}` | {style.name[0]} | `{style.default}` |')
     return '\n'.join(lines)
 
 
@@ -71,7 +78,8 @@ def option_matrix():
 
 
 def blocks():
-    generated = {'styles': readme_styles(), 'option-matrix': option_matrix(), 'gallery': gallery_block()}
+    generated = {'styles': readme_styles(), 'option-matrix': option_matrix(), 'gallery': gallery_block(),
+                 'technical-examples': technical_block(), 'style-codes': compatibility_names()}
     for code, style in STYLES.items():
         for language in LANGUAGES:
             generated[f'menu-{language}-{code}'] = menu_table(style, language)

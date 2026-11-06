@@ -1,10 +1,19 @@
 # README gallery
 
-The README has one group for each style A–H. A–G use two horizontal rows:
-seven preset examples, then representative text/input options. Each preset
-example changes only one menu setting from the default, so every value in
-the three-row menu is visible without listing all 27 combinations. H uses
-three rows: canvas ratios, blurred backgrounds, and mats/keylines/text.
+The README leads with eight short display names: Shadow (A), Gallery (B),
+Specs (C), Specs + Text (D), Color (E), Film (F), Paper (G), and Canvas (H).
+Their agreed naming hierarchy is in `docs/proposals/readme-names.md`.
+The main gallery has 87 examples. A–G use appearance and text rows; E's shared
+color belongs with appearance. Each preset example changes one setting from
+the default, so every menu value is visible without listing all combinations.
+H uses three rows: ratios, blur and details, with the same ratio order in its
+first two rows. C/D's four metadata/input examples are in the technical section.
+All 91 examples remain generated and verified.
+
+Names and descriptive variants lead the gallery. Letters remain secondary in
+the group headings; CLI flags, legacy names and default three-number codes
+are in the technical reference. This changes documentation and skill vocabulary,
+not the renderer's codes, names or output bytes.
 
 The number of columns is independent for every row. Wide tables can scroll
 horizontally on GitHub; each thumbnail links to a larger JPEG. The README
@@ -13,11 +22,12 @@ and cell width attributes to fit its container, so an accessibility-hidden
 nonbreaking spacer supplies an intrinsic minimum width in each image cell.
 This keeps the previews readable and activates native horizontal table scrolling.
 
-Every thumbnail is centered on an opaque black (`#000000`) square, including
-the original-photo thumbnails. This presentation surround makes white mats
-and frame boundaries visible in GitHub's light theme. It is not part of the
-rendered frame: clicking a thumbnail opens the larger image without the black
-surround. The table chrome still follows the viewer's GitHub theme; GitHub
+Thumbnails are centered on opaque presentation squares: white (`#ffffff`)
+for Film (F), black (`#000000`) for the other styles and the original
+photos. White keeps F's dark film borders visible; black separates the light
+mats from GitHub's page. These surrounds are not part of the rendered frame:
+clicking a thumbnail opens the larger image without the presentation surround.
+The table chrome still follows the viewer's GitHub theme; GitHub
 sanitizes custom CSS in README files.
 
 ## Rebuild
@@ -39,14 +49,14 @@ after verification; original photographs are never rewritten.
 
 Larger gallery JPEGs have a longest edge of at most 1280 px. Thumbnail PNGs
 are 432×432 px, with the intact frame reduced to at most 400 px and centered
-with at least 16 px of black padding on every side. PNG keeps the surrounding
-pixels exactly black. They use the committed sRGB profile and contain no EXIF.
+with at least 16 px of white or black padding on every side. PNG keeps that
+padding exactly white or black. They use the committed sRGB profile and contain no EXIF.
 They are documentation previews, not full-resolution or exact-size share files.
 The H renderer's actual share outputs remain 1080×1350 (4:5), 1080×1080 (1:1),
 1080×1440 (3:4), 1080×1920 (9:16), and 1920×1080 (16:9).
 
 The manifest in `docs/images/gallery/manifest.json` records the recipes,
-input hashes, renderer fingerprint, thumbnail presentation recipe, and output
+input hashes, renderer fingerprint, per-example thumbnail presentation recipe, and output
 hashes. The fingerprint normalizes text line endings so Windows and Unix checkouts agree. Unchanged
 examples are cached independently of their thumbnail presentation, so changing
 the surround does not rerender the photographs. `--check` verifies the committed
