@@ -141,7 +141,8 @@ def gallery_block():
              'text, signatures and other named options have a separate row. H has three rows. '
              'Scroll a wide row horizontally and click any preview to enlarge it.', '',
              'These are reduced previews, not full-resolution outputs. The originals stay untouched. '
-             'The black surrounds belong only to the thumbnail display, not to the frame. '
+             'The display surrounds are white for Film Edge and black for the other styles; '
+             'they belong only to the thumbnail display, not to the frame. '
              'Click through to see the framed image without that surround. '
              'The sample text is supplied wording, never inferred metadata.', '',
              '| Original landscape | Original portrait |', '| :---: | :---: |']
@@ -214,11 +215,15 @@ def save_preview(image, path, edge):
     reduced.save(path, quality=RECIPE['quality'], subsampling=0, icc_profile=SRGB)
 
 
-def save_thumbnail(image, path):
+def thumbnail_recipe(style=None):
+    return {**THUMBNAIL, 'background': '#ffffff' if style == 'F' else THUMBNAIL['background']}
+
+
+def save_thumbnail(image, path, presentation):
     reduced = image.convert('RGB')
-    reduced.thumbnail((THUMBNAIL['image_edge'], THUMBNAIL['image_edge']), Image.Resampling.LANCZOS)
-    edge = THUMBNAIL['edge']
-    stage = Image.new('RGB', (edge, edge), THUMBNAIL['background'])
+    reduced.thumbnail((presentation['image_edge'], presentation['image_edge']), Image.Resampling.LANCZOS)
+    edge = presentation['edge']
+    stage = Image.new('RGB', (edge, edge), presentation['background'])
     stage.paste(reduced, ((edge-reduced.width)//2, (edge-reduced.height)//2))
     path.parent.mkdir(parents=True, exist_ok=True)
     stage.save(path, icc_profile=SRGB)
@@ -238,14 +243,15 @@ def main(argv=None):
     records = {}
     for item in examples():
         expected = recipe(item)
+        presentation = thumbnail_recipe(item.style)
         saved = old.get('examples', {}).get(item.key, {})
         preview, thumbnail = ASSETS/f'{item.key}.jpg', THUMBS/f'{item.key}.png'
         preview_valid = (old.get('renderer_sha256') == fingerprint and saved.get('recipe') == expected
                          and file_matches(preview, saved.get('files', {})))
-        thumbnail_valid = (preview_valid and old.get('thumbnail_recipe') == THUMBNAIL
+        thumbnail_valid = (preview_valid and saved.get('thumbnail_recipe', old.get('thumbnail_recipe')) == presentation
                            and file_matches(thumbnail, saved.get('files', {})))
         if preview_valid and thumbnail_valid:
-            records[item.key] = saved
+            records[item.key] = {**saved, 'thumbnail_recipe': presentation}
             continue
         stale.append(item.key)
         if args.check:
@@ -273,8 +279,8 @@ def main(argv=None):
                     save_preview(source.convert('RGB'), preview, RECIPE['preview_edge'])
             print('Rendered '+item.key, flush=True)
         with Image.open(preview) as image:
-            save_thumbnail(image, thumbnail)
-        records[item.key] = {'recipe': expected, 'files': {
+            save_thumbnail(image, thumbnail, presentation)
+        records[item.key] = {'recipe': expected, 'thumbnail_recipe': presentation, 'files': {
             path.relative_to(ROOT).as_posix(): digest(path) for path in (preview, thumbnail)}}
         print('Updated thumbnail '+item.key, flush=True)
     source_records = {}
@@ -289,7 +295,7 @@ def main(argv=None):
                 from photoframer.io import load_photo
                 from photoframer.color import convert_profile
                 photo, profile, _ = load_photo(ROOT/SOURCES[name])
-                save_thumbnail(convert_profile(photo, profile, SRGB), path)
+                save_thumbnail(convert_profile(photo, profile, SRGB), path, thumbnail_recipe())
         if path.exists():
             source_records[name] = {'recipe': expected, 'sha256': digest(path)}
     if args.check:

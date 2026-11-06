@@ -1,6 +1,6 @@
 # Handoff: Photo Framer
 
-Last updated: 2026-11-06 (v0.12 merged; v0.13 PR #11 approved for integration).
+Last updated: 2026-11-06 (PR #11 merged; Film Edge presentation correction and naming review).
 Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography and post-processing terms. Ask with `AskUserQuestion` and give a recommended option when a decision is really the owner's. Otherwise proceed.
 
 ## Where to read first (do not duplicate here)
@@ -24,11 +24,13 @@ Owner: trongtrd. Writes in Vietnamese: reply in Vietnamese, using photography an
 
 ## Current state
 
-The latest verified `main` is `5f49b92`: PR #10 merged v0.12.0 (24 MP complete output cap, capture sidecars, A/B/G labels). All 75 tests and all five main CI jobs passed after merging (run 60). The existing GitHub Release is still v0.11.1 at `2f64ad0`; v0.12.0 has no separate release. Earlier stacked PRs (#1–#7) and maintenance PRs (#8–#9) are also merged.
+The latest verified `main` is `08a191c`: PR #11 merged the v0.13 landscape H and README gallery changes. All 76 tests, generated-doc/gallery checks and all five main CI jobs passed after merging (run 69, ID 42114834799). PR #10 previously merged v0.12.0 (24 MP complete output cap, capture sidecars, A/B/G labels). The existing GitHub Release is still v0.11.1 at `2f64ad0`; v0.12/v0.13 have no separate releases. Earlier PRs #1–#9 are also merged.
 
-This change prepares unreleased v0.13.0 on `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. On 2026-11-06 the owner explicitly requested opening and merging this change after checks pass. The resulting PR is #11: https://github.com/trongtrd/photo-framer/pull/11. This authorization applies to PR #11 only; it does not authorize another PR, a release or branch deletion. Verify its actual merge status and the latest `main` checks on GitHub.
+PR #11 merged unreleased v0.13.0 from `codex/h-landscape-readme-gallery`: H 16:9, square/landscape blur examples, and a README gallery organized by A–H. The owner requested representative variants covering the visible controls, allowing two or three rows per style; A–G have two rows, H three. Their explicit opening/merge authorization applied to PR #11 only: https://github.com/trongtrd/photo-framer/pull/11. It does not authorize another PR, a release or branch deletion.
 
-The owner also requested a black or colored gallery background to distinguish white frames. Thumbnails now use exact-black 432×432 PNG presentation squares, with the intact reduced frame centered inside at least 16 px of padding. Only this thumbnail surround is black; linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged.
+The owner requested contrasting gallery backgrounds: black for the light-framed styles and, after review, white for Film Edge (F), whose dark borders blend into black. The current branch `codex/readme-clarity-film-background` implements that F-only correction with per-example thumbnail presentation recipes. Squares remain 432×432 PNGs, with at least 16 px of padding around the intact reduced frame. Linked larger previews keep the actual frame background. GitHub's table chrome follows the viewer's theme because custom README CSS is sanitized. Renderer behavior is unchanged. No PR or merge has been requested for this new branch.
+
+The owner requested a review of grouping and naming, not immediate renaming. `docs/proposals/readme-names.md` contains a concrete proposal pending approval; A–H and the three-digit codes remain frozen. They also requested removing Claude from GitHub Contributors. An audit found 26 Claude-authored commits and 33 Claude co-author trailers (35 distinct commits affected by one or both). Do not rewrite published history, move release tags or force-update `main` without explicit approval of the reviewed history plan; the push restriction to the designated development branch still applies.
 
 Takeover verified `main` at `2f64ad0`, all nine PRs merged, 64 tests passing and CI run 55 successful in all five jobs. The local checkout was stale at `6408659` and was fast-forwarded without edits. The current workstation is Windows, Python 3.14.8/Pillow 12.3.0, rather than the previous session's Linux environment.
 
@@ -84,6 +86,6 @@ Working rules for the next session:
 
 1. Signature selection and publication are resolved: **sample 3**, width **0.12**, bottom-right, opacity 1.0. The owner approved public README use on 2026-11-06. The original three sources and comparison files remain in their Dropbox; only the selected transparent PNG is used by the documentation gallery. Background extraction/cropping used explicitly approved Python/Pillow processing; white recompositing exactly reproduces the cropped source pixels.
 2. Camera names: the owner uses Sony α7C, already supported correctly; no expansion is needed for their current body. Other names remain subject to manufacturer verification before addition.
-3. Capture sidecars, A/B/G labels and the 24 MP cap are complete on `main` through PR #10. The owner authorized opening and merging the v0.13 landscape/gallery change in PR #11 after checks pass. Future PRs still require their own request and specific merge approval.
+3. Capture sidecars, A/B/G labels and the 24 MP cap are complete through PR #10; landscape H and the gallery are complete through PR #11. The F white-surround correction is on `codex/readme-clarity-film-background`, pending a future PR request. The naming/grouping proposal and the contributor-history publication plan need separate owner decisions. Future PRs still require their own request and specific merge approval.
 
 No other new feature or release is authorized. Commits, PR text and repository docs stay in English; conversation stays in Vietnamese.

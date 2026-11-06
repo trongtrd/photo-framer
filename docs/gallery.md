@@ -13,11 +13,12 @@ and cell width attributes to fit its container, so an accessibility-hidden
 nonbreaking spacer supplies an intrinsic minimum width in each image cell.
 This keeps the previews readable and activates native horizontal table scrolling.
 
-Every thumbnail is centered on an opaque black (`#000000`) square, including
-the original-photo thumbnails. This presentation surround makes white mats
-and frame boundaries visible in GitHub's light theme. It is not part of the
-rendered frame: clicking a thumbnail opens the larger image without the black
-surround. The table chrome still follows the viewer's GitHub theme; GitHub
+Thumbnails are centered on opaque presentation squares: white (`#ffffff`)
+for Film Edge (F), black (`#000000`) for the other styles and the original
+photos. White keeps F's dark film borders visible; black separates the light
+mats from GitHub's page. These surrounds are not part of the rendered frame:
+clicking a thumbnail opens the larger image without the presentation surround.
+The table chrome still follows the viewer's GitHub theme; GitHub
 sanitizes custom CSS in README files.
 
 ## Rebuild
@@ -39,14 +40,14 @@ after verification; original photographs are never rewritten.
 
 Larger gallery JPEGs have a longest edge of at most 1280 px. Thumbnail PNGs
 are 432×432 px, with the intact frame reduced to at most 400 px and centered
-with at least 16 px of black padding on every side. PNG keeps the surrounding
-pixels exactly black. They use the committed sRGB profile and contain no EXIF.
+with at least 16 px of white or black padding on every side. PNG keeps that
+padding exactly white or black. They use the committed sRGB profile and contain no EXIF.
 They are documentation previews, not full-resolution or exact-size share files.
 The H renderer's actual share outputs remain 1080×1350 (4:5), 1080×1080 (1:1),
 1080×1440 (3:4), 1080×1920 (9:16), and 1920×1080 (16:9).
 
 The manifest in `docs/images/gallery/manifest.json` records the recipes,
-input hashes, renderer fingerprint, thumbnail presentation recipe, and output
+input hashes, renderer fingerprint, per-example thumbnail presentation recipe, and output
 hashes. The fingerprint normalizes text line endings so Windows and Unix checkouts agree. Unchanged
 examples are cached independently of their thumbnail presentation, so changing
 the surround does not rerender the photographs. `--check` verifies the committed

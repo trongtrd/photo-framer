@@ -144,7 +144,7 @@ For a separate caption on A–E, G or H, supply exact wording; bundled Inter alr
 <!-- generated:gallery -->
 Each style has its own gallery. Preset examples change one setting from the default; text, signatures and other named options have a separate row. H has three rows. Scroll a wide row horizontally and click any preview to enlarge it.
 
-These are reduced previews, not full-resolution outputs. The originals stay untouched. The black surrounds belong only to the thumbnail display, not to the frame. Click through to see the framed image without that surround. The sample text is supplied wording, never inferred metadata.
+These are reduced previews, not full-resolution outputs. The originals stay untouched. The display surrounds are white for Film Edge and black for the other styles; they belong only to the thumbnail display, not to the frame. Click through to see the framed image without that surround. The sample text is supplied wording, never inferred metadata.
 
 | Original landscape | Original portrait |
 | :---: | :---: |
