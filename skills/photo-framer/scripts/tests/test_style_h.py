@@ -148,7 +148,7 @@ class MinimalMatExtensions(unittest.TestCase):
         tones = {}
         for tone in ('dark', 'neutral', 'light'):
             image, _ = render(photo, 'H', ratio='9:16', background='blur', blur_tone=tone)
-            tones[tone] = sum(image.crop((0, 0, 40, 40)).convert('L').getdata())
+            tones[tone] = sum(image.crop((0, 0, 40, 40)).convert('L').tobytes())
             self.assertEqual(image.crop((x, y, x+600, y+400)).tobytes(), photo.tobytes())
         self.assertLess(tones['dark'], tones['neutral'])
         self.assertLess(tones['neutral'], tones['light'])
