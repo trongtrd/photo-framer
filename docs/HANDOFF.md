@@ -1,6 +1,6 @@
 # Session handoff: Photo Framer
 
-Updated 2026-11-06. Repository: https://github.com/trongtrd/photo-framer.
+Updated 2026-11-11. Repository: https://github.com/trongtrd/photo-framer.
 Local checkout: `C:\GitHub Projects\photo-framer` (Windows, PowerShell).
 Owner: `trongtrd`. Speak Vietnamese; write commits, PRs and repository docs in English.
 
@@ -47,10 +47,26 @@ Completed work is documented in the linked artifacts, not repeated here:
   public README. See the artwork credits and manifest instead of asking again.
 - Sony Alpha 7C is the owner's body and already supported; no camera-name expansion is pending.
 
-The latest published GitHub Release remains **v0.11.1**, with its tag exactly at
-`2f64ad02db53c5aa5a1b3380cea051c6cd19b3b0`. v0.12/v0.13 have no separate releases.
-Publishing another release and deleting current development branches are not authorized.
-The earlier deletion approval applied to the old merged Claude branch, already deleted.
+The v0.11.1 GitHub Release and its tag stay exactly at
+`2f64ad02db53c5aa5a1b3380cea051c6cd19b3b0`; never move them.
+
+## 2026-11-11 follow-up: Pillow 14 maintenance and v0.13.0 release
+
+On 2026-11-11 the owner approved three proposals together:
+
+- A maintenance PR from `claude/festive-bohr-x6lncl`: the tests stop calling
+  `Image.getdata()` (removed in Pillow 14, 2027-10-15) and `tools/golden.py`
+  drops an unused `os` import. The renderer is unchanged. Merging that PR still
+  needs the owner's approval for that specific PR.
+- Publishing **v0.13.0** as one GitHub Release that also covers v0.12.0, created
+  from the merge commit of that PR. The changelog dates v0.13.0 to 2026-11-11.
+  The Claude session cannot create tags or releases (the git proxy accepts pushes
+  only to its designated branch, and the GitHub tools have no release call), so
+  the owner publishes it. Check the live release list rather than this note.
+- Deleting the three merged `codex/*` branches and enabling GitHub's automatic
+  deletion of merged head branches. These are owner actions in GitHub settings.
+  `codex/capture-sidecars-gallery-labels` and `codex/h-landscape-readme-gallery`
+  still carry the pre-rewrite history; never merge them to synchronize.
 
 ## Owner-only attribution: completed history operation
 
@@ -122,12 +138,11 @@ latest main checks and release/tag state. Trust the repository if anything diffe
 
 ## Remaining decisions and useful next steps
 
-1. Verify PR #12 integration, clean checkout, main CI and the contributor sidebar cache.
-2. If desired, propose a release containing the merged work; ask which version/scope
-   the owner wants before publishing. The existing unreleased changelog headings are intentional.
-3. Ask before cleaning up the remaining merged development branches. Preserve the
-   history-review backup and the frozen release tag.
-4. There is no other approved feature backlog. Signature selection, naming/grouping,
+1. Verify the maintenance PR's merge, main CI, the v0.13.0 release state and the
+   contributor sidebar cache (not observable from a cloud session; ask the owner).
+2. Confirm the merged `codex/*` branches are gone. Preserve the
+   history-review backup and the frozen v0.11.1 tag.
+3. There is no other approved feature backlog. Signature selection, naming/grouping,
    sidecars, labels, output cap and landscape/square framing are resolved.
 
 ## Nonduplicated operational lessons

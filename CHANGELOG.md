@@ -2,7 +2,9 @@
 
 Versions follow the rendering specification in `skills/photo-framer/references/presets.md`. The renderer reports its version with `python skills/photo-framer/scripts/frame_photo.py --version`. Three-digit choice codes are a frozen contract: no release changes the meaning of an existing code.
 
-## v0.13.0 (unreleased): landscape H and a complete README gallery
+## v0.13.0 (2026-11-11): landscape H and a complete README gallery
+
+The GitHub release for v0.13.0 also publishes v0.12.0, which had no separate release.
 
 - **Landscape H:** `--ratio 16:9` adds a fixed horizontal canvas, with plain or blurred backgrounds, all three blur tones, keylines and gallery labels. Its minimum margin is 5% of the short edge (height), equivalent to 2.8125% of canvas width, mirroring 9:16. Share JPEGs are exactly 1920×1080. The full photo stays unscaled and uncropped; the shared 24 MP output cap still applies. Existing choice codes and ratios are unchanged.
 - **Square blur is now visible in the examples.** `--ratio 1:1 --background blur` already worked; it is demonstrated alongside the new 16:9 blur and the existing ratios.
@@ -12,8 +14,9 @@ Versions follow the rendering specification in `skills/photo-framer/references/p
 - `tools/gallery.py` renders and verifies the examples through the CLI, records recipes and hashes in a manifest, and supports a fast `--check` in CI. `tools/gen_docs.py` also generates the README gallery. Text hashes normalize line endings for Windows/Unix checkouts; full-resolution source files stay untouched.
 - The owner approved their selected sample-3 PNG signature for the public README, at width 0.12. Signature examples appear only on A/B/E/G; H still has no signature. The supplied artwork is documented separately and is not bundled with the installed renderer.
 - Tests cover landscape geometry/margins, square and landscape blur pixel preservation, exact share sizes, preview routing and size suggestions. Golden also covers the previously supported square blur to protect existing output.
+- Maintenance: the tests no longer call `Image.getdata()`, which Pillow 14 removes (2027-10-15); they use `tobytes()` and `getextrema()`, available on every supported Pillow. `tools/golden.py` drops an unused import. Renderer outputs are unchanged: golden finds all 303 cases and 1,047 output files byte-identical.
 
-## v0.12.0 (unreleased): bounded outputs, capture sidecars and more gallery labels
+## v0.12.0 (released with v0.13.0): bounded outputs, capture sidecars and more gallery labels
 
 - **24 MP output cap for every style.** Owner-approved replacement for the former 60 MP cap (100 MP for H). The complete oriented/cropped layout, including labels and borders, is checked before allocating a canvas; JPEGs are checked before decoding. Oversized results report the proposed canvas dimensions and a proportionate smaller source size that fits the selected settings. No resizing is automatic: exporting a smaller copy, or explicitly authorizing preprocessing of a separate copy, remains the user's choice. Three-digit codes, accepted layouts below the cap, and share sizes are unchanged.
 - **Per-image capture JSON for C/D.** Opt-in `--capture-sidecar` reads the exact UTF-8 sibling `<complete input filename>.json`. Allowed fields: camera, lens, ISO, aperture, shutter and focal length. Explicit flags override JSON; JSON overrides EXIF/XMP field by field. Missing files are reported, malformed files fail only their own image, and typed values affect display only, never source/output EXIF or logo selection. A runnable synthetic example is included.
