@@ -89,7 +89,7 @@ class LabelsAndOverlays(unittest.TestCase):
         self.assertEqual(caption.CAPTION_INK, spec_band.EXPOSURE_INK)
         self.assertEqual(caption.CAPTION_INK, h_minimal_mat.LABEL_INKS['dark'][1])
         im, (x, y) = render(Image.new('RGB', (900, 600), 'white'), 'A', caption='Hà Nội')
-        darkest = min(im.crop((0, y+600, im.width, im.height)).getdata())
+        darkest = tuple(low for low, _ in im.crop((0, y+600, im.width, im.height)).getextrema())
         self.assertEqual(darkest, (115, 115, 115))
 
     def test_label_contrast_on_blur_and_validation(self):
@@ -168,8 +168,8 @@ class LabelsAndOverlays(unittest.TestCase):
         strong, _ = render(self.photo, 'A', signature=self.signature)
         bar = ImageChops.difference(faint, strong).getbbox()
         self.assertIsNotNone(bar)
-        self.assertGreater(min(faint.crop(bar).convert('L').getdata()),
-                           min(strong.crop(bar).convert('L').getdata()))
+        self.assertGreater(faint.crop(bar).convert('L').getextrema()[0],
+                           strong.crop(bar).convert('L').getextrema()[0])
 
     def test_signature_errors_and_collisions(self):
         font = str(text.FONTS_DIR / 'Inter-Regular.ttf')
